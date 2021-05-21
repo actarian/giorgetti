@@ -2840,9 +2840,6 @@ h6 {
     [swiper-gallery] .swiper-button-prev {
       display: none; } }
 
-[swiper-gallery] {
-  overflow: visible; }
-
 @keyframes stagger-childs {
   0% {
     transform: translateY(10px);
@@ -4377,6 +4374,13 @@ body {
       margin-left: 0px;
       margin-right: 0px;
       margin-bottom: 70px; } }
+
+[swiper-gallery] {
+  overflow: visible;
+  margin-left: -50px;
+  margin-right: -50px;
+  width: calc(100% + 100px);
+  padding: 0 50px; }
 
 .card--gallery {
   position: relative;

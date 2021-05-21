@@ -9,7 +9,7 @@ export class SwiperGalleryDirective extends SwiperDirective {
 			speed: 600,
 			centeredSlides: true,
 			loop: true,
-			loopAdditionalSlides: 3,
+			loopAdditionalSlides: 100,
 			keyboardControl: true,
 			mousewheelControl: false,
 			keyboard: {
