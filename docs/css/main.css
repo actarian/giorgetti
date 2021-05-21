@@ -3943,7 +3943,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 40px; }
+    padding: 0 40px 5px 40px; }
     @media (max-width: 767.98px) {
       .group--filters-projects .filters__title {
         display: none; } }
@@ -4252,7 +4252,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 40px; }
+    padding: 0 40px 5px 40px; }
     @media (max-width: 767.98px) {
       .group--filters-news .filters__title {
         display: none; } }

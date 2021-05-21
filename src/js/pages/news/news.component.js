@@ -13,7 +13,6 @@ export class NewsComponent extends Component {
 		this.items = [];
 		this.filteredItems = [];
 		this.filters = {};
-		this.filter = {};
 		const form = this.form = new FormGroup({
 			country: new FormControl(null, [Validators.RequiredValidator()]),
 			search: new FormControl(null, [Validators.RequiredValidator()]),
@@ -72,7 +71,9 @@ export class NewsComponent extends Component {
 		});
 		this.filterService = filterService;
 		this.filters = filterService.filters;
-		this.filter = this.filters.country;
+		const country = this.filters.country.values.length ? this.filters.country.values[0] : null;
+		const search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+		this.form.patch({ country, search });
 		filterService.items$(items).pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(filteredItems => {

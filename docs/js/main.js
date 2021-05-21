@@ -1855,7 +1855,6 @@ _defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);v
     this.items = [];
     this.filteredItems = [];
     this.filters = {};
-    this.filter = {};
     var form = this.form = new rxcompForm.FormGroup({
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
@@ -1924,7 +1923,12 @@ _defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);v
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    this.filter = this.filters.country;
+    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      country: country,
+      search: search
+    });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
       _this2.filteredItems = filteredItems;
 
@@ -2029,7 +2033,6 @@ NewsletterPropositionComponent.meta = {
     this.items = [];
     this.filteredItems = [];
     this.filters = {};
-    this.filter = {};
     var form = this.form = new rxcompForm.FormGroup({
       category: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
@@ -2098,7 +2101,12 @@ NewsletterPropositionComponent.meta = {
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    this.filter = this.filters.category;
+    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      category: category,
+      search: search
+    });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
       _this2.filteredItems = filteredItems;
 

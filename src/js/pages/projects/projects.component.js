@@ -13,7 +13,6 @@ export class ProjectsComponent extends Component {
 		this.items = [];
 		this.filteredItems = [];
 		this.filters = {};
-		this.filter = {};
 		const form = this.form = new FormGroup({
 			category: new FormControl(null, [Validators.RequiredValidator()]),
 			search: new FormControl(null, [Validators.RequiredValidator()]),
@@ -72,7 +71,9 @@ export class ProjectsComponent extends Component {
 		});
 		this.filterService = filterService;
 		this.filters = filterService.filters;
-		this.filter = this.filters.category;
+		const category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+		const search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+		this.form.patch({ category, search });
 		filterService.items$(items).pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(filteredItems => {
