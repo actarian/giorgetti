@@ -2429,13 +2429,14 @@ html.has-scroll-dragging {
   to {
     transform: translateY(-10px); } }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a,
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a,
 .nav--language > li > span,
 .nav--service > li > span,
 .nav--main > li > span,
 .nav--social > li > span,
 .nav--colophon > li > span,
-.nav--breadcrumb > li > span, .nav--footer-menu > li > a,
+.nav--breadcrumb > li > span,
+.nav--share > li > span, .nav--footer-menu > li > a,
 .nav--footer-menu > li > span, .nav--dropdown > li > a,
 .nav--dropdown > li > span {
   flex-grow: 0;
@@ -2447,23 +2448,24 @@ html.has-scroll-dragging {
   z-index: 1;
   transition: ease-in-out 250ms;
   transition-property: background-color, color, border, opacity; }
-  .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus,
+  .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus,
   .nav--language > li > span:focus,
   .nav--service > li > span:focus,
   .nav--main > li > span:focus,
   .nav--social > li > span:focus,
   .nav--colophon > li > span:focus,
-  .nav--breadcrumb > li > span:focus, .nav--footer-menu > li > a:focus,
+  .nav--breadcrumb > li > span:focus,
+  .nav--share > li > span:focus, .nav--footer-menu > li > a:focus,
   .nav--footer-menu > li > span:focus, .nav--dropdown > li > a:focus,
   .nav--dropdown > li > span:focus {
     outline: 0; }
 
-.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--footer-menu, .nav--dropdown {
+.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share, .nav--footer-menu, .nav--dropdown {
   list-style: none;
   padding: 0;
   margin: 0; }
 
-.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb {
+.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share {
   display: flex;
   justify-content: flex-start;
   /*
@@ -2477,7 +2479,7 @@ html.has-scroll-dragging {
 		// margin-bottom: 100px;
 	}
 	*/ }
-  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li {
+  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li, .nav--share > li {
     position: relative;
     display: block; }
 
@@ -2747,7 +2749,7 @@ h6 {
     opacity: 1;
     transform: translateX(0); } }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit {
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit, .card--gallery > .card__picture, .card--gallery .btn--more {
   display: inline-block;
   padding: 0;
   border: none;
@@ -2758,18 +2760,18 @@ h6 {
   font: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
-  .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit, .nav--language > li > a:active, .nav--service > li > a:active, .nav--main > li > a:active, .nav--social > li > a:active, .nav--colophon > li > a:active, .nav--breadcrumb > li > a:active, .nav--footer-menu > li > a:active, .btn:active, .header .group--logo .btn--logo:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .section--hero .title:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--more:active, .card--project:active, .group--filters-projects .btn--submit:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--more:active, .card--news:active, .card--news .btn--more:active, .group--filters-news .btn--submit:active, .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--footer-menu > li > a:focus, .btn:focus, .header .group--logo .btn--logo:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .section--hero .title:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--more:focus, .card--project:focus, .group--filters-projects .btn--submit:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--more:focus, .card--news:focus, .card--news .btn--more:focus, .group--filters-news .btn--submit:focus, .nav--language > li > a:hover, .nav--service > li > a:hover, .nav--main > li > a:hover, .nav--social > li > a:hover, .nav--colophon > li > a:hover, .nav--breadcrumb > li > a:hover, .nav--footer-menu > li > a:hover, .btn:hover, .header .group--logo .btn--logo:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .section--hero .title:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--more:hover, .card--project:hover, .group--filters-projects .btn--submit:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--more:hover, .card--news:hover, .card--news .btn--more:hover, .group--filters-news .btn--submit:hover, .nav--language > li > a:visited, .nav--service > li > a:visited, .nav--main > li > a:visited, .nav--social > li > a:visited, .nav--colophon > li > a:visited, .nav--breadcrumb > li > a:visited, .nav--footer-menu > li > a:visited, .btn:visited, .header .group--logo .btn--logo:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .section--hero .title:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--more:visited, .card--project:visited, .group--filters-projects .btn--submit:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--more:visited, .card--news:visited, .card--news .btn--more:visited, .group--filters-news .btn--submit:visited {
+  .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit, .card--gallery > .card__picture, .card--gallery .btn--more, .nav--language > li > a:active, .nav--service > li > a:active, .nav--main > li > a:active, .nav--social > li > a:active, .nav--colophon > li > a:active, .nav--breadcrumb > li > a:active, .nav--share > li > a:active, .nav--footer-menu > li > a:active, .btn:active, .header .group--logo .btn--logo:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .section--hero .title:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--more:active, .card--project:active, .group--filters-projects .btn--submit:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--more:active, .card--news:active, .card--news .btn--more:active, .group--filters-news .btn--submit:active, .card--gallery > .card__picture:active, .card--gallery .btn--more:active, .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--footer-menu > li > a:focus, .btn:focus, .header .group--logo .btn--logo:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .section--hero .title:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--more:focus, .card--project:focus, .group--filters-projects .btn--submit:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--more:focus, .card--news:focus, .card--news .btn--more:focus, .group--filters-news .btn--submit:focus, .card--gallery > .card__picture:focus, .card--gallery .btn--more:focus, .nav--language > li > a:hover, .nav--service > li > a:hover, .nav--main > li > a:hover, .nav--social > li > a:hover, .nav--colophon > li > a:hover, .nav--breadcrumb > li > a:hover, .nav--share > li > a:hover, .nav--footer-menu > li > a:hover, .btn:hover, .header .group--logo .btn--logo:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .section--hero .title:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--more:hover, .card--project:hover, .group--filters-projects .btn--submit:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--more:hover, .card--news:hover, .card--news .btn--more:hover, .group--filters-news .btn--submit:hover, .card--gallery > .card__picture:hover, .card--gallery .btn--more:hover, .nav--language > li > a:visited, .nav--service > li > a:visited, .nav--main > li > a:visited, .nav--social > li > a:visited, .nav--colophon > li > a:visited, .nav--breadcrumb > li > a:visited, .nav--share > li > a:visited, .nav--footer-menu > li > a:visited, .btn:visited, .header .group--logo .btn--logo:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .section--hero .title:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--more:visited, .card--project:visited, .group--filters-projects .btn--submit:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--more:visited, .card--news:visited, .card--news .btn--more:visited, .group--filters-news .btn--submit:visited, .card--gallery > .card__picture:visited, .card--gallery .btn--more:visited {
     color: inherit;
     text-decoration: none;
     outline: none; }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit {
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--footer-menu > li > a, .btn, .header .group--logo .btn--logo, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .section--hero .title, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .group--filters-projects .btn--submit, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .group--filters-news .btn--submit, .card--gallery > .card__picture, .card--gallery .btn--more {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--footer-menu > li > a svg, .btn svg, .header .group--logo .btn--logo svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .section--hero .title svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .group--filters-projects .btn--submit svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .group--filters-news .btn--submit svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--footer-menu > li > a svg, .btn svg, .header .group--logo .btn--logo svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .section--hero .title svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .group--filters-projects .btn--submit svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .group--filters-news .btn--submit svg, .card--gallery > .card__picture svg, .card--gallery .btn--more svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
-  .nav--language > li > a[disabled], .nav--service > li > a[disabled], .nav--main > li > a[disabled], .nav--social > li > a[disabled], .nav--colophon > li > a[disabled], .nav--breadcrumb > li > a[disabled], .nav--footer-menu > li > a[disabled], .btn[disabled], .header .group--logo .btn--logo[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .section--hero .title[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--more[disabled], .card--project[disabled], .group--filters-projects .btn--submit[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--more[disabled], .card--news[disabled], .card--news .btn--more[disabled], .group--filters-news .btn--submit[disabled] {
+  .nav--language > li > a[disabled], .nav--service > li > a[disabled], .nav--main > li > a[disabled], .nav--social > li > a[disabled], .nav--colophon > li > a[disabled], .nav--breadcrumb > li > a[disabled], .nav--share > li > a[disabled], .nav--footer-menu > li > a[disabled], .btn[disabled], .header .group--logo .btn--logo[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .section--hero .title[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--more[disabled], .card--project[disabled], .group--filters-projects .btn--submit[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--more[disabled], .card--news[disabled], .card--news .btn--more[disabled], .group--filters-news .btn--submit[disabled], .card--gallery > .card__picture[disabled], .card--gallery .btn--more[disabled] {
     opacity: 0.5;
     pointer-events: none; }
 
@@ -2778,6 +2780,68 @@ h6 {
     transform: rotate(0); }
   100% {
     transform: rotate(-360deg); } }
+
+@media screen {
+  [swiper-gallery] {
+    line-height: 0; }
+    [swiper-gallery] .swiper-pagination-bullets,
+    .swiper-container-horizontal > [swiper-gallery] .swiper-pagination-bullets {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px 0;
+      bottom: 0; }
+    [swiper-gallery] .swiper-pagination-bullet {
+      display: inline-block;
+      position: relative;
+      width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      border: 2px solid rgba(22, 37, 91, 0.5);
+      background: transparent;
+      opacity: 1;
+      outline: none; }
+      [swiper-gallery] .swiper-pagination-bullet:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -4px;
+        margin-left: -4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: #16255b;
+        opacity: 0;
+        transition: opacity ease-in-out 350ms; }
+      [swiper-gallery] .swiper-pagination-bullet:hover:before {
+        opacity: 1; }
+    [swiper-gallery] .swiper-pagination-bullet-active:before {
+      opacity: 1; }
+    [swiper-gallery] > .swiper-pagination-bullets .swiper-pagination-bullet {
+      margin: 0 4px 4px 0; }
+    [swiper-gallery] .swiper-button-next,
+    [swiper-gallery] .swiper-button-prev {
+      outline: 0;
+      /*
+			background: $background-tertiary;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			*/ }
+      [swiper-gallery] .swiper-button-next:after,
+      [swiper-gallery] .swiper-button-prev:after {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); } }
+  @media screen and (max-width: 767.98px) {
+    [swiper-gallery] .swiper-button-next,
+    [swiper-gallery] .swiper-button-prev {
+      display: none; } }
+
+[swiper-gallery] {
+  overflow: visible; }
 
 @keyframes stagger-childs {
   0% {
@@ -3681,6 +3745,8 @@ test-component .btn--mode {
   white-space: nowrap;
   font-size: 12px;
   color: var(--foreground-secondary); }
+  .nav--breadcrumb > .nav__item:last-child {
+    color: var(--foreground); }
 
 .nav--breadcrumb > .nav__item + .nav__item:before {
   content: '/';
@@ -3694,7 +3760,7 @@ body {
   padding: 0 0 80px 0; }
   .section--hero .title {
     display: block;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     font-family: var(--font-secondary);
     font-size: 72px;
     line-height: 1.1;
@@ -4311,3 +4377,137 @@ body {
       margin-left: 0px;
       margin-right: 0px;
       margin-bottom: 70px; } }
+
+.card--gallery {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 60px; }
+  .card--gallery > .card__picture {
+    position: relative;
+    display: block;
+    overflow: hidden; }
+    .card--gallery > .card__picture img {
+      transition: transform ease-in-out 250ms; }
+    .card--gallery > .card__picture .over {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.4);
+      transition: opacity ease-in-out 250ms; }
+      .card--gallery > .card__picture .over__date {
+        margin-bottom: 16px;
+        font-size: 18px;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--foreground-negative); }
+      .card--gallery > .card__picture .over__title {
+        max-width: 600px;
+        font-family: var(--font-secondary);
+        font-size: 48px;
+        line-height: 1.2;
+        text-align: center;
+        letter-spacing: -0.041em;
+        text-transform: uppercase;
+        color: var(--foreground-negative); }
+    .card--gallery > .card__picture:hover img {
+      transform: scale(1.03, 1.03); }
+    .card--gallery > .card__picture:hover .over {
+      opacity: 1; }
+  .card--gallery .card__content {
+    width: 100%;
+    background: var(--background-negative);
+    color: var(--foreground-negative); }
+    @media (max-width: 767.98px) {
+      .card--gallery .card__content {
+        padding: 15px; } }
+    @media (min-width: 768px) {
+      .card--gallery .card__content {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        max-width: 445px; } }
+    @media (min-width: 768px) and (max-width: 1439.98px) {
+      .card--gallery .card__content {
+        margin: 0 -40px -60px 0;
+        padding: 30px; } }
+    @media (min-width: 1024px) {
+      .card--gallery .card__content {
+        margin: 0 -60px -60px 0;
+        padding: 40px; } }
+  .card--gallery .card__date {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 14px; }
+  .card--gallery .card__title {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 24px;
+    line-height: 1.2; }
+  .card--gallery .btn--more {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1; }
+    .card--gallery .btn--more svg {
+      width: 20px;
+      height: 20px;
+      margin: 2px 0 0 12px;
+      transition: all ease-in-out 250ms; }
+    .card--gallery .btn--more:hover svg {
+      transform: translateX(5px); }
+
+.section--blog-detail {
+  padding: 0 0 80px 0; }
+  .section--blog-detail .title {
+    margin-bottom: 100px;
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 1.2;
+    text-align: center;
+    letter-spacing: -0.027em;
+    text-transform: uppercase;
+    color: #232221; }
+    .section--blog-detail .title em {
+      display: block;
+      font-style: normal;
+      color: #6A6A6A; }
+
+.section--text {
+  padding-bottom: 140px; }
+  .section--text .title {
+    margin-bottom: 60px;
+    font-family: var(--font-secondary);
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.0625em;
+    text-transform: uppercase;
+    color: #000000; }
+  .section--text .description {
+    font-size: 18px; }
+    .section--text .description p {
+      margin: 0 0 80px;
+      padding: 0; }
+
+.group--share {
+  display: flex; }
+  .group--share .share__title {
+    margin-right: 20px;
+    font-size: 16px;
+    text-transform: uppercase; }
+
+.nav--share > .nav__item svg {
+  fill: currentColor;
+  width: 24px;
+  height: 24px; }
+
+.nav--share > .nav__item + .nav__item {
+  margin-left: 20px; }

@@ -952,6 +952,165 @@ LocomotiveScrollDirective.meta = {
 }(rxcomp.Pipe);
 SlugPipe.meta = {
   name: 'slug'
+};var SwiperDirective = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(SwiperDirective, _Component);
+
+  function SwiperDirective() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 'auto',
+      spaceBetween: 0,
+      centeredSlides: true,
+      speed: 600,
+      autoplay: {
+        delay: 5000
+      },
+      keyboardControl: true,
+      mousewheelControl: false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      }
+    };
+    this.init_();
+  };
+
+  _proto.onChanges = function onChanges() {
+    this.swiperInitOrUpdate_();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    this.removeListeners_();
+    this.swiperDestroy_();
+  };
+
+  _proto.onBeforePrint = function onBeforePrint() {
+    this.swiperDestroy_();
+  };
+
+  _proto.slideToIndex = function slideToIndex(index) {
+    // console.log('SwiperDirective.slideToIndex', index);
+    if (this.swiper) {
+      this.swiper.slideTo(index);
+    }
+  };
+
+  _proto.init_ = function init_() {
+    var _this = this;
+
+    this.events$ = new rxjs.Subject();
+
+    if (this.enabled) {
+      var _getContext = rxcomp.getContext(this),
+          node = _getContext.node;
+
+      gsap.set(node, {
+        opacity: 0
+      });
+      this.index = 0;
+      var on = this.options.on || {};
+
+      on.slideChange = function () {
+        var swiper = _this.swiper;
+
+        if (swiper) {
+          _this.index = swiper.activeIndex;
+
+          _this.events$.next(_this.index);
+
+          _this.pushChanges();
+        }
+      };
+
+      this.options.on = on;
+      this.addListeners_();
+    }
+  };
+
+  _proto.addListeners_ = function addListeners_() {
+    this.onBeforePrint = this.onBeforePrint.bind(this);
+    window.addEventListener('beforeprint', this.onBeforePrint);
+    /*
+    scope.$on('onResize', ($scope) => {
+    	this.onResize(scope, element, attributes);
+    });
+    */
+  };
+
+  _proto.removeListeners_ = function removeListeners_() {
+    window.removeEventListener('beforeprint', this.onBeforePrint);
+  };
+
+  _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
+    if (this.enabled) {
+      var _getContext2 = rxcomp.getContext(this),
+          node = _getContext2.node;
+
+      if (this.swiper) {
+        this.swiper.update();
+      } else {
+        var swiper;
+        var on = this.options.on || (this.options.on = {});
+        var callback = on.init;
+
+        if (!on.init || !on.init.swiperDirectiveInit) {
+          on.init = function () {
+            var _this2 = this;
+
+            gsap.to(node, {
+              duration: 0.4,
+              opacity: 1,
+              ease: Power2.easeOut
+            });
+            setTimeout(function () {
+              if (typeof callback === 'function') {
+                callback.apply(_this2, [swiper, element, scope]);
+              }
+            }, 1);
+          };
+
+          on.init.swiperDirectiveInit = true;
+        }
+
+        gsap.set(node, {
+          opacity: 1
+        });
+        swiper = new Swiper(node, this.options);
+        console.log(swiper);
+        this.swiper = swiper;
+        this.swiper._opening = true;
+        node.classList.add('swiper-init');
+      }
+    }
+  };
+
+  _proto.swiperDestroy_ = function swiperDestroy_() {
+    if (this.swiper) {
+      this.swiper.destroy();
+    }
+  };
+
+  _createClass(SwiperDirective, [{
+    key: "enabled",
+    get: function get() {
+      return !window.matchMedia('print').matches;
+    }
+  }]);
+
+  return SwiperDirective;
+}(rxcomp.Component);
+SwiperDirective.meta = {
+  selector: '[swiper]',
+  inputs: ['consumer']
 };var TitleDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(TitleDirective, _Directive);
 
@@ -1988,6 +2147,41 @@ NewsletterPropositionComponent.meta = {
 }(rxcomp.Component);
 ProjectsComponent.meta = {
   selector: '[projects]'
+};var SwiperGalleryDirective = /*#__PURE__*/function (_SwiperDirective) {
+  _inheritsLoose(SwiperGalleryDirective, _SwiperDirective);
+
+  function SwiperGalleryDirective() {
+    return _SwiperDirective.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperGalleryDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 1,
+      spaceBetween: 40,
+      speed: 600,
+      centeredSlides: true,
+      loop: true,
+      loopAdditionalSlides: 3,
+      keyboardControl: true,
+      mousewheelControl: false,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    };
+    this.init_(); // console.log('SwiperGalleryDirective.onInit');
+  };
+
+  return SwiperGalleryDirective;
+}(SwiperDirective);
+SwiperGalleryDirective.meta = {
+  selector: '[swiper-gallery]'
 };var AppModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(AppModule, _Module);
 
@@ -2017,7 +2211,7 @@ AppModule.meta = {
   LocomotiveScrollDirective, // ModalComponent,
   // ModalOutletComponent,
   NewsComponent, NewsletterPropositionComponent, ProjectsComponent, SlugPipe, // SvgIconStructure,
-  TitleDirective // UploadItemComponent,
+  SwiperDirective, SwiperGalleryDirective, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure
   ],

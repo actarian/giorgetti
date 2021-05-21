@@ -59,9 +59,11 @@ export class SwiperDirective extends Component {
 			const on = this.options.on || {};
 			on.slideChange = () => {
 				const swiper = this.swiper;
-				this.index = swiper.activeIndex;
-				this.events$.next(this.index);
-				this.pushChanges();
+				if (swiper) {
+					this.index = swiper.activeIndex;
+					this.events$.next(this.index);
+					this.pushChanges();
+				}
 			}
 			this.options.on = on;
 			this.addListeners_();
@@ -108,6 +110,7 @@ export class SwiperDirective extends Component {
 				}
 				gsap.set(node, { opacity: 1 });
 				swiper = new Swiper(node, this.options);
+				console.log(swiper);
 				this.swiper = swiper;
 				this.swiper._opening = true;
 				node.classList.add('swiper-init');
