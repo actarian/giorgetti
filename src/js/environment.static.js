@@ -3,7 +3,7 @@ export const environmentStatic = {
 	flags: {
 		production: false,
 	},
-	api: '/api',
+	api: '/giorgetti/api',
 	workers: {
 		image: './js/workers/image.service.worker.js',
 		prefetch: './js/workers/prefetch.service.worker.js',
