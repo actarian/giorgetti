@@ -1,0 +1,20 @@
+@import 'fonts';
+@import 'mixins';
+
+@import '_components/reset';
+@import '_components/base';
+@import '_components/locomotive';
+@import '_components/grid';
+@import '_components/navs';
+@import '_components/typography';
+@import '_components/dropdowns';
+@import '_components/buttons';
+@import '_components/stagger-childs';
+@import '_components/animation-enter';
+
+@import '_forms/forms';
+
+@import '_pages/header';
+@import '_pages/footer';
+@import '_pages/breadcrumb';
+@import '_pages/index';

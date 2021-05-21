@@ -1,0 +1,32 @@
+{
+  "category": {
+    "label": "Tipologia",
+    "mode": "select",
+    "options": [
+      {
+        "value": 410,
+        "label": "Corporate"
+      },
+      {
+        "value": 222,
+        "label": "Hospitality"
+      },
+      {
+        "value": 408,
+        "label": "Marine"
+      },
+      {
+        "value": 223,
+        "label": "Residential"
+      },
+      {
+        "value": 409,
+        "label": "Retail Boutiques"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}
