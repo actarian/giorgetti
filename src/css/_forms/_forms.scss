@@ -7,13 +7,13 @@ $pristine: $foreground;
 $dirty: $foreground;
 $touched: $foreground;
 $valid: $foreground;
-$invalid: $foreground-primary;
+$invalid: rgba(#35302C, 0.5);
 
 $pristine-negative: $foreground-negative;
 $dirty-negative: $foreground-negative;
 $touched-negative: $foreground-negative;
 $valid-negative: $foreground-negative;
-$invalid-negative: $foreground-primary;
+$invalid-negative: rgba(white, 0.5);
 
 ::-webkit-file-upload-button {
 	cursor: pointer;

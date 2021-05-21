@@ -10,93 +10,22 @@ window.environment = {
 
 </script>
 
-<main class="main" projects>
+<main class="main">
 
 	<div class="section section--breadcrumb">
 		<div class="container">
 			<ul class="nav--breadcrumb">
-				<li class="nav__item"><a href="#">Home</a></li>
-				<li class="nav__item"><span>Progetti</span></li>
+				<li class="nav__item"><span>Home</span></li>
 			</ul>
 		</div>
 	</div>
 
-	<div class="section section--projects">
+	<div class="section section--hero">
 		<div class="container">
-			<div class="title">Progetti</div>
-			<div class="card--hero">
-				<a href="#" class="card__picture">
-					<img src="/giorgetti/img/projects/hero.jpg" />
-					<div class="over">
-						<div class="over__title">Mews II</div>
-						<div class="over__country">Gibilterra</div>
-					</div>
-				</a>
-				<div class="card__content" data-scroll data-scroll-speed="1.5">
-					<div class="card__title">Mews II</div>
-					<div class="card__country">Gibilterra</div>
-					<div class="card__cta">
-						<a href="#" class="btn--more"><span>Guarda il progetto</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
-					</div>
-				</div>
-			</div>
+			<a href="/giorgetti/projects.html" class="title">Progetti</a>
+			<a href="/giorgetti/news.html" class="title">News</a>
 		</div>
 	</div>
-
-	<!-- filters -->
-	<div class="section--filters">
-		<div class="container">
-			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
-				<div class="group--filters">
-					<div class="filters__title">Cerca progetti relativi a</div>
-					<div class="filters__type">
-						<div control-custom-select [control]="controls.category" label="Tipologia"></div>
-					</div>
-					<div class="filters__search">
-						<div control-search [control]="controls.search" label="Cerca"></div>
-					</div>
-					<div class="filters__cta">
-						<button type="submit" class="btn--submit">Cerca</button>
-					</div>
-					<!--
-					<ul class="nav--submenu" *if="items.length">
-						<li *for="let item of filter.options">
-							<div class="title" [class]="{ active: filter.has(item), disabled: item.disabled }" (click)="filter.toggle(item)">
-								<span class="name" [innerHTML]="item.label"></span>
-								<span class="count" [innerHTML]="item.count || ''"></span>
-							</div>
-						</li>
-					</ul>
-					-->
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<section class="section--projects">
-		<div class="container">
-			<!-- spinner -->
-			<div class="spinner" *if="items.length == 0"></div>
-			<!-- results -->
-			<div class="listing--projects">
-				<div class="listing__item" *for="let item of filteredItems">
-					<a [href]="item.url" class="card--project">
-						<span class="card__picture">
-							<img loading="lazy" [src]="item.image" />
-							<span class="over">
-								<span class="over__title" [innerHTML]="item.title"></span>
-								<span class="over__country" [innerHTML]="item.country" *if="item.country"></span>
-							</span>
-						</span>
-						<span class="card__content">
-							<span class="card__title" [innerHTML]="item.title"></span>
-							<span class="card__country" [innerHTML]="item.country" *if="item.country"></span>
-						</span>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
 
 </main>
 <!-- @@close-->

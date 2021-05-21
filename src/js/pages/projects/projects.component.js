@@ -101,18 +101,6 @@ export class ProjectsComponent extends Component {
 		this.pushChanges();
 	}
 
-	toggleFilter(filter) {
-		Object.keys(this.filters).forEach(key => {
-			const f = this.filters[key];
-			if (f === filter) {
-				f.active = !f.active;
-			} else {
-				f.active = false;
-			}
-		});
-		this.pushChanges();
-	}
-
 	onSearch(model) {
 		// console.log('ProjectsComponent.onSearch', this.form.value);
 		this.setFilterByKeyAndValue('category', this.form.value.category);

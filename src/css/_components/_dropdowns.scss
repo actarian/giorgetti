@@ -23,31 +23,17 @@
 
 	&>.category {
 		position: relative;
-
 		margin-top: 10px;
-		margin-bottom: 0;
+		margin-bottom: 10px;
 		padding: 0 15px;
-
-		font-family: $font-secondary;
-		font-size: 11px;
-
-		font-weight: $font-semibold;
-		line-height: 1;
-		color: $foreground-tertiary;
+		font-size: 14px;
+		color: $foreground-secondary;
 		z-index: 2;
 	}
 
 	&--with-icons {
 		&>.category {
 			padding: 0 40px 0 60px;
-		}
-	}
-
-	@include media-down(md) {
-		&>.category {
-			margin-top: 10px;
-			margin-bottom: 0;
-			padding: 0 15px;
 		}
 	}
 
@@ -66,22 +52,21 @@
 		position: relative;
 		display: block;
 		flex: 1 1 auto;
+		margin-bottom: 15px;
 
 		&>a,
 		&>span {
 			@extend %nav-item;
-			font-family: $font-secondary;
-			line-height: 1;
-			font-size: 15px;
-			white-space: nowrap;
 			width: 100%;
+			padding: 0 15px;
+			font-family: $font-secondary;
+			font-size: 16px;
+			line-height: 1;
+			text-transform: uppercase;
+			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			// display: block;
-
 			opacity: 0;
-			// max-width: 0;
-			// overflow: hidden;
 			animation-name: nav-dropdown;
 			animation-duration: 350ms;
 			animation-fill-mode: forwards;
@@ -147,7 +132,6 @@
 
 			&>a,
 			&>span {
-				padding: 8px 15px;
 
 				.icon:first-child {
 					margin-left: -10px;
@@ -158,30 +142,11 @@
 			}
 		}
 
-		/*
-		&>li {
-
-			&>a,
-			&>span {
-				padding: 15px;
-
-				.icon:first-child {
-					margin-left: -30px;
-					margin-right: 10px;
-					width: 40px;
-					height: 40px;
-				}
-			}
-		}
-		*/
-
 		&.multiple {
 			&>li {
 
 				&>a,
 				&>span {
-					font-size: 19px;
-					padding: 8px 15px;
 
 					&:before {
 						margin: 0 8px 0 -20px;
@@ -197,7 +162,6 @@
 
 			&>a,
 			&>span {
-				padding: 8px 15px;
 
 				.icon:first-child {
 					margin-left: -10px;
@@ -213,8 +177,6 @@
 
 				&>a,
 				&>span {
-					font-size: 19px;
-					padding: 8px 15px;
 
 					&:before {
 						margin: 0 8px 0 0;

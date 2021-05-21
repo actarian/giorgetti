@@ -1,0 +1,28 @@
+{
+  "country": {
+    "label": "Tipologia",
+    "mode": "select",
+    "options": [
+      {
+        "value": 0,
+        "label": "Italia"
+      },
+      {
+        "value": 72,
+        "label": "Germania"
+      },
+      {
+        "value": 95,
+        "label": "Regno Unito"
+      },
+      {
+        "value": 204,
+        "label": "Stati Uniti d'America"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}

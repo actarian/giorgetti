@@ -1030,35 +1030,6 @@ TitleDirective.meta = {
 }(rxcomp.Component);
 HeaderComponent.meta = {
   selector: '[header]'
-};var NewsletterPropositionComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(NewsletterPropositionComponent, _Component);
-
-  function NewsletterPropositionComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = NewsletterPropositionComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    var form = this.form = new rxcompForm.FormGroup({
-      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      _this.pushChanges();
-    });
-  };
-
-  _proto.onNewsletter = function onNewsletter(event) {
-    console.log('NewsletterPropositionComponent.onNewsletter', this.form.value);
-  };
-
-  return NewsletterPropositionComponent;
-}(rxcomp.Component);
-NewsletterPropositionComponent.meta = {
-  selector: '[newsletter-proposition]'
 };var FilterMode = {
   SELECT: 'select',
   AND: 'and',
@@ -1698,7 +1669,181 @@ _defineProperty(LanguageService, "selectedLanguage", LanguageService.defaultLang
   return ApiService;
 }(HttpService);
 
-_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var ProjectsService = /*#__PURE__*/function () {
+_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var NewsService = /*#__PURE__*/function () {
+  function NewsService() {}
+
+  NewsService.all$ = function all$() {
+    return ApiService.get$('/news/all.json'); // .pipe(map(response => response.data));
+  };
+
+  NewsService.filters$ = function filters$() {
+    return ApiService.get$('/news/filters.json'); // .pipe(map(response => response.data));
+  };
+
+  return NewsService;
+}();var NewsComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(NewsComponent, _Component);
+
+  function NewsComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = NewsComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.items = [];
+    this.filteredItems = [];
+    this.filters = {};
+    this.filter = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('NewsComponent.changes$', form.value);
+      _this.setFilterByKeyAndValue('country', form.value.country);
+
+      _this.setFilterByKeyAndValue('search', form.value.search);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+
+      var options = _this.filters.country.options.slice().map(function (x) {
+        return {
+          id: x.value,
+          name: x.label
+        };
+      });
+
+      options.unshift({
+        id: null,
+        name: 'select'
+      }); // , // LabelPipe.transform('select')
+
+      controls.country.options = options;
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([NewsService.all$(), NewsService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'country':
+                return item.country.id === value;
+
+              case 'search':
+                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    this.filter = this.filters.country;
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('NewsComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+
+    this.pushChanges();
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('NewsComponent.onSearch', this.form.value);
+    this.setFilterByKeyAndValue('country', this.form.value.country);
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return NewsComponent;
+}(rxcomp.Component);
+NewsComponent.meta = {
+  selector: '[news]'
+};var NewsletterPropositionComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(NewsletterPropositionComponent, _Component);
+
+  function NewsletterPropositionComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = NewsletterPropositionComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    var form = this.form = new rxcompForm.FormGroup({
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+    });
+  };
+
+  _proto.onNewsletter = function onNewsletter(event) {
+    console.log('NewsletterPropositionComponent.onNewsletter', this.form.value);
+  };
+
+  return NewsletterPropositionComponent;
+}(rxcomp.Component);
+NewsletterPropositionComponent.meta = {
+  selector: '[newsletter-proposition]'
+};var ProjectsService = /*#__PURE__*/function () {
   function ProjectsService() {}
 
   ProjectsService.all$ = function all$() {
@@ -1826,21 +1971,6 @@ _defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);v
     this.pushChanges();
   };
 
-  _proto.toggleFilter = function toggleFilter(filter) {
-    var _this3 = this;
-
-    Object.keys(this.filters).forEach(function (key) {
-      var f = _this3.filters[key];
-
-      if (f === filter) {
-        f.active = !f.active;
-      } else {
-        f.active = false;
-      }
-    });
-    this.pushChanges();
-  };
-
   _proto.onSearch = function onSearch(model) {
     // console.log('ProjectsComponent.onSearch', this.form.value);
     this.setFilterByKeyAndValue('category', this.form.value.category);
@@ -1886,7 +2016,7 @@ AppModule.meta = {
   // LazyDirective,
   LocomotiveScrollDirective, // ModalComponent,
   // ModalOutletComponent,
-  NewsletterPropositionComponent, ProjectsComponent, SlugPipe, // SvgIconStructure,
+  NewsComponent, NewsletterPropositionComponent, ProjectsComponent, SlugPipe, // SvgIconStructure,
   TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure

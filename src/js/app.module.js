@@ -14,6 +14,7 @@ import { LocomotiveScrollDirective } from './core/locomotive-scroll/locomotive-s
 import { SlugPipe } from './core/slug/slug.pipe';
 import { TitleDirective } from './core/title/title.directive';
 import { HeaderComponent } from './pages/header/header.component';
+import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 
@@ -53,6 +54,7 @@ AppModule.meta = {
 		LocomotiveScrollDirective,
 		// ModalComponent,
 		// ModalOutletComponent,
+		NewsComponent,
 		NewsletterPropositionComponent,
 		ProjectsComponent,
 		SlugPipe,

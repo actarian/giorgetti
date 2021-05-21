@@ -157,7 +157,7 @@
 		white-space: nowrap;
 	}
 
-	@include media-down(sm) {
+	@include media-down(md) {
 		margin-bottom: 40px;
 	}
 }
