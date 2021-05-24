@@ -186,3 +186,25 @@
 		}
 	}
 }
+
+@mixin expand-right($max-widths: $container-max-widths, $gutter-widths: $grid-gutter-widths, $breakpoints: $grid-breakpoints) {
+
+	@each $breakpoint,
+	$container-max-width in $max-widths {
+		@include media-up($breakpoint, $breakpoints) {
+			$gutter: map-get($grid-gutter-widths, $breakpoint);
+			margin-right: calc(-50vw + (#{$container-max-width} - #{$gutter}) / 2);
+		}
+	}
+}
+
+@mixin expand-left($max-widths: $container-max-widths, $gutter-widths: $grid-gutter-widths, $breakpoints: $grid-breakpoints) {
+
+	@each $breakpoint,
+	$container-max-width in $max-widths {
+		@include media-up($breakpoint, $breakpoints) {
+			$gutter: map-get($grid-gutter-widths, $breakpoint);
+			margin-left: calc(-50vw + (#{$container-max-width} - #{$gutter}) / 2);
+		}
+	}
+}
