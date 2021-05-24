@@ -30,20 +30,12 @@
 			transition: opacity ease-in-out $fast;
 
 			&__title {
-				margin-bottom: 20px;
 				font-family: $font-secondary;
 				font-size: 48px;
 				line-height: 1.2;
 				text-align: center;
 				letter-spacing: -0.041em;
 				text-transform: uppercase;
-				color: $foreground-negative;
-			}
-
-			&__country {
-				font-size: 18px;
-				line-height: 1.2;
-				text-align: center;
 				color: $foreground-negative;
 			}
 		}
@@ -135,20 +127,12 @@
 			transition: opacity ease-in-out $fast;
 
 			&__title {
-				margin-bottom: 20px;
 				font-family: $font-secondary;
-				font-size: 48px;
+				font-size: 32px;
 				line-height: 1.2;
 				text-align: center;
 				letter-spacing: -0.041em;
 				text-transform: uppercase;
-				color: $foreground-negative;
-			}
-
-			&__country {
-				font-size: 18px;
-				line-height: 1.2;
-				text-align: center;
 				color: $foreground-negative;
 			}
 		}

@@ -5014,18 +5014,12 @@ body {
       background: rgba(0, 0, 0, 0.4);
       transition: opacity ease-in-out 250ms; }
       .card--atelier > .card__picture .over__title {
-        margin-bottom: 20px;
         font-family: var(--font-secondary);
         font-size: 48px;
         line-height: 1.2;
         text-align: center;
         letter-spacing: -0.041em;
         text-transform: uppercase;
-        color: var(--foreground-negative); }
-      .card--atelier > .card__picture .over__country {
-        font-size: 18px;
-        line-height: 1.2;
-        text-align: center;
         color: var(--foreground-negative); }
   .card--atelier .card__title {
     display: block;
@@ -5099,18 +5093,12 @@ body {
       background: rgba(0, 0, 0, 0.4);
       transition: opacity ease-in-out 250ms; }
       .card--store > .card__picture .over__title {
-        margin-bottom: 20px;
         font-family: var(--font-secondary);
-        font-size: 48px;
+        font-size: 32px;
         line-height: 1.2;
         text-align: center;
         letter-spacing: -0.041em;
         text-transform: uppercase;
-        color: var(--foreground-negative); }
-      .card--store > .card__picture .over__country {
-        font-size: 18px;
-        line-height: 1.2;
-        text-align: center;
         color: var(--foreground-negative); }
   .card--store .card__title {
     display: block;
