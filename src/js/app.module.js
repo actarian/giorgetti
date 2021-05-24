@@ -11,6 +11,7 @@ import { ControlSearchComponent } from './core/forms/control-search.component';
 import { HtmlPipe } from './core/html/html.pipe';
 import { LabelPipe } from './core/label/label.pipe';
 import { LocomotiveScrollDirective } from './core/locomotive-scroll/locomotive-scroll.directive';
+import { ScrollDirective } from './core/locomotive-scroll/scroll.directive';
 import { SlugPipe } from './core/slug/slug.pipe';
 import { SwiperDirective } from './core/swiper/swiper.directive';
 import { TitleDirective } from './core/title/title.directive';
@@ -59,6 +60,7 @@ AppModule.meta = {
 		NewsComponent,
 		NewsletterPropositionComponent,
 		ProjectsComponent,
+		ScrollDirective,
 		SlugPipe,
 		// SvgIconStructure,
 		SwiperDirective,

@@ -843,13 +843,37 @@ LabelPipe.meta = {
       el: node
     });
 
-    if (node.offsetWidth >= 768) {
+    if (this.useLocomotiveScroll()) {
       var instance = new LocomotiveScroll(options);
       LocomotiveScrollService.instance = instance;
       return instance;
     } else {
       document.querySelector('html').classList.add('has-scroll-init');
     }
+  };
+
+  LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
+    return window.innerWidth >= 768 && !this.isMacLike();
+  };
+
+  LocomotiveScrollService.isMacLike = function isMacLike() {
+    var isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isMacLike;
+  };
+
+  LocomotiveScrollService.isIOS = function isIOS() {
+    var isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isIOS;
+  };
+
+  LocomotiveScrollService.isMacOs = function isMacOs() {
+    var isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
+    return isMacOs;
+  };
+
+  LocomotiveScrollService.isSafari = function isSafari() {
+    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
+    return isSafari;
   };
 
   LocomotiveScrollService.init$ = function init$(node) {
@@ -869,14 +893,15 @@ LabelPipe.meta = {
             y: 0
           },
           speed: 0
-        };
-        var body = document.querySelector('body');
-        var previousY = body.scrollTop; // window.pageYOffset
+        }; // const body = document.querySelector('body');
+
+        var previousY = window.pageYOffset; // body.scrollTop;
 
         window.addEventListener('scroll', function () {
-          var y = body.scrollTop; // window.pageYOffset
+          var y = window.pageYOffset; // body.scrollTop;
 
-          var direction = y > previousY ? 'down' : 'up';
+          var direction = y > previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+
           previousY = y;
           event.direction = direction;
           event.scroll.y = y;
@@ -936,6 +961,49 @@ _defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));v
 }(rxcomp.Directive);
 LocomotiveScrollDirective.meta = {
   selector: '[locomotive-scroll],[[locomotive-scroll]]'
+};var ScrollDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(ScrollDirective, _Directive);
+
+  function ScrollDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = ScrollDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    if (!LocomotiveScrollService.useLocomotiveScroll()) {
+      this.scroll$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('ScrollDirective', event);
+      });
+    }
+  };
+
+  _proto.scroll$ = function scroll$() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var speed = node.hasAttribute('data-scroll-speed') ? parseFloat(node.getAttribute('data-scroll-speed')) : 1.5;
+    return LocomotiveScrollService.scroll$.pipe(operators.tap(function (scroll) {
+      var wh = window.innerHeight;
+      var wh2 = wh / 2;
+      var rect = node.getBoundingClientRect();
+      var currentY = gsap.getProperty(node, 'y');
+      var top = rect.top - currentY;
+      var bottom = rect.bottom - currentY;
+
+      if (top < wh && bottom > 0) {
+        var pow = (top - wh2) / wh2;
+        var y = pow * speed * 40;
+        gsap.set(node, {
+          y: y
+        });
+      }
+    }));
+  };
+
+  return ScrollDirective;
+}(rxcomp.Directive);
+ScrollDirective.meta = {
+  selector: '[data-scroll]'
 };var SlugPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(SlugPipe, _Pipe);
 
@@ -2218,7 +2286,7 @@ AppModule.meta = {
   // LazyDirective,
   LocomotiveScrollDirective, // ModalComponent,
   // ModalOutletComponent,
-  NewsComponent, NewsletterPropositionComponent, ProjectsComponent, SlugPipe, // SvgIconStructure,
+  NewsComponent, NewsletterPropositionComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
   SwiperDirective, SwiperGalleryDirective, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure

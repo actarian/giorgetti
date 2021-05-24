@@ -40,13 +40,39 @@ export class LocomotiveScrollService {
 		}, options, {
 			el: node,
 		});
-		if (node.offsetWidth >= 768) {
+		if (this.useLocomotiveScroll()) {
 			const instance = new LocomotiveScroll(options);
 			LocomotiveScrollService.instance = instance;
 			return instance;
 		} else {
 			document.querySelector('html').classList.add('has-scroll-init');
 		}
+	}
+
+	static useLocomotiveScroll() {
+		return window.innerWidth >= 768 && !this.isMacLike();
+	}
+
+	static isMacLike() {
+		const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+		return isMacLike;
+	}
+
+	static isIOS() {
+		const isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
+		return isIOS;
+	}
+
+	static isMacOs() {
+		const isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
+		return isMacOs;
+	}
+
+	static isSafari() {
+		const isSafari = navigator.vendor.match(/apple/i) &&
+			!navigator.userAgent.match(/crios/i) &&
+			!navigator.userAgent.match(/fxios/i);
+		return isSafari;
 	}
 
 	static init$(node) {
@@ -61,11 +87,12 @@ export class LocomotiveScrollService {
 					});
 				} else {
 					const event = { direction: null, scroll: { x: 0, y: 0 }, speed: 0 };
-					const body = document.querySelector('body');
-					let previousY = body.scrollTop; // window.pageYOffset
+					// const body = document.querySelector('body');
+					let previousY = window.pageYOffset; // body.scrollTop;
 					window.addEventListener('scroll', () => {
-						const y = body.scrollTop; // window.pageYOffset
+						const y = window.pageYOffset; // body.scrollTop;
 						const direction = y > previousY ? 'down' : 'up';
+						// console.log('scroll', y, direction);
 						previousY = y;
 						event.direction = direction;
 						event.scroll.y = y;
