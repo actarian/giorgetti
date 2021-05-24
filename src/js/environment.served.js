@@ -13,4 +13,7 @@ export const environmentServed = {
 			myModal: '/template/modules/giorgetti/my-modal.cshtml',
 		}
 	},
+	googleMaps: {
+		apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60',
+	}
 };

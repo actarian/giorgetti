@@ -1,0 +1,76 @@
+{
+  "country": {
+    "label": "Paese",
+    "mode": "select",
+    "options": [
+      {
+        "value": 19,
+        "label": "Belgio"
+      },
+      {
+        "value": 41,
+        "label": "Cina"
+      },
+      {
+        "value": 67,
+        "label": "Francia"
+      },
+      {
+        "value": 72,
+        "label": "Germania"
+      },
+      {
+        "value": 91,
+        "label": "Hong Kong SAR"
+      },
+      {
+        "value": 93,
+        "label": "India"
+      },
+      {
+        "value": 94,
+        "label": "Indonesia"
+      },
+      {
+        "value": 114,
+        "label": "Italia"
+      },
+      {
+        "value": 145,
+        "label": "Messico"
+      },
+      {
+        "value": 95,
+        "label": "Regno Unito"
+      },
+      {
+        "value": 182,
+        "label": "Russia"
+      },
+      {
+        "value": 197,
+        "label": "Singapore"
+      },
+      {
+        "value": 204,
+        "label": "Stati Uniti d'America"
+      },
+      {
+        "value": 205,
+        "label": "Sudafrica"
+      },
+      {
+        "value": 226,
+        "label": "Ucraina"
+      },
+      {
+        "value": 232,
+        "label": "Vietnam"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}

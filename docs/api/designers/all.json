@@ -1,0 +1,237 @@
+[
+  {
+    "id": 1,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-01.jpg",
+    "name": "Pamela Amine"
+  }, {
+    "id": 2,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-02.jpg",
+    "name": "Umberto Asnago"
+  }, {
+    "id": 3,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-03.jpg",
+    "name": "Giancarlo Bosio"
+  }, {
+    "id": 4,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-04.jpg",
+    "name": "Roberto Cambi"
+  }, {
+    "id": 5,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-05.jpg",
+    "name": "Massimo Castagna"
+  }, {
+    "id": 6,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-06.jpg",
+    "name": "Centro Ricerce Giorgetti"
+  }, {
+    "id": 7,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-07.jpg",
+    "name": "Carlo Colombo"
+  }, {
+    "id": 8,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-08.jpg",
+    "name": "Leonadro Danieli"
+  }, {
+    "id": 9,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-09.jpg",
+    "name": "Alessio De Francesco"
+  }, {
+    "id": 10,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-10.jpg",
+    "name": "Design MVW"
+  }, {
+    "id": 11,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-11.jpg",
+    "name": "Virginia Harper"
+  }, {
+    "id": 12,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-12.jpg",
+    "name": "Setsu Shinobu Ito"
+  }, {
+    "id": 13,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-13.jpg",
+    "name": "Toshiyuki Kita"
+  }, {
+    "id": 14,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-14.jpg",
+    "name": "Leon Krier"
+  }, {
+    "id": 15,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-15.jpg",
+    "name": "Roberto Lazzeroni"
+  }, {
+    "id": 16,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-16.jpg",
+    "name": "M2Atelier"
+  }, {
+    "id": 17,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-17.jpg",
+    "name": "Antonello Mosca"
+  }, {
+    "id": 18,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-18.jpg",
+    "name": "Andrei Munteanu"
+  }, {
+    "id": 19,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-19.jpg",
+    "name": "LudovicaRoberto Palomba"
+  }, {
+    "id": 20,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-20.jpg",
+    "name": "Rossella Pugliatti"
+  }, {
+    "id": 21,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-21.jpg",
+    "name": "Massimo Scolari"
+  }, {
+    "id": 22,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-22.jpg",
+    "name": "Dominic Siguang Ma"
+  }, {
+    "id": 23,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-23.jpg",
+    "name": "Laura Silvestrini"
+  }, {
+    "id": 24,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-24.jpg",
+    "name": "Paolo Suman"
+  }, {
+    "id": 25,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-25.jpg",
+    "name": "Adam D. Tihany"
+  }, {
+    "id": 26,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/designer-detail.html",
+    "image": "/giorgetti/img/designers/designer-26.jpg",
+    "name": "Chi Wing Lo"
+  }
+]

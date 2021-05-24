@@ -1,0 +1,278 @@
+[
+  {
+    "id": 1,
+    "country": {
+      "id": 19,
+      "name": "Belgio"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3459_t_Listing_Atelier_antwerpen.jpg",
+    "title": "Antwerp",
+    "abstract": "GIORGETTI ATELIER",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 94,
+      "name": "Indonesia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3479_t_Listing_Atelier_jacarta.jpg",
+    "title": "Jakarta",
+    "abstract": "GIORGETTI ATELIER PT. PRODOTTI INDONESIA",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3483_t_Listing_Atelier_milano.jpg",
+    "title": "Milan",
+    "abstract": "GIORGETTI ATELIER",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 93,
+      "name": "India"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3484_t_Listing_Atelier_mumbai.jpg",
+    "title": "Mumbai",
+    "abstract": "GIORGETTI ATELIER",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 197,
+      "name": "Singapore"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3486_t_Listing_Atelier_singapore.jpg",
+    "title": "Singapore",
+    "abstract": "Space Furniture",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 41,
+      "name": "Cina"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6010_t_DEFAULT-STORE-BEJING.jpg",
+    "title": "Beijing",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 204,
+      "name": "Stati Uniti d'America"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/5108_t_EDITORIALquadrata_boston-min.jpg",
+    "title": "Boston",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 72,
+      "name": "Germania"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6557_t_3550_t_DEFAULT_Colonia2019.jpg",
+    "title": "Cologne",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 41,
+      "name": "Cina"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3541_t_LISTINGquadrata_foshan.jpg",
+    "title": "Foshan",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 41,
+      "name": "Cina"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6133_t_guangzhou_store_LISTING.jpg",
+    "title": "Guangzhou",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 232,
+      "name": "Vietnam"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3551_t_EDITORIALquadrata_HoChiMinh-min.jpg",
+    "title": "Ho Chi Minh City",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 91,
+      "name": "Hong Kong SAR"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/4783_t_StoreHongKong_001-min.jpg",
+    "title": "Hong Kong",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 204,
+      "name": "Stati Uniti d'America"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/4007_t_StoreHouston_001-min.jpg",
+    "title": "Houston",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 205,
+      "name": "Sudafrica"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6209_t_Store_Johannesburg_news.jpg",
+    "title": "Johannesburg",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 226,
+      "name": "Ucraina"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/5956_t_store_kiev_LISTING.jpg",
+    "title": "Kyiv",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 95,
+      "name": "Regno Unito"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6564_t_news-.jpg",
+    "title": "London",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 204,
+      "name": "Stati Uniti d'America"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6642_t_Giorgetti_RobinaBenson_store.jpg",
+    "title": "Los Angeles",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 145,
+      "name": "Messico"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3729_t_GiorgettiStore_Mexico_00-min.jpg",
+    "title": "Mexico City",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/7164_t_Store_Milan_listing.jpg",
+    "title": "Milan",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 182,
+      "name": "Russia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/6168_t_store_MOSCOW2_LISTING-def.jpg",
+    "title": "Moscow",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 41,
+      "name": "Cina"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/4742_t_EDITORIALquadrata_Cina.jpg",
+    "title": "Nanjing",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 93,
+      "name": "India"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3547_t_Giorgetti_Store_NewDelhi_default-MEDIUM.jpg",
+    "title": "New Delhi",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 67,
+      "name": "Francia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/5813_t_G_storeParigi-anteprima.jpg",
+    "title": "Paris",
+    "abstract": "Giorgetti Store",
+    "type": 2
+  }
+]

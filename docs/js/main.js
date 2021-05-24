@@ -276,6 +276,9 @@ DropdownItemDirective.meta = {
     modal: {
       myModal: '/template/modules/giorgetti/my-modal.cshtml'
     }
+  },
+  googleMaps: {
+    apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
   }
 };var environmentStatic = {
   flags: {
@@ -291,6 +294,9 @@ DropdownItemDirective.meta = {
     modal: {
       myModal: '/my-modal.html'
     }
+  },
+  googleMaps: {
+    apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
   }
 };var NODE = typeof module !== 'undefined' && module.exports;
 var PARAMS = NODE ? {
@@ -1208,55 +1214,6 @@ SwiperDirective.meta = {
 TitleDirective.meta = {
   selector: '[[title]]',
   inputs: ['title']
-};var HeaderComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(HeaderComponent, _Component);
-
-  function HeaderComponent() {
-    var _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
-
-    _defineProperty(_assertThisInitialized(_this), "direction_", null);
-
-    return _this;
-  }
-
-  var _proto = HeaderComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this2 = this;
-
-    LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
-      _this2.direction = event.direction; // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
-      // gsap.set(node, { y });
-    });
-  };
-
-  _createClass(HeaderComponent, [{
-    key: "direction",
-    get: function get() {
-      return this.direction_;
-    },
-    set: function set(direction) {
-      if (this.direction_ !== direction) {
-        var _getContext = rxcomp.getContext(this),
-            node = _getContext.node;
-
-        node.classList.remove("scrolling-" + this.direction_);
-        node.classList.add("scrolling-" + direction);
-        this.direction_ = direction;
-      }
-    }
-  }]);
-
-  return HeaderComponent;
-}(rxcomp.Component);
-HeaderComponent.meta = {
-  selector: '[header]'
 };var FilterMode = {
   SELECT: 'select',
   AND: 'and',
@@ -1896,15 +1853,581 @@ _defineProperty(LanguageService, "selectedLanguage", LanguageService.defaultLang
   return ApiService;
 }(HttpService);
 
-_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var NewsService = /*#__PURE__*/function () {
+_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var AteliersAndStoresService = /*#__PURE__*/function () {
+  function AteliersAndStoresService() {}
+
+  AteliersAndStoresService.all$ = function all$() {
+    return ApiService.get$('/ateliers-and-stores/all.json');
+  };
+
+  AteliersAndStoresService.ateliers$ = function ateliers$() {
+    return ApiService.get$('/ateliers-and-stores/ateliers.json');
+  };
+
+  AteliersAndStoresService.stores$ = function stores$() {
+    return ApiService.get$('/ateliers-and-stores/stores.json');
+  };
+
+  AteliersAndStoresService.filters$ = function filters$() {
+    return ApiService.get$('/ateliers-and-stores/filters.json');
+  };
+
+  return AteliersAndStoresService;
+}();var AteliersAndStoresComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AteliersAndStoresComponent, _Component);
+
+  function AteliersAndStoresComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = AteliersAndStoresComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.types = {
+      Atelier: 1,
+      Store: 2
+    };
+    this.items = [];
+    this.filteredItems = [];
+    this.filteredAteliers = [];
+    this.filteredStores = [];
+    this.filters = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('AteliersAndStoresComponent.changes$', form.value);
+      _this.setFilterByKeyAndValue('country', form.value.country);
+
+      _this.setFilterByKeyAndValue('search', form.value.search);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+
+      var options = _this.filters.country.options.slice().map(function (x) {
+        return {
+          id: x.value,
+          name: x.label
+        };
+      });
+
+      options.unshift({
+        id: null,
+        name: 'select'
+      }); // , // LabelPipe.transform('select')
+
+      controls.country.options = options;
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([AteliersAndStoresService.all$(), AteliersAndStoresService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'country':
+                return item.country.id === value;
+
+              case 'search':
+                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      country: country,
+      search: search
+    });
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+      _this2.filteredAteliers = filteredItems.filter(function (x) {
+        return x.type === _this2.types.Atelier;
+      });
+      _this2.filteredStores = filteredItems.filter(function (x) {
+        return x.type === _this2.types.Store;
+      });
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('AteliersAndStoresComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+
+    this.pushChanges();
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('AteliersAndStoresComponent.onSearch', this.form.value);
+    this.setFilterByKeyAndValue('country', this.form.value.country);
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return AteliersAndStoresComponent;
+}(rxcomp.Component);
+AteliersAndStoresComponent.meta = {
+  selector: '[ateliers-and-stores]'
+};var DesignersService = /*#__PURE__*/function () {
+  function DesignersService() {}
+
+  DesignersService.all$ = function all$() {
+    return ApiService.get$('/designers/all.json');
+  };
+
+  DesignersService.filters$ = function filters$() {
+    return ApiService.get$('/designers/filters.json');
+  };
+
+  return DesignersService;
+}();var DesignersComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(DesignersComponent, _Component);
+
+  function DesignersComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = DesignersComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.items = [];
+    this.filteredItems = [];
+    this.filters = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      category: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('DesignersComponent.changes$', form.value);
+      _this.setFilterByKeyAndValue('category', form.value.category);
+
+      _this.setFilterByKeyAndValue('search', form.value.search);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+
+      var options = _this.filters.category.options.slice().map(function (x) {
+        return {
+          id: x.value,
+          name: x.label
+        };
+      });
+
+      options.unshift({
+        id: null,
+        name: 'select'
+      }); // , // LabelPipe.transform('select')
+
+      controls.category.options = options;
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([DesignersService.all$(), DesignersService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'category':
+                return item.category.id === value;
+
+              case 'search':
+                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      category: category,
+      search: search
+    });
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('DesignersComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+
+    this.pushChanges();
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('DesignersComponent.onSearch', this.form.value);
+    this.setFilterByKeyAndValue('category', this.form.value.category);
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return DesignersComponent;
+}(rxcomp.Component);
+DesignersComponent.meta = {
+  selector: '[designers]'
+};var HeaderComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(HeaderComponent, _Component);
+
+  function HeaderComponent() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "direction_", null);
+
+    return _this;
+  }
+
+  var _proto = HeaderComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this2 = this;
+
+    LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      _this2.direction = event.direction; // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
+      // gsap.set(node, { y });
+    });
+  };
+
+  _createClass(HeaderComponent, [{
+    key: "direction",
+    get: function get() {
+      return this.direction_;
+    },
+    set: function set(direction) {
+      if (this.direction_ !== direction) {
+        var _getContext = rxcomp.getContext(this),
+            node = _getContext.node;
+
+        node.classList.remove("scrolling-" + this.direction_);
+        node.classList.add("scrolling-" + direction);
+        this.direction_ = direction;
+      }
+    }
+  }]);
+
+  return HeaderComponent;
+}(rxcomp.Component);
+HeaderComponent.meta = {
+  selector: '[header]'
+};var GOOGLE_MAPS;
+var MapComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MapComponent, _Component);
+
+  function MapComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MapComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    var apiKey = environment.googleMaps.apiKey;
+
+    if (GOOGLE_MAPS != null) {
+      this.initMap();
+    } else {
+      window.onGoogleMapsLoaded = function () {
+        GOOGLE_MAPS = window.google.maps;
+
+        _this.initMap();
+      };
+
+      var script = document.createElement('script');
+      script.setAttribute('type', 'text/javascript');
+      script.setAttribute('src', "https://maps.googleapis.com/maps/api/js?callback=onGoogleMapsLoaded" + (apiKey ? "&key=" + apiKey : '') + "&libraries=places");
+      (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(script);
+    }
+  };
+
+  _proto.initMap = function initMap() {
+    var google = window.google;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var latitude = node.getAttribute('data-latitude');
+    var longitude = node.getAttribute('data-longitude');
+    var position = new google.maps.LatLng(latitude, longitude);
+    var mapOptions = {
+      zoom: 17,
+      center: position,
+      scrollwheel: false,
+      // mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: true,
+      scaleControl: true,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.DEFAULT
+      },
+      overviewMapControl: true,
+      styles: [{
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#e9e9e9"
+        }, {
+          "lightness": 17
+        }]
+      }, {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#f5f5f5"
+        }, {
+          "lightness": 20
+        }]
+      }, {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [{
+          "color": "#ffffff"
+        }, {
+          "lightness": 17
+        }]
+      }, {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [{
+          "color": "#ffffff"
+        }, {
+          "lightness": 29
+        }, {
+          "weight": 0.2
+        }]
+      }, {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#ffffff"
+        }, {
+          "lightness": 18
+        }]
+      }, {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#ffffff"
+        }, {
+          "lightness": 16
+        }]
+      }, {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#f5f5f5"
+        }, {
+          "lightness": 21
+        }]
+      }, {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#dedede"
+        }, {
+          "lightness": 21
+        }]
+      }, {
+        "elementType": "labels.text.stroke",
+        "stylers": [{
+          "visibility": "on"
+        }, {
+          "color": "#ffffff"
+        }, {
+          "lightness": 16
+        }]
+      }, {
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "saturation": 36
+        }, {
+          "color": "#333333"
+        }, {
+          "lightness": 40
+        }]
+      }, {
+        "elementType": "labels.icon",
+        "stylers": [{
+          "visibility": "off"
+        }]
+      }, {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#f2f2f2"
+        }, {
+          "lightness": 19
+        }]
+      }, {
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
+        "stylers": [{
+          "color": "#fefefe"
+        }, {
+          "lightness": 20
+        }]
+      }, {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [{
+          "color": "#fefefe"
+        }, {
+          "lightness": 17
+        }, {
+          "weight": 1.2
+        }]
+      }]
+    };
+    var mapElement = node.querySelector('.map');
+    var map = new google.maps.Map(mapElement, mapOptions);
+    var iconOptions = {
+      home: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      text: '<div class="map-popup"><h2>Websolute</h2><p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></div>',
+      icon_url: '/img/marker.png',
+      zoom: 15
+    };
+    var icon = {
+      url: iconOptions.icon_url,
+      origin: new google.maps.Point(0, 0)
+    };
+    var marker = new google.maps.Marker({
+      position: position,
+      map: map,
+      icon: icon,
+      draggable: false
+    });
+    var info = new google.maps.InfoWindow({
+      content: iconOptions.text
+    });
+    google.maps.event.addListener(marker, 'click', function () {
+      info.open(map, marker);
+    });
+  };
+
+  return MapComponent;
+}(rxcomp.Component);
+MapComponent.meta = {
+  selector: '[map]'
+};var NewsService = /*#__PURE__*/function () {
   function NewsService() {}
 
   NewsService.all$ = function all$() {
-    return ApiService.get$('/news/all.json'); // .pipe(map(response => response.data));
+    return ApiService.get$('/news/all.json');
   };
 
   NewsService.filters$ = function filters$() {
-    return ApiService.get$('/news/filters.json'); // .pipe(map(response => response.data));
+    return ApiService.get$('/news/filters.json');
   };
 
   return NewsService;
@@ -1983,7 +2506,6 @@ _defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);v
 
               case 'search':
                 return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-
             }
           };
 
@@ -2078,11 +2600,11 @@ NewsletterPropositionComponent.meta = {
   function ProjectsService() {}
 
   ProjectsService.all$ = function all$() {
-    return ApiService.get$('/projects/all.json'); // .pipe(map(response => response.data));
+    return ApiService.get$('/projects/all.json');
   };
 
   ProjectsService.filters$ = function filters$() {
-    return ApiService.get$('/projects/filters.json'); // .pipe(map(response => response.data));
+    return ApiService.get$('/projects/filters.json');
   };
 
   return ProjectsService;
@@ -2161,7 +2683,6 @@ NewsletterPropositionComponent.meta = {
 
               case 'search':
                 return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-
             }
           };
 
@@ -2269,7 +2790,7 @@ SwiperGalleryDirective.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule],
-  declarations: [// ControlCheckboxComponent,
+  declarations: [AteliersAndStoresComponent, // ControlCheckboxComponent,
   ControlCustomSelectComponent, ControlEmailComponent, // ControlLinkComponent,
   // ControlNumberComponent,
   // ControlPasswordComponent,
@@ -2277,14 +2798,14 @@ AppModule.meta = {
   // ControlSelectComponent,
   ControlSearchComponent, // ControlTextareaComponent,
   // ControlTextComponent,
-  // DisabledDirective,
+  DesignersComponent, // DisabledDirective,
   // DropDirective,
   DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
   EnvPipe, // ErrorsComponent,
   FlagPipe, HeaderComponent, HtmlPipe, // IdDirective,
   LabelPipe, // LanguageComponent,
   // LazyDirective,
-  LocomotiveScrollDirective, // ModalComponent,
+  LocomotiveScrollDirective, MapComponent, // ModalComponent,
   // ModalOutletComponent,
   NewsComponent, NewsletterPropositionComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
   SwiperDirective, SwiperGalleryDirective, TitleDirective // UploadItemComponent,

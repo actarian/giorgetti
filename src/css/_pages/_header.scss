@@ -24,7 +24,8 @@
 	}
 
 	.group--language,
-	.group--service {
+	.group--service,
+	.group--main {
 		transition: all ease-in-out $fast;
 	}
 
@@ -42,9 +43,21 @@
 		}
 		*/
 
+		/*
 		.group--language,
 		.group--service {
 			transform: translateY(-40px);
+			opacity: 0;
+		}
+		*/
+
+		.group--language,
+		.group--service {
+			transform: translateY(10px);
+		}
+
+		.group--main {
+			margin-top: -35px;
 			opacity: 0;
 		}
 	}

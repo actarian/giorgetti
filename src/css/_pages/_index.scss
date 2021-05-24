@@ -22,15 +22,15 @@ body {
 	}
 }
 
-.section--hero {
+.section--index {
 	padding: 0 0 80px 0;
 
 	.title {
 		@extend %btn;
 		display: block;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		font-family: $font-secondary;
-		font-size: 72px;
+		font-size: 48px;
 		line-height: 1.1;
 		text-align: center;
 		letter-spacing: -0.027em;

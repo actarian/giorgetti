@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "country": {
+      "id": 19,
+      "name": "Belgio"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3459_t_Listing_Atelier_antwerpen.jpg",
+    "title": "Antwerp",
+    "abstract": "Giorgetti Atelier",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 94,
+      "name": "Indonesia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3479_t_Listing_Atelier_jacarta.jpg",
+    "title": "Jakarta",
+    "abstract": "Giorgetti Atelier PT. prodotti Indonesia",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3483_t_Listing_Atelier_milano.jpg",
+    "title": "Milan",
+    "abstract": "Giorgetti Atelier",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 93,
+      "name": "India"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3484_t_Listing_Atelier_mumbai.jpg",
+    "title": "Mumbai",
+    "abstract": "Giorgetti Atelier",
+    "type": 1
+  },
+  {
+    "id": 1,
+    "country": {
+      "id": 197,
+      "name": "Singapore"
+    },
+    "url": "/giorgetti/ateliers-and-stores-detail.html",
+    "image": "/giorgetti/img/ateliers-and-stores/3486_t_Listing_Atelier_singapore.jpg",
+    "title": "Singapore",
+    "abstract": "Space Furniture",
+    "type": 1
+  }
+]

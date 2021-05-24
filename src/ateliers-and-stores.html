@@ -1,0 +1,101 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<script>
+window.environment = {
+	labels: {
+		select: 'Seleziona'
+	}
+}
+
+</script>
+
+<main class="main" ateliers-and-stores>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><a href="/giorgetti/giorgetti-world.html">Giorgetti World</a></li>
+				<li class="nav__item"><span>Ateliers and Stores</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--hero">
+		<div class="container">
+			<div class="title">Ateliers</div>
+		</div>
+	</div>
+
+	<!-- filters -->
+	<div class="section--filters">
+		<div class="container">
+			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
+				<div class="group--filters-ateliers-and-stores">
+					<div class="filters__title">Cerca ateliers relativi a</div>
+					<div class="filters__type">
+						<div control-custom-select [control]="controls.country" label="Paese"></div>
+					</div>
+					<div class="filters__search">
+						<div control-search [control]="controls.search" label="Cerca"></div>
+					</div>
+					<div class="filters__cta">
+						<button type="submit" class="btn--submit">Cerca</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<section class="section--ateliers">
+		<div class="container">
+			<!-- spinner -->
+			<div class="spinner" *if="items.length == 0"></div>
+			<!-- results -->
+			<div class="listing--ateliers">
+				<div class="listing__item" *for="let item of filteredAteliers">
+					<a [href]="item.url" class="card--atelier">
+						<span class="card__picture">
+							<img loading="lazy" [src]="item.image" />
+							<span class="over">
+								<span class="over__title" [innerHTML]="item.title"></span>
+							</span>
+						</span>
+						<span class="card__content">
+							<span class="card__title" [innerHTML]="item.title"></span>
+							<span class="card__abstract" [innerHTML]="item.abstract"></span>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="section--stores" *if="filteredStores.length">
+		<div class="container">
+			<div class="title">Stores</div>
+			<!-- spinner -->
+			<div class="spinner" *if="items.length == 0"></div>
+			<!-- results -->
+			<div class="listing--stores">
+				<div class="listing__item" *for="let item of filteredStores">
+					<a [href]="item.url" class="card--store">
+						<span class="card__picture">
+							<img loading="lazy" [src]="item.image" />
+							<span class="over">
+								<span class="over__title" [innerHTML]="item.title"></span>
+							</span>
+						</span>
+						<span class="card__content">
+							<span class="card__title" [innerHTML]="item.title"></span>
+							<span class="card__abstract" [innerHTML]="item.abstract"></span>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

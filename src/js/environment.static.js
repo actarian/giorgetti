@@ -14,4 +14,7 @@ export const environmentStatic = {
 			myModal: '/my-modal.html',
 		}
 	},
+	googleMaps: {
+		apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60',
+	}
 };

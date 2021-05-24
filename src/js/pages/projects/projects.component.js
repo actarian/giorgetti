@@ -64,7 +64,6 @@ export class ProjectsComponent extends Component {
 								return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
 									item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1
 							default:
-							// return item.features.indexOf(value) !== -1;
 						}
 					};
 			}

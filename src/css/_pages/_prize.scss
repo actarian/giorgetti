@@ -1,0 +1,182 @@
+.card--prize {
+	position: relative;
+	width: 100%;
+
+	&:not(:last-child) {
+		margin-bottom: 200px;
+	}
+
+	/*
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	*/
+
+	.card__picture {
+		position: relative;
+
+		img {
+			width: 100%;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #000000;
+			opacity: 0.03;
+		}
+	}
+
+	.card__content {
+		position: relative;
+		padding: 80px 110px;
+		background: #D1CDCA;
+	}
+
+	.card__title {
+		font-family: $font-secondary;
+		font-size: 140px;
+		line-height: 1.1;
+		letter-spacing: -0.05em;
+		text-transform: uppercase;
+		color: #A19C96;
+		white-space: nowrap;
+	}
+
+	.card__abstract {
+		font-family: $font-secondary;
+		font-size: 48px;
+		line-height: 1.2;
+		letter-spacing: -0.05em;
+		text-transform: uppercase;
+		color: #35302C;
+	}
+
+	.card__description {
+		font-size: 18px;
+		line-height: 1.2;
+	}
+
+	@include media-up(md) {
+
+		.card__title {
+			position: absolute;
+		}
+
+		&:nth-child(even) {
+			.card__picture {
+				order: 2;
+			}
+
+			.card__content {
+				margin-right: -7vw !important;
+			}
+
+			.card__title {
+				left: 30px;
+				top: 0;
+				transform: translateX(-1.1em) translateY(-50%);
+			}
+		}
+
+		&:nth-child(odd) {
+			.card__content {
+				margin-left: -7vw !important;
+			}
+
+			.card__title {
+				right: 30px;
+				top: 0;
+				transform: translateX(1.1em) translateY(-50%);
+			}
+		}
+	}
+
+	@include media-between(md, lg) {
+		display: flex;
+		align-items: center;
+		$gutter: 50px;
+
+		.card__picture {
+			@include as-col(6, 12, $gutter);
+			max-width: 100%;
+			flex-grow: 1;
+		}
+
+		.card__content {
+			@include as-col(7, 12, $gutter);
+		}
+
+		&:nth-child(even) {
+			.card__picture {
+				@include expand-right();
+			}
+		}
+
+		&:nth-child(odd) {
+			.card__picture {
+				@include expand-left();
+			}
+		}
+	}
+
+	@include media-between(lg, xl) {
+		display: flex;
+		align-items: center;
+		$gutter: 60px;
+
+		.card__picture {
+			@include as-col(6, 12, $gutter);
+			max-width: 100%;
+			flex-grow: 1;
+		}
+
+		.card__content {
+			@include as-col(7, 12, $gutter);
+		}
+
+		&:nth-child(even) {
+			.card__picture {
+				@include expand-right();
+			}
+		}
+
+		&:nth-child(odd) {
+			.card__picture {
+				@include expand-left();
+			}
+		}
+	}
+
+	@include media-up(xl) {
+		display: flex;
+		align-items: center;
+		$gutter: 70px;
+
+		.card__picture {
+			@include as-col(6, 12, $gutter);
+			max-width: 100%;
+			flex-grow: 1;
+		}
+
+		.card__content {
+			@include as-col(7, 12, $gutter);
+		}
+
+		&:nth-child(even) {
+			.card__picture {
+				@include expand-right();
+			}
+		}
+
+		&:nth-child(odd) {
+			.card__picture {
+				@include expand-left();
+			}
+		}
+	}
+}

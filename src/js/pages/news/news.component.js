@@ -64,7 +64,6 @@ export class NewsComponent extends Component {
 								return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
 									item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1
 							default:
-							// return item.features.indexOf(value) !== -1;
 						}
 					};
 			}

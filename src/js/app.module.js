@@ -15,7 +15,10 @@ import { ScrollDirective } from './core/locomotive-scroll/scroll.directive';
 import { SlugPipe } from './core/slug/slug.pipe';
 import { SwiperDirective } from './core/swiper/swiper.directive';
 import { TitleDirective } from './core/title/title.directive';
+import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers-and-stores.component';
+import { DesignersComponent } from './pages/designers/designers.component';
 import { HeaderComponent } from './pages/header/header.component';
+import { MapComponent } from './pages/map/map.component';
 import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
@@ -29,6 +32,7 @@ AppModule.meta = {
 		FormModule,
 	],
 	declarations: [
+		AteliersAndStoresComponent,
 		// ControlCheckboxComponent,
 		ControlCustomSelectComponent,
 		ControlEmailComponent,
@@ -40,6 +44,7 @@ AppModule.meta = {
 		ControlSearchComponent,
 		// ControlTextareaComponent,
 		// ControlTextComponent,
+		DesignersComponent,
 		// DisabledDirective,
 		// DropDirective,
 		DropdownDirective,
@@ -55,6 +60,7 @@ AppModule.meta = {
 		// LanguageComponent,
 		// LazyDirective,
 		LocomotiveScrollDirective,
+		MapComponent,
 		// ModalComponent,
 		// ModalOutletComponent,
 		NewsComponent,
