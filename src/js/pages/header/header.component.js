@@ -17,13 +17,25 @@ export class HeaderComponent extends Component {
 		}
 	}
 
+	scrolled_ = null;
+	get scrolled() {
+		return this.scrolled_;
+	}
+	set scrolled(scrolled) {
+		if (this.scrolled_ !== scrolled) {
+			this.scrolled_ = scrolled;
+			const { node } = getContext(this);
+			scrolled ? node.classList.add(`scrolled`) : node.classList.remove(`scrolled`);
+		}
+	}
+
 	onInit() {
 		LocomotiveScrollService.scroll$.pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe((event) => {
 			this.direction = event.direction;
+			this.scrolled = event.scroll.y > 600;
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
-			// gsap.set(node, { y });
 		});
 	}
 }

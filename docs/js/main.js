@@ -2183,6 +2183,8 @@ DesignersComponent.meta = {
 
     _defineProperty(_assertThisInitialized(_this), "direction_", null);
 
+    _defineProperty(_assertThisInitialized(_this), "scrolled_", null);
+
     return _this;
   }
 
@@ -2192,8 +2194,8 @@ DesignersComponent.meta = {
     var _this2 = this;
 
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
-      _this2.direction = event.direction; // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
-      // gsap.set(node, { y });
+      _this2.direction = event.direction;
+      _this2.scrolled = event.scroll.y > 600; // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
     });
   };
 
@@ -2210,6 +2212,21 @@ DesignersComponent.meta = {
         node.classList.remove("scrolling-" + this.direction_);
         node.classList.add("scrolling-" + direction);
         this.direction_ = direction;
+      }
+    }
+  }, {
+    key: "scrolled",
+    get: function get() {
+      return this.scrolled_;
+    },
+    set: function set(scrolled) {
+      if (this.scrolled_ !== scrolled) {
+        this.scrolled_ = scrolled;
+
+        var _getContext2 = rxcomp.getContext(this),
+            node = _getContext2.node;
+
+        scrolled ? node.classList.add("scrolled") : node.classList.remove("scrolled");
       }
     }
   }]);

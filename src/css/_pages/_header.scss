@@ -3,7 +3,7 @@
 	top: 0;
 	padding: 18px 0;
 	border-bottom: 1px solid $background-tertiary;
-	background: $background;
+	background: transparent;
 	transition: all ease-in-out $fast;
 	z-index: 1000;
 
@@ -31,6 +31,7 @@
 
 	&.scrolling-down {
 		padding: 9px 0;
+		background: $background;
 
 		/*
 		.group--logo {
@@ -53,13 +54,17 @@
 
 		.group--language,
 		.group--service {
-			transform: translateY(10px);
+			transform: translateY(9px);
 		}
 
 		.group--main {
-			margin-top: -35px;
+			margin-top: -45px;
 			opacity: 0;
 		}
+	}
+
+	&.scrolled {
+		background: $background;
 	}
 
 	@include media-down(xs) {

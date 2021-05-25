@@ -22,11 +22,19 @@
 		display: flex;
 		justify-content: flex-end;
 
+		height: calc(100vh - 220px);
+		margin-top: -91px;
+		padding-top: 0;
+		background: #d1cdca;
+		opacity: .2;
+
 		img {
 			width: 60vw;
 			margin-top: -15%;
 			margin-right: -18%;
 			max-width: 980px;
+
+			display: none;
 		}
 
 		/*
