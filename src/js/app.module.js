@@ -14,6 +14,7 @@ import { LocomotiveScrollDirective } from './core/locomotive-scroll/locomotive-s
 import { ScrollDirective } from './core/locomotive-scroll/scroll.directive';
 import { SlugPipe } from './core/slug/slug.pipe';
 import { SwiperDirective } from './core/swiper/swiper.directive';
+import { ThronComponent } from './core/thron/thron.component';
 import { TitleDirective } from './core/title/title.directive';
 import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers-and-stores.component';
 import { DesignersComponent } from './pages/designers/designers.component';
@@ -23,6 +24,10 @@ import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { SwiperGalleryDirective } from './pages/swiper-gallery/swiper-gallery.directive';
+import { SwiperHomepageDirective } from './pages/swiper-homepage/swiper-homepage.directive';
+import { SwiperNewsPropositionDirective } from './pages/swiper-news-proposition/swiper-news-proposition.directive';
+import { SwiperProductsPropositionDirective } from './pages/swiper-products-proposition/swiper-products-proposition.directive';
+import { SwiperProjectsPropositionDirective } from './pages/swiper-projects-proposition/swiper-projects-proposition.directive';
 
 export class AppModule extends Module { }
 
@@ -70,7 +75,12 @@ AppModule.meta = {
 		SlugPipe,
 		// SvgIconStructure,
 		SwiperDirective,
+		SwiperHomepageDirective,
+		SwiperNewsPropositionDirective,
+		SwiperProductsPropositionDirective,
+		SwiperProjectsPropositionDirective,
 		SwiperGalleryDirective,
+		ThronComponent,
 		TitleDirective,
 		// UploadItemComponent,
 		// ValueDirective,

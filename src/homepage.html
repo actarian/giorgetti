@@ -12,22 +12,453 @@ window.environment = {
 
 <main class="main">
 
-	<div class="section--breadcrumb">
-		<div class="container">
-			<ul class="nav--breadcrumb">
-				<li class="nav__item"><span>Home</span></li>
-			</ul>
+	<!-- HERO HOMEPAGE -->
+	<div class="section--hero-homepage">
+		<div class="swiper-container" swiper-homepage>
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="card--hero-homepage">
+						<div class="card__picture">
+							<img src="/giorgetti/img/homepage/hero.jpg" />
+						</div>
+						<div class="card__content">
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-8 offset-lg-2">
+										<div class="card__title">Nuovi arrivi</div>
+										<div class="card__abstract">Scopri i prodotti delle nostre nuove collezioni</div>
+										<div class="card__cta">
+											<a href="/giorgetti/new-products.html" class="btn--cta">Nuovi arrivi</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="card--hero-homepage">
+						<div class="card__picture">
+							<img src="/giorgetti/img/homepage/hero.jpg" />
+						</div>
+						<div class="card__content">
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-8 offset-lg-2">
+										<div class="card__title">Nuovi arrivi</div>
+										<div class="card__abstract">Scopri i prodotti delle nostre nuove collezioni</div>
+										<div class="card__cta">
+											<a href="/giorgetti/new-products.html" class="btn--cta">Nuovi arrivi</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<div class="section--homepage">
+	<!-- PRODUCTS PROPOSITION -->
+	<div class="section--products-proposition" swiper-products-proposition>
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8">
-					<div class="title">Nuovi arrivi</div>
-					<div class="abstract">Scopri i prodotti delle nostre nuove collezioni</div>
+				<div class="col-md-5">
+					<div class="title">Prodotti senza tempo</div>
+					<div class="abstract">Massima qualità, innovazione estetica, abilità nella lavorazione, progettazione, ingegnerizzazione e produzione made in Italy.</div>
+				</div>
+			</div>
+			<div class="group--actions">
+				<div class="group--cta">
+					<a href="/giorgetti/new-products.html" class="btn--cta">Scopri tutti i prodotti</a>
+				</div>
+				<div class="group--navs">
+					<button type="button" class="btn--prev" [class]="{ active: hasPrev() }" (click)="slidePrev()"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
+					<button type="button" class="btn--next" [class]="{ active: hasNext() }" (click)="slideNext()"><svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg></button>
+				</div>
+			</div>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div href="/giorgetti/products-detail.html" class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/4240_n_LISTING_50250.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">50250</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/4462_n_Giorgetti_SL_Adam_bench_005_listing-sedie-poltroncine.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Adam <span>panca</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/283_n_LISTING_ala.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Ala</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/4541_n_LISTING_alexa.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Alexa</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/282_n_LISTING_alina.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Alina</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/4444_n_LISTING_AllAround-min.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">All Around</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/296_n_LISTING_arabella.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Arabella</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/309_n_LISTING_aura.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Aura</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/315_n_LISTING_baron.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Baron</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/7034_n_listing-sedie-poltroncine.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Bicolette</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/335_n_LISTING_caddy.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Caddy</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/4445_n_LISTING_clip.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Clip</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/products/342_n_LISTING_cozy.jpg" />
+								<div class="over">
+									<div class="over__title">Aura</div>
+									<div class="over__abstract">Lorem ipsum dolor</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Cozy</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- VIDEO -->
+	<div class="section--video">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 offset-md-2">
+					<div class="content">
+						<div class="title">L'arte di plasmare</div>
+						<div class="abstract">Progetti esclusivi e poliedrici, dove traspare l’unicità atipica dello “stile Giorgetti”.</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="group--video expand--left" data-scroll data-scroll-speed="2" thron="https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=gruppoconcorde&amp;xcontentId=0e72b47c-73d3-431a-93b2-5d9409424bc0&amp;pkey=yz1hpd" m3u8="https://gruppoconcorde-cdn.thron.com/delivery/public/video/gruppoconcorde/0e72b47c-73d3-431a-93b2-5d9409424bc0/yz1hpd/STREAMHTTPIOSHD/AtlasConcorde_Norde_Trailer.m3u8" controls>
+						<div class="video">
+							<div class="thron"></div>
+						</div>
+						<button type="button" class="btn--play" (click)="toggle($event)"><svg class="play"><use xlink:href="#play"></use></svg></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- NEWS PROPOSITION -->
+	<div class="section--news-proposition" swiper-news-proposition>
+		<div class="container">
+			<div class="group--actions">
+				<div class="group--cta">
+					<div class="title">News</div>
+				</div>
+				<div class="group--navs">
+					<button type="button" class="btn--prev" [class]="{ active: hasPrev() }" (click)="slidePrev()"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
+					<button type="button" class="btn--next" [class]="{ active: hasNext() }" (click)="slideNext()"><svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg></button>
+				</div>
+			</div>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="card--news-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/news-01.jpg" />
+								<div class="over">
+									<div class="over__title">Leggi l'articolo</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__date">2020.10.28</div>
+								<div class="card__title">Visita il Giorgetti Store di Londra durante la Design Week</div>
+								<div class="card__cta">
+									<a href="/giorgetti/news-detail.html" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--news-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/news-02.jpg" />
+								<div class="over">
+									<div class="over__title">Leggi l'articolo</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__date">2020.10.28</div>
+								<div class="card__title">Visita il Giorgetti Store di Londra durante la Design Week</div>
+								<div class="card__cta">
+									<a href="/giorgetti/news-detail.html" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--news-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/news-03.jpg" />
+								<div class="over">
+									<div class="over__title">Leggi l'articolo</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__date">2020.10.28</div>
+								<div class="card__title">Visita il Giorgetti Store di Londra durante la Design Week</div>
+								<div class="card__cta">
+									<a href="/giorgetti/news-detail.html" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PROJECTS PROPOSITION -->
+	<div class="section--projects-proposition" swiper-products-proposition>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="title">Progetti</div>
+					<div class="abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris id sit orci tristique mattis sed tristique mattis.</div>
+				</div>
+			</div>
+			<div class="group--actions">
+				<div class="group--cta">
+					<a href="/giorgetti/new-products.html" class="btn--cta">Scopri tutti i progetti</a>
+				</div>
+				<div class="group--navs">
+					<button type="button" class="btn--prev" [class]="{ active: hasPrev() }" (click)="slidePrev()"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
+					<button type="button" class="btn--next" [class]="{ active: hasNext() }" (click)="slideNext()"><svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg></button>
+				</div>
+			</div>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/project-01.jpg" />
+								<div class="over">
+									<div class="over__title">Audemars Piguet</div>
+									<div class="over__abstract">Barcelona</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Audemars Piguet</div>
+								<div class="card__abstract">Barcelona</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/project-02.jpg" />
+								<div class="over">
+									<div class="over__title">Audemars Piguet</div>
+									<div class="over__abstract">Barcelona</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Audemars Piguet</div>
+								<div class="card__abstract">Barcelona</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/project-03.jpg" />
+								<div class="over">
+									<div class="over__title">Audemars Piguet</div>
+									<div class="over__abstract">Barcelona</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Audemars Piguet</div>
+								<div class="card__abstract">Barcelona</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="card--product-proposition">
+							<div class="card__picture">
+								<img src="/giorgetti/img/homepage/project-04.jpg" />
+								<div class="over">
+									<div class="over__title">Audemars Piguet</div>
+									<div class="over__abstract">Barcelona</div>
+								</div>
+							</div>
+							<div class="card__content">
+								<div class="card__title">Audemars Piguet</div>
+								<div class="card__abstract">Barcelona</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--product-proposition">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="picture expand--left" data-scroll data-scroll-speed="2">
+						<img src="/giorgetti/img/homepage/product-hero.jpg" />
+					</div>
+				</div>
+				<div class="col-md-5 offset-md-1">
+					<div class="title">Adam</div>
+					<div class="abstract">Divano dalla grande componiblità dal segno grafico essenziale e rigoroso.</div>
 					<div class="group--cta">
-						<a href="/giorgetti/new-products.html" class="btn--cta">Nuovi arrivi</a>
+						<a href="/giorgetti/products-detail.html" class="btn--cta">Scopri Adam</a>
 					</div>
 				</div>
 			</div>

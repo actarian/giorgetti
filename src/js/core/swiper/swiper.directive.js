@@ -50,11 +50,48 @@ export class SwiperDirective extends Component {
 		}
 	}
 
-	init_() {
+	hasPrev() {
+		const swiper = this.swiper;
+		if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
+			// console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+			return true;
+		}
+	}
+
+	hasNext() {
+		const swiper = this.swiper;
+		if (swiper) {
+			const slidesPerView = swiper.params.slidesPerView || 1;
+			// console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
+			if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
+				return true;
+			}
+		}
+	}
+
+	slidePrev() {
+		const swiper = this.swiper;
+		if (this.hasPrev()) {
+			// console.log('SwiperDirective.slidePrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+			swiper.slideTo(swiper.activeIndex - 1);
+		}
+	}
+
+	slideNext() {
+		const swiper = this.swiper;
+		if (this.hasNext()) {
+			// console.log('SwiperDirective.slideNext', swiper.activeIndex, swiper.realIndex, swiper.slides);
+			swiper.slideTo(swiper.activeIndex + 1);
+		}
+	}
+
+	init_(target) {
 		this.events$ = new Subject();
 		if (this.enabled) {
 			const { node } = getContext(this);
-			gsap.set(node, { opacity: 0 });
+			target = target || node;
+			this.target = target;
+			gsap.set(target, { opacity: 0 });
 			this.index = 0;
 			const on = this.options.on || {};
 			on.slideChange = () => {
@@ -86,7 +123,7 @@ export class SwiperDirective extends Component {
 
 	swiperInitOrUpdate_() {
 		if (this.enabled) {
-			const { node } = getContext(this);
+			const target = this.target;
 			if (this.swiper) {
 				this.swiper.update();
 			} else {
@@ -95,7 +132,7 @@ export class SwiperDirective extends Component {
 				const callback = on.init;
 				if (!on.init || !on.init.swiperDirectiveInit) {
 					on.init = function() {
-						gsap.to(node, {
+						gsap.to(target, {
 							duration: 0.4,
 							opacity: 1,
 							ease: Power2.easeOut,
@@ -108,12 +145,12 @@ export class SwiperDirective extends Component {
 					};
 					on.init.swiperDirectiveInit = true;
 				}
-				gsap.set(node, { opacity: 1 });
-				swiper = new Swiper(node, this.options);
+				gsap.set(target, { opacity: 1 });
+				swiper = new Swiper(target, this.options);
 				console.log(swiper);
 				this.swiper = swiper;
 				this.swiper._opening = true;
-				node.classList.add('swiper-init');
+				target.classList.add('swiper-init');
 			}
 		}
 	}

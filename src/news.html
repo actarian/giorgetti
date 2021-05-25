@@ -77,13 +77,13 @@ window.environment = {
 								<span class="over__title" [innerHTML]="item.title"></span>
 							</span>
 						</a>
-						<span class="card__content">
-							<span class="card__date" [innerHTML]="item.date" *if="item.date"></span>
-							<span class="card__title" [innerHTML]="item.title"></span>
+						<div class="card__content">
+							<div class="card__date" [innerHTML]="item.date" *if="item.date"></div>
+							<div class="card__title" [innerHTML]="item.title"></div>
 							<div class="card__cta">
 								<a [href]="item.url" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
 							</div>
-						</span>
+						</div>
 					</div>
 				</div>
 			</div>

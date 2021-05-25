@@ -1078,7 +1078,46 @@ SlugPipe.meta = {
     }
   };
 
-  _proto.init_ = function init_() {
+  _proto.hasPrev = function hasPrev() {
+    var swiper = this.swiper;
+
+    if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
+      // console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      return true;
+    }
+  };
+
+  _proto.hasNext = function hasNext() {
+    var swiper = this.swiper;
+
+    if (swiper) {
+      var slidesPerView = swiper.params.slidesPerView || 1; // console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
+
+      if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
+        return true;
+      }
+    }
+  };
+
+  _proto.slidePrev = function slidePrev() {
+    var swiper = this.swiper;
+
+    if (this.hasPrev()) {
+      // console.log('SwiperDirective.slidePrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      swiper.slideTo(swiper.activeIndex - 1);
+    }
+  };
+
+  _proto.slideNext = function slideNext() {
+    var swiper = this.swiper;
+
+    if (this.hasNext()) {
+      // console.log('SwiperDirective.slideNext', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      swiper.slideTo(swiper.activeIndex + 1);
+    }
+  };
+
+  _proto.init_ = function init_(target) {
     var _this = this;
 
     this.events$ = new rxjs.Subject();
@@ -1087,7 +1126,9 @@ SlugPipe.meta = {
       var _getContext = rxcomp.getContext(this),
           node = _getContext.node;
 
-      gsap.set(node, {
+      target = target || node;
+      this.target = target;
+      gsap.set(target, {
         opacity: 0
       });
       this.index = 0;
@@ -1126,8 +1167,7 @@ SlugPipe.meta = {
 
   _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
     if (this.enabled) {
-      var _getContext2 = rxcomp.getContext(this),
-          node = _getContext2.node;
+      var target = this.target;
 
       if (this.swiper) {
         this.swiper.update();
@@ -1140,7 +1180,7 @@ SlugPipe.meta = {
           on.init = function () {
             var _this2 = this;
 
-            gsap.to(node, {
+            gsap.to(target, {
               duration: 0.4,
               opacity: 1,
               ease: Power2.easeOut
@@ -1155,14 +1195,14 @@ SlugPipe.meta = {
           on.init.swiperDirectiveInit = true;
         }
 
-        gsap.set(node, {
+        gsap.set(target, {
           opacity: 1
         });
-        swiper = new Swiper(node, this.options);
+        swiper = new Swiper(target, this.options);
         console.log(swiper);
         this.swiper = swiper;
         this.swiper._opening = true;
-        node.classList.add('swiper-init');
+        target.classList.add('swiper-init');
       }
     }
   };
@@ -1185,6 +1225,197 @@ SlugPipe.meta = {
 SwiperDirective.meta = {
   selector: '[swiper]',
   inputs: ['consumer']
+};var ID = 0;
+var ThronComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ThronComponent, _Component);
+
+  function ThronComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ThronComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    // console.log('ThronComponent.onInit');
+    var THRON = window.THRONContentExperience || window.THRONPlayer;
+
+    if (!THRON) {
+      return;
+    } // console.log('THRONContentExperience', window.THRONContentExperience, 'THRONPlayer', window.THRONPlayer);
+
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = this.target = node.querySelector('.video > .thron');
+    var id = target.id = "thron-" + ++ID;
+    var media = this.thron;
+
+    if (media.indexOf('pkey=') === -1) {
+      var splitted = media.split('/');
+      var clientId = splitted[6];
+      var xcontentId = splitted[7];
+      var pkey = splitted[8];
+      media = "https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=" + clientId + "&xcontentId=" + xcontentId + "&pkey=" + pkey;
+    }
+
+    var controls = this.controls = node.hasAttribute('controls') ? true : false,
+        loop = this.loop = node.hasAttribute('loop') ? true : false,
+        autoplay = this.autoplay = node.hasAttribute('autoplay') ? true : false;
+    var player = this.player = THRON(id, {
+      media: media,
+      loop: loop,
+      autoplay: autoplay,
+      muted: !controls,
+      displayLinked: 'close',
+      noSkin: !controls // lockBitrate: 'max',
+
+    });
+    this.onReady = this.onReady.bind(this);
+    this.onCanPlay = this.onCanPlay.bind(this);
+    this.onPlaying = this.onPlaying.bind(this);
+    this.onComplete = this.onComplete.bind(this);
+    player.on('ready', this.onReady);
+    player.on('canPlay', this.onCanPlay);
+    player.on('playing', this.onPlaying);
+    player.on('complete', this.onComplete);
+  };
+
+  _proto.onReady = function onReady() {
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var id = this.target.id;
+    var player = this.player;
+
+    if (!this.controls) {
+      var mediaContainer = player.mediaContainer();
+      var video = mediaContainer.querySelector('video');
+      video.setAttribute('playsinline', 'true');
+      video.setAttribute('autoplay', 'true');
+    }
+
+    this.ready.next(id); // video.setAttribute('autoplay', 'true');
+  };
+
+  _proto.onCanPlay = function onCanPlay() {
+    var _getContext3 = rxcomp.getContext(this),
+        node = _getContext3.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onCanPlay', id);
+
+    this.canPlay.next(id);
+  };
+
+  _proto.onPlaying = function onPlaying() {
+    var _getContext4 = rxcomp.getContext(this),
+        node = _getContext4.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    player.off('playing', this.onPlaying);
+
+    if (!this.controls) {
+      var qualities = player.qualityLevels(); // console.log('ThronDirective.onPlaying', id, qualities);
+
+      if (qualities.length) {
+        var highestQuality = qualities[qualities.length - 1].index;
+        var lowestQuality = qualities[0].index;
+        player.currentQuality(highestQuality); // console.log('ThronDirective.onPlaying', id, 'currentQuality', player.currentQuality());
+      }
+    }
+  };
+
+  _proto.onComplete = function onComplete() {
+    var _getContext5 = rxcomp.getContext(this),
+        node = _getContext5.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.complete.next(id);
+  };
+
+  _proto.playVideo = function playVideo() {
+    var _getContext6 = rxcomp.getContext(this),
+        node = _getContext6.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.playVideo', id, status);
+
+    if (status && !status.playing) {
+      player.play();
+    }
+  };
+
+  _proto.pauseVideo = function pauseVideo() {
+    var _getContext7 = rxcomp.getContext(this),
+        node = _getContext7.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
+
+    if (status && status.playing) {
+      player.pause();
+    }
+  };
+
+  _proto.toggle = function toggle() {
+    var _getContext8 = rxcomp.getContext(this),
+        node = _getContext8.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
+
+    if (status && status.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
+  };
+
+  _proto.play = function play(id) {
+    // console.log('ThronDirective.play', id, id, id === id);
+    var _getContext9 = rxcomp.getContext(this),
+        node = _getContext9.node;
+
+    if (id === this.target.id) {
+      this.playVideo();
+    }
+  };
+
+  _proto.pause = function pause(id) {
+    // console.log('ThronDirective.pause', id, id, id === id);
+    var _getContext10 = rxcomp.getContext(this),
+        node = _getContext10.node;
+
+    if (id === this.target.id) {
+      this.pauseVideo();
+    }
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    var player = this.player;
+
+    if (player) {
+      player.off('ready', this.onReady);
+      player.off('canPlay', this.onCanPlay);
+      player.off('playing', this.onPlaying);
+      player.off('complete', this.onComplete);
+    }
+  };
+
+  return ThronComponent;
+}(rxcomp.Component);
+ThronComponent.meta = {
+  selector: '[thron],[[thron]]',
+  outputs: ['ready', 'canPlay', 'complete'],
+  inputs: ['thron', 'm3u8'],
+  template:
+  /* html */
+  ""
 };var TitleDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(TitleDirective, _Directive);
 
@@ -2801,6 +3032,158 @@ ProjectsComponent.meta = {
 }(SwiperDirective);
 SwiperGalleryDirective.meta = {
   selector: '[swiper-gallery]'
+};var SwiperHomepageDirective = /*#__PURE__*/function (_SwiperDirective) {
+  _inheritsLoose(SwiperHomepageDirective, _SwiperDirective);
+
+  function SwiperHomepageDirective() {
+    return _SwiperDirective.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperHomepageDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      speed: 600,
+      keyboardControl: true,
+      mousewheelControl: false,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    };
+    this.init_(); // console.log('SwiperHomepageDirective.onInit');
+  };
+
+  return SwiperHomepageDirective;
+}(SwiperDirective);
+SwiperHomepageDirective.meta = {
+  selector: '[swiper-homepage]'
+};var SwiperNewsPropositionDirective = /*#__PURE__*/function (_SwiperDirective) {
+  _inheritsLoose(SwiperNewsPropositionDirective, _SwiperDirective);
+
+  function SwiperNewsPropositionDirective() {
+    return _SwiperDirective.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperNewsPropositionDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 2,
+      spaceBetween: 40,
+      speed: 600,
+      centeredSlides: false,
+      loop: false,
+      loopAdditionalSlides: 100,
+      keyboardControl: true,
+      mousewheelControl: false,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    };
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector('.swiper-container');
+    this.init_(target); // console.log('SwiperNewsPropositionDirective.onInit');
+  };
+
+  return SwiperNewsPropositionDirective;
+}(SwiperDirective);
+SwiperNewsPropositionDirective.meta = {
+  selector: '[swiper-news-proposition]'
+};var SwiperProductsPropositionDirective = /*#__PURE__*/function (_SwiperDirective) {
+  _inheritsLoose(SwiperProductsPropositionDirective, _SwiperDirective);
+
+  function SwiperProductsPropositionDirective() {
+    return _SwiperDirective.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperProductsPropositionDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 3,
+      spaceBetween: 40,
+      speed: 600,
+      centeredSlides: false,
+      loop: false,
+      loopAdditionalSlides: 100,
+      keyboardControl: true,
+      mousewheelControl: false,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    };
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector('.swiper-container');
+    this.init_(target); // console.log('SwiperProductsPropositionDirective.onInit');
+  };
+
+  return SwiperProductsPropositionDirective;
+}(SwiperDirective);
+SwiperProductsPropositionDirective.meta = {
+  selector: '[swiper-products-proposition]'
+};var SwiperProjectsPropositionDirective = /*#__PURE__*/function (_SwiperDirective) {
+  _inheritsLoose(SwiperProjectsPropositionDirective, _SwiperDirective);
+
+  function SwiperProjectsPropositionDirective() {
+    return _SwiperDirective.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperProjectsPropositionDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 3,
+      spaceBetween: 40,
+      speed: 600,
+      centeredSlides: false,
+      loop: false,
+      loopAdditionalSlides: 100,
+      keyboardControl: true,
+      mousewheelControl: false,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    };
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector('.swiper-container');
+    this.init_(target); // console.log('SwiperProjectsPropositionDirective.onInit');
+  };
+
+  return SwiperProjectsPropositionDirective;
+}(SwiperDirective);
+SwiperProjectsPropositionDirective.meta = {
+  selector: '[swiper-projects-proposition]'
 };var AppModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(AppModule, _Module);
 
@@ -2830,7 +3213,7 @@ AppModule.meta = {
   LocomotiveScrollDirective, MapComponent, // ModalComponent,
   // ModalOutletComponent,
   NewsComponent, NewsletterPropositionComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
-  SwiperDirective, SwiperGalleryDirective, TitleDirective // UploadItemComponent,
+  SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, ThronComponent, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure
   ],
