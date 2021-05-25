@@ -35,7 +35,7 @@ export class HeaderComponent extends Component {
 			takeUntil(this.unsubscribe$),
 		).subscribe((event) => {
 			this.direction = event.direction;
-			this.scrolled = event.scroll.y > 600;
+			this.scrolled = event.scroll.y > 100;
 			const opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 2);
 			gsap.set(pictogram, { opacity });
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);

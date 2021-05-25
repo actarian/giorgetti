@@ -2196,7 +2196,7 @@ DesignersComponent.meta = {
     var pictogram = document.querySelector('.page > .pictogram');
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
-      _this2.scrolled = event.scroll.y > 600;
+      _this2.scrolled = event.scroll.y > 100;
       var opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 2);
       gsap.set(pictogram, {
         opacity: opacity
@@ -2777,7 +2777,7 @@ ProjectsComponent.meta = {
 
   _proto.onInit = function onInit() {
     this.options = {
-      slidesPerView: 1,
+      slidesPerView: 'auto',
       spaceBetween: 40,
       speed: 600,
       centeredSlides: true,

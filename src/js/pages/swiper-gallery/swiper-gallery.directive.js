@@ -4,7 +4,7 @@ export class SwiperGalleryDirective extends SwiperDirective {
 
 	onInit() {
 		this.options = {
-			slidesPerView: 1,
+			slidesPerView: 'auto',
 			spaceBetween: 40,
 			speed: 600,
 			centeredSlides: true,
