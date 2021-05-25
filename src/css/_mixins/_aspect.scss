@@ -102,3 +102,23 @@
 		align-items: center;
 	}
 }
+
+// !!! unused
+@mixin clip($w: 4, $h: 3) {
+	position: relative;
+	width: 100%;
+	padding-top: 100% / $w * $h;
+	overflow: hidden;
+
+	&>img,
+	&>svg,
+	&>video,
+	&>canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}

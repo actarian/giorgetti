@@ -17,8 +17,9 @@
 
 @import '_pages/header';
 @import '_pages/footer';
+@import '_pages/pictogram';
 @import '_pages/breadcrumb';
-@import '_pages/index';
+@import '_pages/homepage';
 @import '_pages/projects';
 @import '_pages/projects-detail';
 @import '_pages/news';
@@ -29,3 +30,5 @@
 @import '_pages/ateliers-and-stores-detail';
 @import '_pages/history';
 @import '_pages/prize';
+//
+@import '_pages/index';
