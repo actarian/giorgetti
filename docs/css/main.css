@@ -4758,7 +4758,7 @@ body {
     font-family: var(--font-secondary);
     font-size: 32px;
     line-height: 1.2;
-    letter-spacing: -0.0625em;
+    letter-spacing: -.03em;
     text-transform: uppercase;
     color: #000000; }
   .section--text .description {
@@ -4988,6 +4988,53 @@ body {
       margin-left: 0px;
       margin-right: 0px;
       margin-bottom: 70px; } }
+
+.section--designers-detail {
+  padding: 0 0 80px 0; }
+  .section--designers-detail .title {
+    margin-bottom: 100px;
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 1.2;
+    text-align: center;
+    letter-spacing: -0.027em;
+    text-transform: uppercase;
+    color: #232221; }
+    .section--designers-detail .title em {
+      display: block;
+      font-style: normal;
+      color: #6A6A6A; }
+
+.section--picture-text {
+  padding-bottom: 140px; }
+  .section--picture-text .title {
+    margin-bottom: 60px;
+    font-family: var(--font-secondary);
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    color: #000000; }
+  .section--picture-text .description {
+    font-size: 18px; }
+    .section--picture-text .description p {
+      margin: 0 0 80px;
+      padding: 0; }
+
+.group--share {
+  display: flex; }
+  .group--share .share__title {
+    margin-right: 20px;
+    font-size: 16px;
+    text-transform: uppercase; }
+
+.nav--share > .nav__item svg {
+  fill: currentColor;
+  width: 24px;
+  height: 24px; }
+
+.nav--share > .nav__item + .nav__item {
+  margin-left: 20px; }
 
 .card--atelier {
   display: flex;
