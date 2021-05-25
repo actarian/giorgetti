@@ -4194,6 +4194,9 @@ test-component .btn--mode {
   letter-spacing: -0.027em;
   text-transform: uppercase; }
 
+.section--share + .section--design {
+  margin-top: 140px; }
+
 .card--design {
   display: flex;
   flex-direction: column;
@@ -4783,6 +4786,8 @@ test-component .btn--mode {
     .section--text .description p {
       margin: 0 0 80px;
       padding: 0; }
+      .section--text .description p:last-child {
+        margin: 0; }
 
 .group--share {
   display: flex; }

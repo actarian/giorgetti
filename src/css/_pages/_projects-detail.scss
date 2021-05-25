@@ -30,6 +30,10 @@
 	}
 }
 
+.section--share+.section--design {
+	margin-top: 140px;
+}
+
 .card--design {
 	@extend %btn;
 	display: flex;

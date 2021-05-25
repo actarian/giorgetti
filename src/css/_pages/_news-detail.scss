@@ -184,6 +184,10 @@
 		p {
 			margin: 0 0 80px;
 			padding: 0;
+
+			&:last-child {
+				margin: 0;
+			}
 		}
 	}
 }
