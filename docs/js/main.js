@@ -2193,9 +2193,14 @@ DesignersComponent.meta = {
   _proto.onInit = function onInit() {
     var _this2 = this;
 
+    var pictogram = document.querySelector('.page > .pictogram');
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
-      _this2.scrolled = event.scroll.y > 600; // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
+      _this2.scrolled = event.scroll.y > 600;
+      var opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 2);
+      gsap.set(pictogram, {
+        opacity: opacity
+      }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
     });
   };
 
