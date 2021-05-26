@@ -111,4 +111,12 @@ export class LocomotiveScrollService {
 		}
 	}
 
+	static scrollTo(target, options) {
+		if (this.instance) {
+			this.instance.scrollTo(target, options);
+		} else {
+			target.scrollIntoView();
+		}
+	}
+
 }

@@ -10,7 +10,7 @@ window.environment = {
 
 </script>
 
-<main class="main" projects-detail>
+<main class="main" products-detail>
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -23,11 +23,11 @@ window.environment = {
 		</div>
 	</div>
 
-	<!-- HERO PRODUCT DETAIL -->
+	<!-- HERO PRODUCTS DETAIL -->
 	<div class="section--hero-products-detail">
 		<div class="card--hero-products-detail">
 			<div class="card__picture">
-				<img src="/giorgetti/img/products-detail/hero.jpg" />
+				<img src="/giorgetti/img/products-detail/hero.png" />
 			</div>
 			<div class="card__content">
 				<div class="container">
@@ -35,7 +35,10 @@ window.environment = {
 						<div class="col-md-5 offset-md-7">
 							<div class="card__title">Adam <span>Divano</span></div>
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
-							<div class="card__designer">Designer: Carlo Colombo - 2018</div>
+							<div class="card__cta">
+								<button type="button" class="btn--more" (click)="scrollTo('#versions')">Scopri le versioni</button>
+							</div>
+							<div class="card__designer">Designer Carlo Colombo 2018</div>
 						</div>
 					</div>
 				</div>
@@ -43,6 +46,7 @@ window.environment = {
 		</div>
 	</div>
 
+	<!-- PRODUCTS DETAIL GALLERY -->
 	<div class="section--products-detail-gallery">
 		<div class="container">
 			<div class="swiper-container" swiper-gallery>
@@ -92,7 +96,8 @@ window.environment = {
 		</div>
 	</div>
 
-	<div class="section--detail">
+	<!-- DETAILS -->
+	<div class="section--details">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
@@ -100,7 +105,7 @@ window.environment = {
 				</div>
 			</div>
 			<div class="picture">
-				<img src="/giorgetti/img/products-detail/detail-01.jpg" />
+				<img src="/giorgetti/img/products-detail/detail-01.png" />
 			</div>
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
@@ -112,154 +117,144 @@ window.environment = {
 		</div>
 	</div>
 
-	<div class="section--detail">
+	<!-- VERSIONS -->
+	<div class="section--versions" id="versions">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
 					<div class="title">Versioni</div>
 				</div>
 			</div>
+			<!-- LISTING VERSIONS -->
 			<div class="listing--versions">
-				<div class="listing__item">
-					<div class="card--version">
+				<div class="listing__item" *for="let item of visibleItems">
+					<a class="card--version" [hreF]="item.url" target="_blank">
 						<div class="card__picture">
-							<img src="/giorgetti/img/products-detail/comp-01.jpg" />
-							<div class="configure--badge">Personalizzabile</div>
+							<img [src]="item.image" />
+							<div class="badge--configure" *if="item.configurable"><svg class="edit"><use xlink:href="#edit"></use></svg> Personalizzabile</div>
 						</div>
 						<div class="card__content">
-							<div class="card__title">Adam 01</div>
-							<div class="card__measures">
-								<p>cm 170 x 100 x h 84</p>
-								<p>in 67 x 39 3/8 x h 33</p>
-							</div>
-							<div class="card__cta">
-								<button type="button" class="btn--configure">Personalizza</button>
-							</div>
+							<div class="card__title" [innerHTML]="item.title"></div>
+							<div class="card__abstract" [innerHTML]="item.abstract" *if="item.abstract"></div>
+							<div class="card__measures" [innerHTML]="item.measures"></div>
 						</div>
-					</div>
+					</a>
 				</div>
-				<div class="listing__item">
-					<div class="card--version">
-						<div class="card__picture">
-							<img src="/giorgetti/img/products-detail/comp-02.jpg" />
-						</div>
-						<div class="card__content">
-							<div class="card__title">Adam 02</div>
-							<div class="card__measures">
-								<p>cm 210 x 100 x h 84</p>
-								<p>in 82 3/4 x 39 3/8 x h 33</p>
-							</div>
-							<div class="card__cta">
-								<button type="button" class="btn--download">Scarica il pdf</button>
-							</div>
-						</div>
+			</div>
+
+			<!-- include ./shared/products-detail-versions.html -->
+
+			<!--
+			<div class="listing__item">
+				<div class="card--version">
+					<div class="card__picture">
+						<img src="/giorgetti/img/products-detail/comp-01.jpg" />
+						<div class="configure--badge">Personalizzabile</div>
 					</div>
-				</div>
-				<div class="listing__item">
-					<div class="card--version">
-						<div class="card__picture">
-							<img src="/giorgetti/img/products-detail/comp-03.jpg" />
+					<div class="card__content">
+						<div class="card__title">Adam 01</div>
+						<div class="card__measures">
+							<p>cm 170 x 100 x h 84</p>
+							<p>in 67 x 39 3/8 x h 33</p>
 						</div>
-						<div class="card__content">
-							<div class="card__title">Adam 03</div>
-							<div class="card__measures">
-								<p>cm 250 x 100 x h 84</p>
-								<p>in 98 1/2 x 39 3/8 x h 33</p>
-							</div>
-							<div class="card__cta">
-								<button type="button" class="btn--configure">Personalizza</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="listing__item">
-					<div class="card--version">
-						<div class="card__picture">
-							<img src="/giorgetti/img/products-detail/comp-04.jpg" />
-						</div>
-						<div class="card__content">
-							<div class="card__title">Adam 04</div>
-							<div class="card__measures">
-								<p>cm 250 x 100 x h 84</p>
-								<p>in 98 1/2 x 39 3/8 x h 33</p>
-							</div>
-							<div class="card__cta">
-								<button type="button" class="btn--configure">Personalizza</button>
-							</div>
+						<div class="card__cta">
+							<button type="button" class="btn--configure">Personalizza</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="picture">
-				<img src="/giorgetti/img/products-detail/detail-01.jpg" />
-			</div>
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="description">
-						<p>Serie di divani componibili in tre misure di larghezza. La struttura in metallo verniciato può avere rivestimento in tessuto, pelle o cuoio, completamente sfoderabile.</p>
+			<div class="listing__item">
+				<div class="card--version">
+					<div class="card__picture">
+						<img src="/giorgetti/img/products-detail/comp-02.jpg" />
+					</div>
+					<div class="card__content">
+						<div class="card__title">Adam 02</div>
+						<div class="card__measures">
+							<p>cm 210 x 100 x h 84</p>
+							<p>in 82 3/4 x 39 3/8 x h 33</p>
+						</div>
+						<div class="card__cta">
+							<button type="button" class="btn--download">Scarica il pdf</button>
+						</div>
 					</div>
 				</div>
 			</div>
+			-->
+
+		</div>
+		<div class="group--cta">
+			<button type="button" class="btn--more" (click)="showVersions($event)" *if="items.length > visibleItems.length">Tutte le versioni</button>
+			<button type="button" class="btn--configure">Configura e acquista</button>
 		</div>
 	</div>
 
-	<div class="section--detail">
+	<!-- MATERIALS -->
+	<div class="section--materials">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
 					<div class="title">Materie</div>
 				</div>
 			</div>
-			<div class="picture">
-				<img src="/giorgetti/img/products-detail/detail-01.jpg" />
+			<div class="listing--materials">
+				<div class="listing__item">
+					<div class="card--material">
+						<div class="card__picture">
+							<img src="/giorgetti/img/products-detail/material-01.jpg" />
+						</div>
+						<div class="card__content">
+							<div class="card__title">48</div>
+						</div>
+					</div>
+				</div>
+				<div class="listing__item">
+					<div class="card--material">
+						<div class="card__picture">
+							<img src="/giorgetti/img/products-detail/material-02.jpg" />
+						</div>
+						<div class="card__content">
+							<div class="card__title">5A</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
 					<div class="description">
-						<p>Serie di divani componibili in tre misure di larghezza. La struttura in metallo verniciato può avere rivestimento in tessuto, pelle o cuoio, completamente sfoderabile.</p>
+						<p>Il design dei nostri prodotti nasce dalla fusione di tradizioni centenarie, cura artigianale ed attenzione nella selezione delle materie prime.</p>
 					</div>
 				</div>
+			</div>
+			<div class="group--cta">
+				<a href="/giorgetti/materie.html" class="btn--more">Scopri le materie</a>
 			</div>
 		</div>
 	</div>
 
-	<div class="section--detail">
+	<!-- INSIGHTS -->
+	<div class="section--insights">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
 					<div class="title">Approfondimenti</div>
 				</div>
-			</div>
-			<div class="picture">
-				<img src="/giorgetti/img/products-detail/detail-01.jpg" />
-			</div>
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="description">
-						<p>Serie di divani componibili in tre misure di larghezza. La struttura in metallo verniciato può avere rivestimento in tessuto, pelle o cuoio, completamente sfoderabile.</p>
+				<div class="col-sm-4">
+					<div class="group--insights">
+						<div class="label">Scheda tecnica</div>
+						<button type="button" class="btn--more">Download</button>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--share">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="group--share group--share--centered">
-						<div class="share__title">Condividi</div>
-						<ul class="nav--share">
-							<li class="nav__item">
-								<a href="#"><svg class="facebook"><use xlink:href="#facebook"></use></svg></a>
-							</li>
-							<li class="nav__item">
-								<a href="#"><svg class="twitter"><use xlink:href="#twitter"></use></svg></a>
-							</li>
-							<li class="nav__item">
-								<a href="#"><svg class="email"><use xlink:href="#email"></use></svg></a>
-							</li>
-						</ul>
+				<div class="col-sm-4">
+					<div class="group--insights">
+						<div class="label">Disegni tecnici</div>
+						<button type="button" href="/giorgetti/materie.html" class="btn--more">Accedi</button>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="group--insights">
+						<div class="label">Richiedi informazioni</div>
+						<button type="button" href="/giorgetti/materie.html" class="btn--more">Scrivici</button>
 					</div>
 				</div>
 			</div>

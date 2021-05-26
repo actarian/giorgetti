@@ -925,6 +925,14 @@ LabelPipe.meta = {
     }
   };
 
+  LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
+    if (this.instance) {
+      this.instance.scrollTo(target, options);
+    } else {
+      target.scrollIntoView();
+    }
+  };
+
   return LocomotiveScrollService;
 }();
 
@@ -2484,7 +2492,7 @@ DesignersComponent.meta = {
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
       _this2.scrolled = event.scroll.y > 100;
-      var opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 2);
+      var opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 3);
       gsap.set(pictogram, {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
@@ -2905,6 +2913,59 @@ NewsComponent.meta = {
 }(rxcomp.Component);
 NewsletterPropositionComponent.meta = {
   selector: '[newsletter-proposition]'
+};var ProductsDetailService = /*#__PURE__*/function () {
+  function ProductsDetailService() {}
+
+  ProductsDetailService.versions$ = function versions$() {
+    return ApiService.get$('/products-detail/versions.json');
+  };
+
+  return ProductsDetailService;
+}();var ProductsDetailComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProductsDetailComponent, _Component);
+
+  function ProductsDetailComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProductsDetailComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.items = [];
+    this.visibleItems = [];
+    ProductsDetailService.versions$().pipe(operators.first()).subscribe(function (items) {
+      _this.items = items;
+      _this.visibleItems = _this.items.slice(0, Math.min(4, _this.items.length));
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.scrollTo = function scrollTo(id) {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector(id);
+
+    if (target) {
+      LocomotiveScrollService.scrollTo(target, {
+        offset: -200
+      });
+    }
+  };
+
+  _proto.showVersions = function showVersions(event) {
+    this.visibleItems = this.items.slice();
+    this.pushChanges();
+    LocomotiveScrollService.update();
+  };
+
+  return ProductsDetailComponent;
+}(rxcomp.Component);
+ProductsDetailComponent.meta = {
+  selector: '[products-detail]'
 };var ProjectsService = /*#__PURE__*/function () {
   function ProjectsService() {}
 
@@ -3322,7 +3383,7 @@ AppModule.meta = {
   // LazyDirective,
   LocomotiveScrollDirective, MapComponent, // ModalComponent,
   // ModalOutletComponent,
-  NewsComponent, NewsletterPropositionComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
+  NewsComponent, NewsletterPropositionComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
   SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, ThronComponent, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure

@@ -22,6 +22,7 @@ import { HeaderComponent } from './pages/header/header.component';
 import { MapComponent } from './pages/map/map.component';
 import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
+import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { SwiperGalleryDirective } from './pages/swiper-gallery/swiper-gallery.directive';
 import { SwiperHomepageDirective } from './pages/swiper-homepage/swiper-homepage.directive';
@@ -70,6 +71,7 @@ AppModule.meta = {
 		// ModalOutletComponent,
 		NewsComponent,
 		NewsletterPropositionComponent,
+		ProductsDetailComponent,
 		ProjectsComponent,
 		ScrollDirective,
 		SlugPipe,
