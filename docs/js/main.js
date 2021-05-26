@@ -3075,8 +3075,26 @@ SwiperHomepageDirective.meta = {
 
   _proto.onInit = function onInit() {
     this.options = {
-      slidesPerView: 2,
-      spaceBetween: 40,
+      slidesPerView: 1,
+      spaceBetween: 30,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 40
+        },
+        1024: {
+          slidesPerView: 2,
+          spaceBetween: 50
+        },
+        1440: {
+          slidesPerView: 2,
+          spaceBetween: 60
+        },
+        1920: {
+          slidesPerView: 2,
+          spaceBetween: 70
+        }
+      },
       speed: 600,
       centeredSlides: false,
       loop: false,
@@ -3115,8 +3133,26 @@ SwiperNewsPropositionDirective.meta = {
 
   _proto.onInit = function onInit() {
     this.options = {
-      slidesPerView: 3,
-      spaceBetween: 40,
+      slidesPerView: 1.5,
+      spaceBetween: 30,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 40
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 50
+        },
+        1440: {
+          slidesPerView: 3,
+          spaceBetween: 60
+        },
+        1920: {
+          slidesPerView: 3,
+          spaceBetween: 70
+        }
+      },
       speed: 600,
       centeredSlides: false,
       loop: false,
@@ -3155,8 +3191,26 @@ SwiperProductsPropositionDirective.meta = {
 
   _proto.onInit = function onInit() {
     this.options = {
-      slidesPerView: 3,
-      spaceBetween: 40,
+      slidesPerView: 1.5,
+      spaceBetween: 30,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 40
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 50
+        },
+        1440: {
+          slidesPerView: 3,
+          spaceBetween: 60
+        },
+        1920: {
+          slidesPerView: 3,
+          spaceBetween: 70
+        }
+      },
       speed: 600,
       centeredSlides: false,
       loop: false,

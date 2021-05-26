@@ -58,7 +58,6 @@
 		}
 
 		.group--main {
-			margin-top: -45px;
 			opacity: 0;
 		}
 	}
@@ -69,6 +68,14 @@
 
 	@include media-down(xs) {
 		padding: 9px 0;
+	}
+
+	@include media-up(sm) {
+		&.scrolling-down {
+			.group--main {
+				margin-top: -45px;
+			}
+		}
 	}
 }
 

@@ -6,9 +6,8 @@
 	align-items: center;
 	margin-bottom: 60px;
 
-	&>.card__picture {
+	.card__picture {
 		@extend %btn;
-		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -34,7 +33,6 @@
 	}
 
 	.card__content {
-		position: absolute;
 		width: 100%;
 	}
 
@@ -94,6 +92,31 @@
 		&:hover {
 			background: $background;
 			color: $foreground;
+		}
+	}
+
+	@include media-down(sm) {
+		.card__picture {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.card__content {
+			position: relative;
+			padding: 80px 0;
+		}
+	}
+
+	@include media-up(md) {
+		.card__picture {
+			position: relative;
+		}
+
+		.card__content {
+			position: absolute;
 		}
 	}
 }
