@@ -1230,7 +1230,17 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ThronComponent, _Component);
 
   function ThronComponent() {
-    return _Component.apply(this, arguments) || this;
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "playing_", false);
+
+    return _this;
   }
 
   var _proto = ThronComponent.prototype;
@@ -1274,10 +1284,14 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
     this.onReady = this.onReady.bind(this);
     this.onCanPlay = this.onCanPlay.bind(this);
     this.onPlaying = this.onPlaying.bind(this);
+    this.onPlay = this.onPlay.bind(this);
+    this.onPause = this.onPause.bind(this);
     this.onComplete = this.onComplete.bind(this);
     player.on('ready', this.onReady);
     player.on('canPlay', this.onCanPlay);
     player.on('playing', this.onPlaying);
+    player.on('play', this.onPlay);
+    player.on('pause', this.onPause);
     player.on('complete', this.onComplete);
   };
 
@@ -1326,18 +1340,39 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
     }
   };
 
-  _proto.onComplete = function onComplete() {
+  _proto.onPlay = function onPlay() {
     var _getContext5 = rxcomp.getContext(this),
         node = _getContext5.node;
 
     var id = this.target.id; // console.log('ThronDirective.onComplete', id);
 
+    this.playing = true;
+    this.play.next(id);
+  };
+
+  _proto.onPause = function onPause() {
+    var _getContext6 = rxcomp.getContext(this),
+        node = _getContext6.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.playing = false;
+    this.pause.next(id);
+  };
+
+  _proto.onComplete = function onComplete() {
+    var _getContext7 = rxcomp.getContext(this),
+        node = _getContext7.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.playing = false;
     this.complete.next(id);
   };
 
   _proto.playVideo = function playVideo() {
-    var _getContext6 = rxcomp.getContext(this),
-        node = _getContext6.node;
+    var _getContext8 = rxcomp.getContext(this),
+        node = _getContext8.node;
 
     var id = this.target.id;
     var player = this.player;
@@ -1349,8 +1384,8 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
   };
 
   _proto.pauseVideo = function pauseVideo() {
-    var _getContext7 = rxcomp.getContext(this),
-        node = _getContext7.node;
+    var _getContext9 = rxcomp.getContext(this),
+        node = _getContext9.node;
 
     var id = this.target.id;
     var player = this.player;
@@ -1362,8 +1397,8 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
   };
 
   _proto.toggle = function toggle() {
-    var _getContext8 = rxcomp.getContext(this),
-        node = _getContext8.node;
+    var _getContext10 = rxcomp.getContext(this),
+        node = _getContext10.node;
 
     var id = this.target.id;
     var player = this.player;
@@ -1378,8 +1413,8 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
 
   _proto.play = function play(id) {
     // console.log('ThronDirective.play', id, id, id === id);
-    var _getContext9 = rxcomp.getContext(this),
-        node = _getContext9.node;
+    var _getContext11 = rxcomp.getContext(this),
+        node = _getContext11.node;
 
     if (id === this.target.id) {
       this.playVideo();
@@ -1388,8 +1423,8 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
 
   _proto.pause = function pause(id) {
     // console.log('ThronDirective.pause', id, id, id === id);
-    var _getContext10 = rxcomp.getContext(this),
-        node = _getContext10.node;
+    var _getContext12 = rxcomp.getContext(this),
+        node = _getContext12.node;
 
     if (id === this.target.id) {
       this.pauseVideo();
@@ -1403,15 +1438,36 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
       player.off('ready', this.onReady);
       player.off('canPlay', this.onCanPlay);
       player.off('playing', this.onPlaying);
+      player.off('play', this.onPlay);
+      player.off('pause', this.onPause);
       player.off('complete', this.onComplete);
     }
   };
+
+  _createClass(ThronComponent, [{
+    key: "playing",
+    get: function get() {
+      return this.playing_;
+    },
+    set: function set(playing) {
+      if (this.playing_ !== playing) {
+        this.playing_ = playing;
+
+        var _getContext13 = rxcomp.getContext(this),
+            node = _getContext13.node;
+
+        if (node) {
+          playing ? node.classList.add('playing') : node.classList.remove('playing');
+        }
+      }
+    }
+  }]);
 
   return ThronComponent;
 }(rxcomp.Component);
 ThronComponent.meta = {
   selector: '[thron],[[thron]]',
-  outputs: ['ready', 'canPlay', 'complete'],
+  outputs: ['ready', 'canPlay', 'play', 'pause', 'complete'],
   inputs: ['thron', 'm3u8'],
   template:
   /* html */

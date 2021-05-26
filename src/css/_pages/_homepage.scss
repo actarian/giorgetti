@@ -415,15 +415,27 @@
 		height: 128px;
 		margin: -64px 0 0 -64px;
 		z-index: 1;
-		color: $foreground-negative;
+
+		&,
+		&:link,
+		&:active,
+		&:focus,
+		&:visited {
+			color: $foreground-negative;
+		}
 	}
 
 	&:hover {
 		.btn--play {
-			color: $foreground;
+			color: $foreground-tertiary;
 		}
 	}
 
+	&.playing {
+		.btn--play {
+			opacity: 0;
+		}
+	}
 }
 
 .section--video {

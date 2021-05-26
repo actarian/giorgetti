@@ -4342,10 +4342,13 @@ test-component .btn--mode {
     width: 128px;
     height: 128px;
     margin: -64px 0 0 -64px;
-    z-index: 1;
-    color: var(--foreground-negative); }
+    z-index: 1; }
+    .group--video .btn--play, .group--video .btn--play:link, .group--video .btn--play:active, .group--video .btn--play:focus, .group--video .btn--play:visited {
+      color: var(--foreground-negative); }
   .group--video:hover .btn--play {
-    color: var(--foreground); }
+    color: var(--foreground-tertiary); }
+  .group--video.playing .btn--play {
+    opacity: 0; }
 
 .section--video {
   padding-bottom: 20vw;

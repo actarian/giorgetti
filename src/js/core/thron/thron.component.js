@@ -5,6 +5,20 @@ let ID = 0;
 
 export class ThronComponent extends Component {
 
+	playing_ = false;
+	get playing() {
+		return this.playing_;
+	}
+	set playing(playing) {
+		if (this.playing_ !== playing) {
+			this.playing_ = playing;
+			const { node } = getContext(this);
+			if (node) {
+				playing ? node.classList.add('playing') : node.classList.remove('playing');
+			}
+		}
+	}
+
 	onInit() {
 		// console.log('ThronComponent.onInit');
 		const THRON = window.THRONContentExperience || window.THRONPlayer;
@@ -38,10 +52,14 @@ export class ThronComponent extends Component {
 		this.onReady = this.onReady.bind(this);
 		this.onCanPlay = this.onCanPlay.bind(this);
 		this.onPlaying = this.onPlaying.bind(this);
+		this.onPlay = this.onPlay.bind(this);
+		this.onPause = this.onPause.bind(this);
 		this.onComplete = this.onComplete.bind(this);
 		player.on('ready', this.onReady);
 		player.on('canPlay', this.onCanPlay);
 		player.on('playing', this.onPlaying);
+		player.on('play', this.onPlay);
+		player.on('pause', this.onPause);
 		player.on('complete', this.onComplete);
 	}
 
@@ -83,10 +101,27 @@ export class ThronComponent extends Component {
 		}
 	}
 
+	onPlay() {
+		const { node } = getContext(this);
+		const id = this.target.id;
+		// console.log('ThronDirective.onComplete', id);
+		this.playing = true;
+		this.play.next(id);
+	}
+
+	onPause() {
+		const { node } = getContext(this);
+		const id = this.target.id;
+		// console.log('ThronDirective.onComplete', id);
+		this.playing = false;
+		this.pause.next(id);
+	}
+
 	onComplete() {
 		const { node } = getContext(this);
 		const id = this.target.id;
 		// console.log('ThronDirective.onComplete', id);
+		this.playing = false;
 		this.complete.next(id);
 	}
 
@@ -147,6 +182,8 @@ export class ThronComponent extends Component {
 			player.off('ready', this.onReady);
 			player.off('canPlay', this.onCanPlay);
 			player.off('playing', this.onPlaying);
+			player.off('play', this.onPlay);
+			player.off('pause', this.onPause);
 			player.off('complete', this.onComplete);
 		}
 	}
@@ -154,7 +191,7 @@ export class ThronComponent extends Component {
 
 ThronComponent.meta = {
 	selector: '[thron],[[thron]]',
-	outputs: ['ready', 'canPlay', 'complete'],
+	outputs: ['ready', 'canPlay', 'play', 'pause', 'complete'],
 	inputs: ['thron', 'm3u8'],
 	template: /* html */``,
 };
