@@ -2,7 +2,6 @@ import { Component, getContext } from 'rxcomp';
 
 let ID = 0;
 
-
 export class ThronComponent extends Component {
 
 	playing_ = false;

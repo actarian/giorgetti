@@ -62,7 +62,7 @@
 	}
 
 	.btn--cta {
-		@extend %btn;
+		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -75,24 +75,6 @@
 		text-align: center;
 		text-transform: uppercase;
 		letter-spacing: 0.043em;
-
-		&,
-		&:link,
-		&:focus,
-		&:visited {
-			background: $background;
-			color: #232221;
-		}
-
-		&:active {
-			background: $background-tertiary;
-			color: #232221;
-		}
-
-		&:hover {
-			background: $background;
-			color: $foreground;
-		}
 	}
 
 	@include media-down(sm) {
@@ -125,7 +107,6 @@
 	padding: 0 0 80px 0;
 
 	.title {
-		@extend %btn;
 		display: block;
 		margin-bottom: 20px;
 		font-family: $font-secondary;
@@ -237,6 +218,7 @@
 .group--actions {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 100px;
 
 	.group--navs {
@@ -245,7 +227,7 @@
 	}
 
 	.btn--cta {
-		@extend %btn;
+		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -259,29 +241,11 @@
 		text-transform: uppercase;
 		letter-spacing: 0.043em;
 		border: 1px solid #232221;
-
-		&,
-		&:link,
-		&:focus,
-		&:visited {
-			background: $background;
-			color: #232221;
-		}
-
-		&:active {
-			background: $background-tertiary;
-			color: #232221;
-		}
-
-		&:hover {
-			background: $background;
-			color: $foreground;
-		}
 	}
 
 	.btn--prev,
 	.btn--next {
-		@extend %btn;
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-tertiary, #232221);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -300,23 +264,6 @@
 			width: 46px;
 			height: 13px;
 			fill: currentColor;
-		}
-
-		&,
-		&:link,
-		&:focus,
-		&:visited {
-			color: #35302C;
-		}
-
-		&:active {
-			background: $background-tertiary;
-			color: #232221;
-		}
-
-		&:hover {
-			background: $background-tertiary;
-			color: $foreground;
 		}
 
 		&.active {
@@ -404,7 +351,7 @@
 	}
 
 	.btn--play {
-		@extend %btn;
+		@include btn(transparent, $foreground-negative, transparent, $foreground-tertiary, transparent, #232221);
 		position: absolute;
 		display: flex;
 		justify-content: center;
@@ -415,14 +362,6 @@
 		height: 128px;
 		margin: -64px 0 0 -64px;
 		z-index: 1;
-
-		&,
-		&:link,
-		&:active,
-		&:focus,
-		&:visited {
-			color: $foreground-negative;
-		}
 	}
 
 	&:hover {
@@ -621,6 +560,11 @@
 		letter-spacing: -0.03em;
 		text-transform: uppercase;
 	}
+
+	.btn--prev,
+	.btn--next {
+		@include btn(transparent, $foreground, $background-secondary, $foreground, $background-secondary, #232221);
+	}
 }
 
 .card--project-proposition {
@@ -722,7 +666,7 @@
 
 .section--projects-proposition {
 	position: relative;
-	padding-bottom: 360px;
+	padding-bottom: 300px;
 
 	&:before {
 		content: '';
@@ -795,7 +739,7 @@
 	}
 
 	.btn--cta {
-		@extend %btn;
+		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -809,24 +753,6 @@
 		text-transform: uppercase;
 		letter-spacing: 0.043em;
 		border: 1px solid #232221;
-
-		&,
-		&:link,
-		&:focus,
-		&:visited {
-			background: $background;
-			color: #232221;
-		}
-
-		&:active {
-			background: $background-tertiary;
-			color: #232221;
-		}
-
-		&:hover {
-			background: $background;
-			color: $foreground;
-		}
 	}
 
 	@include media-up(md) {
@@ -838,9 +764,7 @@
 			display: flex;
 		}
 	}
-
 }
-
 
 [swiper-homepage] {
 	@extend %swiper-hero;

@@ -223,6 +223,12 @@
 	}
 }
 
+.section--filters {
+	// background: linear-gradient(90deg, transparent, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, transparent);
+	// background: $background-secondary;
+	background: $background-tertiary;
+}
+
 .group--filters-projects {
 	display: flex;
 	justify-content: space-between;

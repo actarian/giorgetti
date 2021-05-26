@@ -382,6 +382,58 @@
 		align-items: stretch;
 
 		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(md, lg) {
+		$gutter: 60px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(sm, md) {
+		$gutter: 50px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(xs, sm) {
+		$gutter: 40px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-down(xs) {
+		&>.listing__item {
+			@include as-col(6, 12, 0px);
+			margin-bottom: 70px;
+		}
+	}
+
+	/*
+	@include media-up(xl) {
+		$gutter: 70px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
 			@include as-col(3, 12, $gutter);
 		}
 	}
@@ -425,6 +477,7 @@
 			margin-bottom: 70px;
 		}
 	}
+	*/
 }
 
 .section--stores {

@@ -41,6 +41,50 @@
 	}
 }
 
+@mixin btn($fill: transparent,
+	$color: $foreground,
+	$fillOver: $fill,
+	$colorOver: $color,
+	$fillPressed: $fillOver,
+	$colorPressed: $colorOver,
+	$fillDisabled: $fill,
+	$colorDisabled: $color) {
+
+	@extend %btn;
+
+	&,
+	&:active,
+	&:focus,
+	&:visited {
+		background-color: $fill;
+		color: $color;
+	}
+
+	&:hover {
+		background-color: $fillOver;
+		color: $colorOver;
+	}
+
+	&:active:hover {
+		background-color: $fillPressed;
+		color: $colorPressed;
+		transition: none;
+	}
+
+	&.disabled {
+
+		&,
+		&:active,
+		&:focus,
+		&:hover,
+		&:visited {
+			background-color: $fillDisabled;
+			color: $colorDisabled;
+			pointer-events: none;
+		}
+	}
+}
+
 %btn-animated {
 	@extend %btn;
 	position: relative;
