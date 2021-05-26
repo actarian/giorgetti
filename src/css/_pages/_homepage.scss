@@ -142,6 +142,7 @@
 
 		img {
 			transition: transform ease-in-out $fast;
+			transform-origin: bottom;
 		}
 
 		&:after {

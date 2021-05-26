@@ -4177,7 +4177,8 @@ test-component .btn--mode {
       -o-object-fit: cover;
          object-fit: cover; }
     .card--product-proposition > .card__picture img {
-      transition: transform ease-in-out 250ms; }
+      transition: transform ease-in-out 250ms;
+      transform-origin: bottom; }
     .card--product-proposition > .card__picture:after {
       content: '';
       position: absolute;
