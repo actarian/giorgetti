@@ -230,10 +230,10 @@ html.has-scroll-dragging {
       padding-left: 35px; } }
   @media (min-width: 768px) {
     .container {
-      max-width: calc(100% - 40px); } }
+      max-width: 768px; } }
   @media (min-width: 1024px) {
     .container {
-      max-width: calc(100% - 80px); } }
+      max-width: 1024px; } }
   @media (min-width: 1440px) {
     .container {
       max-width: 1280px; } }
@@ -2429,11 +2429,11 @@ html.has-scroll-dragging {
 
 @media (min-width: 768px) and (min-width: 768px) {
   .expand--right {
-    margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+    margin-right: calc(-50vw + (768px - 40px) / 2); } }
 
 @media (min-width: 768px) and (min-width: 1024px) {
   .expand--right {
-    margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+    margin-right: calc(-50vw + (1024px - 50px) / 2); } }
 
 @media (min-width: 768px) and (min-width: 1440px) {
   .expand--right {
@@ -2453,11 +2453,11 @@ html.has-scroll-dragging {
 
 @media (min-width: 768px) and (min-width: 768px) {
   .expand--left {
-    margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+    margin-left: calc(-50vw + (768px - 40px) / 2); } }
 
 @media (min-width: 768px) and (min-width: 1024px) {
   .expand--left {
-    margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+    margin-left: calc(-50vw + (1024px - 50px) / 2); } }
 
 @media (min-width: 768px) and (min-width: 1440px) {
   .expand--left {
@@ -2870,6 +2870,16 @@ h6 {
   [swiper-news-proposition] .swiper-container,
   [swiper-projects-proposition] .swiper-container, [swiper-gallery] {
     line-height: 0; }
+    [swiper-homepage] .swiper-slide, [swiper-products-proposition] .swiper-container .swiper-slide, [swiper-news-proposition] .swiper-container .swiper-slide, [swiper-projects-proposition] .swiper-container .swiper-slide, [swiper-gallery] .swiper-slide,
+    [swiper-homepage] .swiper-slide *,
+    [swiper-products-proposition] .swiper-container .swiper-slide *,
+    [swiper-news-proposition] .swiper-container .swiper-slide *,
+    [swiper-projects-proposition] .swiper-container .swiper-slide *,
+    [swiper-gallery] .swiper-slide * {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
     [swiper-homepage] .swiper-pagination-bullets, [swiper-products-proposition] .swiper-container .swiper-pagination-bullets, [swiper-news-proposition] .swiper-container .swiper-pagination-bullets, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullets, [swiper-gallery] .swiper-pagination-bullets,
     .swiper-container-horizontal > [swiper-homepage] .swiper-pagination-bullets,
     [swiper-products-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
@@ -4416,6 +4426,8 @@ test-component .btn--mode {
     margin-bottom: 30px;
     font-size: 18px;
     line-height: 1.2; }
+  .card--news-proposition .card__abstract {
+    display: none; }
   .card--news-proposition .btn--more {
     display: flex;
     align-items: center;
@@ -6419,10 +6431,10 @@ test-component .btn--mode {
         margin-right: 25px; } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 768px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1024px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1440px) {
     .card--history:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6431,10 +6443,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 768px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1024px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1440px) {
     .card--history:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6461,10 +6473,10 @@ test-component .btn--mode {
         margin-right: 30px; } }
   @media (min-width: 1440px) and (min-width: 768px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1024px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1440px) {
     .card--history:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6473,10 +6485,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1440px) and (min-width: 768px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1024px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1440px) {
     .card--history:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6503,10 +6515,10 @@ test-component .btn--mode {
         margin-right: 35px; } }
   @media (min-width: 1920px) and (min-width: 768px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1024px) {
     .card--history:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1440px) {
     .card--history:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6515,10 +6527,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1920px) and (min-width: 768px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1024px) {
     .card--history:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1440px) {
     .card--history:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6608,10 +6620,10 @@ test-component .btn--mode {
         margin-right: 25px; } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 768px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1024px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1440px) {
     .card--prize:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6620,10 +6632,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 768px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1024px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1024px) and (max-width: 1919.98px) and (min-width: 1440px) {
     .card--prize:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6650,10 +6662,10 @@ test-component .btn--mode {
         margin-right: 30px; } }
   @media (min-width: 1440px) and (min-width: 768px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1024px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1440px) {
     .card--prize:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6662,10 +6674,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1440px) and (min-width: 768px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1024px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1440px) and (min-width: 1440px) {
     .card--prize:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6692,10 +6704,10 @@ test-component .btn--mode {
         margin-right: 35px; } }
   @media (min-width: 1920px) and (min-width: 768px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-right: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1024px) {
     .card--prize:nth-child(even) .card__picture {
-      margin-right: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-right: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1440px) {
     .card--prize:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 60px) / 2); } }
@@ -6704,10 +6716,10 @@ test-component .btn--mode {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
   @media (min-width: 1920px) and (min-width: 768px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 40px) - 40px) / 2); } }
+      margin-left: calc(-50vw + (768px - 40px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1024px) {
     .card--prize:nth-child(odd) .card__picture {
-      margin-left: calc(-50vw + (calc(100% - 80px) - 50px) / 2); } }
+      margin-left: calc(-50vw + (1024px - 50px) / 2); } }
   @media (min-width: 1920px) and (min-width: 1440px) {
     .card--prize:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 60px) / 2); } }

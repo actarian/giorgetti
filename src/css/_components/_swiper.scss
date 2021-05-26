@@ -2,6 +2,14 @@
 	@media screen {
 		line-height: 0;
 
+		.swiper-slide {
+
+			&,
+			* {
+				@include unselectable();
+			}
+		}
+
 		.swiper-pagination-bullets {
 
 			&,

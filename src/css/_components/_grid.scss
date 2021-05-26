@@ -48,9 +48,6 @@
 	}
 }
 
-
-
-
 .expand--right {
 	@include media-up(sm) {
 		@include expand-right();

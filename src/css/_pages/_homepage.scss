@@ -506,6 +506,10 @@
 		line-height: 1.2;
 	}
 
+	.card__abstract {
+		display: none;
+	}
+
 	.btn--more {
 		@extend %btn;
 		display: flex;
