@@ -1,4 +1,6 @@
 import { Component, getContext } from 'rxcomp';
+import { first } from 'rxjs/operators';
+import { HttpService } from '../../core/http/http.service';
 import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;`;
@@ -20,6 +22,13 @@ export class ProductsConfigureComponent extends Component {
 			throw ('missing iframe');
 		}
 		this.onEvent = this.onEvent.bind(this);
+
+		HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', { grant_type: 'client_credentials' }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(
+			first(),
+		).subscribe(response => {
+			console.log(response);
+		});
+
 		const sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
 		sfy.init();
 		console.log('ProductsConfigureComponent.onInit', sfy, iframe);
@@ -80,7 +89,7 @@ export class ProductsConfigureComponent extends Component {
 		this.addTexts();
 		this.addButtons();
 		this.addBreadcrumb();
-		/*
+		return;
 		const iframeDocument = this.getIframeDocument(this.iframe);
 		console.log(iframeDocument.querySelector('head'));
 		const style = iframeDocument.createElement('style');
@@ -91,7 +100,6 @@ export class ProductsConfigureComponent extends Component {
 		`;
 		const head = iframeDocument.querySelector('head');
 		head.appendChild(style);
-		*/
 	}
 
 	onShowefyComplete(event) {

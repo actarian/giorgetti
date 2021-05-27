@@ -21,18 +21,26 @@ export class HttpResponse {
 
 export class HttpService {
 
-	static http$(method, url, data, format = 'json') {
+	static http$(method, url, data, format = 'json', userPass = null) {
 		const methods = ['POST', 'PUT', 'PATCH'];
 		let response_ = null;
 		// url = this.getUrl(url, format);
-		return from(fetch(url, {
+		const options = {
 			method: method,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: methods.indexOf(method) !== -1 ? JSON.stringify(data) : undefined
-		}).then((response) => {
+		}
+		if (userPass) {
+			// options.mode = 'no-cors';
+			options.credentials = 'include';
+			userPass = window.btoa(userPass);
+			options.headers['Authorization'] = `Basic ${userPass}`;
+		}
+		options.headers = new Headers(options.headers);
+		return from(fetch(url, options).then((response) => {
 			response_ = response;
 			// console.log(response);
 			try {

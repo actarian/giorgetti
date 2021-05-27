@@ -1903,20 +1903,34 @@ var FilterItem = /*#__PURE__*/function () {
 }();var HttpService = /*#__PURE__*/function () {
   function HttpService() {}
 
-  HttpService.http$ = function http$(method, url, data, format) {
+  HttpService.http$ = function http$(method, url, data, format, userPass) {
     var _this = this;
+
+    if (userPass === void 0) {
+      userPass = null;
+    }
 
     var methods = ['POST', 'PUT', 'PATCH'];
     var response_ = null; // url = this.getUrl(url, format);
 
-    return rxjs.from(fetch(url, {
+    var options = {
       method: method,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: methods.indexOf(method) !== -1 ? JSON.stringify(data) : undefined
-    }).then(function (response) {
+    };
+
+    if (userPass) {
+      // options.mode = 'no-cors';
+      options.credentials = 'include';
+      userPass = window.btoa(userPass);
+      options.headers['Authorization'] = "Basic " + userPass;
+    }
+
+    options.headers = new Headers(options.headers);
+    return rxjs.from(fetch(url, options).then(function (response) {
       response_ = response; // console.log(response);
 
       try {
@@ -2949,6 +2963,11 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     }
 
     this.onEvent = this.onEvent.bind(this);
+    HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', {
+      grant_type: 'client_credentials'
+    }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(operators.first()).subscribe(function (response) {
+      console.log(response);
+    });
     var sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
     sfy.init();
     console.log('ProductsConfigureComponent.onInit', sfy, iframe);
@@ -3023,18 +3042,7 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     this.addTexts();
     this.addButtons();
     this.addBreadcrumb();
-    /*
-    const iframeDocument = this.getIframeDocument(this.iframe);
-    console.log(iframeDocument.querySelector('head'));
-    const style = iframeDocument.createElement('style');
-    style.innerHTML = `
-    	* {
-    		background: none!important;
-    	}
-    `;
-    const head = iframeDocument.querySelector('head');
-    head.appendChild(style);
-    */
+    return;
   };
 
   _proto.onShowefyComplete = function onShowefyComplete(event) {

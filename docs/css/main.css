@@ -6610,8 +6610,7 @@ test-component .btn--mode {
       -o-object-fit: cover;
          object-fit: cover; }
     .card--atelier > .card__picture img {
-      transition: transform ease-in-out 250ms;
-      transform-origin: left bottom; }
+      transition: transform ease-in-out 250ms; }
     .card--atelier > .card__picture .over {
       display: flex;
       flex-direction: column;
