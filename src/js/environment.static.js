@@ -9,6 +9,9 @@ export const environmentStatic = {
 		prefetch: './js/workers/prefetch.service.worker.js',
 	},
 	githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
+	slug: {
+		configureProduct: `/giorgetti/products-configure.html`,
+	},
 	template: {
 		modal: {
 			myModal: '/my-modal.html',

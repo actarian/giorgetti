@@ -50,41 +50,47 @@
 		color: #6A6A6A;
 	}
 
-	.card__cta {
-		margin-top: 40px;
+	.btn--more {
+		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 25px;
+		font-size: 16px;
+		line-height: 1;
+		font-size: 16px;
+		line-height: 1.1;
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
 
-		.btn--more {
-			@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 15px 25px;
-			font-size: 16px;
-			line-height: 1;
-			font-size: 16px;
-			line-height: 1.1;
-			text-align: center;
-			text-transform: uppercase;
-			letter-spacing: 0.043em;
+		svg {
+			margin-right: 10px;
+			width: 24px;
+			height: 24px;
+		}
 
-			@include media-up(md) {
-				min-width: 280px;
-			}
+		@include media-up(md) {
+			min-width: 280px;
+		}
 
-			@include media-between(sm, md) {
-				min-width: 200px;
-			}
+		@include media-between(sm, md) {
+			min-width: 200px;
+		}
 
-			@include media-down(xs) {
-				min-width: 280px;
-			}
+		@include media-down(xs) {
+			min-width: 280px;
 		}
 	}
 
+	.card__cta {
+		margin-top: 40px;
+	}
+
 	.card__designer {
-		margin-top: 140px;
+		margin-top: 100px;
 		font-size: 14px;
-		text-align: right;
+		// text-align: right;
 		letter-spacing: 0.05em;
 		color: #6A6A6A;
 	}

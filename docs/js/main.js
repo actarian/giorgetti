@@ -272,6 +272,10 @@ DropdownItemDirective.meta = {
     image: '/Client/docs/js/workers/image.service.worker.js',
     prefetch: '/Client/docs/js/workers/prefetch.service.worker.js'
   },
+  githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
+  slug: {
+    configureProduct: "/Client/docs/products-configure.html"
+  },
   template: {
     modal: {
       myModal: '/template/modules/giorgetti/my-modal.cshtml'
@@ -290,6 +294,9 @@ DropdownItemDirective.meta = {
     prefetch: './js/workers/prefetch.service.worker.js'
   },
   githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
+  slug: {
+    configureProduct: "/giorgetti/products-configure.html"
+  },
   template: {
     modal: {
       myModal: '/my-modal.html'
@@ -2492,7 +2499,7 @@ DesignersComponent.meta = {
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
       _this2.scrolled = event.scroll.y > 100;
-      var opacity = 0.2 - 0.2 * Math.min(1, event.scroll.y / window.innerHeight / 3);
+      var opacity = 0.3 - 0.3 * Math.min(1, event.scroll.y / window.innerHeight / 4);
       gsap.set(pictogram, {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
@@ -2913,6 +2920,258 @@ NewsComponent.meta = {
 }(rxcomp.Component);
 NewsletterPropositionComponent.meta = {
   selector: '[newsletter-proposition]'
+};var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;";
+var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
+var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;";
+var descriptionStyle = "font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;";
+var key = 'a9$hhVGHxos';
+var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProductsConfigureComponent, _Component);
+
+  function ProductsConfigureComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProductsConfigureComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.isReady = false;
+    this.isComplete = false;
+    this.isConfiguring = false;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var iframe = this.iframe = node.querySelector('#showefy');
+
+    if (!iframe) {
+      throw 'missing iframe';
+    }
+
+    this.onEvent = this.onEvent.bind(this);
+    var sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
+    sfy.init();
+    console.log('ProductsConfigureComponent.onInit', sfy, iframe);
+  };
+
+  _proto.getIframeDocument = function getIframeDocument(iframe) {
+    var content = iframe.contentWindow || iframe.contentDocument;
+    var iframeDocument = content.document ? content.document : content;
+    return iframeDocument;
+  };
+
+  _proto.onEvent = function onEvent(data) {
+    var event = JSON.parse(data);
+    var eventName = event.emit;
+
+    if (event.status == 0) {
+      // console.log('ProductsConfigureComponent.onEvent', event);
+      switch (eventName) {
+        case 'showefy_ready':
+          this.onReady(event);
+          break;
+
+        case 'showefy_complete':
+          this.onShowefyComplete(event);
+          break;
+
+        case 'start_configurator':
+          this.onStartConfigurator(event);
+          break;
+
+        case 'button_pressed':
+          this.onButtonPressed(event);
+          break;
+
+        case 'setButtonStatus':
+          this.onSetButtonStatus(event);
+          break;
+
+        case 'getIframeSize':
+          this.onGetIframeSize(event);
+          break;
+
+        case 'getProductExtData':
+          this.onGetProductExtData(event);
+          break;
+
+        case 'getFastProductExtData':
+          this.onGetFastProductExtData(event);
+          break;
+      }
+
+      if (this.isConfiguring && this.isReady && this.isComplete) {
+        console.log('set taratura impaginazione configuratore');
+
+        var _getContext2 = rxcomp.getContext(this),
+            node = _getContext2.node; // window.scroll(0, findPos(document.getElementById('container_ifrshowefy')));
+
+
+        LocomotiveScrollService.update();
+        LocomotiveScrollService.scrollTo(node, {
+          offset: -100
+        });
+      }
+    } else {
+      console.log('ProductsConfigureComponent.onEvent.error', event.status, event.statusTxt, eventName);
+    }
+  };
+
+  _proto.onReady = function onReady(event) {
+    console.log('ProductsConfigureComponent.onReady', event);
+    this.isReady = true;
+    this.addTexts();
+    this.addButtons();
+    this.addBreadcrumb();
+    /*
+    const iframeDocument = this.getIframeDocument(this.iframe);
+    console.log(iframeDocument.querySelector('head'));
+    const style = iframeDocument.createElement('style');
+    style.innerHTML = `
+    	* {
+    		background: none!important;
+    	}
+    `;
+    const head = iframeDocument.querySelector('head');
+    head.appendChild(style);
+    */
+  };
+
+  _proto.onShowefyComplete = function onShowefyComplete(event) {
+    console.log('ProductsConfigureComponent.onShowefyComplete', event);
+
+    if (this.isConfiguring) {
+      this.isComplete = true;
+    }
+  };
+
+  _proto.onStartConfigurator = function onStartConfigurator(event) {
+    console.log('ProductsConfigureComponent.onStartConfigurator', event);
+    this.isConfiguring = true;
+  };
+
+  _proto.onButtonPressed = function onButtonPressed(event) {
+    console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
+  };
+
+  _proto.onSetButtonStatus = function onSetButtonStatus(event) {
+    console.log('ProductsConfigureComponent.onSetButtonStatus', event);
+  };
+
+  _proto.onGetIframeSize = function onGetIframeSize(event) {
+    console.log('ProductsConfigureComponent.onGetIframeSize', event);
+  };
+
+  _proto.onGetProductExtData = function onGetProductExtData(event) {
+    console.log('ProductsConfigureComponent.onGetProductExtData', event);
+  };
+
+  _proto.onGetFastProductExtData = function onGetFastProductExtData(event) {
+    console.log('ProductsConfigureComponent.onGetFastProductExtData', event);
+  };
+
+  _proto.findPos = function findPos(obj) {
+    var curtop = 0;
+
+    if (obj.offsetParent) {
+      do {
+        curtop += obj.offsetTop;
+      } while (obj = obj.offsetParent);
+
+      return [curtop];
+    }
+  } // methods
+  ;
+
+  _proto.addTexts = function addTexts() {
+    var sfy = this.sfy;
+    var html = sfy.HTML;
+    var index = 0;
+    html.text[index++] =
+    /* html */
+    "<h1 style=\"" + titleStyle + "\">Nome Prodotto</h1>";
+    html.text[index++] =
+    /* html */
+    "<h5 style=\"" + designerStyle + "\">Designer</h5>";
+    html.text[index++] =
+    /* html */
+    "<div style=\"" + descriptionStyle + "\"><p>Descrizione</p></div>";
+    sfy.printHTML(html);
+  };
+
+  _proto.addButtons = function addButtons() {
+    var sfy = this.sfy;
+    var buttons = sfy.BUTTONS;
+    var index = 0;
+    buttons.element[index] = new sfy.PROPERTIES();
+    buttons.element[index].visibility = true;
+    buttons.element[index].id = 'order';
+    buttons.element[index].label = new sfy.LABEL();
+    buttons.element[index].label.en = 'ADD TO CART';
+    index++;
+    buttons.element[index] = new sfy.PROPERTIES();
+    buttons.element[index].visibility = true;
+    buttons.element[index].id = 'save_configuration';
+    buttons.element[index].label = new sfy.LABEL();
+    buttons.element[index].label.en = 'SAVE CONFIGURATION';
+    index++;
+    sfy.setButtonStatus(buttons);
+  };
+
+  _proto.addBreadcrumb = function addBreadcrumb() {
+    var sfy = this.sfy;
+    var breadcrumb = sfy.BREADCUMB;
+    var index = 0;
+    breadcrumb.element[index] = new sfy.PROPERTIES();
+    breadcrumb.element[index].visibility = true;
+    breadcrumb.element[index].id = 'breadcumb_home';
+    breadcrumb.element[index].label = new sfy.LABEL();
+    breadcrumb.element[index].label.en =
+    /* html */
+    " Home <span aria-hidden='true'>/</span>&nbsp; ";
+    breadcrumb.element[index].style = breadcumbStyle;
+    index++;
+    breadcrumb.element[index] = new sfy.PROPERTIES();
+    breadcrumb.element[index].visibility = true;
+    breadcrumb.element[index].id = 'breadcumb_products';
+    breadcrumb.element[index].label = new sfy.LABEL();
+    breadcrumb.element[index].label.en =
+    /* html */
+    " Products <span aria-hidden='true'>/</span>&nbsp; ";
+    breadcrumb.element[index].style = breadcumbStyle;
+    index++;
+    breadcrumb.element[index] = new sfy.PROPERTIES();
+    breadcrumb.element[index].visibility = true;
+    breadcrumb.element[index].id = 'breadcumb_products';
+    breadcrumb.element[index].label = new sfy.LABEL();
+    breadcrumb.element[index].label.en =
+    /* html */
+    " Nome prodotto";
+    breadcrumb.element[index].style = breadcumbStyle;
+    index++;
+    sfy.printBreadcumb(breadcrumb);
+  };
+
+  _proto.getCartData = function getCartData() {
+    var sfy = this.sfy;
+
+    if (sfy) {
+      sfy.getProductExtData();
+    }
+  };
+
+  _proto.getFastData = function getFastData() {
+    var sfy = this.sfy;
+
+    if (sfy) {
+      sfy.getFastProductExtData();
+    }
+  };
+
+  return ProductsConfigureComponent;
+}(rxcomp.Component);
+ProductsConfigureComponent.meta = {
+  selector: '[products-configure]'
 };var ProductsDetailService = /*#__PURE__*/function () {
   function ProductsDetailService() {}
 
@@ -2960,6 +3219,10 @@ NewsletterPropositionComponent.meta = {
     this.visibleItems = this.items.slice();
     this.pushChanges();
     LocomotiveScrollService.update();
+  };
+
+  _proto.configureProduct = function configureProduct(event) {
+    window.location.href = environment.slug.configureProduct;
   };
 
   return ProductsDetailComponent;
@@ -3383,7 +3646,7 @@ AppModule.meta = {
   // LazyDirective,
   LocomotiveScrollDirective, MapComponent, // ModalComponent,
   // ModalOutletComponent,
-  NewsComponent, NewsletterPropositionComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
+  NewsComponent, NewsletterPropositionComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
   SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, ThronComponent, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure

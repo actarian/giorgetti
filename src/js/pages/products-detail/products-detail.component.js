@@ -1,6 +1,7 @@
 import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { environment } from '../../environment';
 import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {
@@ -29,6 +30,10 @@ export class ProductsDetailComponent extends Component {
 		this.visibleItems = this.items.slice();
 		this.pushChanges();
 		LocomotiveScrollService.update();
+	}
+
+	configureProduct(event) {
+		window.location.href = environment.slug.configureProduct;
 	}
 }
 

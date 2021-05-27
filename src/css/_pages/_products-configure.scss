@@ -1,0 +1,15 @@
+.section--products-configure {
+	padding: 240px 0;
+
+	iframe {
+		position: relative;
+		border: none;
+		background: none;
+		width: 100%;
+		min-height: 1024px;
+
+		.header {
+			display: none;
+		}
+	}
+}
