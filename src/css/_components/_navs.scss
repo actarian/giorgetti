@@ -20,6 +20,24 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
+
+	&>li {
+		display: block;
+
+		&>a,
+		&>span {
+			transition: ease-in-out $fast;
+			transition-property: background-color, color, border, opacity;
+
+			&:focus {
+				outline: 0;
+			}
+		}
+
+		&>a {
+			@extend %btn;
+		}
+	}
 }
 
 %nav {
@@ -34,10 +52,6 @@
 		&>a,
 		&>span {
 			@extend %nav-item;
-		}
-
-		&>a {
-			@extend %btn;
 		}
 	}
 

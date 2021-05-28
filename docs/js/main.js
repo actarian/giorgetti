@@ -2757,6 +2757,59 @@ var MapComponent = /*#__PURE__*/function (_Component) {
 }(rxcomp.Component);
 MapComponent.meta = {
   selector: '[map]'
+};var MENUS = [];
+var MenuDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(MenuDirective, _Directive);
+
+  function MenuDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = MenuDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = this.target = document.querySelector("#menu-" + this.menu);
+    var container = this.container = target.querySelector(".container");
+    this.onOver = this.onOver.bind(this);
+    this.onLeave = this.onLeave.bind(this);
+    node.addEventListener('mouseover', this.onOver);
+    MENUS.push(this);
+  };
+
+  _proto.onOver = function onOver() {
+    MENUS.forEach(function (x) {
+      return x.onLeave();
+    });
+    var target = this.target;
+    target.classList.add('active');
+    var container = this.container;
+    container.addEventListener('mouseleave', this.onLeave);
+  };
+
+  _proto.onLeave = function onLeave() {
+    var target = this.target;
+    target.classList.remove('active');
+    var container = this.container;
+    container.removeEventListener('mouseleave', this.onLeave);
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    this.onLeave();
+
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    node.removeEventListener('mouseover', this.onOver);
+  };
+
+  return MenuDirective;
+}(rxcomp.Directive);
+MenuDirective.meta = {
+  selector: '[menu]',
+  inputs: ['menu']
 };var NewsService = /*#__PURE__*/function () {
   function NewsService() {}
 
@@ -3385,6 +3438,47 @@ ProductsDetailComponent.meta = {
 }(rxcomp.Component);
 ProjectsComponent.meta = {
   selector: '[projects]'
+};var SubmenuDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(SubmenuDirective, _Directive);
+
+  function SubmenuDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = SubmenuDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var items = Array.prototype.slice.call(node.querySelectorAll('[data-picture]'));
+    var target = node.querySelector('[data-target]');
+    items.forEach(function (item) {
+      item.addEventListener('mouseover', function (event) {
+        var picture = item.getAttribute('data-picture');
+        gsap.set(target, {
+          opacity: 0
+        });
+
+        target.onload = function () {
+          gsap.to(target, {
+            duration: 0.5,
+            delay: 0.1,
+            opacity: 1,
+            ease: Power4.easeOut,
+            overwrite: 'all'
+          });
+        };
+
+        target.src = picture;
+      });
+    });
+  };
+
+  return SubmenuDirective;
+}(rxcomp.Directive);
+SubmenuDirective.meta = {
+  selector: '[submenu]'
 };var SwiperGalleryDirective = /*#__PURE__*/function (_SwiperDirective) {
   _inheritsLoose(SwiperGalleryDirective, _SwiperDirective);
 
@@ -3652,9 +3746,9 @@ AppModule.meta = {
   FlagPipe, HeaderComponent, HtmlPipe, // IdDirective,
   LabelPipe, // LanguageComponent,
   // LazyDirective,
-  LocomotiveScrollDirective, MapComponent, // ModalComponent,
+  LocomotiveScrollDirective, MapComponent, MenuDirective, // ModalComponent,
   // ModalOutletComponent,
-  NewsComponent, NewsletterPropositionComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, // SvgIconStructure,
+  NewsComponent, NewsletterPropositionComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, SubmenuDirective, // SvgIconStructure,
   SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, ThronComponent, TitleDirective // UploadItemComponent,
   // ValueDirective,
   // VirtualStructure

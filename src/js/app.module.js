@@ -20,11 +20,13 @@ import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers
 import { DesignersComponent } from './pages/designers/designers.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { MapComponent } from './pages/map/map.component';
+import { MenuDirective } from './pages/menu/menu.directive';
 import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
 import { ProductsConfigureComponent } from './pages/products-configure/products-configure.component';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { SubmenuDirective } from './pages/submenu/submenu.directive';
 import { SwiperGalleryDirective } from './pages/swiper-gallery/swiper-gallery.directive';
 import { SwiperHomepageDirective } from './pages/swiper-homepage/swiper-homepage.directive';
 import { SwiperNewsPropositionDirective } from './pages/swiper-news-proposition/swiper-news-proposition.directive';
@@ -68,6 +70,7 @@ AppModule.meta = {
 		// LazyDirective,
 		LocomotiveScrollDirective,
 		MapComponent,
+		MenuDirective,
 		// ModalComponent,
 		// ModalOutletComponent,
 		NewsComponent,
@@ -77,6 +80,7 @@ AppModule.meta = {
 		ProjectsComponent,
 		ScrollDirective,
 		SlugPipe,
+		SubmenuDirective,
 		// SvgIconStructure,
 		SwiperDirective,
 		SwiperHomepageDirective,
