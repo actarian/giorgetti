@@ -11,11 +11,12 @@ export class MenuDirective extends Directive {
 		const container = this.container = target.querySelector(`.container`);
 		this.onOver = this.onOver.bind(this);
 		this.onLeave = this.onLeave.bind(this);
-		node.addEventListener('mouseover', this.onOver);
+		node.addEventListener('click', this.onOver);
 		MENUS.push(this);
 	}
 
-	onOver() {
+	onOver(event) {
+		event.preventDefault();
 		MENUS.forEach(x => x.onLeave(true));
 		const submenus = this.submenus;
 		submenus.classList.add('active');

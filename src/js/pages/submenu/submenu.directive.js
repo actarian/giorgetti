@@ -6,6 +6,7 @@ export class SubmenuDirective extends Directive {
 		const { node } = getContext(this);
 		const items = Array.prototype.slice.call(node.querySelectorAll('[data-picture]'));
 		const target = node.querySelector('[data-target]');
+		gsap.set(target, { opacity: 1 });
 		items.forEach(item => {
 			item.addEventListener('mouseover', (event) => {
 				const picture = item.getAttribute('data-picture');

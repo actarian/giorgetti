@@ -4539,11 +4539,12 @@ var MenuDirective = /*#__PURE__*/function (_Directive) {
     var container = this.container = target.querySelector(".container");
     this.onOver = this.onOver.bind(this);
     this.onLeave = this.onLeave.bind(this);
-    node.addEventListener('mouseover', this.onOver);
+    node.addEventListener('click', this.onOver);
     MENUS.push(this);
   };
 
-  _proto.onOver = function onOver() {
+  _proto.onOver = function onOver(event) {
+    event.preventDefault();
     MENUS.forEach(function (x) {
       return x.onLeave(true);
     });
@@ -5406,6 +5407,9 @@ StoreLocatorComponent.meta = {
 
     var items = Array.prototype.slice.call(node.querySelectorAll('[data-picture]'));
     var target = node.querySelector('[data-target]');
+    gsap.set(target, {
+      opacity: 1
+    });
     items.forEach(function (item) {
       item.addEventListener('mouseover', function (event) {
         var picture = item.getAttribute('data-picture');
