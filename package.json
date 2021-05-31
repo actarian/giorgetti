@@ -13,6 +13,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "@googlemaps/markerclustererplus": "1.1.2",
     "gsap": "3.6.1",
     "locomotive-scroll": "4.1.1",
     "rxcomp": "1.0.0-beta.20",

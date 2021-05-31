@@ -97,13 +97,13 @@ export class DesignersComponent extends Component {
 				}
 			}
 		}
-		this.pushChanges();
 	}
 
 	onSearch(model) {
 		// console.log('DesignersComponent.onSearch', this.form.value);
 		this.setFilterByKeyAndValue('category', this.form.value.category);
 		this.setFilterByKeyAndValue('search', this.form.value.search);
+		this.pushChanges();
 	}
 
 	clearFilter(event, filter) {

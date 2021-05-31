@@ -34,6 +34,7 @@
 	background: $background-tertiary;
 
 	.title {
+		margin-bottom: 80px;
 		font-family: $font-secondary;
 		font-size: 48px;
 		line-height: 1.1;
@@ -44,9 +45,8 @@
 
 	.map {
 		@include aspect-clip(2, 1);
-		margin: 80px 00;
+		margin-bottom: 80px;
 	}
-
 }
 
 .group--address {

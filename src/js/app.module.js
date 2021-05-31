@@ -26,6 +26,7 @@ import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-pr
 import { ProductsConfigureComponent } from './pages/products-configure/products-configure.component';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { StoreLocatorComponent } from './pages/store-locator/store-locator.component';
 import { SubmenuDirective } from './pages/submenu/submenu.directive';
 import { SwiperGalleryDirective } from './pages/swiper-gallery/swiper-gallery.directive';
 import { SwiperHomepageDirective } from './pages/swiper-homepage/swiper-homepage.directive';
@@ -80,6 +81,7 @@ AppModule.meta = {
 		ProjectsComponent,
 		ScrollDirective,
 		SlugPipe,
+		StoreLocatorComponent,
 		SubmenuDirective,
 		// SvgIconStructure,
 		SwiperDirective,

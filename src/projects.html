@@ -49,7 +49,7 @@ window.environment = {
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters-projects">
 					<div class="filters__title">Cerca progetti relativi a</div>
-					<div class="filters__type">
+					<div class="filters__select">
 						<div control-custom-select [control]="controls.category" label="Tipologia"></div>
 					</div>
 					<div class="filters__search">

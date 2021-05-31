@@ -4,6 +4,7 @@ export const environmentServed = {
 		production: true,
 	},
 	api: '/api',
+	assets: '/Client/docs/',
 	workers: {
 		image: '/Client/docs/js/workers/image.service.worker.js',
 		prefetch: '/Client/docs/js/workers/prefetch.service.worker.js',

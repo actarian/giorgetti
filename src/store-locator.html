@@ -1,0 +1,101 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<main class="main" store-locator>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Cerca rivenditori</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--intro-sm">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" data-scroll data-scroll-speed="1.5">
+					<div class="background expand--right">
+						<!-- <img src="/giorgetti/img/pictogram.png" /> -->
+						<!-- <svg class="pictogram"><use xlink:href="#pictogram"></use></svg> -->
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="title">Cerca rivenditori</div>
+					<div class="description">
+						<p>Giorgetti è presente attraverso una rete di punti vendita e distributori autorizzati. Consigliamo pertanto ai consumatori di rivolgersi per l’acquisto unicamente a questi punti vendita che saranno in grado di garantire l’originalità e la qualità dei prodotti oltre che un eccellente servizio di progettazione, vendita e post-vendita.</p>
+						<p>Giorgetti precisa di non avere alcun tipo di rapporto con i soggetti che non fanno parte del proprio network di rivenditori autorizzati, ivi compresi quelli che mettono in vendita i prodotti Giorgetti attraverso siti internet. Per ulteriori informazioni in merito alla distribuzione invitiamo a contattare direttamente Giorgetti S.p.A. info@giorgetti.eu, il nostro personale sarà a Vostra completa disposizione.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- filters -->
+	<div class="section--filters">
+		<div class="container">
+			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
+				<div class="group--filters-store-locator">
+					<div class="filters__select">
+						<div control-custom-select [control]="controls.country" label="Paese"></div>
+					</div>
+					<div class="filters__select">
+						<div control-custom-select [control]="controls.category" label="Tipologia"></div>
+					</div>
+					<div class="filters__search">
+						<div control-search [control]="controls.search" label="Cerca"></div>
+					</div>
+					<div class="filters__cta">
+						<button type="submit" class="btn--submit">Cerca</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="section--store-locator-map" map [center]="{ latitude: 39.9149984, longitude: 116.4136529 }" [items]="filteredItems">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Google Maps -->
+					<div class="map expand--left"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="section--store-locator">
+		<div class="container">
+			<!-- spinner -->
+			<div class="spinner" *if="items.length == 0"></div>
+			<!-- results -->
+			<div class="listing--store-locator">
+				<div class="listing__item" *for="let item of visibleItems">
+					<div class="card--store-locator" [class]="{ store: item.category.id === 8, atelier: item.category.id === 9 }">
+						<div class="card__content">
+							<div class="card__name" [innerHTML]="item.name"></div>
+							<div class="card__address" [innerHTML]="item.address"></div>
+							<div class="card__city" [innerHTML]="item.city"></div>
+							<div class="card__country" [innerHTML]="item.country.name"></div>
+							<div class="card__phones" *if="item.phone || item.fax">
+								<a class="card__phone" [href]="'tel:' + item.phone" [innerHTML]="item.phone" *if="item.phone"></a>
+								<a class="card__fax" [href]="'tel:' + item.fax" [innerHTML]="item.fax" *if="item.fax"></a>
+							</div>
+							<a class="card__email" [href]="'mailto:' + item.email" [innerHTML]="item.email" *if="item.email"></a>
+							<div class="card__cta" *if="item.related">
+								<a [href]="item.related.url" class="btn--more">Scopri</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- more -->
+			<div class="group--cta">
+				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
+			</div>
+		</div>
+	</section>
+
+</main>
+<!-- @@close-->

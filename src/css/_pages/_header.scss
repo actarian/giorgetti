@@ -13,6 +13,7 @@
 
 	.group--logo {
 		flex: 0 0 220px;
+		line-height: 0;
 
 		.btn--logo {
 			@extend %btn;
@@ -123,6 +124,20 @@
 
 	&>.nav__item {
 
+		&:last-child {
+			padding-right: 0;
+		}
+
+		&>a {
+			padding: 0 10px;
+			background: transparent;
+			transition: all ease-in-out $fast;
+
+			&:hover {
+				transform: translateY(-3px);
+			}
+		}
+
 		svg {
 			fill: currentColor;
 			width: 24px;
@@ -130,9 +145,11 @@
 		}
 	}
 
+	/*
 	&>.nav__item+.nav__item {
 		margin-left: 20px;
 	}
+	*/
 
 	@include media-down(xs) {
 		display: none;
@@ -150,19 +167,25 @@
 
 	&>.nav__item {
 		position: static;
+		margin-bottom: -10px;
 		font-size: 14px;
 		line-height: 1.5;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
+		background: transparent;
 
-		&>a {
+		&>a,
+		&>span {
+			padding: 5px 5px 10px 5px;
+
 			&:after {
 				content: '';
 				display: block;
 				position: absolute;
-				bottom: -9px;
+				left: 0;
+				bottom: 0px;
 				width: 100%;
-				height: 3px;
+				height: 4px;
 				background: $background-negative;
 				transform: scale(0, 1);
 				transform-origin: center;
@@ -172,7 +195,9 @@
 
 		&:hover,
 		&.active {
-			&>a {
+
+			&>a,
+			&>span {
 				&:after {
 					transform: scale(1, 1);
 				}
@@ -181,7 +206,7 @@
 	}
 
 	&>.nav__item+.nav__item {
-		margin-left: 60px;
+		margin-left: 50px;
 	}
 
 	@include media-down(xs) {
@@ -189,36 +214,59 @@
 	}
 }
 
-.group--submenu {
+.group--submenus {
 	position: absolute;
 	top: 135px;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(53, 48, 44, 0.4);
 	left: 0;
 	width: 100%;
 	min-height: calc(100vh - 135px);
 	height: auto;
-
-	/*
-	&:after {
-		content: '';
-		position: absolute;
-		width: 100%;
-		height: 100vh;
-		left: 0;
-		top: 100%;
-		background: rgba(0, 0, 0, 0.4);
-	}
-	*/
-
 	pointer-events: none;
 	clip-path: inset(0 0 100vh 0);
-	// opacity: 0;
-	transition: all ease-in-out 350ms;
+	opacity: 0;
+	transition: all ease-in-out $slow;
 	// hack IE 11
 	display: none;
 
 	&.active {
 		display: block;
+
+		.nav--submenu {
+			@extend %stagger-left;
+		}
+	}
+
+	@media (-webkit-min-device-pixel-ratio:0) {
+		display: block;
+
+		&.active {
+			transition-property: clip-path;
+			clip-path: inset(0 0 0 0);
+			opacity: 1;
+		}
+	}
+}
+
+.group--submenu {
+	position: absolute;
+	top: 0;
+	// background: rgba(53, 48, 44, 0.4);
+	left: 0;
+	width: 100%;
+	height: auto;
+
+	pointer-events: none;
+	/*
+	clip-path: inset(0 0 100vh 0);
+	// opacity: 0;
+	transition: all ease-in-out 350ms;
+	*/
+	// hack IE 11
+	display: none;
+
+	&.active {
+		display: flex;
 		pointer-events: all;
 
 		.nav--submenu {
@@ -227,12 +275,14 @@
 	}
 
 	@media (-webkit-min-device-pixel-ratio:0) {
+		/*
 		display: flex;
 
 		&.active {
 			clip-path: inset(0 0 0 0);
 			// opacity: 1;
 		}
+		*/
 	}
 
 	.container {
@@ -267,7 +317,7 @@
 	}
 
 	.group--picture {
-		background: grey;
+		background: #f6f5f4; // tertiary 30%
 		max-width: 402px;
 	}
 

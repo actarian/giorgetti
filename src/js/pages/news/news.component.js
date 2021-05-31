@@ -98,13 +98,13 @@ export class NewsComponent extends Component {
 				}
 			}
 		}
-		this.pushChanges();
 	}
 
 	onSearch(model) {
 		// console.log('NewsComponent.onSearch', this.form.value);
 		this.setFilterByKeyAndValue('country', this.form.value.country);
 		this.setFilterByKeyAndValue('search', this.form.value.search);
+		this.pushChanges();
 	}
 
 	clearFilter(event, filter) {

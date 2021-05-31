@@ -263,9 +263,9 @@
 		content: '';
 		position: absolute;
 		width: 100%;
-		height: 2px;
+		height: 1px;
 		left: 0;
-		bottom: 3px;
+		bottom: -1px;
 		background: currentColor;
 		transform-origin: left;
 		transition: transform cubic-bezier(0.65, 0.05, 0.36, 1) 350ms;

@@ -1,4 +1,4 @@
-.section--intro-pictogram {
+.section--intro-lg {
 
 	padding: 0 0 80px 0;
 
@@ -23,7 +23,6 @@
 		justify-content: flex-end;
 
 		height: calc(100vh - 220px);
-		margin-top: -91px;
 		padding-top: 0;
 		background: #d1cdca;
 		opacity: .2;
@@ -45,6 +44,14 @@
 			fill: #d1cdca;
 		}
 		*/
+
+		@include media-down(xs) {
+			margin-top: -80px;
+		}
+
+		@include media-up(sm) {
+			margin-top: -85px;
+		}
 	}
 
 	.title {
