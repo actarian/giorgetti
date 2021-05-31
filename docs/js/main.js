@@ -2534,7 +2534,7 @@ DesignersComponent.meta = {
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
       _this2.scrolled = event.scroll.y > 100;
-      var opacity = 0.1 - 0.1 * Math.min(1, event.scroll.y / window.innerHeight / 4);
+      var opacity = 0.1 - 0.1 * Math.min(1, Math.max(0, (event.scroll.y - window.innerHeight * 3) / window.innerHeight / 3));
       gsap.set(pictogram, {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
