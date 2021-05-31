@@ -147,7 +147,7 @@ export class SwiperDirective extends Component {
 				}
 				gsap.set(target, { opacity: 1 });
 				swiper = new Swiper(target, this.options);
-				console.log(swiper);
+				// console.log(swiper);
 				this.swiper = swiper;
 				this.swiper._opening = true;
 				target.classList.add('swiper-init');

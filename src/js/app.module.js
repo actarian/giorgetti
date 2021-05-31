@@ -9,6 +9,7 @@ import { ControlCustomSelectComponent } from './core/forms/control-custom-select
 import { ControlEmailComponent } from './core/forms/control-email.component';
 import { ControlSearchComponent } from './core/forms/control-search.component';
 import { HtmlPipe } from './core/html/html.pipe';
+import { IdDirective } from './core/id/id.directive';
 import { LabelPipe } from './core/label/label.pipe';
 import { LocomotiveScrollDirective } from './core/locomotive-scroll/locomotive-scroll.directive';
 import { ScrollDirective } from './core/locomotive-scroll/scroll.directive';
@@ -20,6 +21,7 @@ import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers
 import { DesignersComponent } from './pages/designers/designers.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { MapComponent } from './pages/map/map.component';
+import { MaterialsComponent } from './pages/materials/materials.component';
 import { MenuDirective } from './pages/menu/menu.directive';
 import { NewsComponent } from './pages/news/news.component';
 import { NewsletterPropositionComponent } from './pages/newsletter/newsletter-proposition.component';
@@ -65,12 +67,13 @@ AppModule.meta = {
 		FlagPipe,
 		HeaderComponent,
 		HtmlPipe,
-		// IdDirective,
+		IdDirective,
 		LabelPipe,
 		// LanguageComponent,
 		// LazyDirective,
 		LocomotiveScrollDirective,
 		MapComponent,
+		MaterialsComponent,
 		MenuDirective,
 		// ModalComponent,
 		// ModalOutletComponent,

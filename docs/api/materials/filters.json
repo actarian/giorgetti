@@ -1,0 +1,40 @@
+{
+  "category": {
+    "label": "Tipologia",
+    "mode": "select",
+    "options": [
+      {
+        "value": 1,
+        "label": "Tessuto"
+      },
+      {
+        "value": 2,
+        "label": "Pelle"
+      },
+      {
+        "value": 3,
+        "label": "Cuoio"
+      },
+      {
+        "value": 4,
+        "label": "Marmo"
+      },
+      {
+        "value": 5,
+        "label": "Metallo"
+      },
+      {
+        "value": 6,
+        "label": "Laccatura"
+      },
+      {
+        "value": 7,
+        "label": "Vetro"
+      },
+      {
+        "value": 8,
+        "label": "Legno"
+      }
+    ]
+  }
+}

@@ -770,6 +770,27 @@ var HtmlPipe = /*#__PURE__*/function (_Pipe) {
 }(rxcomp.Pipe);
 HtmlPipe.meta = {
   name: 'html'
+};var IdDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(IdDirective, _Directive);
+
+  function IdDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = IdDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('id', this.id);
+  };
+
+  return IdDirective;
+}(rxcomp.Directive);
+IdDirective.meta = {
+  selector: '[id]',
+  inputs: ['id']
 };var LabelPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(LabelPipe, _Pipe);
 
@@ -1215,8 +1236,8 @@ SlugPipe.meta = {
         gsap.set(target, {
           opacity: 1
         });
-        swiper = new Swiper(target, this.options);
-        console.log(swiper);
+        swiper = new Swiper(target, this.options); // console.log(swiper);
+
         this.swiper = swiper;
         this.swiper._opening = true;
         target.classList.add('swiper-init');
@@ -4346,6 +4367,159 @@ var MapComponent = /*#__PURE__*/function (_Component) {
 MapComponent.meta = {
   selector: '[map]',
   inputs: ['center', 'items']
+};var MaterialsService = /*#__PURE__*/function () {
+  function MaterialsService() {}
+
+  MaterialsService.all$ = function all$() {
+    return ApiService.get$('/materials/all.json');
+  };
+
+  MaterialsService.filters$ = function filters$() {
+    return ApiService.get$('/materials/filters.json');
+  };
+
+  return MaterialsService;
+}();var MaterialsComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MaterialsComponent, _Component);
+
+  function MaterialsComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MaterialsComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.selectedItem = null;
+    this.items = [];
+    this.filteredItems = [];
+    this.filters = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      category: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.setFilterByKeyAndValue('category', form.value.category);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+
+      var options = _this.filters.category.options.slice().map(function (x) {
+        return {
+          id: x.value,
+          name: x.label
+        };
+      });
+
+      controls.category.options = options;
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([MaterialsService.all$(), MaterialsService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'category':
+                return item.category.id === value;
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+    this.form.patch({
+      category: category,
+      search: search
+    });
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('MaterialsComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+  };
+
+  _proto.onToggle = function onToggle(item) {
+    this.selectedItem = this.selectedItem === item ? null : item;
+
+    if (this.selectedItem) {
+      var selector = '#cat-' + item.category.id + '-' + item.id;
+      this.scrollTo(selector);
+    }
+
+    this.pushChanges();
+  };
+
+  _proto.scrollTo = function scrollTo(selector, event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector(selector);
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -100
+    });
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return MaterialsComponent;
+}(rxcomp.Component);
+MaterialsComponent.meta = {
+  selector: '[materials]'
 };var MENUS = [];
 var MenuDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(MenuDirective, _Directive);
@@ -5522,10 +5696,9 @@ AppModule.meta = {
   // DropDirective,
   DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
   EnvPipe, // ErrorsComponent,
-  FlagPipe, HeaderComponent, HtmlPipe, // IdDirective,
-  LabelPipe, // LanguageComponent,
+  FlagPipe, HeaderComponent, HtmlPipe, IdDirective, LabelPipe, // LanguageComponent,
   // LazyDirective,
-  LocomotiveScrollDirective, MapComponent, MenuDirective, // ModalComponent,
+  LocomotiveScrollDirective, MapComponent, MaterialsComponent, MenuDirective, // ModalComponent,
   // ModalOutletComponent,
   NewsComponent, NewsletterPropositionComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, StoreLocatorComponent, SubmenuDirective, // SvgIconStructure,
   SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, ThronComponent, TitleDirective // UploadItemComponent,
