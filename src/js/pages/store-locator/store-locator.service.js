@@ -1,9 +1,14 @@
+import { map } from 'rxjs/operators';
 import { ApiService } from '../../core/api/api.service';
 
 export class StoreLocatorService {
 
 	static all$() {
-		return ApiService.get$('/store-locator/all.json');
+		return ApiService.get$('/store-locator/all.json').pipe(
+			map(items => items.sort((a, b) => {
+				return a.rank - b.rank;
+			})),
+		);
 	}
 
 	static filters$() {

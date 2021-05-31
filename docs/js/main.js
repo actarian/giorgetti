@@ -2513,7 +2513,7 @@ DesignersComponent.meta = {
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
       _this2.scrolled = event.scroll.y > 100;
-      var opacity = 0.3 - 0.3 * Math.min(1, event.scroll.y / window.innerHeight / 4);
+      var opacity = 0.1 - 0.1 * Math.min(1, event.scroll.y / window.innerHeight / 4);
       gsap.set(pictogram, {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
@@ -4009,7 +4009,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
   "featureType": "water",
   "elementType": "all",
   "stylers": [{
-    "color": "#d1cdca"
+    "color": "#e2e0df"
   }, {
     "visibility": "on"
   }]
@@ -4051,7 +4051,8 @@ var MapComponent = /*#__PURE__*/function (_Component) {
         node = _getContext.node;
 
     var center = this.center;
-    var position = new google.maps.LatLng(center.latitude, center.longitude);
+    var item = this.items && this.items.length ? this.items[0] : null;
+    var position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
     var mapOptions = {
       zoom: 15,
       // 9,
@@ -4072,31 +4073,6 @@ var MapComponent = /*#__PURE__*/function (_Component) {
     };
     var mapElement = node.querySelector('.map');
     var map = this.map = new google.maps.Map(mapElement, mapOptions);
-    /*
-    const iconOptions = {
-    	home: { latitude: center.latitude, longitude: center.longitude },
-    	text: '<div class="map-popup"><h2>Websolute</h2><p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></div>',
-    	icon_url: `${environment.assets}img/maps/marker-sm.png`,
-    	zoom: 15
-    }
-    		const markerImage = new google.maps.MarkerImage(
-    	`${environment.assets}img/maps/marker-sm.png`,
-    	new google.maps.Size(24, 32),
-    );
-    		const marker = new google.maps.Marker({
-    	position: position,
-    	map: map,
-    	icon: markerImage,
-    	draggable: false
-    });
-    		const info = new google.maps.InfoWindow({
-    	content: iconOptions.text
-    });
-    		google.maps.event.addListener(marker, 'click', function() {
-    	info.open(map, marker);
-    });
-    */
-
     this.addMarkers(this.items);
 
     if (!this.items) {
@@ -5061,7 +5037,11 @@ ProjectsComponent.meta = {
   function StoreLocatorService() {}
 
   StoreLocatorService.all$ = function all$() {
-    return ApiService.get$('/store-locator/all.json');
+    return ApiService.get$('/store-locator/all.json').pipe(operators.map(function (items) {
+      return items.sort(function (a, b) {
+        return a.rank - b.rank;
+      });
+    }));
   };
 
   StoreLocatorService.filters$ = function filters$() {
@@ -5103,6 +5083,7 @@ ProjectsComponent.meta = {
     });
     this.load$().pipe(operators.first()).subscribe(function (data) {
       _this.items = data[0];
+      console.log(_this.items);
       _this.filters = data[1]; // countries
 
       var countries = _this.filters.country.options.slice().map(function (x) {

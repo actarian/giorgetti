@@ -70,7 +70,7 @@ export const MAP_STYLE = [
 		"elementType": "all",
 		"stylers": [
 			{
-				"color": "#d1cdca"
+				"color": "#e2e0df"
 			},
 			{
 				"visibility": "on"

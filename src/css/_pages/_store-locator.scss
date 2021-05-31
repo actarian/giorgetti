@@ -35,7 +35,7 @@
 		}
 
 		@include media-up(sm) {
-			margin-top: -85px;
+			margin-top: -80px;
 		}
 	}
 
@@ -255,6 +255,7 @@
 	position: relative;
 	padding: 60px 0 0 0;
 
+	/*
 	&:before {
 		content: '';
 		position: absolute;
@@ -262,8 +263,9 @@
 		left: 0;
 		width: 100%;
 		height: 50%;
-		background: $background-secondary;
+		background: $background-tertiary;
 	}
+	*/
 
 	.map {
 		@include aspect-clip(2, 1);
@@ -272,9 +274,9 @@
 }
 
 .section--store-locator {
-	margin-bottom: -238px;
+	margin-bottom: -240px;
 	padding: 0 0 80px 0;
-	background: $background-secondary;
+	// background: $background-tertiary;
 
 	.title {
 		margin-bottom: 100px;

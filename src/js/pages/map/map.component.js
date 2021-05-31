@@ -29,7 +29,11 @@ export class MapComponent extends Component {
 		const google = window.google;
 		const { node } = getContext(this);
 		const center = this.center;
-		const position = new google.maps.LatLng(center.latitude, center.longitude);
+
+		const item = this.items && this.items.length ? this.items[0] : null;
+
+		const position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
+
 		const mapOptions = {
 			zoom: 15, // 9,
 			center: position,
@@ -50,37 +54,10 @@ export class MapComponent extends Component {
 
 			styles: MAP_STYLE
 		};
+
 		const mapElement = node.querySelector('.map');
+
 		const map = this.map = new google.maps.Map(mapElement, mapOptions);
-
-		/*
-		const iconOptions = {
-			home: { latitude: center.latitude, longitude: center.longitude },
-			text: '<div class="map-popup"><h2>Websolute</h2><p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></div>',
-			icon_url: `${environment.assets}img/maps/marker-sm.png`,
-			zoom: 15
-		}
-
-		const markerImage = new google.maps.MarkerImage(
-			`${environment.assets}img/maps/marker-sm.png`,
-			new google.maps.Size(24, 32),
-		);
-
-		const marker = new google.maps.Marker({
-			position: position,
-			map: map,
-			icon: markerImage,
-			draggable: false
-		});
-
-		const info = new google.maps.InfoWindow({
-			content: iconOptions.text
-		});
-
-		google.maps.event.addListener(marker, 'click', function() {
-			info.open(map, marker);
-		});
-		*/
 
 		this.addMarkers(this.items);
 

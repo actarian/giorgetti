@@ -33,6 +33,7 @@ export class StoreLocatorComponent extends Component {
 			first(),
 		).subscribe(data => {
 			this.items = data[0];
+			console.log(this.items);
 			this.filters = data[1];
 			// countries
 			const countries = this.filters.country.options.slice().map(x => ({ id: x.value, name: x.label }));
