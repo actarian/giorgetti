@@ -95,10 +95,12 @@ export class MaterialsComponent extends Component {
 
 	onToggle(item) {
 		this.selectedItem = this.selectedItem === item ? null : item;
+		/*
 		if (this.selectedItem) {
 			const selector = '#cat-' + item.category.id + '-' + item.id;
 			this.scrollTo(selector);
 		}
+		*/
 		this.pushChanges();
 	}
 
@@ -108,7 +110,7 @@ export class MaterialsComponent extends Component {
 		}
 		const { node } = getContext(this);
 		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 100 });
+		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
 	}
 
 	clearFilter(event, filter) {

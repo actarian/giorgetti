@@ -4486,11 +4486,12 @@ MapComponent.meta = {
 
   _proto.onToggle = function onToggle(item) {
     this.selectedItem = this.selectedItem === item ? null : item;
-
+    /*
     if (this.selectedItem) {
-      var selector = '#cat-' + item.category.id + '-' + item.id;
-      this.scrollTo(selector);
+    	const selector = '#cat-' + item.category.id + '-' + item.id;
+    	this.scrollTo(selector);
     }
+    */
 
     this.pushChanges();
   };
@@ -4505,7 +4506,7 @@ MapComponent.meta = {
 
     var target = node.querySelector(selector);
     LocomotiveScrollService.scrollTo(target, {
-      offset: -100
+      offset: -160
     });
   };
 

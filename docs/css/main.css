@@ -8223,7 +8223,8 @@ test-component .btn--mode {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: all ease-out 250ms; }
   .card--material .card__picture {
     position: relative;
     width: 100%;
@@ -8285,7 +8286,7 @@ test-component .btn--mode {
   position: relative;
   display: grid;
   grid-auto-flow: row;
-  grid-gap: 0;
+  grid-gap: 10px;
   /*
 	display: flex;
 	flex-wrap: wrap;
@@ -8352,29 +8353,28 @@ test-component .btn--mode {
 	*/ }
   @media (min-width: 1920px) {
     .listing--materials {
-      grid-template-columns: 20% 20% 20% 20% 20%; } }
+      grid-template-columns: auto auto auto auto auto; } }
   @media (min-width: 1440px) {
     .listing--materials {
-      grid-template-columns: 20% 20% 20% 20% 20%; } }
+      grid-template-columns: auto auto auto auto auto; } }
   @media (min-width: 1024px) and (max-width: 1919.98px) {
     .listing--materials {
-      grid-template-columns: 25% 25% 25% 25%; } }
+      grid-template-columns: auto auto auto auto; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
     .listing--materials {
-      grid-template-columns: 33.333% 33.333% 33.333%; } }
+      grid-template-columns: auto auto auto; } }
   @media (max-width: 767.98px) {
     .listing--materials {
-      grid-template-columns: 50% 50%; } }
+      grid-template-columns: auto auto; } }
   .listing--materials > .listing__item.active .card--material {
     transform: scale(2);
-    transform-origin: top left;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
     z-index: 11; }
     .listing--materials > .listing__item.active .card--material .card__content {
       opacity: 1; }
 
 .section--materials-listing {
-  padding: 160px 0 160px 0;
-  background: #F8F7F7; }
+  padding: 0; }
   .section--materials-listing .title {
     margin-bottom: 40px;
     font-family: var(--font-secondary);
