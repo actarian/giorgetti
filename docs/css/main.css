@@ -8763,7 +8763,7 @@ test-component code {
       transform: scale(1, 1); }
 
 .divline {
-  margin: 20px 0;
+  margin: 80px 0;
   display: flex;
   justify-content: center; }
   .divline:after {
