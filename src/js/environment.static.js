@@ -15,7 +15,7 @@ export const environmentStatic = {
 	},
 	template: {
 		modal: {
-			myModal: '/my-modal.html',
+			userModal: '/giorgetti/user-modal.html',
 		}
 	},
 	googleMaps: {

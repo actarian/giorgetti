@@ -1,0 +1,117 @@
+/*
+.section--filters {
+	// background: linear-gradient(90deg, transparent, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, #35302c, transparent);
+	// background: $background-secondary;
+	background: $background-tertiary;
+}
+*/
+
+.group--filters {
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	min-height: 70px;
+	background: $background-negative;
+	color: $foreground-negative;
+
+	.filters__title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 40px 5px 40px;
+
+		@include media-down(xs) {
+			display: none;
+		}
+	}
+
+	.filters__select {
+		flex: 1 1 auto;
+
+		.group--form--select {
+			label {
+				display: none;
+			}
+
+			.required__badge {
+				display: none;
+			}
+		}
+
+		.control--custom-select {
+			@extend %control--text-negative;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		[control-custom-select] {
+			height: 100%;
+
+			.group--form--select {
+				height: 100%;
+			}
+		}
+	}
+
+	.filters__select+.filters__select {
+		border-left: 1px solid #6a6a6a;
+	}
+
+	.filters__search {
+		flex: 1 1 auto;
+		border-left: 1px solid #6A6A6A; // grigio scuro
+
+		[control-search] {
+			height: 100%;
+			color: $foreground-negative;
+
+			.group--form {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 100%;
+				border: none;
+				margin: 0;
+
+				.search {
+					fill: currentColor;
+					width: 24px;
+					height: 24px;
+					opacity: 0.6;
+					margin-right: 20px;
+				}
+			}
+
+			.control--text {
+				@extend %control--text-negative;
+			}
+		}
+	}
+
+	.group--form,
+	.group--form--checkbox,
+	.group--form--file,
+	.group--form--select,
+	.group--form--textarea {
+		padding: 10px;
+	}
+
+	.btn--submit {
+		@include btn($background-tertiary, #000000, $background-secondary, #000000, $background-tertiary, #000000);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		min-width: 180px;
+		padding: 15px 25px;
+		font-size: 14px;
+		line-height: 1;
+		text-align: center;
+		letter-spacing: 0.043em;
+
+		@include media-down(xs) {
+			display: none;
+		}
+	}
+}

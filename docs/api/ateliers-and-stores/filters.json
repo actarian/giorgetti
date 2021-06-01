@@ -4,6 +4,10 @@
     "mode": "select",
     "options": [
       {
+        "value": 114,
+        "label": "Italia"
+      },
+      {
         "value": 19,
         "label": "Belgio"
       },
@@ -30,10 +34,6 @@
       {
         "value": 94,
         "label": "Indonesia"
-      },
-      {
-        "value": 114,
-        "label": "Italia"
       },
       {
         "value": 145,

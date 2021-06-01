@@ -1,5 +1,5 @@
 $family: $font-primary;
-$size: 14px;
+$size: 16px;
 $weight: normal;
 $spacing: 0.05em;
 $line: 1.5;
@@ -7,13 +7,13 @@ $pristine: $foreground;
 $dirty: $foreground;
 $touched: $foreground;
 $valid: $foreground;
-$invalid: rgba(#35302C, 0.5);
+$invalid: $foreground-primary;
 
 $pristine-negative: $foreground-negative;
 $dirty-negative: $foreground-negative;
 $touched-negative: $foreground-negative;
 $valid-negative: $foreground-negative;
-$invalid-negative: rgba(white, 0.5);
+$invalid-negative: $foreground-primary;
 
 ::-webkit-file-upload-button {
 	cursor: pointer;
@@ -28,13 +28,13 @@ $invalid-negative: rgba(white, 0.5);
 %label {
 	display: block;
 	flex: 0 0 100%;
-	font-family: $font-secondary;
+	font-family: $font-primary;
 	font-size: 0.6em;
 	font-weight: $font-semibold;
 	line-height: $line;
-	// margin-bottom: -1px;
+	margin-bottom: 4px;
 	color: $pristine;
-	text-transform: none;
+	text-transform: uppercase;
 }
 
 %placeholder {
@@ -46,8 +46,8 @@ $invalid-negative: rgba(white, 0.5);
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-	padding: 0 10px;
-	// border-bottom: 2px solid $background-disabled;
+	padding: 10px 0;
+	border-bottom: 2px solid $border;
 
 	@include media-down(xs) {
 		margin-bottom: 10px;
@@ -59,11 +59,11 @@ $invalid-negative: rgba(white, 0.5);
 
 	&.required {
 		.required__badge {
-			top: 3px;
-			right: 3px;
+			top: 13px;
+			right: 1px;
 			width: 4px;
 			height: 4px;
-			background: $background-disabled;
+			background: $border;
 			border-radius: 2px;
 			line-height: 0;
 			font-size: 0;
@@ -73,8 +73,8 @@ $invalid-negative: rgba(white, 0.5);
 
 	.invalid.touched & {
 		.required__badge {
+			background: $background-primary;
 			color: $foreground-secondary;
-			background: $background-secondary;
 		}
 	}
 }
@@ -200,12 +200,14 @@ $invalid-negative: rgba(white, 0.5);
 	// min-width: 375px;
 
 	.title {
-		margin-bottom: 15px;
+		margin-bottom: 25px;
 		font-family: $font-secondary;
-		font-size: 21px;
-		font-weight: $font-extrabold;
-		line-height: 1.15;
-		text-transform: none;
+		font-size: 48px;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+		text-transform: uppercase;
+		text-align: left;
+		color: #000000;
 	}
 
 	.group--cta {
@@ -254,8 +256,6 @@ fieldset,
 	border: none;
 }
 
-/* text */
-
 .group--form {
 	@extend %group--form;
 }
@@ -264,18 +264,14 @@ fieldset,
 	@extend %control--text;
 }
 
-/* textarea */
-
 .group--form--textarea {
 	@extend %group--form;
-	padding: 15px 10px;
-	padding: 3px 1px;
-	margin-bottom: 8px;
-	border-bottom: 2px solid $background-disabled;
+	padding: 10px;
+	border: 2px solid $border;
 
 	.control--text {
 		resize: vertical;
-		font-size: 14px;
+		font-size: 16px;
 		@include scrollbar();
 	}
 
@@ -283,8 +279,6 @@ fieldset,
 		margin-bottom: 5px;
 	}
 }
-
-/* checkbox */
 
 .group--form--checkbox {
 	@extend %group--form;
@@ -325,7 +319,57 @@ fieldset,
 	}
 }
 
-/* radio */
+.group--form--checkbox {
+	@extend %group--form;
+	align-items: center;
+	flex-wrap: nowrap;
+	margin: 0 auto;
+	position: relative;
+
+	label {
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		cursor: pointer;
+
+		&>svg {
+			display: none;
+			flex: 0 0 20px;
+			width: 20px;
+			height: 20px;
+			margin: 10px 10px 10px 0;
+			line-height: 0;
+			fill: currentColor;
+		}
+
+		&>span {
+			flex: 1 1 auto;
+			font-family: $font-primary;
+			font-size: 16px;
+			text-transform: none;
+			line-height: 1.4;
+			padding-top: 9px;
+
+			&>a {
+				@extend %btn-link;
+				font-weight: 500;
+			}
+		}
+	}
+
+	input[type="checkbox"] {
+		position: absolute;
+		visibility: hidden;
+
+		&:not(:checked)+label .icon--checkbox {
+			display: flex;
+		}
+
+		&:checked+label .icon--checkbox-checked {
+			display: flex;
+		}
+	}
+}
 
 .group--form--radio {
 	min-height: 72px;
@@ -341,8 +385,6 @@ fieldset,
 		margin: 0 5px 0 4px;
 	}
 }
-
-/* file */
 
 .group--form--file {
 	@extend %group--form;
@@ -360,45 +402,17 @@ fieldset,
 	}
 }
 
-/*
-.control--file {
-	color: transparent;
-	background: rgba(0, 1, 0, 0.2);
-	opacity: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
-}
-*/
-
 errors-component {
 	display: block;
 
 	.inner {
-		@extend %label;
 		margin-top: 0;
 		margin-bottom: 10px;
-		padding: 7px 7px;
+		padding: 10px 0;
 		font-size: 10px;
-		background: $background-secondary;
-		color: $foreground-negative;
-		border-radius: 2px;
-	}
-}
-
-.group--form--results {
-	justify-content: center;
-	margin: 30px 0;
-	padding: 10px 15px;
-	font-size: 14px;
-	text-align: center;
-	background: rgba(255, 255, 255, 0.8);
-
-	@include media-down(xs) {
-		display: none;
+		font-weight: 900;
+		line-height: 1;
+		color: $foreground-primary;
 	}
 }
 
@@ -413,7 +427,7 @@ errors-component {
 		margin-left: - $gutter / 2;
 		margin-right: - $gutter / 2;
 
-		&>div {
+		&>div:not(.full) {
 			@include as-col(4, 12, $gutter);
 
 			&[control-textarea] {
@@ -422,12 +436,12 @@ errors-component {
 		}
 	}
 
-	@include media-down(md) {
+	@include media-between(sm, md) {
 		$gutter: 30px;
 		margin-left: - $gutter / 2;
 		margin-right: - $gutter / 2;
 
-		&>div {
+		&>div:not(.full) {
 			@include as-col(6, 12, $gutter);
 
 			&[control-textarea] {
@@ -440,7 +454,7 @@ errors-component {
 		margin-left: 0;
 		margin-right: 0;
 
-		&>div {
+		&>div:not(.full) {
 			@include as-col(12, 12, 0);
 
 			&[control-textarea] {
@@ -450,6 +464,11 @@ errors-component {
 				margin-right: 0;
 			}
 		}
+	}
+
+	&>div.full {
+		$gutter: 30px;
+		@include as-col(12, 12, $gutter);
 	}
 }
 
@@ -459,30 +478,12 @@ errors-component {
 	align-items: flex-start;
 	flex-wrap: wrap;
 
-	@include media-up(lg) {
+	@include media-up(sm) {
 		$gutter: 30px;
 		margin-left: - $gutter / 2;
 		margin-right: - $gutter / 2;
 
-		&>div {
-			@include as-col(4, 12, $gutter);
-
-			&[control-checkbox] {
-				@include as-col(6, 12, $gutter);
-			}
-
-			&[control-textarea] {
-				@include as-col(12, 12, $gutter);
-			}
-		}
-	}
-
-	@include media-down(md) {
-		$gutter: 30px;
-		margin-left: - $gutter / 2;
-		margin-right: - $gutter / 2;
-
-		&>div {
+		&>div:not(.full) {
 			@include as-col(6, 12, $gutter);
 
 			&[control-textarea] {
@@ -492,19 +493,22 @@ errors-component {
 	}
 
 	@include media-down(xs) {
-		margin-left: 0;
-		margin-right: 0;
+		$gutter: 30px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
 
-		&>div {
-			@include as-col(12, 12, 0);
+		&>div:not(.full) {
+			@include as-col(12, 12, $gutter);
 
 			&[control-textarea] {
-				flex: 1 1 100%;
-				max-width: 100%;
-				margin-left: 0;
-				margin-right: 0;
+				@include as-col(12, 12, $gutter);
 			}
 		}
+	}
+
+	&>div.full {
+		$gutter: 30px;
+		@include as-col(12, 12, $gutter);
 	}
 }
 
@@ -520,8 +524,6 @@ errors-component {
 		display: block;
 		position: absolute;
 		font-size: 0.6em;
-		right: 8px;
-		top: 5px;
 	}
 }
 
@@ -530,8 +532,6 @@ errors-component {
 		color: $foreground-secondary;
 	}
 }
-
-// control-values
 
 .control--head {
 	display: flex;
@@ -557,35 +557,49 @@ errors-component {
 	label,
 	.control--text,
 	.required__badge {
-		// color: $foreground-disabled;
 		opacity: 0.5;
 		pointer-events: none;
 	}
+}
 
-	/*
-	.control--text {
-		border-color: rgba(#000, 0.15);
+.group--form--results {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 30px 0;
+	padding: 10px 15px;
+	font-size: 16px;
+	text-align: center;
+
+	@include media-down(xs) {
+		display: none;
 	}
-	*/
 }
 
 test-component {
-	.group--form--results {
+
+	.test-component {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-start;
 		margin: 10px 0;
-		padding: 0;
+		padding: 20px 30px;
+		font-size: 16px;
+		text-align: center;
+		border: 2px solid $foreground;
+		border-radius: 8px;
+	}
+
+	.test-component__title {
+		margin-bottom: 20px;
 	}
 
 	code {
-		font-size: 10px;
+		margin-bottom: 15px;
+		font-size: 14px;
 		letter-spacing: -0.2px;
-	}
-
-	.btn--mode {
-		margin: 5px 0 0 0;
 	}
 }
 

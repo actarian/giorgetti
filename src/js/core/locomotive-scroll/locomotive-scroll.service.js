@@ -111,6 +111,18 @@ export class LocomotiveScrollService {
 		}
 	}
 
+	static stop() {
+		if (this.instance) {
+			this.instance.stop();
+		}
+	}
+
+	static start() {
+		if (this.instance) {
+			this.instance.start();
+		}
+	}
+
 	static scrollTo(target, options) {
 		if (this.instance) {
 			this.instance.scrollTo(target, options);

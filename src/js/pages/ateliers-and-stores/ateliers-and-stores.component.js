@@ -1,9 +1,10 @@
 import { Component } from 'rxcomp';
-import { FormControl, FormGroup, Validators } from 'rxcomp-form';
+import { FormControl, FormGroup } from 'rxcomp-form';
 import { combineLatest } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { FilterMode } from '../../core/filter/filter-item';
 import { FilterService } from '../../core/filter/filter.service';
+import { FormService } from '../../core/forms/form.service';
 import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
 import { AteliersAndStoresService } from './ateliers-and-stores.service';
 
@@ -20,8 +21,8 @@ export class AteliersAndStoresComponent extends Component {
 		this.filteredStores = [];
 		this.filters = {};
 		const form = this.form = new FormGroup({
-			country: new FormControl(null, [Validators.RequiredValidator()]),
-			search: new FormControl(null, [Validators.RequiredValidator()]),
+			country: new FormControl(null),
+			search: new FormControl(null),
 		});
 		const controls = this.controls = form.controls;
 		form.changes$.pipe(
@@ -37,9 +38,7 @@ export class AteliersAndStoresComponent extends Component {
 		).subscribe(data => {
 			this.items = data[0];
 			this.filters = data[1];
-			const options = this.filters.country.options.slice().map(x => ({ id: x.value, name: x.label }));
-			options.unshift({ id: null, name: 'select' }); // , // LabelPipe.transform('select')
-			controls.country.options = options;
+			controls.country.options = FormService.toSelectOptions(this.filters.country.options);
 			this.onLoad();
 			this.pushChanges();
 		});

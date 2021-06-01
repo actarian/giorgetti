@@ -1,0 +1,165 @@
+{
+  "ambience": {
+    "label": "Ambiente",
+    "mode": "select",
+    "options": [
+      { "value": 1, "label": "Living" },
+      { "value": 2, "label": "Kitchen" },
+      { "value": 3, "label": "Bedroom" },
+      { "value": 4, "label": "Bathroom" },
+      { "value": 5, "label": "Studio" }
+    ]
+  },
+  "material": {
+    "label": "Materiale",
+    "mode": "select",
+    "options": [
+      {
+        "value": 1,
+        "label": "Tessuto"
+      },
+      {
+        "value": 2,
+        "label": "Pelle"
+      },
+      {
+        "value": 3,
+        "label": "Cuoio"
+      },
+      {
+        "value": 4,
+        "label": "Marmo"
+      },
+      {
+        "value": 5,
+        "label": "Metallo"
+      },
+      {
+        "value": 6,
+        "label": "Laccatura"
+      },
+      {
+        "value": 7,
+        "label": "Vetro"
+      },
+      {
+        "value": 8,
+        "label": "Legno"
+      }
+    ]
+  },
+  "designer": {
+    "label": "Designer",
+    "mode": "select",
+    "options": [
+      {
+        "value": 217,
+        "label": "Pamela Amine"
+      },
+      {
+        "value": 221,
+        "label": "Umberto Asnago"
+      },
+      {
+        "value": 407,
+        "label": "Giancarlo Bosio"
+      },
+      {
+        "value": 413,
+        "label": "Roberto Cambi"
+      },
+      {
+        "value": 215,
+        "label": "Massimo Castagna"
+      },
+      {
+        "value": 207,
+        "label": "Centro Ricerche Giorgetti"
+      },
+      {
+        "value": 205,
+        "label": "Carlo Colombo"
+      },
+      {
+        "value": 8,
+        "label": "Leonardo Danieli"
+      },
+      {
+        "value": 202,
+        "label": "Alessio De Francesco"
+      },
+      {
+        "value": 209,
+        "label": "Design MVW"
+      },
+      {
+        "value": 415,
+        "label": "Virginia Harper"
+      },
+      {
+        "value": 411,
+        "label": "Setsu & Shinobu Ito"
+      },
+      {
+        "value": 220,
+        "label": "Toshiyuki Kita"
+      },
+      {
+        "value": 212,
+        "label": "Léon Krier"
+      },
+      {
+        "value": 218,
+        "label": "Roberto Lazzeroni"
+      },
+      {
+        "value": 214,
+        "label": "M2Atelier"
+      },
+      {
+        "value": 204,
+        "label": "Antonello Mosca"
+      },
+      {
+        "value": 203,
+        "label": "Andrei Munteanu"
+      },
+      {
+        "value": 213,
+        "label": "LudovicaRoberto Palomba"
+      },
+      {
+        "value": 219,
+        "label": "Rossella Pugliatti"
+      },
+      {
+        "value": 216,
+        "label": "Massimo Scolari"
+      },
+      {
+        "value": 401,
+        "label": "Dominic Siguang Ma"
+      },
+      {
+        "value": 211,
+        "label": "Laura Silvestrini"
+      },
+      {
+        "value": 399,
+        "label": "Paolo Suman"
+      },
+      {
+        "value": 412,
+        "label": "Adam D. Tihany"
+      },
+      {
+        "value": 208,
+        "label": "Chi Wing Lo"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}

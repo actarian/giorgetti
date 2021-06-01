@@ -1,9 +1,7 @@
 <!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
 <!-- @@block = main-->
 
-<script src="https://www.showefy.com/sfy/frame/v.5.0/sfyIframe-v.5.0.min.js"></script>
-
-<main class="main" products-configure>
+<main class="main" ambience>
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -14,7 +12,7 @@
 		</div>
 	</div>
 
-	<div class="section--intro-lg">
+	<div class="section--intro-sm">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9 offset-md-3 absolute" data-scroll data-scroll-speed="1.5">
@@ -25,10 +23,61 @@
 				</div>
 				<div class="col-md-6">
 					<div class="title">Ambienti</div>
+					<div class="description">
+						<p>Prodotti funzionali, contemporanei e dallo stile atipico e inconfondibile, in grado di conciliare la più alta tradizione ebanistica con l’impiego di sofisticate tecnologie produttive.</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- filters -->
+	<div class="section--filters">
+		<div class="container">
+			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
+				<div class="group--filters">
+					<div class="filters__select" *if="!ambienceId">
+						<div control-custom-select [control]="controls.ambience" label="Tipologia"></div>
+					</div>
+					<div class="filters__select">
+						<div control-custom-select [control]="controls.material" label="Materiale"></div>
+					</div>
+					<div class="filters__select">
+						<div control-custom-select [control]="controls.designer" label="Designer"></div>
+					</div>
+					<div class="filters__search">
+						<div control-search [control]="controls.search" label="Cerca"></div>
+					</div>
+					<div class="filters__cta">
+						<button type="submit" class="btn--submit">Cerca</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<section class="section--projects">
+		<div class="container">
+			<!-- spinner -->
+			<div class="spinner" *if="items.length == 0"></div>
+			<!-- results -->
+			<div class="listing--projects">
+				<div class="listing__item" *for="let item of filteredItems">
+					<a [href]="item.url" class="card--product-proposition">
+						<span class="card__picture">
+							<img loading="lazy" [src]="item.image" />
+							<span class="over">
+								<span class="over__title" [innerHTML]="item.title"></span>
+							</span>
+						</span>
+						<span class="card__content">
+							<span class="card__title" [innerHTML]="item.title"></span>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
 
 </main>
 <!-- @@close-->

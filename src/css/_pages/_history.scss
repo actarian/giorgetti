@@ -16,7 +16,6 @@
 
 	.background {
 		background: #F8F7F7;
-		margin-top: -7vw;
 		padding-top: 7vw;
 		padding-bottom: 30px;
 		display: flex;
@@ -44,14 +43,6 @@
 			fill: #d1cdca;
 		}
 		*/
-
-		@include media-down(xs) {
-			margin-top: -80px;
-		}
-
-		@include media-up(sm) {
-			margin-top: -80px;
-		}
 	}
 
 	.title {

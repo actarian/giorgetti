@@ -25,6 +25,7 @@
 		display: block;
 
 		&>a,
+		&>button,
 		&>span {
 			transition: ease-in-out $fast;
 			transition-property: background-color, color, border, opacity;
@@ -34,7 +35,8 @@
 			}
 		}
 
-		&>a {
+		&>a,
+		&>button {
 			@extend %btn;
 		}
 	}
@@ -50,6 +52,7 @@
 		display: block;
 
 		&>a,
+		&>button,
 		&>span {
 			@extend %nav-item;
 		}
@@ -81,11 +84,13 @@
 		display: block;
 
 		&>a,
+		&>button,
 		&>span {
 			@extend %nav-item;
 		}
 
-		&>a {
+		&>a,
+		&>button {
 			@extend %btn;
 		}
 	}
@@ -114,6 +119,7 @@
 		display: block;
 
 		&>a,
+		&>button,
 		&>span {
 			@extend %nav-item;
 			line-height: 1;
@@ -128,6 +134,7 @@
 		&.active {
 
 			&>a,
+			&>button,
 			&>span {
 				box-shadow: 0 20px 20px -5px $black-20;
 			}
@@ -144,6 +151,7 @@
 			flex: 1 1 33%;
 
 			&>a,
+			&>button,
 			&>span {
 				height: 100%;
 				padding: 25px 20px 25px 15px;
@@ -162,6 +170,7 @@
 		&>li {
 
 			&>a,
+			&>button,
 			&>span {
 				padding: 15px;
 				font-size: 16px;
@@ -181,6 +190,7 @@
 		&>li {
 
 			&>a,
+			&>button,
 			&>span {
 				padding: 15px;
 			}

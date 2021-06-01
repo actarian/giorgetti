@@ -19,7 +19,6 @@
 
 	.background {
 		background: #F8F7F7;
-		margin-top: -7vw;
 		padding-top: 7vw;
 		padding-bottom: 30px;
 		display: flex;
@@ -29,14 +28,6 @@
 		padding-top: 0;
 		background: #d1cdca;
 		opacity: .2;
-
-		@include media-down(xs) {
-			margin-top: -80px;
-		}
-
-		@include media-up(sm) {
-			margin-top: -80px;
-		}
 	}
 
 	.title {
@@ -159,98 +150,6 @@
 	}
 }
 
-.group--filters-store-locator {
-	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	min-height: 70px;
-	background: $background-negative;
-	color: $foreground-negative;
-
-	.filters__select {
-		flex: 1 1 auto;
-
-		.group--form--select {
-			label {
-				display: none;
-			}
-
-			.required__badge {
-				display: none;
-			}
-		}
-
-		.control--custom-select {
-			@extend %control--text-negative;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-
-		[control-custom-select] {
-			height: 100%;
-
-			.group--form--select {
-				height: 100%;
-			}
-		}
-
-	}
-
-	.filters__select+.filters__select {
-		border-left: 1px solid #6a6a6a;
-	}
-
-	.filters__search {
-		flex: 1 1 auto;
-		border-left: 1px solid #6A6A6A; // grigio scuro
-
-		[control-search] {
-			height: 100%;
-			color: $foreground-negative;
-
-			.group--form {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				height: 100%;
-				border: none;
-				margin: 0;
-
-				.search {
-					fill: currentColor;
-					width: 24px;
-					height: 24px;
-					opacity: 0.6;
-					margin-right: 20px;
-				}
-			}
-
-			.control--text {
-				@extend %control--text-negative;
-			}
-		}
-	}
-
-	.btn--submit {
-		@extend %btn;
-		min-width: 180px;
-		height: 100%;
-		font-size: 14px;
-		background: $background-tertiary;
-		color: #000000;
-
-		&:hover {
-			background: $background;
-			color: $foreground;
-		}
-
-		@include media-down(xs) {
-			display: none;
-		}
-	}
-}
-
 .section--store-locator-map {
 	position: relative;
 	padding: 60px 0 0 0;
@@ -276,6 +175,7 @@
 .section--store-locator {
 	margin-bottom: -240px;
 	padding: 0 0 80px 0;
+	// border-bottom: 1px solid $border;
 	// background: $background-tertiary;
 
 	.title {
@@ -422,8 +322,13 @@
 	}
 
 	@include media-down(xs) {
+		$gutter: 40px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
 		&>.listing__item {
-			@include as-col(12, 12, 0px);
+			@include as-col(12, 12, $gutter);
 			margin-bottom: 70px;
 		}
 	}

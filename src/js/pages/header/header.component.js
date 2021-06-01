@@ -1,6 +1,9 @@
 import { Component, getContext } from 'rxcomp';
 import { takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { ModalResolveEvent, ModalService } from '../../core/modal/modal.service';
+import { environment } from '../../environment';
+import { UserService } from '../user/user.service';
 
 export class HeaderComponent extends Component {
 
@@ -39,6 +42,17 @@ export class HeaderComponent extends Component {
 			const opacity = 0.1 - 0.1 * Math.min(1, Math.max(0, (event.scroll.y - window.innerHeight * 3) / window.innerHeight / 3));
 			gsap.set(pictogram, { opacity });
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
+		});
+	}
+
+	onLogin() {
+		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('AppComponent.onLogin', event);
+			if (event instanceof ModalResolveEvent) {
+				UserService.setUser(event.data);
+			}
 		});
 	}
 }

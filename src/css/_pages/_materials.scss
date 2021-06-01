@@ -1,5 +1,5 @@
 .section--materials {
-	padding: 100px 0;
+	padding: 100px 0 240px 0;
 
 	.picture {
 		@include aspect-clip(1920, 1080);
@@ -10,7 +10,7 @@
 .nav--materials {
 	@extend %nav;
 	justify-content: space-between;
-	margin-bottom: 140px;
+	margin-bottom: 240px;
 	padding: 0 24px;
 	background: $background-tertiary;
 

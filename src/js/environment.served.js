@@ -15,7 +15,7 @@ export const environmentServed = {
 	},
 	template: {
 		modal: {
-			myModal: '/template/modules/giorgetti/my-modal.cshtml',
+			userModal: '/template/shared/user-modal.cshtml',
 		}
 	},
 	googleMaps: {

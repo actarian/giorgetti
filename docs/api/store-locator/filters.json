@@ -4,6 +4,10 @@
     "mode": "select",
     "options": [
       {
+        "value": 114,
+        "label": "Italia"
+      },
+      {
         "value": 2,
         "label": "Albania"
       },
@@ -114,10 +118,6 @@
       {
         "value": 113,
         "label": "Israele"
-      },
-      {
-        "value": 114,
-        "label": "Italia"
       },
       {
         "value": 119,
