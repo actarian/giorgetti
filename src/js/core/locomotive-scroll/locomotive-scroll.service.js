@@ -87,10 +87,10 @@ export class LocomotiveScrollService {
 					});
 				} else {
 					const event = { direction: null, scroll: { x: 0, y: 0 }, speed: 0 };
-					// const body = document.querySelector('body');
-					let previousY = window.pageYOffset; // body.scrollTop;
-					window.addEventListener('scroll', () => {
-						const y = window.pageYOffset; // body.scrollTop;
+					const body = document.querySelector('body');
+					let previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+					body.addEventListener('scroll', () => {
+						const y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 						const direction = y > previousY ? 'down' : 'up';
 						// console.log('scroll', y, direction);
 						previousY = y;

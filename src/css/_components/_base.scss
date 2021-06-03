@@ -1,41 +1,32 @@
 html {
+	width: 100%;
 	margin: 0;
 
 	&:not(.has-scroll-smooth) {
-		width: 100%;
+		position: fixed;
 		height: 100%;
+		overflow: hidden;
 
 		body {
-			width: 100%;
-			min-height: 100%;
-			margin: 0;
-			padding: 0;
+			height: 100%;
 			overflow-x: hidden;
 			overflow-y: auto;
 			overscroll-behavior: none;
 			scroll-behavior: smooth;
 			@include scrollbar();
-
-			@include media-down(sm) {
-				overflow-x: hidden;
-				overflow-y: auto;
-			}
 		}
 	}
 }
 
 body {
+	width: 100%;
+	min-height: 100%;
 	margin: 0;
 	padding: 0;
 
 	&.fixed {
 		position: fixed;
 	}
-}
-
-html,
-body {
-	height: 100%;
 }
 
 img {

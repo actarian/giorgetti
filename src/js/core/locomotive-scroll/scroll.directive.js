@@ -5,7 +5,7 @@ import { LocomotiveScrollService } from './locomotive-scroll.service';
 export class ScrollDirective extends Directive {
 
 	onInit() {
-		if (!LocomotiveScrollService.useLocomotiveScroll()) {
+		if (LocomotiveScrollService.useLocomotiveScroll()) {
 			this.scroll$().pipe(
 				takeUntil(this.unsubscribe$),
 			).subscribe(event => {
@@ -16,7 +16,7 @@ export class ScrollDirective extends Directive {
 
 	scroll$() {
 		const { node } = getContext(this);
-		const speed = node.hasAttribute('data-scroll-speed') ? parseFloat(node.getAttribute('data-scroll-speed')) : 1.5;
+		const speed = this.scrollSpeed ? parseFloat(this.scrollSpeed) : 1.5;
 		return LocomotiveScrollService.scroll$.pipe(
 			tap(scroll => {
 				const wh = window.innerHeight;
@@ -37,5 +37,6 @@ export class ScrollDirective extends Directive {
 }
 
 ScrollDirective.meta = {
-	selector: '[data-scroll]'
+	selector: '[scroll]',
+	inputs: ['scrollSpeed'],
 };

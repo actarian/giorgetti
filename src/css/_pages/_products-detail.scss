@@ -4,7 +4,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 60px;
 
 	.card__picture {
 		@extend %btn;
@@ -28,7 +27,6 @@
 	.card__title {
 		margin-bottom: 10px;
 		font-family: $font-secondary;
-		font-size: 160px;
 		line-height: 1.1;
 		letter-spacing: -0.015em;
 		text-transform: uppercase;
@@ -37,7 +35,6 @@
 			display: block;
 			margin-bottom: 72px;
 			font-family: $font-secondary;
-			font-size: 48px;
 			line-height: 1.2;
 			letter-spacing: 0.03em;
 			color: #6A6A6A;
@@ -95,7 +92,28 @@
 		color: #6A6A6A;
 	}
 
+	@include media-up(md) {
+		margin-bottom: 60px;
+
+		.card__picture {
+			position: relative;
+		}
+
+		.card__content {
+			position: absolute;
+		}
+
+		.card__title {
+			font-size: 160px;
+
+			&>span {
+				font-size: 48px;
+			}
+		}
+	}
+
 	@include media-down(sm) {
+
 		.card__picture {
 			position: relative;
 		}
@@ -104,22 +122,23 @@
 			position: relative;
 			padding: 80px 0;
 		}
-	}
 
-	@include media-up(md) {
-		.card__picture {
-			position: relative;
-		}
-
-		.card__content {
-			position: absolute;
+		.card__title {
+			font-size: 72px;
 		}
 	}
 }
 
 .section--hero-products-detail {
-	padding: 0 0 80px 0;
-	margin-top: -78px;
+
+	@include media-up(md) {
+		padding: 0 0 80px 0;
+		margin-top: -78px;
+	}
+
+	@include media-down(sm) {
+		padding: 0 0 40px 0;
+	}
 }
 
 .section--products-detail-gallery {

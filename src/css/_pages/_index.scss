@@ -17,31 +17,6 @@
 
 .nav--index {
 	@extend %nav-reset;
-	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-template-rows: repeat(8, 0);
-	grid-auto-flow: column;
-	// grid-auto-columns: 400px;
-
-	@include media-up(xl) {
-		gap: 40px 70px;
-	}
-
-	@include media-between(lg, xl) {
-		gap: 40px 60px;
-	}
-
-	@include media-between(md, lg) {
-		gap: 40px 50px;
-	}
-
-	@include media-between(sm, md) {
-		gap: 40px 40px;
-	}
-
-	@include media-down(xs) {
-		gap: 40px 30px;
-	}
 
 	&>.nav__item {
 		position: static;
@@ -85,7 +60,35 @@
 		}
 	}
 
+	@include media-up(sm) {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		grid-template-rows: repeat(8, 0);
+		grid-auto-flow: column;
+		// grid-auto-columns: 400px;
+	}
+
+	@include media-up(xl) {
+		gap: 40px 70px;
+	}
+
+	@include media-between(lg, xl) {
+		gap: 40px 60px;
+	}
+
+	@include media-between(md, lg) {
+		gap: 40px 50px;
+	}
+
+	@include media-between(sm, md) {
+		gap: 40px 40px;
+	}
+
 	@include media-down(xs) {
-		display: none;
+		gap: 40px 30px;
+
+		&>.nav__item {
+			margin-bottom: 15px;
+		}
 	}
 }

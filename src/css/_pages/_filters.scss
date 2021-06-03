@@ -7,26 +7,15 @@
 */
 
 .group--filters {
-	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	min-height: 70px;
-	background: $background-negative;
-	color: $foreground-negative;
 
 	.filters__title {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 0 40px 5px 40px;
-
-		@include media-down(xs) {
-			display: none;
-		}
 	}
 
 	.filters__select {
-		flex: 1 1 auto;
 
 		.group--form--select {
 			label {
@@ -52,10 +41,6 @@
 				height: 100%;
 			}
 		}
-	}
-
-	.filters__select+.filters__select {
-		border-left: 1px solid #6a6a6a;
 	}
 
 	.filters__search {
@@ -112,6 +97,38 @@
 
 		@include media-down(xs) {
 			display: none;
+		}
+	}
+
+	@include media-up(md) {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+		min-height: 70px;
+		background: $background-negative;
+		color: $foreground-negative;
+
+		.filters__select {
+			flex: 1 1 auto;
+		}
+
+		.filters__select+.filters__select {
+			border-left: 1px solid #6a6a6a;
+		}
+	}
+
+	@include media-down(md) {
+
+		.group--form,
+		.group--form--checkbox,
+		.group--form--file,
+		.group--form--select,
+		.group--form--textarea {
+			padding: 10px 10px 10px 15px;
+			margin-bottom: 2px;
+			min-height: 70px;
+			background: $background-negative;
+			color: $foreground-negative;
 		}
 	}
 }

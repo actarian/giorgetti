@@ -1661,12 +1661,12 @@ LabelForDirective.meta = {
             y: 0
           },
           speed: 0
-        }; // const body = document.querySelector('body');
+        };
+        var body = document.querySelector('body');
+        var previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
-        var previousY = window.pageYOffset; // body.scrollTop;
-
-        window.addEventListener('scroll', function () {
-          var y = window.pageYOffset; // body.scrollTop;
+        body.addEventListener('scroll', function () {
+          var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
           var direction = y > previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
 
@@ -1759,7 +1759,7 @@ LocomotiveScrollDirective.meta = {
   var _proto = ScrollDirective.prototype;
 
   _proto.onInit = function onInit() {
-    if (!LocomotiveScrollService.useLocomotiveScroll()) {
+    if (LocomotiveScrollService.useLocomotiveScroll()) {
       this.scroll$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('ScrollDirective', event);
       });
     }
@@ -1769,7 +1769,7 @@ LocomotiveScrollDirective.meta = {
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
 
-    var speed = node.hasAttribute('data-scroll-speed') ? parseFloat(node.getAttribute('data-scroll-speed')) : 1.5;
+    var speed = this.scrollSpeed ? parseFloat(this.scrollSpeed) : 1.5;
     return LocomotiveScrollService.scroll$.pipe(operators.tap(function (scroll) {
       var wh = window.innerHeight;
       var wh2 = wh / 2;
@@ -1791,7 +1791,8 @@ LocomotiveScrollDirective.meta = {
   return ScrollDirective;
 }(rxcomp.Directive);
 ScrollDirective.meta = {
-  selector: '[data-scroll]'
+  selector: '[scroll]',
+  inputs: ['scrollSpeed']
 };var ModalOutletComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ModalOutletComponent, _Component);
 

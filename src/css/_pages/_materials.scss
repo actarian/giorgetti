@@ -1,18 +1,22 @@
 .section--materials {
-	padding: 100px 0 240px 0;
 
 	.picture {
 		@include aspect-clip(1920, 1080);
 		overflow: visible;
 	}
+
+	@include media-up(md) {
+		padding: 100px 0 240px 0;
+	}
+
+	@include media-down(sm) {
+		padding: 100px 0 100px 0;
+	}
 }
 
 .nav--materials {
 	@extend %nav;
-	justify-content: space-between;
-	margin-bottom: 240px;
 	padding: 0 24px;
-	background: $background-tertiary;
 
 	&>.nav__item {
 		font-size: 18px;
@@ -49,6 +53,23 @@
 					transform: scale(1, 1);
 				}
 			}
+		}
+	}
+
+	@include media-up(md) {
+		margin-bottom: 240px;
+		justify-content: space-between;
+		background: $background-tertiary;
+	}
+
+	@include media-down(sm) {
+		margin-bottom: 80px;
+		flex-direction: column;
+		text-align: center;
+
+		&>.nav__item {
+			margin-bottom: 2px;
+			background: $background-tertiary;
 		}
 	}
 }
