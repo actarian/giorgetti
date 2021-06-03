@@ -28,7 +28,7 @@ export class UserModalComponent extends UserComponent {
 
 	onViewForgot() {
 		console.log('UserModalComponent.onViewForgot');
-		this.setView(UserViews.SIGN_IN);
+		this.setView(UserViews.FORGOTTEN);
 	}
 
 	onViewSignIn() {

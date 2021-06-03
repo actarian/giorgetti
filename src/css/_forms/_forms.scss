@@ -213,13 +213,16 @@ $invalid-negative: $foreground-primary;
 	.group--cta {
 		display: flex;
 		align-items: center;
-		justify-content: center;
 		width: 100%;
 		margin: 0;
 		padding: 10px 0 20px 0;
 
 		&>*+* {
 			margin-left: 10px;
+		}
+
+		@include media-down(xs) {
+			justify-content: center;
 		}
 	}
 

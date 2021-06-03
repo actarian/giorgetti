@@ -170,7 +170,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
   slug: {
-    configureProduct: "/Client/docs/products-configure.html"
+    configureProduct: "/Client/docs/products-configure.html",
+    reservedArea: "/Client/docs/reserved-area.html"
   },
   template: {
     modal: {
@@ -192,7 +193,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
   slug: {
-    configureProduct: "/giorgetti/products-configure.html"
+    configureProduct: "/giorgetti/products-configure.html",
+    reservedArea: "/giorgetti/reserved-area.html"
   },
   template: {
     modal: {
@@ -704,7 +706,84 @@ _defineProperty(LanguageService, "selectedLanguage", LanguageService.defaultLang
   return ApiService;
 }(HttpService);
 
-_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var UserViews = {
+_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var SessionStorageService = /*#__PURE__*/function () {
+  function SessionStorageService() {}
+
+  SessionStorageService.delete = function _delete(name) {
+    if (this.isSessionStorageSupported()) {
+      window.sessionStorage.removeItem(name);
+    }
+  };
+
+  SessionStorageService.exist = function exist(name) {
+    if (this.isSessionStorageSupported()) {
+      return window.sessionStorage[name] !== undefined;
+    }
+  };
+
+  SessionStorageService.get = function get(name) {
+    var value = null;
+
+    if (this.isSessionStorageSupported() && window.sessionStorage[name] !== undefined) {
+      try {
+        value = JSON.parse(window.sessionStorage[name]);
+      } catch (e) {
+        console.log('SessionStorageService.get.error parsing', name, e);
+      }
+    }
+
+    return value;
+  };
+
+  SessionStorageService.set = function set(name, value) {
+    if (this.isSessionStorageSupported()) {
+      try {
+        var cache = [];
+        var json = JSON.stringify(value, function (key, value) {
+          if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Circular reference found, discard key
+              return;
+            }
+
+            cache.push(value);
+          }
+
+          return value;
+        });
+        window.sessionStorage.setItem(name, json);
+      } catch (e) {
+        console.log('SessionStorageService.set.error serializing', name, value, e);
+      }
+    }
+  };
+
+  SessionStorageService.isSessionStorageSupported = function isSessionStorageSupported() {
+    if (this.supported) {
+      return true;
+    }
+
+    var supported = false;
+
+    try {
+      supported = 'sessionStorage' in window && window.sessionStorage !== null;
+
+      if (supported) {
+        window.sessionStorage.setItem('test', '1');
+        window.sessionStorage.removeItem('test');
+      } else {
+        supported = false;
+      }
+    } catch (e) {
+      supported = false;
+    }
+
+    this.supported = supported;
+    return supported;
+  };
+
+  return SessionStorageService;
+}();var UserViews = {
   SIGN_IN: 1,
   SIGN_UP: 2,
   FORGOTTEN: 3
@@ -734,6 +813,7 @@ var UserService = /*#__PURE__*/function () {
   function UserService() {}
 
   UserService.setUser = function setUser(user) {
+    SessionStorageService.set('user', user);
     this.user$_.next(user);
   };
 
@@ -745,18 +825,32 @@ var UserService = /*#__PURE__*/function () {
     return ApiService.post$("/user/forgot.json", payload);
   };
 
+  UserService.sessionStorage$ = function sessionStorage$() {
+    return rxjs.of(SessionStorageService.get('user') || null);
+  };
+
   UserService.me$ = function me$() {
     var _this = this;
 
-    return ApiService.get$("/user/me.json").pipe(operators.map(function (response) {
-      return _this.mapUser(response);
-    }), operators.catchError(function (_) {
-      return rxjs.of(null);
-    }), operators.switchMap(function (user) {
-      _this.setUser(user);
+    var sessionUser = SessionStorageService.get('user');
 
-      return _this.user$_;
-    }));
+    if (sessionUser) {
+      return rxjs.of(sessionUser).pipe(operators.switchMap(function (user) {
+        _this.setUser(new User(user));
+
+        return _this.user$_;
+      }));
+    } else {
+      return ApiService.get$("/user/me.json").pipe(operators.map(function (response) {
+        _this.mapUser(response);
+      }), operators.catchError(function (_) {
+        return rxjs.of(null);
+      }), operators.switchMap(function (user) {
+        _this.setUser(user);
+
+        return _this.user$_;
+      }));
+    }
   };
 
   UserService.signin$ = function signin$(payload) {
@@ -788,39 +882,14 @@ var UserService = /*#__PURE__*/function () {
   };
 
   UserService.mapUser = function mapUser(user) {
-    return new User(user);
+    return user ? new User(user) : null;
   };
 
   UserService.mapUsers = function mapUsers(users) {
     return users ? users.map(function (x) {
       return UserService.mapUser(x);
     }) : [];
-  }
-  /*
-  static mapStatic__(user, isStatic, action = 'me') {
-  	if (!isStatic) {
-  		return user;
-  	};
-  	switch (action) {
-  		case 'me':
-  			if (!LocalStorageService.exist('user')) {
-  				user = null;
-  			};
-  			break;
-  		case 'register':
-  			LocalStorageService.set('user', user);
-  			break;
-  		case 'login':
-  			LocalStorageService.set('user', user);
-  			break;
-  		case 'logout':
-  			LocalStorageService.delete('user');
-  			break;
-  	}
-  	return user;
-  }
-  */
-  ;
+  };
 
   _createClass(UserService, null, [{
     key: "currentUser",
@@ -859,9 +928,13 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
       console.log('AppComponent.onLogin', event);
 
       if (event instanceof ModalResolveEvent) {
-        UserService.setUser(event.data);
+        window.location.href = environment.slug.reservedArea;
       }
     });
+  };
+
+  _proto.onLogout = function onLogout() {
+    UserService.signout$().pipe(first()).subscribe();
   };
 
   return AppComponent;
@@ -3274,6 +3347,12 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
     });
+    this.user = null;
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      _this2.user = user;
+
+      _this2.pushChanges();
+    });
   };
 
   _proto.onLogin = function onLogin() {
@@ -3283,12 +3362,16 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
         view: 1
       }
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
-      console.log('AppComponent.onLogin', event);
+      console.log('HeaderComponent.onLogin', event);
 
       if (event instanceof ModalResolveEvent) {
-        UserService.setUser(event.data);
+        window.location.href = environment.slug.reservedArea;
       }
     });
+  };
+
+  _proto.onLogout = function onLogout() {
+    UserService.signout$().pipe(operators.first()).subscribe();
   };
 
   _proto.onToggleMenu = function onToggleMenu() {
@@ -6096,6 +6179,129 @@ ProductsComponent.meta = {
 }(rxcomp.Component);
 ProjectsComponent.meta = {
   selector: '[projects]'
+};var ReservedAreaService = /*#__PURE__*/function () {
+  function ReservedAreaService() {}
+
+  ReservedAreaService.all$ = function all$() {
+    return ApiService.get$('/reserved-area/all.json').pipe(operators.map(function (items) {
+      items.forEach(function (x) {
+        x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));
+      });
+      return items;
+    }));
+  };
+
+  ReservedAreaService.toTitleCase = function toTitleCase(sentence, seps) {
+    if (seps === void 0) {
+      seps = ' _-/';
+    }
+
+    var capitalize = function capitalize(str) {
+      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+    };
+
+    var escape = function escape(str) {
+      return str.replace(/./g, function (c) {
+        return "\\" + c;
+      });
+    };
+
+    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
+    return sentence.replace(wordPattern, capitalize);
+  };
+
+  return ReservedAreaService;
+}();var ReservedAreaComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ReservedAreaComponent, _Component);
+
+  function ReservedAreaComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ReservedAreaComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.user = undefined;
+    this.items = [];
+    this.tree = [];
+    this.files = [];
+    this.visibleFiles = [];
+    this.item = null;
+    this.load$().pipe(operators.first()).subscribe();
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      console.log('ReservedAreaComponent.user', user);
+      _this.user = user;
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return ReservedAreaService.all$().pipe(operators.tap(function (items) {
+      _this2.items = items;
+      _this2.tree = _this2.getTree(items);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.getTree = function getTree(items, parentId) {
+    var _this3 = this;
+
+    var tree = items.filter(function (x) {
+      return x.parentId === parentId && x.type === 'folder';
+    }).map(function (x) {
+      var item = Object.assign({}, x);
+      item.items = _this3.getTree(items, x.id);
+      return item;
+    });
+    return tree;
+  };
+
+  _proto.onOpen = function onOpen(item) {
+    if (item.active) {
+      this.item = item;
+      this.files = this.items.filter(function (x) {
+        return x.type === 'file' && x.parentId === item.id;
+      });
+      this.visibleFiles = this.files.slice(0, Math.min(8, this.files.length));
+      this.pushChanges();
+      LocomotiveScrollService.update();
+    }
+  };
+
+  _proto.showMore = function showMore(event) {
+    this.visibleFiles = this.files.slice();
+    this.pushChanges();
+    LocomotiveScrollService.update();
+  };
+
+  _proto.onProjectRegistration = function onProjectRegistration(event) {
+    console.log('ReservedAreaComponent.onProjectRegistration', event);
+  };
+
+  _proto.scrollTo = function scrollTo(selector, event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector(selector);
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -160
+    });
+  };
+
+  return ReservedAreaComponent;
+}(rxcomp.Component);
+ReservedAreaComponent.meta = {
+  selector: '[reserved-area]'
 };var StoreLocatorService = /*#__PURE__*/function () {
   function StoreLocatorService() {}
 
@@ -6146,7 +6352,6 @@ ProjectsComponent.meta = {
     });
     this.load$().pipe(operators.first()).subscribe(function (data) {
       _this.items = data[0];
-      console.log(_this.items);
       _this.filters = data[1];
       controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
       controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
@@ -6539,6 +6744,112 @@ SwiperProductsPropositionDirective.meta = {
 }(SwiperDirective);
 SwiperProjectsPropositionDirective.meta = {
   selector: '[swiper-projects-proposition]'
+};var ToggleDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(ToggleDirective, _Directive);
+
+  function ToggleDirective() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Directive.call.apply(_Directive, [this].concat(args)) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "toggle_", false);
+
+    return _this;
+  }
+
+  var _proto = ToggleDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.onToggle = this.onToggle.bind(this);
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    this.toggle ? node.classList.add('active') : node.classList.remove('active');
+    node.addEventListener('click', this.onToggle);
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    node.removeEventListener('click', this.onToggle);
+  };
+
+  _proto.onToggle = function onToggle(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.toggle = !this.toggle;
+  };
+
+  _createClass(ToggleDirective, [{
+    key: "toggle",
+    get: function get() {
+      return this.toggle_;
+    },
+    set: function set(toggle) {
+      if (this.toggle_ !== toggle) {
+        this.toggle_ = toggle;
+
+        var _getContext3 = rxcomp.getContext(this),
+            node = _getContext3.node;
+
+        if (node) {
+          toggle ? node.classList.add('active') : node.classList.remove('active');
+        }
+      }
+    }
+  }]);
+
+  return ToggleDirective;
+}(rxcomp.Directive);
+ToggleDirective.meta = {
+  selector: '[toggle]',
+  inputs: ['toggle']
+};var TreeComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(TreeComponent, _Component);
+
+  function TreeComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = TreeComponent.prototype;
+
+  _proto.hasItems = function hasItems(item) {
+    return item.items && item.items.length > 0;
+  };
+
+  _proto.onClick = function onClick(item) {
+    var _this = this;
+
+    this.tree.forEach(function (x) {
+      x.active = x.id === item.id ? _this.hasItems(item) ? !item.active : true : false;
+    });
+
+    if (item.active) {
+      this.open.next(item);
+    }
+
+    this.pushChanges();
+  };
+
+  _proto.onOpen = function onOpen(item) {
+    this.open.next(item);
+  };
+
+  return TreeComponent;
+}(rxcomp.Component);
+TreeComponent.meta = {
+  selector: '[tree]',
+  inputs: ['tree'],
+  outputs: ['open'],
+  template:
+  /* html */
+  "\n\t\t<li class=\"folder\" [class]=\"{ active: item.active }\" *for=\"let item of tree\">\n\t\t\t<span [innerHTML]=\"item.title\" (click)=\"onClick(item)\"></span>\n\t\t\t<ul [tree]=\"item.items\" (open)=\"onOpen($event)\"></ul>\n\t\t</li>\n\t"
 };var UserForgotComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserForgotComponent, _Component);
 
@@ -6634,7 +6945,7 @@ UserForgotComponent.meta = {
 
   _proto.onInit = function onInit() {
     this.views = UserViews;
-    this.view = this.view || UserViews.SIGN_IN;
+    this.view = this.view || UserViews.SIGN_UP;
   };
 
   _proto.setView = function setView(view) {
@@ -6725,7 +7036,7 @@ UserComponent.meta = {
 
   _proto.onViewForgot = function onViewForgot() {
     console.log('UserModalComponent.onViewForgot');
-    this.setView(UserViews.SIGN_IN);
+    this.setView(UserViews.FORGOTTEN);
   };
 
   _proto.onViewSignIn = function onViewSignIn() {
@@ -6907,7 +7218,7 @@ UserSigninComponent.meta = {
 
       LocomotiveScrollService.update();
     });
-    this.load$().pipe(operators.first()).subscribe();
+    this.load$().pipe(operators.first(), operators.takeUntil(this.unsubscribe$)).subscribe();
   };
 
   _proto.load$ = function load$() {
@@ -7006,8 +7317,8 @@ AppModule.meta = {
   EnvPipe, ErrorsComponent, FlagPipe, HeaderComponent, HtmlPipe, IdDirective, LabelForDirective, LabelPipe, // LanguageComponent,
   // LazyDirective,
   LocomotiveScrollDirective, MapComponent, MaterialsComponent, MenuDirective, // ModalComponent,
-  ModalOutletComponent, NewsComponent, NewsletterPropositionComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ScrollDirective, SlugPipe, StoreLocatorComponent, SubmenuDirective, // SvgIconStructure,
-  SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, TestComponent, ThronComponent, TitleDirective, // UploadItemComponent,
+  ModalOutletComponent, NewsComponent, NewsletterPropositionComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ReservedAreaComponent, ScrollDirective, SlugPipe, StoreLocatorComponent, SubmenuDirective, // SvgIconStructure,
+  SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, TestComponent, ThronComponent, TitleDirective, ToggleDirective, TreeComponent, // UploadItemComponent,
   UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent // ValueDirective,
   // VirtualStructure
   ],

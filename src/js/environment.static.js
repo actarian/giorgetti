@@ -12,6 +12,7 @@ export const environmentStatic = {
 	githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
 	slug: {
 		configureProduct: `/giorgetti/products-configure.html`,
+		reservedArea: `/giorgetti/reserved-area.html`,
 	},
 	template: {
 		modal: {

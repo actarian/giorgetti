@@ -64,10 +64,16 @@
 	}
 
 	@include media-up(sm) {
+
 		&.scrolling-down {
 			.group--main {
 				margin-top: -45px;
 			}
+		}
+
+		.btn--menu,
+		.btn--cart {
+			display: none;
 		}
 	}
 
@@ -148,6 +154,8 @@
 
 		&>a,
 		&>button {
+			display: flex;
+			align-items: center;
 			padding: 0 10px;
 			background: transparent;
 			transition: all ease-in-out $fast;
@@ -155,6 +163,11 @@
 			&:hover {
 				transform: translateY(-3px);
 			}
+		}
+
+		span {
+			font-size: 12px;
+			margin-right: 5px;
 		}
 
 		svg {

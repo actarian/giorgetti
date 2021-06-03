@@ -1,5 +1,5 @@
 import { Component, getContext } from 'rxcomp';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../core/modal/modal.service';
 import { environment } from '../../environment';
@@ -51,17 +51,30 @@ export class HeaderComponent extends Component {
 			gsap.set(pictogram, { opacity });
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
 		});
+		this.user = null;
+		UserService.me$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(user => {
+			this.user = user;
+			this.pushChanges();
+		});
 	}
 
 	onLogin() {
 		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
-			console.log('AppComponent.onLogin', event);
+			console.log('HeaderComponent.onLogin', event);
 			if (event instanceof ModalResolveEvent) {
-				UserService.setUser(event.data);
+				window.location.href = environment.slug.reservedArea;
 			}
 		});
+	}
+
+	onLogout() {
+		UserService.signout$().pipe(
+			first(),
+		).subscribe();
 	}
 
 	onToggleMenu() {

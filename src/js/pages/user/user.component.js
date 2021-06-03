@@ -5,7 +5,7 @@ export class UserComponent extends Component {
 
 	onInit() {
 		this.views = UserViews;
-		this.view = this.view || UserViews.SIGN_IN;
+		this.view = this.view || UserViews.SIGN_UP;
 	}
 
 	setView(view) {

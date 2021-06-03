@@ -38,6 +38,7 @@ export class UserSignupComponent extends Component {
 		});
 		this.load$().pipe(
 			first(),
+			takeUntil(this.unsubscribe$)
 		).subscribe();
 	}
 

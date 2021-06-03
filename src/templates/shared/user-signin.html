@@ -3,7 +3,7 @@
 		<form class="form" [formGroup]="form" (submit)="onSubmit()" name="form" role="form" novalidate autocomplete="off">
 			<div class="title">Login</div>
 			<div class="abstract">Effettua il login per scaricare cataloghi, immagini e altri strumenti relativi ai prodotti Giorgetti.</div>
-			<div class="listing--fields">
+			<div class="listing--form-compact">
 				<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
 				<div control-text [control]="controls.email" label="Email"></div>
 				<div control-password [control]="controls.password" label="Password"></div>

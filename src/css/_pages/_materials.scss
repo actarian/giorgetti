@@ -1,20 +1,4 @@
-.section--materials {
-
-	.picture {
-		@include aspect-clip(1920, 1080);
-		overflow: visible;
-	}
-
-	@include media-up(md) {
-		padding: 100px 0 240px 0;
-	}
-
-	@include media-down(sm) {
-		padding: 100px 0 100px 0;
-	}
-}
-
-.nav--materials {
+.nav--secondary {
 	@extend %nav;
 	padding: 0 24px;
 
@@ -57,19 +41,41 @@
 	}
 
 	@include media-up(md) {
-		margin-bottom: 240px;
 		justify-content: space-between;
 		background: $background-tertiary;
 	}
 
 	@include media-down(sm) {
-		margin-bottom: 80px;
 		flex-direction: column;
 		text-align: center;
 
 		&>.nav__item {
 			margin-bottom: 2px;
 			background: $background-tertiary;
+		}
+	}
+}
+
+.section--materials {
+
+	.picture {
+		@include aspect-clip(1920, 1080);
+		overflow: visible;
+	}
+
+	@include media-up(md) {
+		padding: 100px 0 240px 0;
+
+		.nav--secondary {
+			margin-bottom: 240px;
+		}
+	}
+
+	@include media-down(sm) {
+		padding: 100px 0 100px 0;
+
+		.nav--secondary {
+			margin-bottom: 80px;
 		}
 	}
 }

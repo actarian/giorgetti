@@ -34,7 +34,6 @@ export class StoreLocatorComponent extends Component {
 			first(),
 		).subscribe(data => {
 			this.items = data[0];
-			console.log(this.items);
 			this.filters = data[1];
 			controls.country.options = FormService.toSelectOptions(this.filters.country.options);
 			controls.category.options = FormService.toSelectOptions(this.filters.category.options);

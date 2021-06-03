@@ -1,6 +1,7 @@
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../core/api/api.service';
+import { SessionStorageService } from '../../core/storage/session-storage.service';
 
 export const UserViews = {
 	SIGN_IN: 1,
@@ -33,6 +34,7 @@ export class UserService {
 	}
 
 	static setUser(user) {
+		SessionStorageService.set('user', user);
 		this.user$_.next(user);
 	}
 
@@ -44,15 +46,31 @@ export class UserService {
 		return ApiService.post$(`/user/forgot.json`, payload);
 	}
 
+	static sessionStorage$() {
+		return of(SessionStorageService.get('user') || null);
+	}
+
 	static me$() {
-		return ApiService.get$(`/user/me.json`).pipe(
-			map((response) => this.mapUser(response)),
-			catchError(_ => of(null)),
-			switchMap(user => {
-				this.setUser(user);
-				return this.user$_;
-			})
-		);
+		const sessionUser = SessionStorageService.get('user');
+		if (sessionUser) {
+			return of(sessionUser).pipe(
+				switchMap(user => {
+					this.setUser(new User(user));
+					return this.user$_;
+				})
+			);
+		} else {
+			return ApiService.get$(`/user/me.json`).pipe(
+				map((response) => {
+					this.mapUser(response);
+				}),
+				catchError(_ => of(null)),
+				switchMap(user => {
+					this.setUser(user);
+					return this.user$_;
+				})
+			);
+		}
 	}
 
 	static signin$(payload) {
@@ -76,35 +94,11 @@ export class UserService {
 	}
 
 	static mapUser(user) {
-		return new User(user);
+		return user ? new User(user) : null;
 	}
 
 	static mapUsers(users) {
 		return users ? users.map(x => UserService.mapUser(x)) : [];
 	}
 
-	/*
-	static mapStatic__(user, isStatic, action = 'me') {
-		if (!isStatic) {
-			return user;
-		};
-		switch (action) {
-			case 'me':
-				if (!LocalStorageService.exist('user')) {
-					user = null;
-				};
-				break;
-			case 'register':
-				LocalStorageService.set('user', user);
-				break;
-			case 'login':
-				LocalStorageService.set('user', user);
-				break;
-			case 'logout':
-				LocalStorageService.delete('user');
-				break;
-		}
-		return user;
-	}
-	*/
 }

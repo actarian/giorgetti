@@ -39,6 +39,7 @@ import { ProductsConfigureComponent } from './pages/products-configure/products-
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { ReservedAreaComponent } from './pages/reserved-area/reserved-area.component';
 import { StoreLocatorComponent } from './pages/store-locator/store-locator.component';
 import { SubmenuDirective } from './pages/submenu/submenu.directive';
 import { SwiperGalleryDirective } from './pages/swiper-gallery/swiper-gallery.directive';
@@ -46,6 +47,8 @@ import { SwiperHomepageDirective } from './pages/swiper-homepage/swiper-homepage
 import { SwiperNewsPropositionDirective } from './pages/swiper-news-proposition/swiper-news-proposition.directive';
 import { SwiperProductsPropositionDirective } from './pages/swiper-products-proposition/swiper-products-proposition.directive';
 import { SwiperProjectsPropositionDirective } from './pages/swiper-projects-proposition/swiper-projects-proposition.directive';
+import { ToggleDirective } from './pages/toggle/toggle.directive';
+import { TreeComponent } from './pages/tree/tree.component';
 import { UserForgotComponent } from './pages/user/user-forgot.component';
 import { UserModalComponent } from './pages/user/user-modal.component';
 import { UserSigninComponent } from './pages/user/user-signin.component';
@@ -99,6 +102,7 @@ AppModule.meta = {
 		ProductsConfigureComponent,
 		ProductsDetailComponent,
 		ProjectsComponent,
+		ReservedAreaComponent,
 		ScrollDirective,
 		SlugPipe,
 		StoreLocatorComponent,
@@ -113,6 +117,8 @@ AppModule.meta = {
 		TestComponent,
 		ThronComponent,
 		TitleDirective,
+		ToggleDirective,
+		TreeComponent,
 		// UploadItemComponent,
 		UserComponent,
 		UserForgotComponent,

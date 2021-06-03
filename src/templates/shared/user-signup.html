@@ -3,7 +3,7 @@
 		<form class="form" [formGroup]="form" (submit)="onSubmit()" name="form" role="form" novalidate autocomplete="off">
 			<div class="title">Registrazione</div>
 			<div class="abstract">Compilate il form per richiedere l'accesso. Riceverete un e-mail di conferma ad attivazione avvenuta.</div>
-			<div class="listing--fields">
+			<div class="listing--form-compact">
 				<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
 				<div control-text [control]="controls.firstName" label="Nome"></div>
 				<div control-text [control]="controls.lastName" label="Cognome"></div>

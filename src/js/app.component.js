@@ -18,9 +18,15 @@ export class AppComponent extends Component {
 		).subscribe(event => {
 			console.log('AppComponent.onLogin', event);
 			if (event instanceof ModalResolveEvent) {
-				UserService.setUser(event.data);
+				window.location.href = environment.slug.reservedArea;
 			}
 		});
+	}
+
+	onLogout() {
+		UserService.signout$().pipe(
+			first(),
+		).subscribe();
 	}
 }
 

@@ -12,6 +12,7 @@ export const environmentServed = {
 	githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
 	slug: {
 		configureProduct: `/Client/docs/products-configure.html`,
+		reservedArea: `/Client/docs/reserved-area.html`,
 	},
 	template: {
 		modal: {

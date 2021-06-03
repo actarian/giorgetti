@@ -14,7 +14,9 @@
 			<div class="group--right">
 				<ul class="nav--service">
 					<li class="nav__item">
-						<button type="button" (click)="onLogin($event)"><svg class="user"><use xlink:href="#user"></use></svg></button>
+						<button type="button" (click)="onLogin($event)" *if="!user"><svg class="user"><use xlink:href="#user"></use></svg></button>
+						<!-- <a href="/giorgetti/reserved-area.html" *if="!user"><svg class="user"><use xlink:href="#user"></use></svg></a> -->
+						<button type="button" (click)="onLogout($event)" *if="user"><span>logout</span> <svg class="user"><use xlink:href="#user"></use></svg></button>
 					</li>
 					<li class="nav__item">
 						<a href="/giorgetti/store-locator.html"><svg class="pin"><use xlink:href="#pin"></use></svg></a>
