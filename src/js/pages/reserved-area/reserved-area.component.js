@@ -22,6 +22,7 @@ export class ReservedAreaComponent extends Component {
 			console.log('ReservedAreaComponent.user', user);
 			this.user = user;
 			this.pushChanges();
+			LocomotiveScrollService.update();
 		});
 	}
 
