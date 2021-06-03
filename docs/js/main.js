@@ -850,6 +850,8 @@ var UserService = /*#__PURE__*/function () {
         _this.setUser(user);
 
         return _this.user$_;
+      }), operators.map(function (user) {
+        return user || null;
       }));
     }
   };
