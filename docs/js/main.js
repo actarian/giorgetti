@@ -6242,6 +6242,8 @@ ProjectsComponent.meta = {
       _this.user = user;
 
       _this.pushChanges();
+
+      LocomotiveScrollService.update();
     });
   };
 
