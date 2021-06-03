@@ -30,7 +30,6 @@
 	.title {
 		margin-bottom: 30px;
 		font-family: $font-secondary;
-		font-size: 72px;
 		line-height: 1.1;
 		letter-spacing: -0.027em;
 		text-transform: uppercase;
@@ -70,6 +69,7 @@
 	@include media-up(md) {
 		.title {
 			margin-top: 120px;
+			font-size: 72px;
 		}
 
 		.abstract {
@@ -94,6 +94,7 @@
 
 		.title {
 			margin-top: 60px;
+			font-size: 48px;
 		}
 
 		.abstract {
@@ -198,9 +199,19 @@
 	}
 	*/
 
-	.map {
-		@include aspect-clip(2, 1);
-		width: auto;
+	@include media-up(md) {
+
+		.map {
+			@include aspect-clip(2, 1);
+			width: auto;
+		}
+	}
+
+	@include media-down(sm) {
+
+		.map {
+			@include aspect-clip(1, 1);
+		}
 	}
 }
 

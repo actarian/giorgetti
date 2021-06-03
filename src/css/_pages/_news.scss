@@ -239,16 +239,32 @@
 }
 
 .section--news {
-	padding: 0 0 80px 0;
 
 	.title {
-		margin-bottom: 100px;
 		font-family: $font-secondary;
-		font-size: 72px;
 		line-height: 1.1;
 		text-align: center;
 		letter-spacing: -0.027em;
 		text-transform: uppercase;
+	}
+
+	@include media-up(md) {
+		padding: 0 0 80px 0;
+
+		.title {
+			margin-bottom: 100px;
+			font-size: 72px;
+		}
+
+	}
+
+	@include media-down(md) {
+		padding: 0;
+
+		.title {
+			margin-bottom: 40px;
+			font-size: 48px;
+		}
 	}
 }
 

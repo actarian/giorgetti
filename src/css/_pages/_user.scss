@@ -1,14 +1,10 @@
 .modal--user {
 	background: $background;
 	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	max-height: calc(100vh - 200px);
 	width: 100%;
 	max-width: 840px;
 
 	.modal__picture {
-		flex: 1 1 50%;
 		position: relative;
 		background: $background-tertiary;
 
@@ -31,10 +27,8 @@
 	}
 
 	.modal__content {
-		flex: 1 1 50%;
 		position: relative;
 		display: block;
-		height: 600px;
 	}
 
 	.modal__header {
@@ -49,10 +43,6 @@
 		display: block;
 		padding-top: 50px;
 		padding-bottom: 80px;
-		height: 600px;
-		overflow-x: hidden;
-		overflow-y: auto;
-		@include scrollbar();
 	}
 
 	.section--form {
@@ -98,6 +88,45 @@
 			&:after {
 				transform: scale(1, 1);
 			}
+		}
+	}
+
+	@include media-up(md) {
+		justify-content: space-between;
+		align-items: stretch;
+		max-height: calc(100vh - 200px);
+
+		.modal__picture {
+			flex: 1 1 50%;
+		}
+
+		.modal__inner {
+			height: 600px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			@include scrollbar();
+		}
+
+		.modal__content {
+			flex: 1 1 50%;
+			height: 600px;
+		}
+
+	}
+
+	@include media-down(sm) {
+		flex-direction: column;
+		max-height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		@include scrollbar();
+
+		.modal__picture {
+			@include aspect-clip(2, 1);
+		}
+
+		.modal__inner {
+			padding-bottom: 120px;
 		}
 	}
 }

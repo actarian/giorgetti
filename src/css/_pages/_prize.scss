@@ -2,16 +2,6 @@
 	position: relative;
 	width: 100%;
 
-	&:not(:last-child) {
-		margin-bottom: 200px;
-	}
-
-	/*
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	*/
-
 	.card__picture {
 		position: relative;
 
@@ -33,13 +23,11 @@
 
 	.card__content {
 		position: relative;
-		padding: 80px 110px;
 		background: #D1CDCA;
 	}
 
 	.card__title {
 		font-family: $font-secondary;
-		font-size: 140px;
 		line-height: 1.1;
 		letter-spacing: -0.05em;
 		text-transform: uppercase;
@@ -49,21 +37,36 @@
 
 	.card__abstract {
 		font-family: $font-secondary;
-		font-size: 48px;
 		line-height: 1.2;
 		letter-spacing: -0.05em;
 		text-transform: uppercase;
 	}
 
 	.card__description {
-		font-size: 18px;
 		line-height: 1.2;
 	}
 
 	@include media-up(md) {
 
+		&:not(:last-child) {
+			margin-bottom: 200px;
+		}
+
+		.card__content {
+			padding: 80px 110px;
+		}
+
 		.card__title {
 			position: absolute;
+			font-size: 140px;
+		}
+
+		.card__abstract {
+			font-size: 48px;
+		}
+
+		.card__description {
+			font-size: 18px;
 		}
 
 		&:nth-child(even) {
@@ -95,10 +98,10 @@
 		}
 	}
 
-	@include media-between(md, lg) {
+	@include media-up(xl) {
 		display: flex;
 		align-items: center;
-		$gutter: 50px;
+		$gutter: 70px;
 
 		.card__picture {
 			@include as-col(6, 12, $gutter);
@@ -151,10 +154,10 @@
 		}
 	}
 
-	@include media-up(xl) {
+	@include media-between(md, lg) {
 		display: flex;
 		align-items: center;
-		$gutter: 70px;
+		$gutter: 50px;
 
 		.card__picture {
 			@include as-col(6, 12, $gutter);
@@ -176,6 +179,29 @@
 			.card__picture {
 				@include expand-left();
 			}
+		}
+	}
+
+	@include media-down(sm) {
+
+		&:not(:last-child) {
+			margin-bottom: 60px;
+		}
+
+		.card__content {
+			padding: 20px 20px 40px 20px;
+		}
+
+		.card__title {
+			font-size: 72px;
+		}
+
+		.card__abstract {
+			font-size: 32px;
+		}
+
+		.card__description {
+			font-size: 16px;
 		}
 	}
 }

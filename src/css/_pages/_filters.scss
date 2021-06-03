@@ -119,6 +119,10 @@
 
 	@include media-down(md) {
 
+		.filters__title {
+			margin-bottom: 30px;
+		}
+
 		.group--form,
 		.group--form--checkbox,
 		.group--form--file,

@@ -1,15 +1,25 @@
 .page>.pictogram {
 	position: fixed;
-	top: 0;
-	right: -10vw;
-	width: 60vw;
-	height: 60vw;
 	opacity: 0.2;
 	animation: linear-rotate 480000ms linear infinite;
 
 	&>img {
 		width: 100%;
 		height: 100%;
+	}
+
+	@include media-up(md) {
+		top: 0;
+		right: -10vw;
+		width: 60vw;
+		height: 60vw;
+	}
+
+	@include media-down(sm) {
+		top: 20vw;
+		right: -10vw;
+		width: 80vw;
+		height: 80vw;
 	}
 }
 
