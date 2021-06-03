@@ -20,6 +20,6 @@ export const environmentStatic = {
 		}
 	},
 	googleMaps: {
-		apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60',
+		apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w',
 	}
 };
