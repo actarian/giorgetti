@@ -813,7 +813,12 @@ var UserService = /*#__PURE__*/function () {
   function UserService() {}
 
   UserService.setUser = function setUser(user) {
-    SessionStorageService.set('user', user);
+    if (user) {
+      SessionStorageService.set('user', user);
+    } else {
+      SessionStorageService.delete('user');
+    }
+
     this.user$_.next(user);
   };
 

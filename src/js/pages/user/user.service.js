@@ -10,6 +10,7 @@ export const UserViews = {
 };
 
 export class User {
+
 	get avatar() {
 		return (this.firstName || '?').substr(0, 1).toUpperCase() + (this.lastName || '?').substr(0, 1).toUpperCase();
 	}
@@ -23,6 +24,7 @@ export class User {
 			Object.assign(this, data);
 		}
 	}
+
 }
 
 export class UserService {
@@ -34,7 +36,11 @@ export class UserService {
 	}
 
 	static setUser(user) {
-		SessionStorageService.set('user', user);
+		if (user) {
+			SessionStorageService.set('user', user);
+		} else {
+			SessionStorageService.delete('user');
+		}
 		this.user$_.next(user);
 	}
 
