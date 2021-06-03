@@ -2,6 +2,12 @@ import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../core/api/api.service';
 
+export const UserViews = {
+	SIGN_IN: 1,
+	SIGN_UP: 2,
+	FORGOTTEN: 3,
+};
+
 export class User {
 	get avatar() {
 		return (this.firstName || '?').substr(0, 1).toUpperCase() + (this.lastName || '?').substr(0, 1).toUpperCase();

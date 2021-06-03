@@ -3,6 +3,7 @@ import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive
 import { ModalOutletComponent } from '../../core/modal/modal-outlet.component';
 import { ModalService } from '../../core/modal/modal.service';
 import { UserComponent } from './user.component';
+import { UserViews } from './user.service';
 
 export class UserModalComponent extends UserComponent {
 
@@ -17,13 +18,31 @@ export class UserModalComponent extends UserComponent {
 		LocomotiveScrollService.stop();
 	}
 
-	onDestroy() {
-		LocomotiveScrollService.start();
+	setView(view) {
+		this.view = view;
+		this.pushChanges();
+		const { node } = getContext(this);
+		const target = window.innerWidth >= 1024 ? node.querySelector('.modal__inner') : node;
+		target.scrollTo(0, 0);
 	}
 
-	onSignIn(user) {
-		// console.log('UserModalComponent.onSignIn', user);
-		ModalService.resolve(user);
+	onViewForgot() {
+		console.log('UserModalComponent.onViewForgot');
+		this.setView(UserViews.SIGN_IN);
+	}
+
+	onViewSignIn() {
+		console.log('UserModalComponent.onViewSignIn');
+		this.setView(UserViews.SIGN_IN);
+	}
+
+	onViewSignUp() {
+		console.log('UserModalComponent.onViewSignUp');
+		this.setView(UserViews.SIGN_UP);
+	}
+
+	onClose() {
+		ModalService.reject();
 	}
 
 	onSignUp(user) {
@@ -31,10 +50,14 @@ export class UserModalComponent extends UserComponent {
 		ModalService.resolve(user);
 	}
 
-	close() {
-		ModalService.reject();
+	onSignIn(user) {
+		// console.log('UserModalComponent.onSignIn', user);
+		ModalService.resolve(user);
 	}
 
+	onDestroy() {
+		LocomotiveScrollService.start();
+	}
 }
 
 UserModalComponent.meta = {

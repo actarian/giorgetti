@@ -2,15 +2,16 @@
 <header class="header" header>
 	<div class="container">
 		<div class="group--header">
-			<div class="group--language">
+			<div class="group--left">
 				<ul class="nav--language">
 					<li class="nav__item"><a href="#">Italia | IT</a></li>
 				</ul>
+				<button type="button" class="btn--menu" (click)="onToggleMenu($event)"><svg class="menu"><use xlink:href="#menu"></use></svg></button>
 			</div>
-			<div class="group--logo">
-				<a href="#" class="btn--logo"><svg class="giorgetti"><use xlink:href="#giorgetti"></use></svg></a>
+			<div class="group--center">
+				<a href="/giorgetti/" class="btn--logo"><svg class="giorgetti"><use xlink:href="#giorgetti"></use></svg></a>
 			</div>
-			<div class="group--service">
+			<div class="group--right">
 				<ul class="nav--service">
 					<li class="nav__item">
 						<button type="button" (click)="onLogin($event)"><svg class="user"><use xlink:href="#user"></use></svg></button>
@@ -22,15 +23,16 @@
 						<a href="#"><svg class="events"><use xlink:href="#events"></use></svg></a>
 					</li>
 					<li class="nav__item">
-						<a href="#"><svg class="search"><use xlink:href="#search"></use></svg></a>
+						<button type="button" (click)="onToggleSearch($event)"><svg class="search"><use xlink:href="#search"></use></svg></button>
 					</li>
 					<li class="nav__item">
-						<a href="#"><svg class="cart"><use xlink:href="#cart"></use></svg></a>
+						<button type="button" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg></button>
 					</li>
 				</ul>
+				<button type="button" class="btn--cart" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg></button>
 			</div>
 		</div>
-		<div class="group--main">
+		<div class="group--main" [class]="{ active: show == 'menu' }">
 			<ul class="nav--main">
 				<li class="nav__item"><a href="/giorgetti/products.html" menu="1">Collezione</a></li>
 				<li class="nav__item"><a href="/giorgetti/ambience.html" menu="2">Ambienti</a></li>

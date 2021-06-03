@@ -1,4 +1,4 @@
-<div class="section--form" user-signup (signUp)="onSignUp($event)" (login)="onLogin($event)">
+<div class="section--form" user-signup (signUp)="onSignUp($event)" (viewSignIn)="onViewSignIn($event)">
 	<div class="container" *if="!success">
 		<form class="form" [formGroup]="form" (submit)="onSubmit()" name="form" role="form" novalidate autocomplete="off">
 			<div class="title">Registrazione</div>

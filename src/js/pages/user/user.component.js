@@ -1,36 +1,31 @@
-import { Component, getContext } from 'rxcomp';
-import { UserService } from './user.service';
-
-export const UserViews = {
-	SIGN_IN: 1,
-	SIGN_UP: 2,
-	FORGOTTEN: 3,
-};
+import { Component } from 'rxcomp';
+import { UserService, UserViews } from './user.service';
 
 export class UserComponent extends Component {
 
 	onInit() {
-		const { node } = getContext(this);
 		this.views = UserViews;
 		this.view = this.view || UserViews.SIGN_IN;
 	}
 
-	onForgot(event) {
+	setView(view) {
+		this.view = view;
+		this.pushChanges();
+	}
+
+	onViewForgot(event) {
 		// console.log('UserComponent.onForgot');
-		this.view = UserViews.FORGOTTEN;
-		this.pushChanges();
+		this.setView(UserViews.FORGOTTEN);
 	}
 
-	onLogin(event) {
-		// console.log('UserComponent.onLogin');
-		this.view = UserViews.SIGN_IN;
-		this.pushChanges();
+	onViewSignIn(event) {
+		// console.log('UserComponent.onSignIn');
+		this.setView(UserViews.SIGN_IN);
 	}
 
-	onRegister(event) {
-		// console.log('UserComponent.onRegister');
-		this.view = UserViews.SIGN_UP;
-		this.pushChanges();
+	onViewSignUp(event) {
+		// console.log('UserComponent.onSignUp');
+		this.setView(UserViews.SIGN_UP);
 	}
 
 	onSignIn(user) {
@@ -51,11 +46,10 @@ export class UserComponent extends Component {
 		// nav to profile
 	}
 
-	onForgottenSent(email) {
+	onForgot(email) {
 		/*
-		console.log('UserComponent.onForgottenSent', email);
-		this.view = UserViews.SIGN_IN;
-		this.pushChanges();
+		console.log('UserComponent.onForgot', email);
+		this.setView(UserViews.SIGN_IN);
 		*/
 	}
 }

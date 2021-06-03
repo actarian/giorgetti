@@ -3,7 +3,7 @@
 		<img src="/giorgetti/img/user/giorgetti.jpg" />
 	</div>
 	<div class="modal__content">
-		<div class="modal__header" (click)="close()">
+		<div class="modal__header" (click)="onClose()">
 			<button type="button" class="btn--close"><svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#close"></use></svg></button>
 		</div>
 		<div class="modal__inner">
@@ -20,13 +20,13 @@
 			<div class="container" *if="view != views.SIGN_UP">
 				<div class="title">Non fai ancora parte di Giorgetti?</div>
 				<div class="group--info">
-					<button type="button" class="btn--link" (click)="onRegister($event)"><span>Registrati</span></button>
+					<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
 				</div>
 			</div>
 			<div class="container" *if="view == views.SIGN_UP">
 				<div class="title">Sei già registrato?</div>
 				<div class="group--info">
-					<button type="button" class="btn--link" (click)="onLogin($event)"><span>Accedi</span></button>
+					<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
 				</div>
 			</div>
 		</div>

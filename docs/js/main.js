@@ -704,7 +704,12 @@ _defineProperty(LanguageService, "selectedLanguage", LanguageService.defaultLang
   return ApiService;
 }(HttpService);
 
-_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var User = /*#__PURE__*/function () {
+_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var UserViews = {
+  SIGN_IN: 1,
+  SIGN_UP: 2,
+  FORGOTTEN: 3
+};
+var User = /*#__PURE__*/function () {
   function User(data) {
     if (data) {
       Object.assign(this, data);
@@ -3229,7 +3234,13 @@ ContactsComponent.meta = {
 }(rxcomp.Component);
 DesignersComponent.meta = {
   selector: '[designers]'
-};var HeaderComponent = /*#__PURE__*/function (_Component) {
+};var HeaderMode = {
+  IDLE: 'idle',
+  MENU: 'menu',
+  SEARCH: 'search',
+  CART: 'cart'
+};
+var HeaderComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(HeaderComponent, _Component);
 
   function HeaderComponent() {
@@ -3253,6 +3264,7 @@ DesignersComponent.meta = {
   _proto.onInit = function onInit() {
     var _this2 = this;
 
+    this.show = HeaderMode.IDLE;
     var pictogram = document.querySelector('.page > .pictogram');
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
@@ -3277,6 +3289,21 @@ DesignersComponent.meta = {
         UserService.setUser(event.data);
       }
     });
+  };
+
+  _proto.onToggleMenu = function onToggleMenu() {
+    this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
+    this.pushChanges();
+  };
+
+  _proto.onToggleSearch = function onToggleSearch() {
+    this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
+    this.pushChanges();
+  };
+
+  _proto.onToggleCart = function onToggleCart() {
+    this.show = this.show === HeaderMode.CART ? HeaderMode.IDLE : HeaderMode.CART;
+    this.pushChanges();
   };
 
   _createClass(HeaderComponent, [{
@@ -6568,7 +6595,7 @@ SwiperProjectsPropositionDirective.meta = {
         });
         form.reset();
 
-        _this2.sent.next(true);
+        _this2.forgot.next(true);
       }, function (error) {
         console.log('UserForgotComponent.error', error);
         _this2.error = error;
@@ -6583,25 +6610,20 @@ SwiperProjectsPropositionDirective.meta = {
     }
   };
 
-  _proto.onLogin = function onLogin() {
-    this.login.next();
+  _proto.onSignIn = function onSignIn() {
+    this.viewSignIn.next();
   };
 
-  _proto.onRegister = function onRegister() {
-    this.register.next();
+  _proto.onSignUp = function onSignUp() {
+    this.viewSignUp.next();
   };
 
   return UserForgotComponent;
 }(rxcomp.Component);
 UserForgotComponent.meta = {
   selector: '[user-forgot]',
-  outputs: ['sent', 'login', 'register']
-};var UserViews = {
-  SIGN_IN: 1,
-  SIGN_UP: 2,
-  FORGOTTEN: 3
-};
-var UserComponent = /*#__PURE__*/function (_Component) {
+  outputs: ['forgot', 'viewSignIn', 'viewSignUp']
+};var UserComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserComponent, _Component);
 
   function UserComponent() {
@@ -6611,29 +6633,28 @@ var UserComponent = /*#__PURE__*/function (_Component) {
   var _proto = UserComponent.prototype;
 
   _proto.onInit = function onInit() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
     this.views = UserViews;
     this.view = this.view || UserViews.SIGN_IN;
   };
 
-  _proto.onForgot = function onForgot(event) {
+  _proto.setView = function setView(view) {
+    this.view = view;
+    this.pushChanges();
+  };
+
+  _proto.onViewForgot = function onViewForgot(event) {
     // console.log('UserComponent.onForgot');
-    this.view = UserViews.FORGOTTEN;
-    this.pushChanges();
+    this.setView(UserViews.FORGOTTEN);
   };
 
-  _proto.onLogin = function onLogin(event) {
-    // console.log('UserComponent.onLogin');
-    this.view = UserViews.SIGN_IN;
-    this.pushChanges();
+  _proto.onViewSignIn = function onViewSignIn(event) {
+    // console.log('UserComponent.onSignIn');
+    this.setView(UserViews.SIGN_IN);
   };
 
-  _proto.onRegister = function onRegister(event) {
-    // console.log('UserComponent.onRegister');
-    this.view = UserViews.SIGN_UP;
-    this.pushChanges();
+  _proto.onViewSignUp = function onViewSignUp(event) {
+    // console.log('UserComponent.onSignUp');
+    this.setView(UserViews.SIGN_UP);
   };
 
   _proto.onSignIn = function onSignIn(user) {
@@ -6656,11 +6677,10 @@ var UserComponent = /*#__PURE__*/function (_Component) {
 
   };
 
-  _proto.onForgottenSent = function onForgottenSent(email) {
+  _proto.onForgot = function onForgot(email) {
     /*
-    console.log('UserComponent.onForgottenSent', email);
-    this.view = UserViews.SIGN_IN;
-    this.pushChanges();
+    console.log('UserComponent.onForgot', email);
+    this.setView(UserViews.SIGN_IN);
     */
   };
 
@@ -6692,13 +6712,34 @@ UserComponent.meta = {
     LocomotiveScrollService.stop();
   };
 
-  _proto.onDestroy = function onDestroy() {
-    LocomotiveScrollService.start();
+  _proto.setView = function setView(view) {
+    this.view = view;
+    this.pushChanges();
+
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var target = window.innerWidth >= 1024 ? node.querySelector('.modal__inner') : node;
+    target.scrollTo(0, 0);
   };
 
-  _proto.onSignIn = function onSignIn(user) {
-    // console.log('UserModalComponent.onSignIn', user);
-    ModalService.resolve(user);
+  _proto.onViewForgot = function onViewForgot() {
+    console.log('UserModalComponent.onViewForgot');
+    this.setView(UserViews.SIGN_IN);
+  };
+
+  _proto.onViewSignIn = function onViewSignIn() {
+    console.log('UserModalComponent.onViewSignIn');
+    this.setView(UserViews.SIGN_IN);
+  };
+
+  _proto.onViewSignUp = function onViewSignUp() {
+    console.log('UserModalComponent.onViewSignUp');
+    this.setView(UserViews.SIGN_UP);
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
   };
 
   _proto.onSignUp = function onSignUp(user) {
@@ -6706,8 +6747,13 @@ UserComponent.meta = {
     ModalService.resolve(user);
   };
 
-  _proto.close = function close() {
-    ModalService.reject();
+  _proto.onSignIn = function onSignIn(user) {
+    // console.log('UserModalComponent.onSignIn', user);
+    ModalService.resolve(user);
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
   };
 
   return UserModalComponent;
@@ -6788,18 +6834,18 @@ UserModalComponent.meta = {
   };
 
   _proto.onForgot = function onForgot(event) {
-    this.forgot.next();
+    this.viewForgot.next();
   };
 
-  _proto.onRegister = function onRegister(event) {
-    this.register.next();
+  _proto.onSignUp = function onSignUp(event) {
+    this.viewSignUp.next();
   };
 
   return UserSigninComponent;
 }(rxcomp.Component);
 UserSigninComponent.meta = {
   selector: '[user-signin]',
-  outputs: ['signIn', 'forgot', 'register']
+  outputs: ['signIn', 'viewForgot', 'viewSignUp']
 };function MatchValidator(fieldName, formGroup) {
   return new rxcompForm.FormValidator(function (value) {
     var field = formGroup ? formGroup.get(fieldName) : null;
@@ -6933,15 +6979,15 @@ UserSigninComponent.meta = {
     }
   };
 
-  _proto.onLogin = function onLogin() {
-    this.login.next();
+  _proto.onSignIn = function onSignIn() {
+    this.viewSignIn.next();
   };
 
   return UserSignupComponent;
 }(rxcomp.Component);
 UserSignupComponent.meta = {
   selector: '[user-signup]',
-  outputs: ['signUp', 'login']
+  outputs: ['signUp', 'viewSignIn']
 };var AppModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(AppModule, _Module);
 

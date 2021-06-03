@@ -11,7 +11,7 @@
 		position: static;
 	}
 
-	.group--logo {
+	.group--center {
 		flex: 0 0 220px;
 		line-height: 0;
 
@@ -28,8 +28,8 @@
 		}
 	}
 
-	.group--language,
-	.group--service,
+	.group--left,
+	.group--right,
 	.group--main {
 		transition: all ease-in-out $fast;
 	}
@@ -38,27 +38,8 @@
 		padding: 9px 0;
 		background: $background;
 
-		/*
-		.group--logo {
-			.btn--logo {
-				svg {
-					width: 220px * 0.75;
-					height: 63px * 0.75;
-				}
-			}
-		}
-		*/
-
-		/*
-		.group--language,
-		.group--service {
-			transform: translateY(-40px);
-			opacity: 0;
-		}
-		*/
-
-		.group--language,
-		.group--service {
+		.group--left,
+		.group--right {
 			transform: translateY(9px);
 		}
 
@@ -71,8 +52,15 @@
 		background: $background;
 	}
 
-	@include media-down(xs) {
-		padding: 9px 0;
+	.btn--menu,
+	.btn--cart {
+		@extend %btn;
+
+		svg {
+			fill: currentColor;
+			width: 24px;
+			height: 24px;
+		}
 	}
 
 	@include media-up(sm) {
@@ -82,21 +70,63 @@
 			}
 		}
 	}
+
+	@include media-down(xs) {
+		padding: 9px 0;
+
+		.nav--language {
+			display: none;
+		}
+
+		.nav--main {
+			display: none;
+		}
+
+		.group--main {
+			&.active {
+				opacity: 1;
+
+				/* // todo
+				.nav--main {
+					display: flex;
+				}
+				*/
+			}
+		}
+	}
 }
 
 .group--header {
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-start;
 
 	@include media-up(sm) {
+		align-items: flex-start;
 		padding-bottom: 18px;
+	}
+
+	@include media-down(xs) {
+		align-items: center;
 	}
 }
 
-.group--language {
+.group--left {
 	flex: 1 1 calc(100% - 220px / 2);
-	margin-top: 10px;
+
+	@include media-up(sm) {
+		margin-top: 10px;
+	}
+}
+
+.group--right {
+	flex: 1 1 calc(100% - 220px / 2);
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	@include media-up(sm) {
+		margin-top: 10px;
+	}
 }
 
 .nav--language {
@@ -105,18 +135,6 @@
 	&>.nav__item {
 		white-space: nowrap;
 	}
-
-	@include media-down(xs) {
-		display: none;
-	}
-}
-
-.group--service {
-	flex: 1 1 calc(100% - 220px / 2);
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	margin-top: 10px;
 }
 
 .nav--service {
@@ -208,10 +226,6 @@
 
 	&>.nav__item+.nav__item {
 		margin-left: 50px;
-	}
-
-	@include media-down(xs) {
-		display: none;
 	}
 }
 

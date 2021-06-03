@@ -67,15 +67,15 @@ export class UserSigninComponent extends Component {
 	}
 
 	onForgot(event) {
-		this.forgot.next();
+		this.viewForgot.next();
 	}
 
-	onRegister(event) {
-		this.register.next();
+	onSignUp(event) {
+		this.viewSignUp.next();
 	}
 }
 
 UserSigninComponent.meta = {
 	selector: '[user-signin]',
-	outputs: ['signIn', 'forgot', 'register'],
+	outputs: ['signIn', 'viewForgot', 'viewSignUp'],
 };

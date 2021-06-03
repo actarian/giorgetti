@@ -5,6 +5,13 @@ import { ModalResolveEvent, ModalService } from '../../core/modal/modal.service'
 import { environment } from '../../environment';
 import { UserService } from '../user/user.service';
 
+export const HeaderMode = {
+	IDLE: 'idle',
+	MENU: 'menu',
+	SEARCH: 'search',
+	CART: 'cart',
+}
+
 export class HeaderComponent extends Component {
 
 	direction_ = null;
@@ -33,6 +40,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onInit() {
+		this.show = HeaderMode.IDLE;
 		const pictogram = document.querySelector('.page > .pictogram');
 		LocomotiveScrollService.scroll$.pipe(
 			takeUntil(this.unsubscribe$),
@@ -54,6 +62,21 @@ export class HeaderComponent extends Component {
 				UserService.setUser(event.data);
 			}
 		});
+	}
+
+	onToggleMenu() {
+		this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
+		this.pushChanges();
+	}
+
+	onToggleSearch() {
+		this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
+		this.pushChanges();
+	}
+
+	onToggleCart() {
+		this.show = this.show === HeaderMode.CART ? HeaderMode.IDLE : HeaderMode.CART;
+		this.pushChanges();
 	}
 }
 

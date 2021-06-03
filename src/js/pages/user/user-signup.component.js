@@ -105,12 +105,12 @@ export class UserSignupComponent extends Component {
 		}
 	}
 
-	onLogin() {
-		this.login.next();
+	onSignIn() {
+		this.viewSignIn.next();
 	}
 }
 
 UserSignupComponent.meta = {
 	selector: '[user-signup]',
-	outputs: ['signUp', 'login'],
+	outputs: ['signUp', 'viewSignIn'],
 };

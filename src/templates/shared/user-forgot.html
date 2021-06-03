@@ -1,4 +1,4 @@
-<div class="section--form" user-forgot (sent)="onForgottenSent($event)" (login)="onLogin($event)">
+<div class="section--form" user-forgot (forgot)="onForgot($event)" (viewSignIn)="onViewSignIn($event)">
 	<div class="container" *if="!success">
 		<form class="form" [formGroup]="form" (submit)="onSubmit()" name="form" role="form" novalidate autocomplete="off">
 			<div class="title">Recupera Password</div>
@@ -20,7 +20,7 @@
 				</button>
 			</div>
 			<div class="group--info">
-				Ricordi la password? <button type="button" class="btn--link" (click)="onLogin($event)"><span>Accedi</span></button>
+				Ricordi la password? <button type="button" class="btn--link" (click)="onSignIn($event)"><span>Accedi</span></button>
 			</div>
 			<!-- <test-component [form]="form" (test)="test($event)" (reset)="reset($event)"></test-component> -->
 		</form>
@@ -31,7 +31,7 @@
 			Abbiamo inviato la password all'indirizzo email fornito.
 		</div>
 		<div class="group--info">
-			Torna al <button type="button" class="btn--link" (click)="onLogin($event)"><span>Login</span></button>
+			Torna al <button type="button" class="btn--link" (click)="onSignIn($event)"><span>Login</span></button>
 		</div>
 	</div>
 </div>

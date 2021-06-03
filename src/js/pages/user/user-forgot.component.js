@@ -51,7 +51,7 @@ export class UserForgotComponent extends Component {
 					'form_name': "Recupero Password"
 				});
 				form.reset();
-				this.sent.next(true);
+				this.forgot.next(true);
 			}, error => {
 				console.log('UserForgotComponent.error', error);
 				this.error = error;
@@ -64,16 +64,16 @@ export class UserForgotComponent extends Component {
 		}
 	}
 
-	onLogin() {
-		this.login.next();
+	onSignIn() {
+		this.viewSignIn.next();
 	}
 
-	onRegister() {
-		this.register.next();
+	onSignUp() {
+		this.viewSignUp.next();
 	}
 }
 
 UserForgotComponent.meta = {
 	selector: '[user-forgot]',
-	outputs: ['sent', 'login', 'register'],
+	outputs: ['forgot', 'viewSignIn', 'viewSignUp'],
 };
