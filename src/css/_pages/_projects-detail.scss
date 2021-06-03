@@ -17,6 +17,18 @@
 			color: #6A6A6A;
 		}
 	}
+
+	@include media-up(md) {
+		.title {
+			margin-bottom: 100px;
+		}
+	}
+
+	@include media-down(sm) {
+		.title {
+			margin-bottom: 40px;
+		}
+	}
 }
 
 .section--design {

@@ -171,7 +171,6 @@
 }
 
 .section--text {
-	padding-bottom: 140px;
 
 	.title {
 		margin-bottom: 60px;
@@ -194,6 +193,14 @@
 				margin: 0;
 			}
 		}
+	}
+
+	@include media-up(md) {
+		padding-bottom: 140px;
+	}
+
+	@include media-down(sm) {
+		padding-bottom: 60px;
 	}
 }
 

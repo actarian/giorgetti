@@ -6379,6 +6379,12 @@ test-component code {
       display: block;
       font-style: normal;
       color: #6A6A6A; }
+  @media (min-width: 1024px) {
+    .section--projects-detail .title {
+      margin-bottom: 100px; } }
+  @media (max-width: 1023.98px) {
+    .section--projects-detail .title {
+      margin-bottom: 40px; } }
 
 .section--design .title {
   font-family: var(--font-secondary);
@@ -6909,23 +6915,30 @@ test-component code {
       font-style: normal;
       color: #6A6A6A; }
 
-.section--text {
-  padding-bottom: 140px; }
-  .section--text .title {
-    margin-bottom: 60px;
-    font-family: var(--font-secondary);
-    font-size: 32px;
-    line-height: 1.2;
-    letter-spacing: -.03em;
-    text-transform: uppercase;
-    color: #000000; }
-  .section--text .description {
-    font-size: 18px; }
-    .section--text .description p {
-      margin: 0 0 80px;
-      padding: 0; }
-      .section--text .description p:last-child {
-        margin: 0; }
+.section--text .title {
+  margin-bottom: 60px;
+  font-family: var(--font-secondary);
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  color: #000000; }
+
+.section--text .description {
+  font-size: 18px; }
+  .section--text .description p {
+    margin: 0 0 80px;
+    padding: 0; }
+    .section--text .description p:last-child {
+      margin: 0; }
+
+@media (min-width: 1024px) {
+  .section--text {
+    padding-bottom: 140px; } }
+
+@media (max-width: 1023.98px) {
+  .section--text {
+    padding-bottom: 60px; } }
 
 .group--share {
   display: flex; }
