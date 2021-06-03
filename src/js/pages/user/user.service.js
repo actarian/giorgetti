@@ -43,11 +43,7 @@ export class UserService {
 	}
 
 	static forgot$(payload) {
-		return ApiService.post$(`/user/forgot.json`, payload);
-	}
-
-	static sessionStorage$() {
-		return of(SessionStorageService.get('user') || null);
+		return ApiService.get$(`/user/forgot.json`, payload);
 	}
 
 	static me$() {
@@ -74,23 +70,27 @@ export class UserService {
 	}
 
 	static signin$(payload) {
-		return ApiService.post$(`/user/signin.json`, payload).pipe(
+		return ApiService.get$(`/user/signin.json`, payload).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
 		);
 	}
 
 	static signout$() {
-		return ApiService.post$(`/user/signout.json`).pipe(
+		return ApiService.get$(`/user/signout.json`).pipe(
 			tap((_) => this.setUser(null)),
 		);
 	}
 
 	static signup$(payload) {
-		return ApiService.post$(`/user/signup.json`, payload).pipe(
+		return ApiService.get$(`/user/signup.json`, payload).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
 		);
+	}
+
+	static sessionStorage$() {
+		return of(SessionStorageService.get('user') || null);
 	}
 
 	static mapUser(user) {

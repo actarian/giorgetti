@@ -822,11 +822,7 @@ var UserService = /*#__PURE__*/function () {
   };
 
   UserService.forgot$ = function forgot$(payload) {
-    return ApiService.post$("/user/forgot.json", payload);
-  };
-
-  UserService.sessionStorage$ = function sessionStorage$() {
-    return rxjs.of(SessionStorageService.get('user') || null);
+    return ApiService.get$("/user/forgot.json", payload);
   };
 
   UserService.me$ = function me$() {
@@ -856,7 +852,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signin$ = function signin$(payload) {
     var _this2 = this;
 
-    return ApiService.post$("/user/signin.json", payload).pipe(operators.map(function (response) {
+    return ApiService.get$("/user/signin.json", payload).pipe(operators.map(function (response) {
       return _this2.mapUser(response);
     }), operators.tap(function (user) {
       return _this2.setUser(user);
@@ -866,7 +862,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signout$ = function signout$() {
     var _this3 = this;
 
-    return ApiService.post$("/user/signout.json").pipe(operators.tap(function (_) {
+    return ApiService.get$("/user/signout.json").pipe(operators.tap(function (_) {
       return _this3.setUser(null);
     }));
   };
@@ -874,11 +870,15 @@ var UserService = /*#__PURE__*/function () {
   UserService.signup$ = function signup$(payload) {
     var _this4 = this;
 
-    return ApiService.post$("/user/signup.json", payload).pipe(operators.map(function (response) {
+    return ApiService.get$("/user/signup.json", payload).pipe(operators.map(function (response) {
       return _this4.mapUser(response);
     }), operators.tap(function (user) {
       return _this4.setUser(user);
     }));
+  };
+
+  UserService.sessionStorage$ = function sessionStorage$() {
+    return rxjs.of(SessionStorageService.get('user') || null);
   };
 
   UserService.mapUser = function mapUser(user) {
