@@ -4892,6 +4892,13 @@ UserForgotComponent.meta = {
   _proto.setView = function setView(view) {
     this.view = view;
     this.pushChanges();
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    LocomotiveScrollService.scrollTo(node, {
+      offset: -100
+    });
   };
 
   _proto.onViewForgot = function onViewForgot(event) {
@@ -5322,7 +5329,7 @@ SharedModule.meta = {
     LocomotiveScrollService.update();
   };
 
-  _proto.configureProduct = function configureProduct(event) {
+  _proto.configureProduct = function configureProduct(item) {
     window.location.href = environment.slug.configureProduct;
   };
 
