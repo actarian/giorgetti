@@ -18,13 +18,13 @@
 			</div>
 			<div class="divline"></div>
 			<div class="container" *if="view != views.SIGN_UP">
-				<div class="title">Non fai ancora parte di Giorgetti?</div>
+				<div class="subtitle">Non fai ancora parte di Giorgetti?</div>
 				<div class="group--info">
 					<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
 				</div>
 			</div>
 			<div class="container" *if="view == views.SIGN_UP">
-				<div class="title">Sei già registrato?</div>
+				<div class="subtitle">Sei già registrato?</div>
 				<div class="group--info">
 					<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
 				</div>

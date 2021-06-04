@@ -1,4 +1,4 @@
-import { SwiperDirective } from '../../shared/swiper/swiper.directive';
+import { SwiperDirective } from '../../common/swiper/swiper.directive';
 
 export class SwiperHomepageDirective extends SwiperDirective {
 

@@ -16,7 +16,7 @@ export const environmentServed = {
 	},
 	template: {
 		modal: {
-			userModal: '/template/shared/user-modal.cshtml',
+			userModal: '/template/common/user-modal.cshtml',
 		}
 	},
 	googleMaps: {

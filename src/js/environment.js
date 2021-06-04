@@ -1,6 +1,6 @@
+import { Utils } from './common/utils/utils';
 import { environmentServed } from './environment.served';
 import { environmentStatic } from './environment.static';
-import { Utils } from './shared/utils/utils';
 
 export const NODE = (typeof module !== 'undefined' && module.exports);
 export const PARAMS = NODE ? { get: () => { } } : new URLSearchParams(window.location.search);
