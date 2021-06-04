@@ -13,9 +13,213 @@
           "minify": true
         },
         {
-          "input": "src/js/main.js",
+          "input": "src/js/pages/ambience/ambience.module.js",
           "output": {
-            "file": "docs/js/main.js",
+            "file": "docs/js/ambience.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/ateliers-and-stores/ateliers-and-stores.module.js",
+          "output": {
+            "file": "docs/js/ateliers-and-stores.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/contacts/contacts.module.js",
+          "output": {
+            "file": "docs/js/contacts.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/default/default.module.js",
+          "output": {
+            "file": "docs/js/default.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/designers/designers.module.js",
+          "output": {
+            "file": "docs/js/designers.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/materials/materials.module.js",
+          "output": {
+            "file": "docs/js/materials.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/news/news.module.js",
+          "output": {
+            "file": "docs/js/news.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/products/products.module.js",
+          "output": {
+            "file": "docs/js/products.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/products-configure/products-configure.module.js",
+          "output": {
+            "file": "docs/js/products-configure.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/products-detail/products-detail.module.js",
+          "output": {
+            "file": "docs/js/products-detail.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/projects/projects.module.js",
+          "output": {
+            "file": "docs/js/projects.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/reserved-area/reserved-area.module.js",
+          "output": {
+            "file": "docs/js/reserved-area.js",
+            "format": "umd"
+          },
+          "globals": {
+            "gsap": "gsap",
+            "locomotive-scroll": "LocomotiveScroll",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators",
+            "rxcomp": "rxcomp",
+            "rxcomp-form": "rxcomp.form",
+            "swiper": "Swiper"
+          },
+          "minify": true
+        },
+        {
+          "input": "src/js/pages/store-locator/store-locator.module.js",
+          "output": {
+            "file": "docs/js/store-locator.js",
             "format": "umd"
           },
           "globals": {

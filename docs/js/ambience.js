@@ -4,7 +4,7 @@
  * License: MIT
  */
 
-(function(g,f){typeof exports==='object'&&typeof module!=='undefined'?f(require('rxcomp'),require('rxcomp-form'),require('rxjs/operators'),require('rxjs')):typeof define==='function'&&define.amd?define(['rxcomp','rxcomp-form','rxjs/operators','rxjs'],f):(g=typeof globalThis!=='undefined'?globalThis:g||self,f(g.rxcomp,g.rxcomp.form,g.rxjs.operators,g.rxjs));}(this,(function(rxcomp, rxcompForm, operators, rxjs){'use strict';function _defineProperties(target, props) {
+(function(g,f){typeof exports==='object'&&typeof module!=='undefined'?f(exports,require('rxcomp'),require('rxcomp-form'),require('rxjs/operators'),require('rxjs')):typeof define==='function'&&define.amd?define(['exports','rxcomp','rxcomp-form','rxjs/operators','rxjs'],f):(g=typeof globalThis!=='undefined'?globalThis:g||self,f(g.ambience={},g.rxcomp,g.rxcomp.form,g.rxjs.operators,g.rxjs));}(this,(function(exports, rxcomp, rxcompForm, operators, rxjs){'use strict';function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
@@ -2453,2048 +2453,6 @@ CommonModule.meta = {
   imports: [],
   declarations: [].concat(factories, pipes),
   exports: [].concat(factories, pipes)
-};var FilterMode = {
-  SELECT: 'select',
-  AND: 'and',
-  OR: 'or',
-  QUERY: 'query'
-};
-var FilterItem = /*#__PURE__*/function () {
-  function FilterItem(filter) {
-    this.change$ = new rxjs.BehaviorSubject();
-    this.mode = FilterMode.SELECT;
-    this.filter = 'Filter';
-    this.placeholder = 'Select';
-    this.values = [];
-    this.options = [];
-
-    if (filter) {
-      Object.assign(this, filter);
-    }
-
-    if (filter.mode === FilterMode.SELECT) {
-      filter.options.unshift({
-        label: filter.placeholder,
-        value: undefined
-      });
-    }
-  }
-
-  var _proto = FilterItem.prototype;
-
-  _proto.filter = function filter(item, value) {
-    return item.options.indexOf(value) !== -1;
-  };
-
-  _proto.match = function match(item) {
-    var _this = this;
-
-    var match;
-
-    if (this.mode === FilterMode.OR) {
-      match = this.values.length ? false : true;
-      this.values.forEach(function (value) {
-        match = match || _this.filter(item, value);
-      });
-    } else {
-      match = true;
-      this.values.forEach(function (value) {
-        match = match && _this.filter(item, value);
-      });
-    }
-
-    return match;
-  };
-
-  _proto.getLabel = function getLabel() {
-    if (this.mode === FilterMode.SELECT || this.mode === FilterMode.QUERY) {
-      return this.placeholder || this.label;
-    } else {
-      return this.label;
-    }
-  };
-
-  _proto.has = function has(item) {
-    return this.values.indexOf(item.value) !== -1;
-  };
-
-  _proto.set = function set(item) {
-    if (this.mode === FilterMode.QUERY) {
-      this.values = item ? [item] : [];
-      this.placeholder = item;
-    } else {
-      if (this.mode === FilterMode.SELECT) {
-        this.values = [];
-      }
-
-      var index = this.values.indexOf(item.value);
-
-      if (index === -1) {
-        if (item.value !== undefined) {
-          this.values.push(item.value);
-        }
-      }
-
-      if (this.mode === FilterMode.SELECT) {
-        this.placeholder = item.label;
-      }
-    } // console.log('FilterItem.set', item);
-
-
-    this.change$.next();
-  };
-
-  _proto.remove = function remove(item) {
-    var index = this.values.indexOf(item.value);
-
-    if (index !== -1) {
-      this.values.splice(index, 1);
-    }
-
-    if (this.mode === FilterMode.SELECT) {
-      var first = this.options[0];
-      this.placeholder = first.label;
-    } // console.log('FilterItem.remove', item);
-
-
-    this.change$.next();
-  };
-
-  _proto.toggle = function toggle(item) {
-    if (this.has(item)) {
-      this.remove(item);
-    } else {
-      this.set(item);
-    }
-  };
-
-  _proto.clear = function clear() {
-    this.values = [];
-
-    if (this.mode === FilterMode.SELECT) {
-      var first = this.options[0];
-      this.placeholder = first.label;
-    }
-
-    this.change$.next();
-  };
-
-  return FilterItem;
-}();var FilterService = /*#__PURE__*/function () {
-  function FilterService(options, initialParams, callback) {
-    var filters = {};
-
-    if (options) {
-      Object.keys(options).forEach(function (key) {
-        var filter = new FilterItem(options[key]);
-
-        if (typeof callback === 'function') {
-          callback(key, filter);
-        }
-
-        filters[key] = filter;
-      });
-    }
-
-    this.filters = filters;
-    this.deserialize(this.filters, initialParams);
-  }
-
-  var _proto = FilterService.prototype;
-
-  _proto.getParamsCount = function getParamsCount(params) {
-    if (params) {
-      var paramsCount = Object.keys(params).reduce(function (p, c, i) {
-        var values = params[c];
-        return p + (values ? values.length : 0);
-      }, 0);
-      return paramsCount;
-    } else {
-      return 0;
-    }
-  };
-
-  _proto.deserialize = function deserialize(filters, initialParams) {
-    var params;
-
-    if (initialParams && this.getParamsCount(initialParams)) {
-      params = initialParams;
-    }
-
-    var locationParams = LocationService.deserialize('filters');
-
-    if (locationParams && this.getParamsCount(locationParams)) {
-      params = locationParams;
-    }
-
-    if (params) {
-      Object.keys(filters).forEach(function (key) {
-        filters[key].values = params[key] || [];
-      });
-    }
-
-    return filters;
-  };
-
-  _proto.serialize = function serialize(filters) {
-    var params = {};
-    var any = false;
-    Object.keys(filters).forEach(function (x) {
-      var filter = filters[x];
-
-      if (filter.value !== null) {
-        params[x] = filter.values;
-        any = true;
-      }
-    });
-
-    if (!any) {
-      params = null;
-    } // console.log('ReferenceCtrl.serialize', params);
-
-
-    LocationService.serialize('filters', params);
-    return params;
-  };
-
-  _proto.items$ = function items$(items) {
-    var _this = this;
-
-    var filters = this.filters;
-    var changes = Object.keys(filters).map(function (key) {
-      return filters[key].change$;
-    });
-    return rxjs.merge.apply(void 0, changes).pipe( // tap(() => console.log(filters)),
-    operators.tap(function () {
-      return _this.serialize(filters);
-    }), operators.map(function () {
-      return _this.filterItems(items);
-    }), operators.tap(function () {
-      return _this.updateFilterStates(filters, items);
-    }));
-  };
-
-  _proto.filterItems = function filterItems(items, skipFilter) {
-    var _this2 = this;
-
-    var filters = Object.keys(this.filters).map(function (x) {
-      return _this2.filters[x];
-    }).filter(function (x) {
-      return x.value !== null;
-    });
-    items = items.filter(function (item) {
-      var has = true;
-      filters.forEach(function (filter) {
-        if (filter !== skipFilter) {
-          has = has && filter.match(item);
-        }
-      });
-      return has;
-    });
-    return items;
-  };
-
-  _proto.updateFilterStates = function updateFilterStates(filters, items) {
-    var _this3 = this;
-
-    Object.keys(filters).forEach(function (x) {
-      var filter = filters[x];
-
-      var filteredItems = _this3.filterItems(items, filter);
-
-      filter.options.forEach(function (option) {
-        var count = 0;
-
-        if (option.value) {
-          var i = 0;
-
-          while (i < filteredItems.length) {
-            var item = filteredItems[i];
-
-            if (filter.filter(item, option.value)) {
-              count++;
-            }
-
-            i++;
-          }
-        } else {
-          count = filteredItems.length;
-        }
-
-        option.count = count;
-        option.disabled = count === 0;
-      });
-    });
-  };
-
-  _proto.reset = function reset() {
-    var _this4 = this;
-
-    var filter;
-    Object.keys(this.filters).forEach(function (x) {
-      filter = _this4.filters[x];
-      filter.values = [];
-    });
-
-    if (filter) {
-      filter.change$.next();
-    }
-  };
-
-  return FilterService;
-}();var FormService = /*#__PURE__*/function () {
-  function FormService() {}
-
-  FormService.toSelectOptions = function toSelectOptions(options) {
-    options = options.slice().map(function (x) {
-      return {
-        id: x.value,
-        name: x.label
-      };
-    });
-    options.unshift({
-      id: null,
-      name: 'select'
-    });
-    return options;
-  };
-
-  return FormService;
-}();var AmbienceService = /*#__PURE__*/function () {
-  function AmbienceService() {}
-
-  AmbienceService.all$ = function all$() {
-    return ApiService.get$('/ambience/all.json');
-  };
-
-  AmbienceService.filters$ = function filters$() {
-    return ApiService.get$('/ambience/filters.json');
-  };
-
-  return AmbienceService;
-}();var AmbienceComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(AmbienceComponent, _Component);
-
-  function AmbienceComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = AmbienceComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.ambienceId = this.ambienceId || null;
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      ambience: new rxcompForm.FormControl(null),
-      material: new rxcompForm.FormControl(null),
-      designer: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('AmbienceComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('ambience', form.value.ambience);
-
-      _this.setFilterByKeyAndValue('material', form.value.material);
-
-      _this.setFilterByKeyAndValue('designer', form.value.designer);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
-      controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
-      controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([AmbienceService.all$(), AmbienceService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'ambience':
-                return item.ambience.id === value;
-
-              case 'material':
-                return item.materials.indexOf(value) !== -1;
-
-              case 'designer':
-                return item.designers.indexOf(value) !== -1;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var ambience = this.ambienceId ? this.ambienceId : this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
-    var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
-    var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      ambience: ambience,
-      material: material,
-      designer: designer,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('AmbienceComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('AmbienceComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
-    this.setFilterByKeyAndValue('material', this.form.value.material);
-    this.setFilterByKeyAndValue('designer', this.form.value.designer);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return AmbienceComponent;
-}(rxcomp.Component);
-AmbienceComponent.meta = {
-  selector: '[ambience]',
-  inputs: ['ambienceId']
-};var AteliersAndStoresService = /*#__PURE__*/function () {
-  function AteliersAndStoresService() {}
-
-  AteliersAndStoresService.all$ = function all$() {
-    return ApiService.get$('/ateliers-and-stores/all.json');
-  };
-
-  AteliersAndStoresService.ateliers$ = function ateliers$() {
-    return ApiService.get$('/ateliers-and-stores/ateliers.json');
-  };
-
-  AteliersAndStoresService.stores$ = function stores$() {
-    return ApiService.get$('/ateliers-and-stores/stores.json');
-  };
-
-  AteliersAndStoresService.filters$ = function filters$() {
-    return ApiService.get$('/ateliers-and-stores/filters.json');
-  };
-
-  return AteliersAndStoresService;
-}();var AteliersAndStoresComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(AteliersAndStoresComponent, _Component);
-
-  function AteliersAndStoresComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = AteliersAndStoresComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.types = {
-      Atelier: 1,
-      Store: 2
-    };
-    this.items = [];
-    this.filteredItems = [];
-    this.filteredAteliers = [];
-    this.filteredStores = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('AteliersAndStoresComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([AteliersAndStoresService.all$(), AteliersAndStoresService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.country.id === value;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-      _this2.filteredAteliers = filteredItems.filter(function (x) {
-        return x.type === _this2.types.Atelier;
-      });
-      _this2.filteredStores = filteredItems.filter(function (x) {
-        return x.type === _this2.types.Store;
-      });
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('AteliersAndStoresComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('AteliersAndStoresComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return AteliersAndStoresComponent;
-}(rxcomp.Component);
-AteliersAndStoresComponent.meta = {
-  selector: '[ateliers-and-stores]'
-};function push_(event) {
-  var dataLayer = window.dataLayer || [];
-  dataLayer.push(event);
-  console.log('GtmService.dataLayer', event);
-}
-
-var GtmService = /*#__PURE__*/function () {
-  function GtmService() {}
-
-  GtmService.push = function push(event) {
-    return push_(event);
-  };
-
-  return GtmService;
-}();var ContactsService = /*#__PURE__*/function () {
-  function ContactsService() {}
-
-  ContactsService.data$ = function data$() {
-    return ApiService.get$('/contacts/data.json');
-  };
-
-  ContactsService.submit$ = function submit$() {
-    return ApiService.post$('/contacts/submit.json');
-  };
-
-  return ContactsService;
-}();var ContactsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ContactsComponent, _Component);
-
-  function ContactsComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ContactsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.error = null;
-    this.success = false;
-    var form = this.form = new rxcompForm.FormGroup({
-      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
-      telephone: new rxcompForm.FormControl(null),
-      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      message: new rxcompForm.FormControl(null),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletter: new rxcompForm.FormControl(this.flag),
-      checkRequest: window.antiforgery,
-      checkField: ''
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      _this.pushChanges();
-
-      LocomotiveScrollService.update();
-    });
-    this.load$().pipe(operators.first()).subscribe();
-  };
-
-  _proto.load$ = function load$() {
-    var _this2 = this;
-
-    return ContactsService.data$().pipe(operators.tap(function (data) {
-      var controls = _this2.controls;
-      controls.country.options = FormService.toSelectOptions(data.country.options);
-
-      _this2.pushChanges();
-    }));
-  };
-
-  _proto.test = function test() {
-    var form = this.form;
-    var controls = this.controls;
-    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
-    form.patch({
-      firstName: 'Jhon',
-      lastName: 'Appleseed',
-      email: 'jhonappleseed@gmail.com',
-      telephone: '0721 411112',
-      country: country,
-      city: 'Pesaro',
-      message: 'Hi!',
-      privacy: true,
-      checkRequest: window.antiforgery,
-      checkField: ''
-    });
-  };
-
-  _proto.reset = function reset() {
-    var form = this.form;
-    form.reset();
-  };
-
-  _proto.onSubmit = function onSubmit(model) {
-    var _this3 = this;
-
-    var form = this.form;
-    console.log('ContactsComponent.onSubmit', form.value); // console.log('ContactsComponent.onSubmit', 'form.valid', valid);
-
-    if (form.valid) {
-      // console.log('ContactsComponent.onSubmit', form.value);
-      form.submitted = true;
-      ContactsService.submit$(form.value).pipe(operators.first()).subscribe(function (_) {
-        _this3.success = true;
-        form.reset();
-        GtmService.push({
-          'event': "Contact",
-          'form_name': "Contatti"
-        });
-
-        if (form.value.newsletter) {
-          GtmService.push({
-            'event': "ContactNewsletter",
-            'form_name': "ContattiNewsletter"
-          });
-        }
-      }, function (error) {
-        console.log('ContactsComponent.error', error);
-        _this3.error = error;
-
-        _this3.pushChanges();
-
-        LocomotiveScrollService.update();
-      });
-    } else {
-      form.touched = true;
-    }
-  };
-
-  return ContactsComponent;
-}(rxcomp.Component);
-ContactsComponent.meta = {
-  selector: '[contacts]'
-};var DesignersService = /*#__PURE__*/function () {
-  function DesignersService() {}
-
-  DesignersService.all$ = function all$() {
-    return ApiService.get$('/designers/all.json');
-  };
-
-  DesignersService.filters$ = function filters$() {
-    return ApiService.get$('/designers/filters.json');
-  };
-
-  return DesignersService;
-}();var DesignersComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(DesignersComponent, _Component);
-
-  function DesignersComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = DesignersComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('DesignersComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([DesignersService.all$(), DesignersService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-
-              case 'search':
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('DesignersComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('DesignersComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return DesignersComponent;
-}(rxcomp.Component);
-DesignersComponent.meta = {
-  selector: '[designers]'
-};var MaterialsService = /*#__PURE__*/function () {
-  function MaterialsService() {}
-
-  MaterialsService.all$ = function all$() {
-    return ApiService.get$('/materials/all.json');
-  };
-
-  MaterialsService.filters$ = function filters$() {
-    return ApiService.get$('/materials/filters.json');
-  };
-
-  return MaterialsService;
-}();var MaterialsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(MaterialsComponent, _Component);
-
-  function MaterialsComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = MaterialsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.selectedItem = null;
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([MaterialsService.all$(), MaterialsService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    this.form.patch({
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('MaterialsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onToggle = function onToggle(item) {
-    this.selectedItem = this.selectedItem === item ? null : item;
-    /*
-    if (this.selectedItem) {
-    	const selector = '#cat-' + item.category.id + '-' + item.id;
-    	this.scrollTo(selector);
-    }
-    */
-
-    this.pushChanges();
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -160
-    });
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return MaterialsComponent;
-}(rxcomp.Component);
-MaterialsComponent.meta = {
-  selector: '[materials]'
-};var NewsService = /*#__PURE__*/function () {
-  function NewsService() {}
-
-  NewsService.all$ = function all$() {
-    return ApiService.get$('/news/all.json');
-  };
-
-  NewsService.filters$ = function filters$() {
-    return ApiService.get$('/news/filters.json');
-  };
-
-  return NewsService;
-}();var NewsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(NewsComponent, _Component);
-
-  function NewsComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = NewsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('NewsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([NewsService.all$(), NewsService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.country.id === value;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('NewsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('NewsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return NewsComponent;
-}(rxcomp.Component);
-NewsComponent.meta = {
-  selector: '[news]'
-};var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;";
-var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
-var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;";
-var descriptionStyle = "font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;";
-var key = 'a9$hhVGHxos';
-var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProductsConfigureComponent, _Component);
-
-  function ProductsConfigureComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ProductsConfigureComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.isReady = false;
-    this.isComplete = false;
-    this.isConfiguring = false;
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var iframe = this.iframe = node.querySelector('#showefy');
-
-    if (!iframe) {
-      throw 'missing iframe';
-    }
-
-    this.onEvent = this.onEvent.bind(this);
-    HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', {
-      grant_type: 'client_credentials'
-    }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(operators.first()).subscribe(function (response) {
-      console.log(response);
-    });
-    var sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
-    sfy.init();
-    console.log('ProductsConfigureComponent.onInit', sfy, iframe);
-  };
-
-  _proto.getIframeDocument = function getIframeDocument(iframe) {
-    var content = iframe.contentWindow || iframe.contentDocument;
-    var iframeDocument = content.document ? content.document : content;
-    return iframeDocument;
-  };
-
-  _proto.onEvent = function onEvent(data) {
-    var event = JSON.parse(data);
-    var eventName = event.emit;
-
-    if (event.status == 0) {
-      // console.log('ProductsConfigureComponent.onEvent', event);
-      switch (eventName) {
-        case 'showefy_ready':
-          this.onReady(event);
-          break;
-
-        case 'showefy_complete':
-          this.onShowefyComplete(event);
-          break;
-
-        case 'start_configurator':
-          this.onStartConfigurator(event);
-          break;
-
-        case 'button_pressed':
-          this.onButtonPressed(event);
-          break;
-
-        case 'setButtonStatus':
-          this.onSetButtonStatus(event);
-          break;
-
-        case 'getIframeSize':
-          this.onGetIframeSize(event);
-          break;
-
-        case 'getProductExtData':
-          this.onGetProductExtData(event);
-          break;
-
-        case 'getFastProductExtData':
-          this.onGetFastProductExtData(event);
-          break;
-      }
-
-      if (this.isConfiguring && this.isReady && this.isComplete) {
-        console.log('set taratura impaginazione configuratore');
-
-        var _getContext2 = rxcomp.getContext(this),
-            node = _getContext2.node; // window.scroll(0, findPos(document.getElementById('container_ifrshowefy')));
-
-
-        LocomotiveScrollService.update();
-        LocomotiveScrollService.scrollTo(node, {
-          offset: -100
-        });
-      }
-    } else {
-      console.log('ProductsConfigureComponent.onEvent.error', event.status, event.statusTxt, eventName);
-    }
-  };
-
-  _proto.onReady = function onReady(event) {
-    console.log('ProductsConfigureComponent.onReady', event);
-    this.isReady = true;
-    this.addTexts();
-    this.addButtons();
-    this.addBreadcrumb();
-    return;
-  };
-
-  _proto.onShowefyComplete = function onShowefyComplete(event) {
-    console.log('ProductsConfigureComponent.onShowefyComplete', event);
-
-    if (this.isConfiguring) {
-      this.isComplete = true;
-    }
-  };
-
-  _proto.onStartConfigurator = function onStartConfigurator(event) {
-    console.log('ProductsConfigureComponent.onStartConfigurator', event);
-    this.isConfiguring = true;
-  };
-
-  _proto.onButtonPressed = function onButtonPressed(event) {
-    console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
-  };
-
-  _proto.onSetButtonStatus = function onSetButtonStatus(event) {
-    console.log('ProductsConfigureComponent.onSetButtonStatus', event);
-  };
-
-  _proto.onGetIframeSize = function onGetIframeSize(event) {
-    console.log('ProductsConfigureComponent.onGetIframeSize', event);
-  };
-
-  _proto.onGetProductExtData = function onGetProductExtData(event) {
-    console.log('ProductsConfigureComponent.onGetProductExtData', event);
-  };
-
-  _proto.onGetFastProductExtData = function onGetFastProductExtData(event) {
-    console.log('ProductsConfigureComponent.onGetFastProductExtData', event);
-  };
-
-  _proto.findPos = function findPos(obj) {
-    var curtop = 0;
-
-    if (obj.offsetParent) {
-      do {
-        curtop += obj.offsetTop;
-      } while (obj = obj.offsetParent);
-
-      return [curtop];
-    }
-  } // methods
-  ;
-
-  _proto.addTexts = function addTexts() {
-    var sfy = this.sfy;
-    var html = sfy.HTML;
-    var index = 0;
-    html.text[index++] =
-    /* html */
-    "<h1 style=\"" + titleStyle + "\">Nome Prodotto</h1>";
-    html.text[index++] =
-    /* html */
-    "<h5 style=\"" + designerStyle + "\">Designer</h5>";
-    html.text[index++] =
-    /* html */
-    "<div style=\"" + descriptionStyle + "\"><p>Descrizione</p></div>";
-    sfy.printHTML(html);
-  };
-
-  _proto.addButtons = function addButtons() {
-    var sfy = this.sfy;
-    var buttons = sfy.BUTTONS;
-    var index = 0;
-    buttons.element[index] = new sfy.PROPERTIES();
-    buttons.element[index].visibility = true;
-    buttons.element[index].id = 'order';
-    buttons.element[index].label = new sfy.LABEL();
-    buttons.element[index].label.en = 'ADD TO CART';
-    index++;
-    buttons.element[index] = new sfy.PROPERTIES();
-    buttons.element[index].visibility = true;
-    buttons.element[index].id = 'save_configuration';
-    buttons.element[index].label = new sfy.LABEL();
-    buttons.element[index].label.en = 'SAVE CONFIGURATION';
-    index++;
-    sfy.setButtonStatus(buttons);
-  };
-
-  _proto.addBreadcrumb = function addBreadcrumb() {
-    var sfy = this.sfy;
-    var breadcrumb = sfy.BREADCUMB;
-    var index = 0;
-    breadcrumb.element[index] = new sfy.PROPERTIES();
-    breadcrumb.element[index].visibility = true;
-    breadcrumb.element[index].id = 'breadcumb_home';
-    breadcrumb.element[index].label = new sfy.LABEL();
-    breadcrumb.element[index].label.en =
-    /* html */
-    " Home <span aria-hidden='true'>/</span>&nbsp; ";
-    breadcrumb.element[index].style = breadcumbStyle;
-    index++;
-    breadcrumb.element[index] = new sfy.PROPERTIES();
-    breadcrumb.element[index].visibility = true;
-    breadcrumb.element[index].id = 'breadcumb_products';
-    breadcrumb.element[index].label = new sfy.LABEL();
-    breadcrumb.element[index].label.en =
-    /* html */
-    " Products <span aria-hidden='true'>/</span>&nbsp; ";
-    breadcrumb.element[index].style = breadcumbStyle;
-    index++;
-    breadcrumb.element[index] = new sfy.PROPERTIES();
-    breadcrumb.element[index].visibility = true;
-    breadcrumb.element[index].id = 'breadcumb_products';
-    breadcrumb.element[index].label = new sfy.LABEL();
-    breadcrumb.element[index].label.en =
-    /* html */
-    " Nome prodotto";
-    breadcrumb.element[index].style = breadcumbStyle;
-    index++;
-    sfy.printBreadcumb(breadcrumb);
-  };
-
-  _proto.getCartData = function getCartData() {
-    var sfy = this.sfy;
-
-    if (sfy) {
-      sfy.getProductExtData();
-    }
-  };
-
-  _proto.getFastData = function getFastData() {
-    var sfy = this.sfy;
-
-    if (sfy) {
-      sfy.getFastProductExtData();
-    }
-  };
-
-  return ProductsConfigureComponent;
-}(rxcomp.Component);
-ProductsConfigureComponent.meta = {
-  selector: '[products-configure]'
-};var ProductsDetailService = /*#__PURE__*/function () {
-  function ProductsDetailService() {}
-
-  ProductsDetailService.versions$ = function versions$() {
-    return ApiService.get$('/products-detail/versions.json');
-  };
-
-  return ProductsDetailService;
-}();var ProductsDetailComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProductsDetailComponent, _Component);
-
-  function ProductsDetailComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ProductsDetailComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.visibleItems = [];
-    ProductsDetailService.versions$().pipe(operators.first()).subscribe(function (items) {
-      _this.items = items;
-      _this.visibleItems = _this.items.slice(0, Math.min(4, _this.items.length));
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.scrollTo = function scrollTo(id) {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(id);
-
-    if (target) {
-      LocomotiveScrollService.scrollTo(target, {
-        offset: -200
-      });
-    }
-  };
-
-  _proto.showVersions = function showVersions(event) {
-    this.visibleItems = this.items.slice();
-    this.pushChanges();
-    LocomotiveScrollService.update();
-  };
-
-  _proto.configureProduct = function configureProduct(event) {
-    window.location.href = environment.slug.configureProduct;
-  };
-
-  return ProductsDetailComponent;
-}(rxcomp.Component);
-ProductsDetailComponent.meta = {
-  selector: '[products-detail]'
-};var ProductsService = /*#__PURE__*/function () {
-  function ProductsService() {}
-
-  ProductsService.all$ = function all$() {
-    return ApiService.get$('/products/all.json');
-  };
-
-  ProductsService.filters$ = function filters$() {
-    return ApiService.get$('/products/filters.json');
-  };
-
-  return ProductsService;
-}();var ProductsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProductsComponent, _Component);
-
-  function ProductsComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ProductsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.categoryId = this.categoryId || null;
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      material: new rxcompForm.FormControl(null),
-      designer: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('ProductsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('material', form.value.material);
-
-      _this.setFilterByKeyAndValue('designer', form.value.designer);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-      controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
-      controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([ProductsService.all$(), ProductsService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-
-              case 'material':
-                return item.materials.indexOf(value) !== -1;
-
-              case 'designer':
-                return item.designers.indexOf(value) !== -1;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.categoryId ? this.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
-    var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      material: material,
-      designer: designer,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('ProductsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('ProductsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('material', this.form.value.material);
-    this.setFilterByKeyAndValue('designer', this.form.value.designer);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return ProductsComponent;
-}(rxcomp.Component);
-ProductsComponent.meta = {
-  selector: '[products]',
-  inputs: ['categoryId']
-};var ProjectsService = /*#__PURE__*/function () {
-  function ProjectsService() {}
-
-  ProjectsService.all$ = function all$() {
-    return ApiService.get$('/projects/all.json');
-  };
-
-  ProjectsService.filters$ = function filters$() {
-    return ApiService.get$('/projects/filters.json');
-  };
-
-  return ProjectsService;
-}();var ProjectsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProjectsComponent, _Component);
-
-  function ProjectsComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ProjectsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('ProjectsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([ProjectsService.all$(), ProjectsService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('ProjectsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('ProjectsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return ProjectsComponent;
-}(rxcomp.Component);
-ProjectsComponent.meta = {
-  selector: '[projects]'
-};var ReservedAreaService = /*#__PURE__*/function () {
-  function ReservedAreaService() {}
-
-  ReservedAreaService.all$ = function all$() {
-    return ApiService.get$('/reserved-area/all.json').pipe(operators.map(function (items) {
-      items.forEach(function (x) {
-        x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));
-      });
-      return items;
-    }));
-  };
-
-  ReservedAreaService.toTitleCase = function toTitleCase(sentence, seps) {
-    if (seps === void 0) {
-      seps = ' _-/';
-    }
-
-    var capitalize = function capitalize(str) {
-      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
-    };
-
-    var escape = function escape(str) {
-      return str.replace(/./g, function (c) {
-        return "\\" + c;
-      });
-    };
-
-    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
-    return sentence.replace(wordPattern, capitalize);
-  };
-
-  return ReservedAreaService;
-}();var ReservedAreaComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ReservedAreaComponent, _Component);
-
-  function ReservedAreaComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ReservedAreaComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.user = undefined;
-    this.items = [];
-    this.tree = [];
-    this.files = [];
-    this.visibleFiles = [];
-    this.item = null;
-    this.load$().pipe(operators.first()).subscribe();
-    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
-      console.log('ReservedAreaComponent.user', user);
-      _this.user = user;
-
-      _this.pushChanges();
-
-      LocomotiveScrollService.update();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    var _this2 = this;
-
-    return ReservedAreaService.all$().pipe(operators.tap(function (items) {
-      _this2.items = items;
-      _this2.tree = _this2.getTree(items);
-
-      _this2.pushChanges();
-    }));
-  };
-
-  _proto.getTree = function getTree(items, parentId) {
-    var _this3 = this;
-
-    var tree = items.filter(function (x) {
-      return x.parentId === parentId && x.type === 'folder';
-    }).map(function (x) {
-      var item = Object.assign({}, x);
-      item.items = _this3.getTree(items, x.id);
-      return item;
-    });
-    return tree;
-  };
-
-  _proto.onOpen = function onOpen(item) {
-    if (item.active) {
-      this.item = item;
-      this.files = this.items.filter(function (x) {
-        return x.type === 'file' && x.parentId === item.id;
-      });
-      this.visibleFiles = this.files.slice(0, Math.min(8, this.files.length));
-      this.pushChanges();
-      LocomotiveScrollService.update();
-    }
-  };
-
-  _proto.showMore = function showMore(event) {
-    this.visibleFiles = this.files.slice();
-    this.pushChanges();
-    LocomotiveScrollService.update();
-  };
-
-  _proto.onProjectRegistration = function onProjectRegistration(event) {
-    console.log('ReservedAreaComponent.onProjectRegistration', event);
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -160
-    });
-  };
-
-  return ReservedAreaComponent;
-}(rxcomp.Component);
-ReservedAreaComponent.meta = {
-  selector: '[reserved-area]'
-};var StoreLocatorService = /*#__PURE__*/function () {
-  function StoreLocatorService() {}
-
-  StoreLocatorService.all$ = function all$() {
-    return ApiService.get$('/store-locator/all.json').pipe(operators.map(function (items) {
-      return items.sort(function (a, b) {
-        return a.rank - b.rank;
-      });
-    }));
-  };
-
-  StoreLocatorService.filters$ = function filters$() {
-    return ApiService.get$('/store-locator/filters.json');
-  };
-
-  return StoreLocatorService;
-}();var StoreLocatorComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(StoreLocatorComponent, _Component);
-
-  function StoreLocatorComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = StoreLocatorComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.visibleItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('StoreLocatorComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
-
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([StoreLocatorService.all$(), StoreLocatorService.filters$()]);
-  };
-
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.country && item.country.id === value;
-
-              case 'category':
-                return item.category && item.category.id === value;
-
-              case 'search':
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-                item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('StoreLocatorComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.showMore = function showMore(event) {
-    this.visibleItems = this.filteredItems.slice();
-    this.pushChanges();
-    LocomotiveScrollService.update();
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('StoreLocatorComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
-  return StoreLocatorComponent;
-}(rxcomp.Component);
-StoreLocatorComponent.meta = {
-  selector: '[store-locator]'
 };/*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -6819,7 +4777,21 @@ TreeComponent.meta = {
   template:
   /* html */
   "\n\t\t<li class=\"folder\" [class]=\"{ active: item.active }\" *for=\"let item of tree\">\n\t\t\t<span [innerHTML]=\"item.title\" (click)=\"onClick(item)\"></span>\n\t\t\t<ul [tree]=\"item.items\" (open)=\"onOpen($event)\"></ul>\n\t\t</li>\n\t"
-};var UserForgotComponent = /*#__PURE__*/function (_Component) {
+};function push_(event) {
+  var dataLayer = window.dataLayer || [];
+  dataLayer.push(event);
+  console.log('GtmService.dataLayer', event);
+}
+
+var GtmService = /*#__PURE__*/function () {
+  function GtmService() {}
+
+  GtmService.push = function push(event) {
+    return push_(event);
+  };
+
+  return GtmService;
+}();var UserForgotComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserForgotComponent, _Component);
 
   function UserForgotComponent() {
@@ -7126,7 +5098,25 @@ UserModalComponent.meta = {
 UserSigninComponent.meta = {
   selector: '[user-signin]',
   outputs: ['signIn', 'viewForgot', 'viewSignUp']
-};function MatchValidator(fieldName, formGroup) {
+};var FormService = /*#__PURE__*/function () {
+  function FormService() {}
+
+  FormService.toSelectOptions = function toSelectOptions(options) {
+    options = options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label
+      };
+    });
+    options.unshift({
+      id: null,
+      name: 'select'
+    });
+    return options;
+  };
+
+  return FormService;
+}();function MatchValidator(fieldName, formGroup) {
   return new rxcompForm.FormValidator(function (value) {
     var field = formGroup ? formGroup.get(fieldName) : null;
 
@@ -7283,6 +5273,451 @@ SharedModule.meta = {
   imports: [],
   declarations: [].concat(factories$1, pipes$1),
   exports: [].concat(factories$1, pipes$1)
+};var FilterMode = {
+  SELECT: 'select',
+  AND: 'and',
+  OR: 'or',
+  QUERY: 'query'
+};
+var FilterItem = /*#__PURE__*/function () {
+  function FilterItem(filter) {
+    this.change$ = new rxjs.BehaviorSubject();
+    this.mode = FilterMode.SELECT;
+    this.filter = 'Filter';
+    this.placeholder = 'Select';
+    this.values = [];
+    this.options = [];
+
+    if (filter) {
+      Object.assign(this, filter);
+    }
+
+    if (filter.mode === FilterMode.SELECT) {
+      filter.options.unshift({
+        label: filter.placeholder,
+        value: undefined
+      });
+    }
+  }
+
+  var _proto = FilterItem.prototype;
+
+  _proto.filter = function filter(item, value) {
+    return item.options.indexOf(value) !== -1;
+  };
+
+  _proto.match = function match(item) {
+    var _this = this;
+
+    var match;
+
+    if (this.mode === FilterMode.OR) {
+      match = this.values.length ? false : true;
+      this.values.forEach(function (value) {
+        match = match || _this.filter(item, value);
+      });
+    } else {
+      match = true;
+      this.values.forEach(function (value) {
+        match = match && _this.filter(item, value);
+      });
+    }
+
+    return match;
+  };
+
+  _proto.getLabel = function getLabel() {
+    if (this.mode === FilterMode.SELECT || this.mode === FilterMode.QUERY) {
+      return this.placeholder || this.label;
+    } else {
+      return this.label;
+    }
+  };
+
+  _proto.has = function has(item) {
+    return this.values.indexOf(item.value) !== -1;
+  };
+
+  _proto.set = function set(item) {
+    if (this.mode === FilterMode.QUERY) {
+      this.values = item ? [item] : [];
+      this.placeholder = item;
+    } else {
+      if (this.mode === FilterMode.SELECT) {
+        this.values = [];
+      }
+
+      var index = this.values.indexOf(item.value);
+
+      if (index === -1) {
+        if (item.value !== undefined) {
+          this.values.push(item.value);
+        }
+      }
+
+      if (this.mode === FilterMode.SELECT) {
+        this.placeholder = item.label;
+      }
+    } // console.log('FilterItem.set', item);
+
+
+    this.change$.next();
+  };
+
+  _proto.remove = function remove(item) {
+    var index = this.values.indexOf(item.value);
+
+    if (index !== -1) {
+      this.values.splice(index, 1);
+    }
+
+    if (this.mode === FilterMode.SELECT) {
+      var first = this.options[0];
+      this.placeholder = first.label;
+    } // console.log('FilterItem.remove', item);
+
+
+    this.change$.next();
+  };
+
+  _proto.toggle = function toggle(item) {
+    if (this.has(item)) {
+      this.remove(item);
+    } else {
+      this.set(item);
+    }
+  };
+
+  _proto.clear = function clear() {
+    this.values = [];
+
+    if (this.mode === FilterMode.SELECT) {
+      var first = this.options[0];
+      this.placeholder = first.label;
+    }
+
+    this.change$.next();
+  };
+
+  return FilterItem;
+}();var FilterService = /*#__PURE__*/function () {
+  function FilterService(options, initialParams, callback) {
+    var filters = {};
+
+    if (options) {
+      Object.keys(options).forEach(function (key) {
+        var filter = new FilterItem(options[key]);
+
+        if (typeof callback === 'function') {
+          callback(key, filter);
+        }
+
+        filters[key] = filter;
+      });
+    }
+
+    this.filters = filters;
+    this.deserialize(this.filters, initialParams);
+  }
+
+  var _proto = FilterService.prototype;
+
+  _proto.getParamsCount = function getParamsCount(params) {
+    if (params) {
+      var paramsCount = Object.keys(params).reduce(function (p, c, i) {
+        var values = params[c];
+        return p + (values ? values.length : 0);
+      }, 0);
+      return paramsCount;
+    } else {
+      return 0;
+    }
+  };
+
+  _proto.deserialize = function deserialize(filters, initialParams) {
+    var params;
+
+    if (initialParams && this.getParamsCount(initialParams)) {
+      params = initialParams;
+    }
+
+    var locationParams = LocationService.deserialize('filters');
+
+    if (locationParams && this.getParamsCount(locationParams)) {
+      params = locationParams;
+    }
+
+    if (params) {
+      Object.keys(filters).forEach(function (key) {
+        filters[key].values = params[key] || [];
+      });
+    }
+
+    return filters;
+  };
+
+  _proto.serialize = function serialize(filters) {
+    var params = {};
+    var any = false;
+    Object.keys(filters).forEach(function (x) {
+      var filter = filters[x];
+
+      if (filter.value !== null) {
+        params[x] = filter.values;
+        any = true;
+      }
+    });
+
+    if (!any) {
+      params = null;
+    } // console.log('ReferenceCtrl.serialize', params);
+
+
+    LocationService.serialize('filters', params);
+    return params;
+  };
+
+  _proto.items$ = function items$(items) {
+    var _this = this;
+
+    var filters = this.filters;
+    var changes = Object.keys(filters).map(function (key) {
+      return filters[key].change$;
+    });
+    return rxjs.merge.apply(void 0, changes).pipe( // tap(() => console.log(filters)),
+    operators.tap(function () {
+      return _this.serialize(filters);
+    }), operators.map(function () {
+      return _this.filterItems(items);
+    }), operators.tap(function () {
+      return _this.updateFilterStates(filters, items);
+    }));
+  };
+
+  _proto.filterItems = function filterItems(items, skipFilter) {
+    var _this2 = this;
+
+    var filters = Object.keys(this.filters).map(function (x) {
+      return _this2.filters[x];
+    }).filter(function (x) {
+      return x.value !== null;
+    });
+    items = items.filter(function (item) {
+      var has = true;
+      filters.forEach(function (filter) {
+        if (filter !== skipFilter) {
+          has = has && filter.match(item);
+        }
+      });
+      return has;
+    });
+    return items;
+  };
+
+  _proto.updateFilterStates = function updateFilterStates(filters, items) {
+    var _this3 = this;
+
+    Object.keys(filters).forEach(function (x) {
+      var filter = filters[x];
+
+      var filteredItems = _this3.filterItems(items, filter);
+
+      filter.options.forEach(function (option) {
+        var count = 0;
+
+        if (option.value) {
+          var i = 0;
+
+          while (i < filteredItems.length) {
+            var item = filteredItems[i];
+
+            if (filter.filter(item, option.value)) {
+              count++;
+            }
+
+            i++;
+          }
+        } else {
+          count = filteredItems.length;
+        }
+
+        option.count = count;
+        option.disabled = count === 0;
+      });
+    });
+  };
+
+  _proto.reset = function reset() {
+    var _this4 = this;
+
+    var filter;
+    Object.keys(this.filters).forEach(function (x) {
+      filter = _this4.filters[x];
+      filter.values = [];
+    });
+
+    if (filter) {
+      filter.change$.next();
+    }
+  };
+
+  return FilterService;
+}();var AmbienceService = /*#__PURE__*/function () {
+  function AmbienceService() {}
+
+  AmbienceService.all$ = function all$() {
+    return ApiService.get$('/ambience/all.json');
+  };
+
+  AmbienceService.filters$ = function filters$() {
+    return ApiService.get$('/ambience/filters.json');
+  };
+
+  return AmbienceService;
+}();var AmbienceComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AmbienceComponent, _Component);
+
+  function AmbienceComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = AmbienceComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.ambienceId = this.ambienceId || null;
+    this.items = [];
+    this.filteredItems = [];
+    this.filters = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      ambience: new rxcompForm.FormControl(null),
+      material: new rxcompForm.FormControl(null),
+      designer: new rxcompForm.FormControl(null),
+      search: new rxcompForm.FormControl(null)
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('AmbienceComponent.changes$', form.value);
+      _this.setFilterByKeyAndValue('ambience', form.value.ambience);
+
+      _this.setFilterByKeyAndValue('material', form.value.material);
+
+      _this.setFilterByKeyAndValue('designer', form.value.designer);
+
+      _this.setFilterByKeyAndValue('search', form.value.search);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+      controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
+      controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
+      controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([AmbienceService.all$(), AmbienceService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'ambience':
+                return item.ambience.id === value;
+
+              case 'material':
+                return item.materials.indexOf(value) !== -1;
+
+              case 'designer':
+                return item.designers.indexOf(value) !== -1;
+
+              case 'search':
+                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    var ambience = this.ambienceId ? this.ambienceId : this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
+    var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
+    var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      ambience: ambience,
+      material: material,
+      designer: designer,
+      search: search
+    });
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('AmbienceComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('AmbienceComponent.onSearch', this.form.value);
+    this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
+    this.setFilterByKeyAndValue('material', this.form.value.material);
+    this.setFilterByKeyAndValue('designer', this.form.value.designer);
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+    this.pushChanges();
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return AmbienceComponent;
+}(rxcomp.Component);
+AmbienceComponent.meta = {
+  selector: '[ambience]',
+  inputs: ['ambienceId']
 };var AppModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(AppModule, _Module);
 
@@ -7294,6 +5729,7 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, DesignersComponent, MaterialsComponent, NewsComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent],
   bootstrap: AppComponent
-};rxcomp.Browser.bootstrap(AppModule);})));
+};
+rxcomp.Browser.bootstrap(AppModule);exports.AppModule=AppModule;Object.defineProperty(exports,'__esModule',{value:true});})));

@@ -1,17 +1,9 @@
-import { CoreModule, Module } from 'rxcomp';
+import { Browser, CoreModule, Module } from 'rxcomp';
 import { FormModule } from 'rxcomp-form';
-import { HeaderComponent } from '../header/header.component';
-import { MenuDirective } from '../menu/menu.directive';
-import { NewsletterPropositionComponent } from '../newsletter/newsletter-proposition.component';
-import { SharedModule } from '../shared/shared.module';
-import { SubmenuDirective } from '../submenu/submenu.directive';
-import { SwiperGalleryDirective } from '../swiper-gallery/swiper-gallery.directive';
-import { UserForgotComponent } from '../user/user-forgot.component';
-import { UserModalComponent } from '../user/user-modal.component';
-import { UserSigninComponent } from '../user/user-signin.component';
-import { UserSignupComponent } from '../user/user-signup.component';
+import { AppComponent } from '../../app.component';
+import { CommonModule } from '../../common/common.module';
+import { SharedModule } from '../../shared/shared.module';
 import { AmbienceComponent } from './ambience.component';
-import { AppComponent } from './app.component';
 
 export class AppModule extends Module { }
 
@@ -19,19 +11,13 @@ AppModule.meta = {
 	imports: [
 		CoreModule,
 		FormModule,
+		CommonModule,
 		SharedModule,
 	],
 	declarations: [
 		AmbienceComponent,
-		HeaderComponent,
-		MenuDirective,
-		NewsletterPropositionComponent,
-		SubmenuDirective,
-		SwiperGalleryDirective,
-		UserForgotComponent,
-		UserModalComponent,
-		UserSigninComponent,
-		UserSignupComponent,
 	],
 	bootstrap: AppComponent,
 };
+
+Browser.bootstrap(AppModule);
