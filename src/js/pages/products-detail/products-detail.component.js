@@ -32,7 +32,7 @@ export class ProductsDetailComponent extends Component {
 		LocomotiveScrollService.update();
 	}
 
-	configureProduct(event) {
+	configureProduct(item) {
 		window.location.href = environment.slug.configureProduct;
 	}
 }

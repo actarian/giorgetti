@@ -2899,7 +2899,7 @@ h6 {
 .card--contact .card__email, .card--file .btn--download, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .card--hero-homepage .card__picture, .card--hero-homepage .btn--cta, .card--product-proposition, .group--actions .btn--cta, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .section--versions .btn--more,
+.section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .card--version .btn--download, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .section--intro-sm .btn--more, .card--store-locator, .section--store-locator .btn--more, .card--contact, .section--form .btn--submit, .section--materials-listing .btn--more, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
 .section--auth .btn--link, .card--file, .section--files .btn--more, .section--index .title, .nav--index > .nav__item > a,
@@ -2935,7 +2935,7 @@ h6 {
   .card--contact .card__email, .card--file .btn--download, .btn, .header .group--center .btn--logo, .header .btn--menu,
   .header .btn--cart, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .card--hero-homepage .card__picture, .card--hero-homepage .btn--cta, .card--product-proposition, .group--actions .btn--cta, .group--actions .btn--prev,
   .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-  .section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .section--versions .btn--more,
+  .section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .card--version .btn--download, .section--versions .btn--more,
   .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .section--intro-sm .btn--more, .card--store-locator, .section--store-locator .btn--more, .card--contact, .section--form .btn--submit, .section--materials-listing .btn--more, .modal--user .btn--close,
   .section--auth .btn--close, .modal--user .btn--link,
   .section--auth .btn--link, .card--file, .section--files .btn--more, .section--index .title, .nav--index > .nav__item > a,
@@ -2960,7 +2960,7 @@ h6 {
   .card--contact .card__email:active, .card--file .btn--download:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
   .header .btn--cart:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .group--filters .btn--submit:active, .card--hero-homepage .card__picture:active, .card--hero-homepage .btn--cta:active, .card--product-proposition:active, .group--actions .btn--cta:active, .group--actions .btn--prev:active,
   .group--actions .btn--next:active, .group--video .btn--play:active, .card--news-proposition:active, .card--news-proposition .btn--more:active, .section--news-proposition .btn--prev:active,
-  .section--news-proposition .btn--next:active, .card--project-proposition:active, .section--product-proposition .btn--cta:active, .card--hero-products-detail .card__picture:active, .card--hero-products-detail .btn--more:active, .card--version:active, .section--versions .btn--more:active,
+  .section--news-proposition .btn--next:active, .card--project-proposition:active, .section--product-proposition .btn--cta:active, .card--hero-products-detail .card__picture:active, .card--hero-products-detail .btn--more:active, .card--version:active, .card--version .btn--download:active, .section--versions .btn--more:active,
   .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--more:active, .card--project:active, .card--design:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--more:active, .card--news:active, .card--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery .btn--more:active, .card--designer:active, .card--atelier:active, .card--store:active, .section--intro-sm .btn--more:active, .card--store-locator:active, .section--store-locator .btn--more:active, .card--contact:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .modal--user .btn--close:active,
   .section--auth .btn--close:active, .modal--user .btn--link:active,
   .section--auth .btn--link:active, .card--file:active, .section--files .btn--more:active, .section--index .title:active, .nav--index > .nav__item > a:active,
@@ -2985,7 +2985,7 @@ h6 {
   .card--contact .card__email:focus, .card--file .btn--download:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
   .header .btn--cart:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .group--filters .btn--submit:focus, .card--hero-homepage .card__picture:focus, .card--hero-homepage .btn--cta:focus, .card--product-proposition:focus, .group--actions .btn--cta:focus, .group--actions .btn--prev:focus,
   .group--actions .btn--next:focus, .group--video .btn--play:focus, .card--news-proposition:focus, .card--news-proposition .btn--more:focus, .section--news-proposition .btn--prev:focus,
-  .section--news-proposition .btn--next:focus, .card--project-proposition:focus, .section--product-proposition .btn--cta:focus, .card--hero-products-detail .card__picture:focus, .card--hero-products-detail .btn--more:focus, .card--version:focus, .section--versions .btn--more:focus,
+  .section--news-proposition .btn--next:focus, .card--project-proposition:focus, .section--product-proposition .btn--cta:focus, .card--hero-products-detail .card__picture:focus, .card--hero-products-detail .btn--more:focus, .card--version:focus, .card--version .btn--download:focus, .section--versions .btn--more:focus,
   .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--more:focus, .card--project:focus, .card--design:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--more:focus, .card--news:focus, .card--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery .btn--more:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .section--intro-sm .btn--more:focus, .card--store-locator:focus, .section--store-locator .btn--more:focus, .card--contact:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .modal--user .btn--close:focus,
   .section--auth .btn--close:focus, .modal--user .btn--link:focus,
   .section--auth .btn--link:focus, .card--file:focus, .section--files .btn--more:focus, .section--index .title:focus, .nav--index > .nav__item > a:focus,
@@ -3010,7 +3010,7 @@ h6 {
   .card--contact .card__email:hover, .card--file .btn--download:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
   .header .btn--cart:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .group--filters .btn--submit:hover, .card--hero-homepage .card__picture:hover, .card--hero-homepage .btn--cta:hover, .card--product-proposition:hover, .group--actions .btn--cta:hover, .group--actions .btn--prev:hover,
   .group--actions .btn--next:hover, .group--video .btn--play:hover, .card--news-proposition:hover, .card--news-proposition .btn--more:hover, .section--news-proposition .btn--prev:hover,
-  .section--news-proposition .btn--next:hover, .card--project-proposition:hover, .section--product-proposition .btn--cta:hover, .card--hero-products-detail .card__picture:hover, .card--hero-products-detail .btn--more:hover, .card--version:hover, .section--versions .btn--more:hover,
+  .section--news-proposition .btn--next:hover, .card--project-proposition:hover, .section--product-proposition .btn--cta:hover, .card--hero-products-detail .card__picture:hover, .card--hero-products-detail .btn--more:hover, .card--version:hover, .card--version .btn--download:hover, .section--versions .btn--more:hover,
   .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--more:hover, .card--project:hover, .card--design:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--more:hover, .card--news:hover, .card--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery .btn--more:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .section--intro-sm .btn--more:hover, .card--store-locator:hover, .section--store-locator .btn--more:hover, .card--contact:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .modal--user .btn--close:hover,
   .section--auth .btn--close:hover, .modal--user .btn--link:hover,
   .section--auth .btn--link:hover, .card--file:hover, .section--files .btn--more:hover, .section--index .title:hover, .nav--index > .nav__item > a:hover,
@@ -3035,7 +3035,7 @@ h6 {
   .card--contact .card__email:visited, .card--file .btn--download:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
   .header .btn--cart:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .group--filters .btn--submit:visited, .card--hero-homepage .card__picture:visited, .card--hero-homepage .btn--cta:visited, .card--product-proposition:visited, .group--actions .btn--cta:visited, .group--actions .btn--prev:visited,
   .group--actions .btn--next:visited, .group--video .btn--play:visited, .card--news-proposition:visited, .card--news-proposition .btn--more:visited, .section--news-proposition .btn--prev:visited,
-  .section--news-proposition .btn--next:visited, .card--project-proposition:visited, .section--product-proposition .btn--cta:visited, .card--hero-products-detail .card__picture:visited, .card--hero-products-detail .btn--more:visited, .card--version:visited, .section--versions .btn--more:visited,
+  .section--news-proposition .btn--next:visited, .card--project-proposition:visited, .section--product-proposition .btn--cta:visited, .card--hero-products-detail .card__picture:visited, .card--hero-products-detail .btn--more:visited, .card--version:visited, .card--version .btn--download:visited, .section--versions .btn--more:visited,
   .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--more:visited, .card--project:visited, .card--design:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--more:visited, .card--news:visited, .card--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery .btn--more:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .section--intro-sm .btn--more:visited, .card--store-locator:visited, .section--store-locator .btn--more:visited, .card--contact:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .modal--user .btn--close:visited,
   .section--auth .btn--close:visited, .modal--user .btn--link:visited,
   .section--auth .btn--link:visited, .card--file:visited, .section--files .btn--more:visited, .section--index .title:visited, .nav--index > .nav__item > a:visited,
@@ -3065,13 +3065,13 @@ h6 {
 .card--contact .card__email, .card--file .btn--download, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .card--hero-homepage .card__picture, .card--hero-homepage .btn--cta, .card--product-proposition, .group--actions .btn--cta, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .section--versions .btn--more,
+.section--news-proposition .btn--next, .card--project-proposition, .section--product-proposition .btn--cta, .card--hero-products-detail .card__picture, .card--hero-products-detail .btn--more, .card--version, .card--version .btn--download, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .section--intro-sm .btn--more, .card--store-locator, .section--store-locator .btn--more, .card--contact, .section--form .btn--submit, .section--materials-listing .btn--more, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
 .section--auth .btn--link, .card--file, .section--files .btn--more, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--submenu > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--submenu > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .card--file .btn--download svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .card--hero-homepage .card__picture svg, .card--hero-homepage .btn--cta svg, .card--product-proposition svg, .group--actions .btn--cta svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .section--product-proposition .btn--cta svg, .card--hero-products-detail .card__picture svg, .card--hero-products-detail .btn--more svg, .card--version svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .card--design svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .section--intro-sm .btn--more svg, .card--store-locator svg, .section--store-locator .btn--more svg, .card--contact svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .card--file svg, .section--files .btn--more svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--submenu > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--submenu > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .card--file .btn--download svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .card--hero-homepage .card__picture svg, .card--hero-homepage .btn--cta svg, .card--product-proposition svg, .group--actions .btn--cta svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .section--product-proposition .btn--cta svg, .card--hero-products-detail .card__picture svg, .card--hero-products-detail .btn--more svg, .card--version svg, .card--version .btn--download svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .card--design svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .section--intro-sm .btn--more svg, .card--store-locator svg, .section--store-locator .btn--more svg, .card--contact svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .card--file svg, .section--files .btn--more svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
@@ -3096,7 +3096,7 @@ h6 {
   .card--contact .card__email[disabled], .card--file .btn--download[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
   .header .btn--cart[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .group--filters .btn--submit[disabled], .card--hero-homepage .card__picture[disabled], .card--hero-homepage .btn--cta[disabled], .card--product-proposition[disabled], .group--actions .btn--cta[disabled], .group--actions .btn--prev[disabled],
   .group--actions .btn--next[disabled], .group--video .btn--play[disabled], .card--news-proposition[disabled], .card--news-proposition .btn--more[disabled], .section--news-proposition .btn--prev[disabled],
-  .section--news-proposition .btn--next[disabled], .card--project-proposition[disabled], .section--product-proposition .btn--cta[disabled], .card--hero-products-detail .card__picture[disabled], .card--hero-products-detail .btn--more[disabled], .card--version[disabled], .section--versions .btn--more[disabled],
+  .section--news-proposition .btn--next[disabled], .card--project-proposition[disabled], .section--product-proposition .btn--cta[disabled], .card--hero-products-detail .card__picture[disabled], .card--hero-products-detail .btn--more[disabled], .card--version[disabled], .card--version .btn--download[disabled], .section--versions .btn--more[disabled],
   .section--versions .btn--configure[disabled], .section--product-materials .btn--more[disabled], .group--insights .btn--more[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--more[disabled], .card--project[disabled], .card--design[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--more[disabled], .card--news[disabled], .card--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery .btn--more[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .section--intro-sm .btn--more[disabled], .card--store-locator[disabled], .section--store-locator .btn--more[disabled], .card--contact[disabled], .section--form .btn--submit[disabled], .section--materials-listing .btn--more[disabled], .modal--user .btn--close[disabled],
   .section--auth .btn--close[disabled], .modal--user .btn--link[disabled],
   .section--auth .btn--link[disabled], .card--file[disabled], .section--files .btn--more[disabled], .section--index .title[disabled], .nav--index > .nav__item > a[disabled],
@@ -5738,8 +5738,7 @@ test-component code {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 60px; }
+  align-items: center; }
   .card--version .card__picture {
     position: relative;
     display: flex;
@@ -5803,6 +5802,39 @@ test-component code {
     font-size: 16px;
     text-align: center;
     text-transform: uppercase; }
+  .card--version .card__cta {
+    margin-top: 30px; }
+  .card--version .btn--configure,
+  .card--version .btn--download {
+    width: 100%; }
+  .card--version .btn--download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    height: 100%;
+    min-width: 180px;
+    padding: 15px 25px;
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    letter-spacing: 0.043em;
+    text-transform: uppercase;
+    border: 2px solid var(--foreground); }
+    .card--version .btn--download, .card--version .btn--download:active, .card--version .btn--download:focus, .card--version .btn--download:visited {
+      background-color: transparent;
+      color: var(--foreground); }
+    .card--version .btn--download:hover {
+      background-color: var(--background-tertiary);
+      color: var(--foreground); }
+    .card--version .btn--download:active:hover {
+      background-color: var(--background-secondary);
+      color: #000000;
+      transition: none; }
+    .card--version .btn--download.disabled, .card--version .btn--download.disabled:active, .card--version .btn--download.disabled:focus, .card--version .btn--download.disabled:hover, .card--version .btn--download.disabled:visited {
+      background-color: transparent;
+      color: var(--foreground);
+      pointer-events: none; }
 
 .listing--versions {
   position: relative;
@@ -5867,7 +5899,7 @@ test-component code {
 .section--versions {
   padding: 0 0 240px 0; }
   .section--versions .title {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     font-family: var(--font-secondary);
     font-size: 48px;
     line-height: 1.2;
@@ -5914,18 +5946,6 @@ test-component code {
       background-color: #232221;
       color: var(--foreground-negative);
       pointer-events: none; }
-    @media (min-width: 1024px) {
-      .section--versions .btn--more,
-      .section--versions .btn--configure {
-        min-width: 280px; } }
-    @media (min-width: 768px) and (max-width: 1439.98px) {
-      .section--versions .btn--more,
-      .section--versions .btn--configure {
-        min-width: 200px; } }
-    @media (max-width: 767.98px) {
-      .section--versions .btn--more,
-      .section--versions .btn--configure {
-        min-width: 280px; } }
   .section--versions .group--cta {
     display: flex;
     align-items: center;
@@ -9242,8 +9262,10 @@ test-component code {
     color: var(--foreground);
     pointer-events: none; }
 
-.section--auth .picture {
-  height: 100%; }
+.section--auth {
+  padding: 100px 0; }
+  .section--auth .picture {
+    height: 100%; }
 
 .divline {
   margin: 60px 0;

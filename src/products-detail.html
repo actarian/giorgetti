@@ -119,7 +119,7 @@
 			<!-- LISTING VERSIONS -->
 			<div class="listing--versions">
 				<div class="listing__item" *for="let item of visibleItems">
-					<a class="card--version" [hreF]="item.url" target="_blank">
+					<div class="card--version">
 						<div class="card__picture">
 							<img [src]="item.image" />
 							<div class="badge--configure" *if="item.configurable"><svg class="edit"><use xlink:href="#edit"></use></svg> Personalizzabile</div>
@@ -128,52 +128,20 @@
 							<div class="card__title" [innerHTML]="item.title"></div>
 							<div class="card__abstract" [innerHTML]="item.abstract" *if="item.abstract"></div>
 							<div class="card__measures" [innerHTML]="item.measures"></div>
-						</div>
-					</a>
-				</div>
-			</div>
-			<!-- include ./shared/products-detail-versions.html -->
-			<!--
-			<div class="listing__item">
-				<div class="card--version">
-					<div class="card__picture">
-						<img src="/giorgetti/img/products-detail/comp-01.jpg" />
-						<div class="configure--badge">Personalizzabile</div>
-					</div>
-					<div class="card__content">
-						<div class="card__title">Adam 01</div>
-						<div class="card__measures">
-							<p>cm 170 x 100 x h 84</p>
-							<p>in 67 x 39 3/8 x h 33</p>
-						</div>
-						<div class="card__cta">
-							<button type="button" class="btn--configure">Personalizza</button>
+							<div class="card__cta" *if="item.configurable">
+								<button type="button" class="btn--configure" (click)="configureProduct(item)">Personalizza</button>
+							</div>
+							<div class="card__cta" *if="!item.configurable">
+								<a [href]="item.url" download target="_blank" class="btn--download">Scarica il pdf</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="listing__item">
-				<div class="card--version">
-					<div class="card__picture">
-						<img src="/giorgetti/img/products-detail/comp-02.jpg" />
-					</div>
-					<div class="card__content">
-						<div class="card__title">Adam 02</div>
-						<div class="card__measures">
-							<p>cm 210 x 100 x h 84</p>
-							<p>in 82 3/4 x 39 3/8 x h 33</p>
-						</div>
-						<div class="card__cta">
-							<button type="button" class="btn--download">Scarica il pdf</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			-->
 		</div>
 		<div class="group--cta">
 			<button type="button" class="btn--more" (click)="showVersions($event)" *if="items.length > visibleItems.length">Tutte le versioni</button>
-			<button type="button" class="btn--configure" (click)="configureProduct($event)">Configura e acquista</button>
+			<!-- <button type="button" class="btn--configure" (click)="configureProduct($event)">Configura e acquista</button> -->
 		</div>
 	</div>
 

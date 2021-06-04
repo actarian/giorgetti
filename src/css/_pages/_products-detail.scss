@@ -175,7 +175,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 60px;
 
 	.card__picture {
 		position: relative;
@@ -258,6 +257,32 @@
 		text-align: center;
 		text-transform: uppercase;
 	}
+
+	.card__cta {
+		margin-top: 30px;
+	}
+
+	.btn--configure,
+	.btn--download {
+		width: 100%;
+	}
+
+	.btn--download {
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-secondary, #000000);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 5px 0;
+		height: 100%;
+		min-width: 180px;
+		padding: 15px 25px;
+		font-size: 14px;
+		line-height: 1;
+		text-align: center;
+		letter-spacing: 0.043em;
+		text-transform: uppercase;
+		border: 2px solid $foreground;
+	}
 }
 
 .listing--versions {
@@ -326,7 +351,7 @@
 	padding: 0 0 240px 0;
 
 	.title {
-		margin-bottom: 40px;
+		margin-bottom: 60px;
 		font-family: $font-secondary;
 		font-size: 48px;
 		line-height: 1.2;
@@ -353,18 +378,6 @@
 		text-align: center;
 		text-transform: uppercase;
 		letter-spacing: 0.043em;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			min-width: 280px;
-		}
 	}
 
 	.group--cta {

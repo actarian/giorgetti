@@ -1,4 +1,5 @@
-import { Component } from 'rxcomp';
+import { Component, getContext } from 'rxcomp';
+import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { UserService, UserViews } from './user.service';
 
 export class UserComponent extends Component {
@@ -11,6 +12,8 @@ export class UserComponent extends Component {
 	setView(view) {
 		this.view = view;
 		this.pushChanges();
+		const { node } = getContext(this);
+		LocomotiveScrollService.scrollTo(node, { offset: -100 });
 	}
 
 	onViewForgot(event) {
