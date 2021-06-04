@@ -1,8 +1,8 @@
 import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil } from 'rxjs/operators';
-import { GtmService } from '../../core/gtm/gtm.service';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { GtmService } from '../../shared/gtm/gtm.service';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
 import { UserService } from './user.service';
 
 export class UserForgotComponent extends Component {

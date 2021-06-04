@@ -2,10 +2,10 @@ import { Component } from 'rxcomp';
 import { FormControl, FormGroup } from 'rxcomp-form';
 import { combineLatest } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-import { FilterMode } from '../../core/filter/filter-item';
-import { FilterService } from '../../core/filter/filter.service';
-import { FormService } from '../../core/forms/form.service';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { FilterMode } from '../../shared/filter/filter-item';
+import { FilterService } from '../../shared/filter/filter.service';
+import { FormService } from '../../shared/forms/form.service';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
 import { ProductsService } from './products.service';
 
 export class ProductsComponent extends Component {

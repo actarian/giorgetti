@@ -1,8 +1,8 @@
 import { Component, getContext } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
-import { ModalResolveEvent, ModalService } from '../../core/modal/modal.service';
 import { environment } from '../../environment';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
+import { ModalResolveEvent, ModalService } from '../../shared/modal/modal.service';
 import { UserService } from '../user/user.service';
 
 export const HeaderMode = {

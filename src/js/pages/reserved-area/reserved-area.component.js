@@ -1,6 +1,6 @@
 import { Component, getContext } from 'rxcomp';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
 import { UserService } from '../user/user.service';
 import { ReservedAreaService } from './reserved-area.service';
 

@@ -1,7 +1,7 @@
 import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
 import { environment } from '../../environment';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
 import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {

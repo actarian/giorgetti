@@ -1,7 +1,7 @@
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { ApiService } from '../../core/api/api.service';
-import { SessionStorageService } from '../../core/storage/session-storage.service';
+import { ApiService } from '../../shared/api/api.service';
+import { SessionStorageService } from '../../shared/storage/session-storage.service';
 
 export const UserViews = {
 	SIGN_IN: 1,

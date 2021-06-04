@@ -61,104 +61,7 @@ function _assertThisInitialized(self) {
 
 function _readOnlyError(name) {
   throw new TypeError("\"" + name + "\" is read-only");
-}var ModalEvent = function ModalEvent(data) {
-  this.data = data;
-};
-var ModalResolveEvent = /*#__PURE__*/function (_ModalEvent) {
-  _inheritsLoose(ModalResolveEvent, _ModalEvent);
-
-  function ModalResolveEvent() {
-    return _ModalEvent.apply(this, arguments) || this;
-  }
-
-  return ModalResolveEvent;
-}(ModalEvent);
-var ModalRejectEvent = /*#__PURE__*/function (_ModalEvent2) {
-  _inheritsLoose(ModalRejectEvent, _ModalEvent2);
-
-  function ModalRejectEvent() {
-    return _ModalEvent2.apply(this, arguments) || this;
-  }
-
-  return ModalRejectEvent;
-}(ModalEvent);
-var ModalService = /*#__PURE__*/function () {
-  function ModalService() {}
-
-  ModalService.open$ = function open$(modal) {
-    var _this = this;
-
-    return this.getTemplate$(modal.src).pipe(operators.map(function (template) {
-      return {
-        node: _this.getNode(template),
-        data: modal.data,
-        modal: modal
-      };
-    }), operators.tap(function (node) {
-      _this.modal$.next(node);
-
-      _this.hasModal = true;
-    }), operators.switchMap(function (node) {
-      return _this.events$;
-    }), operators.tap(function (_) {
-      return _this.hasModal = false;
-    }));
-  };
-
-  ModalService.load$ = function load$(modal) {};
-
-  ModalService.getTemplate$ = function getTemplate$(url) {
-    return rxjs.from(fetch(url).then(function (response) {
-      return response.text();
-    }));
-  };
-
-  ModalService.getNode = function getNode(template) {
-    var div = document.createElement('div');
-    div.innerHTML = template;
-    var node = div.firstElementChild;
-    return node;
-  };
-
-  ModalService.reject = function reject(data) {
-    this.modal$.next(null);
-    this.events$.next(new ModalRejectEvent(data));
-  };
-
-  ModalService.resolve = function resolve(data) {
-    this.modal$.next(null);
-    this.events$.next(new ModalResolveEvent(data));
-  };
-
-  return ModalService;
-}();
-
-_defineProperty(ModalService, "hasModal", false);
-
-ModalService.modal$ = new rxjs.Subject();
-ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
-  function Utils() {}
-
-  Utils.merge = function merge(target, source) {
-    var _this = this;
-
-    if (typeof source === 'object') {
-      Object.keys(source).forEach(function (key) {
-        var value = source[key];
-
-        if (typeof value === 'object' && !Array.isArray(value)) {
-          target[key] = _this.merge(target[key], value);
-        } else {
-          target[key] = value;
-        }
-      });
-    }
-
-    return target;
-  };
-
-  return Utils;
-}();var environmentServed = {
+}var environmentServed = {
   flags: {
     production: true
   },
@@ -204,7 +107,29 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   googleMaps: {
     apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w'
   }
-};var NODE = typeof module !== 'undefined' && module.exports;
+};var Utils = /*#__PURE__*/function () {
+  function Utils() {}
+
+  Utils.merge = function merge(target, source) {
+    var _this = this;
+
+    if (typeof source === 'object') {
+      Object.keys(source).forEach(function (key) {
+        var value = source[key];
+
+        if (typeof value === 'object' && !Array.isArray(value)) {
+          target[key] = _this.merge(target[key], value);
+        } else {
+          target[key] = value;
+        }
+      });
+    }
+
+    return target;
+  };
+
+  return Utils;
+}();var NODE = typeof module !== 'undefined' && module.exports;
 var PARAMS = NODE ? {
   get: function get() {}
 } : new URLSearchParams(window.location.search);
@@ -908,7 +833,82 @@ var UserService = /*#__PURE__*/function () {
   return UserService;
 }();
 
-_defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppComponent = /*#__PURE__*/function (_Component) {
+_defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var ModalEvent = function ModalEvent(data) {
+  this.data = data;
+};
+var ModalResolveEvent = /*#__PURE__*/function (_ModalEvent) {
+  _inheritsLoose(ModalResolveEvent, _ModalEvent);
+
+  function ModalResolveEvent() {
+    return _ModalEvent.apply(this, arguments) || this;
+  }
+
+  return ModalResolveEvent;
+}(ModalEvent);
+var ModalRejectEvent = /*#__PURE__*/function (_ModalEvent2) {
+  _inheritsLoose(ModalRejectEvent, _ModalEvent2);
+
+  function ModalRejectEvent() {
+    return _ModalEvent2.apply(this, arguments) || this;
+  }
+
+  return ModalRejectEvent;
+}(ModalEvent);
+var ModalService = /*#__PURE__*/function () {
+  function ModalService() {}
+
+  ModalService.open$ = function open$(modal) {
+    var _this = this;
+
+    return this.getTemplate$(modal.src).pipe(operators.map(function (template) {
+      return {
+        node: _this.getNode(template),
+        data: modal.data,
+        modal: modal
+      };
+    }), operators.tap(function (node) {
+      _this.modal$.next(node);
+
+      _this.hasModal = true;
+    }), operators.switchMap(function (node) {
+      return _this.events$;
+    }), operators.tap(function (_) {
+      return _this.hasModal = false;
+    }));
+  };
+
+  ModalService.load$ = function load$(modal) {};
+
+  ModalService.getTemplate$ = function getTemplate$(url) {
+    return rxjs.from(fetch(url).then(function (response) {
+      return response.text();
+    }));
+  };
+
+  ModalService.getNode = function getNode(template) {
+    var div = document.createElement('div');
+    div.innerHTML = template;
+    var node = div.firstElementChild;
+    return node;
+  };
+
+  ModalService.reject = function reject(data) {
+    this.modal$.next(null);
+    this.events$.next(new ModalRejectEvent(data));
+  };
+
+  ModalService.resolve = function resolve(data) {
+    this.modal$.next(null);
+    this.events$.next(new ModalResolveEvent(data));
+  };
+
+  return ModalService;
+}();
+
+_defineProperty(ModalService, "hasModal", false);
+
+ModalService.modal$ = new rxjs.Subject();
+ModalService.events$ = new rxjs.Subject();var AppComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(AppComponent, _Component);
 
   function AppComponent() {
@@ -948,1485 +948,6 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
 }(rxcomp.Component);
 AppComponent.meta = {
   selector: '[app-component]'
-};var DROPDOWN_ID = 1000000;
-var DropdownDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(DropdownDirective, _Directive);
-
-  function DropdownDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = DropdownDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var trigger = node.getAttribute('dropdown-trigger');
-    this.trigger = trigger ? node.querySelector(trigger) : node;
-    this.opened = null;
-    this.onClick = this.onClick.bind(this);
-    this.onDocumentClick = this.onDocumentClick.bind(this);
-    this.openDropdown = this.openDropdown.bind(this);
-    this.closeDropdown = this.closeDropdown.bind(this);
-    this.addListeners();
-    DropdownDirective.dropdown$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (id) {
-      // console.log('DropdownDirective', id, this['dropdown-item']);
-      if (_this.id === id) {
-        node.classList.add('dropped');
-      } else {
-        node.classList.remove('dropped');
-      }
-    });
-  };
-
-  _proto.onClick = function onClick(event) {
-    var _getContext2 = rxcomp.getContext(this),
-        node = _getContext2.node;
-
-    if (this.opened === null) {
-      this.openDropdown();
-    } else {
-      var dropdownItemNode = node.querySelector('[dropdown-item]'); // console.log('dropdownItemNode', dropdownItemNode);
-
-      if (!dropdownItemNode) {
-        // if (this.trigger !== node) {
-        this.closeDropdown();
-      }
-    }
-  };
-
-  _proto.onDocumentClick = function onDocumentClick(event) {
-    var _getContext3 = rxcomp.getContext(this),
-        node = _getContext3.node;
-
-    var clickedInside = node === event.target || node.contains(event.target);
-
-    if (!clickedInside) {
-      this.closeDropdown();
-    }
-  };
-
-  _proto.openDropdown = function openDropdown() {
-    if (this.opened === null) {
-      this.opened = true;
-      this.addDocumentListeners();
-      DropdownDirective.dropdown$.next(this.id);
-      this.dropped.next(this.id);
-    }
-  };
-
-  _proto.closeDropdown = function closeDropdown() {
-    if (this.opened !== null) {
-      this.removeDocumentListeners();
-      this.opened = null;
-
-      if (DropdownDirective.dropdown$.getValue() === this.id) {
-        DropdownDirective.dropdown$.next(null);
-        this.dropped.next(null);
-      }
-    }
-  };
-
-  _proto.addListeners = function addListeners() {
-    this.trigger.addEventListener('click', this.onClick);
-  };
-
-  _proto.addDocumentListeners = function addDocumentListeners() {
-    document.addEventListener('click', this.onDocumentClick);
-  };
-
-  _proto.removeListeners = function removeListeners() {
-    this.trigger.removeEventListener('click', this.onClick);
-  };
-
-  _proto.removeDocumentListeners = function removeDocumentListeners() {
-    document.removeEventListener('click', this.onDocumentClick);
-  };
-
-  _proto.onDestroy = function onDestroy() {
-    this.removeListeners();
-    this.removeDocumentListeners();
-  };
-
-  DropdownDirective.nextId = function nextId() {
-    return DROPDOWN_ID++;
-  };
-
-  _createClass(DropdownDirective, [{
-    key: "id",
-    get: function get() {
-      return this.dropdown || this.id_ || (this.id_ = DropdownDirective.nextId());
-    }
-  }]);
-
-  return DropdownDirective;
-}(rxcomp.Directive);
-DropdownDirective.meta = {
-  selector: '[dropdown]',
-  inputs: ['dropdown', 'dropdown-trigger'],
-  outputs: ['dropped']
-};
-DropdownDirective.dropdown$ = new rxjs.BehaviorSubject(null);var DropdownItemDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(DropdownItemDirective, _Directive);
-
-  function DropdownItemDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = DropdownItemDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    node.classList.add('dropdown-item');
-    DropdownDirective.dropdown$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (id) {
-      // console.log('DropdownItemDirective', id, this['dropdown-item']);
-      if (_this.id === id) {
-        node.classList.add('dropped');
-      } else {
-        node.classList.remove('dropped');
-      }
-    });
-  };
-
-  _createClass(DropdownItemDirective, [{
-    key: "id",
-    get: function get() {
-      return this['dropdown-item'];
-    }
-  }]);
-
-  return DropdownItemDirective;
-}(rxcomp.Directive);
-DropdownItemDirective.meta = {
-  selector: '[dropdown-item], [[dropdown-item]]',
-  inputs: ['dropdown-item']
-};var EnvPipe = /*#__PURE__*/function (_Pipe) {
-  _inheritsLoose(EnvPipe, _Pipe);
-
-  function EnvPipe() {
-    return _Pipe.apply(this, arguments) || this;
-  }
-
-  EnvPipe.transform = function transform(keypath) {
-    var env = environment;
-    var keys = keypath.split('.');
-    var k = keys.shift();
-
-    while (keys.length > 0 && env[k]) {
-      env = env[k];
-      k = keys.shift();
-    }
-
-    var value = env[k] || null;
-    return value;
-  };
-
-  return EnvPipe;
-}(rxcomp.Pipe);
-EnvPipe.meta = {
-  name: 'env'
-};var FlagPipe = /*#__PURE__*/function (_Pipe) {
-  _inheritsLoose(FlagPipe, _Pipe);
-
-  function FlagPipe() {
-    return _Pipe.apply(this, arguments) || this;
-  }
-
-  FlagPipe.transform = function transform(key) {
-    var flags = environment.flags;
-    return flags[key] || false;
-  };
-
-  return FlagPipe;
-}(rxcomp.Pipe);
-FlagPipe.meta = {
-  name: 'flag'
-};var ControlComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ControlComponent, _Component);
-
-  function ControlComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlComponent.prototype;
-
-  _proto.onChanges = function onChanges() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node; // console.log(this, node, this.control);
-
-
-    var control = this.control;
-    var flags = control.flags;
-    Object.keys(flags).forEach(function (key) {
-      flags[key] ? node.classList.add(key) : node.classList.remove(key);
-    });
-  };
-
-  return ControlComponent;
-}(rxcomp.Component);
-ControlComponent.meta = {
-  selector: '[control]',
-  inputs: ['control']
-};var ControlCheckboxComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlCheckboxComponent, _ControlComponent);
-
-  function ControlCheckboxComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlCheckboxComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-  };
-
-  return ControlCheckboxComponent;
-}(ControlComponent);
-ControlCheckboxComponent.meta = {
-  selector: '[control-checkbox]',
-  inputs: ['control', 'label'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input type=\"checkbox\" class=\"control--checkbox\" [id]=\"control.name\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
-};var KeyboardService = /*#__PURE__*/function () {
-  function KeyboardService() {}
-
-  KeyboardService.keydown$ = function keydown$() {
-    if (!this.keydown$_) {
-      this.keydown$_ = rxjs.fromEvent(window, 'keydown').pipe(operators.shareReplay(1));
-    }
-
-    return this.keydown$_;
-  };
-
-  KeyboardService.keyup$ = function keyup$() {
-    if (!this.keyup$_) {
-      this.keyup$_ = rxjs.fromEvent(window, 'keyup').pipe(operators.shareReplay(1));
-    }
-
-    return this.keyup$_;
-  };
-
-  KeyboardService.keys$ = function keys$() {
-    var _this = this;
-
-    if (!this.keys$_) {
-      this.keys$_ = rxjs.merge(this.keydown$(), this.keyup$()).pipe(operators.map(function (event) {
-        var keys = _this.keys;
-
-        if (event.type === 'keydown') {
-          keys[event.key] = true;
-        } else {
-          delete keys[event.key];
-        }
-
-        return _this.keys;
-      }), operators.startWith(this.keys), operators.shareReplay(1));
-    }
-
-    return this.keys$_;
-  };
-
-  KeyboardService.key$ = function key$() {
-    if (!this.key$_) {
-      var regexp = /\w/;
-      this.key$_ = this.keydown$().pipe(operators.filter(function (event) {
-        return event.key && event.key.match(regexp);
-      }), operators.map(function (event) {
-        return event.key;
-      }), operators.shareReplay(1));
-    }
-
-    return this.key$_;
-  };
-
-  KeyboardService.typing$ = function typing$() {
-    if (!this.typing$_) {
-      var typing = '',
-          to;
-      this.typing$_ = this.key$().pipe(operators.map(function (key) {
-        if (to) {
-          clearTimeout(to);
-        }
-
-        typing += key;
-        to = setTimeout(function () {
-          typing = '';
-        }, 1500);
-        return typing;
-      }), operators.shareReplay(1));
-    }
-
-    return this.typing$_;
-  };
-
-  return KeyboardService;
-}();
-
-_defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlCustomSelectComponent, _ControlComponent);
-
-  function ControlCustomSelectComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlCustomSelectComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.label = this.label || 'label';
-    this.dropped = false;
-    this.dropdownId = DropdownDirective.nextId();
-    KeyboardService.typing$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (word) {
-      _this.scrollToWord(word);
-    });
-    /*
-    KeyboardService.key$().pipe(
-    	takeUntil(this.unsubscribe$)
-    ).subscribe(key => {
-    	this.scrollToKey(key);
-    });
-    */
-  }
-  /*
-  onChanges() {
-  	// console.log('ControlCustomSelectComponent.onChanges');
-  }
-  */
-  ;
-
-  _proto.scrollToWord = function scrollToWord(word) {
-    // console.log('ControlCustomSelectComponent.scrollToWord', word);
-    var items = this.control.options || [];
-    var index = -1;
-
-    for (var i = 0; i < items.length; i++) {
-      var x = items[i];
-
-      if (x.name.toLowerCase().indexOf(word.toLowerCase()) === 0) {
-        // console.log(word, x.name);
-        index = i;
-        break;
-      }
-    }
-
-    if (index !== -1) {
-      var _getContext = rxcomp.getContext(this),
-          node = _getContext.node;
-
-      var dropdown = node.querySelector('.dropdown');
-      var navDropdown = node.querySelector('.nav--dropdown');
-      var item = navDropdown.children[index];
-      dropdown.scrollTo(0, item.offsetTop);
-    }
-  };
-
-  _proto.setOption = function setOption(item) {
-    // console.log('setOption', item, this.isMultiple);
-    var value;
-
-    if (this.isMultiple) {
-      var _value = this.control.value || [];
-
-      var index = _value.indexOf(item.id);
-
-      if (index !== -1) {
-        // if (value.length > 1) {
-        _value.splice(index, 1); // }
-
-      } else {
-        _value.push(item.id);
-      }
-
-      _value.length ? _value.slice() : null, _readOnlyError("value");
-    } else {
-      value = item.id; // DropdownDirective.dropdown$.next(null);
-    }
-
-    this.control.value = value;
-    this.change.next(value);
-  };
-
-  _proto.hasOption = function hasOption(item) {
-    if (this.isMultiple) {
-      var values = this.control.value || [];
-      return values.indexOf(item.id) !== -1;
-    } else {
-      return this.control.value === item.id;
-    }
-  };
-
-  _proto.getLabel = function getLabel() {
-    var value = this.control.value;
-    var items = this.control.options || [];
-
-    if (this.isMultiple) {
-      value = value || [];
-
-      if (value.length) {
-        return value.map(function (v) {
-          var item = items.find(function (x) {
-            return x.id === v || x.name === v;
-          });
-          return item ? item.name : '';
-        }).join(', ');
-      } else {
-        return 'select'; // LabelPipe.transform('select');
-      }
-    } else {
-      var item = items.find(function (x) {
-        return x.id === value || x.name === value;
-      });
-
-      if (item) {
-        return item.name;
-      } else {
-        return 'select'; // LabelPipe.transform('select');
-      }
-    }
-  };
-
-  _proto.onDropped = function onDropped($event) {
-    // console.log('ControlCustomSelectComponent.onDropped', id);
-    if (this.dropped && $event === null) {
-      this.control.touched = true;
-    }
-
-    this.dropped = $event === this.dropdownId;
-  };
-
-  _createClass(ControlCustomSelectComponent, [{
-    key: "isMultiple",
-    get: function get() {
-      return this.multiple && this.multiple !== false && this.multiple !== 'false';
-    }
-  }]);
-
-  return ControlCustomSelectComponent;
-}(ControlComponent);
-ControlCustomSelectComponent.meta = {
-  selector: '[control-custom-select]',
-  outputs: ['change'],
-  inputs: ['control', 'label', 'multiple'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form--select\" [class]=\"{ required: control.validators.length, multiple: isMultiple }\" [dropdown]=\"dropdownId\" (dropped)=\"onDropped($event)\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--custom-select\" [innerHTML]=\"getLabel() | label\"></span>\n\t\t\t<svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [dropdown-item]=\"dropdownId\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\" [class]=\"{ multiple: isMultiple }\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of control.options\">\n\t\t\t\t\t<span [class]=\"{ active: hasOption(item) }\" [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
-};var ControlEmailComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlEmailComponent, _ControlComponent);
-
-  function ControlEmailComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlEmailComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-  };
-
-  return ControlEmailComponent;
-}(ControlComponent);
-ControlEmailComponent.meta = {
-  selector: '[control-email]',
-  inputs: ['control', 'label'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
-};var ControlPasswordComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlPasswordComponent, _ControlComponent);
-
-  function ControlPasswordComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlPasswordComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-  };
-
-  return ControlPasswordComponent;
-}(ControlComponent);
-ControlPasswordComponent.meta = {
-  selector: '[control-password]',
-  inputs: ['control', 'label'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
-};var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlSearchComponent, _ControlComponent);
-
-  function ControlSearchComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlSearchComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-    this.disabled = this.disabled || false;
-  };
-
-  return ControlSearchComponent;
-}(ControlComponent);
-ControlSearchComponent.meta = {
-  selector: '[control-search]',
-  inputs: ['control', 'label', 'disabled'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<svg class=\"search\"><use xlink:href=\"#search\"></use></svg>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t"
-};var ControlTextComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlTextComponent, _ControlComponent);
-
-  function ControlTextComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlTextComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-    this.disabled = this.disabled || false;
-  };
-
-  return ControlTextComponent;
-}(ControlComponent);
-ControlTextComponent.meta = {
-  selector: '[control-text]',
-  inputs: ['control', 'label', 'disabled'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
-};var ControlTextareaComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ControlTextareaComponent, _ControlComponent);
-
-  function ControlTextareaComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ControlTextareaComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
-    this.disabled = this.disabled || false;
-  };
-
-  return ControlTextareaComponent;
-}(ControlComponent);
-ControlTextareaComponent.meta = {
-  selector: '[control-textarea]',
-  inputs: ['control', 'label', 'disabled'],
-  template:
-  /* html */
-  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<textarea class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
-};var ErrorsComponent = /*#__PURE__*/function (_ControlComponent) {
-  _inheritsLoose(ErrorsComponent, _ControlComponent);
-
-  function ErrorsComponent() {
-    return _ControlComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ErrorsComponent.prototype;
-
-  _proto.getLabel = function getLabel(key, value) {
-    var label = LabelPipe.transform("error_" + key);
-    return label;
-  };
-
-  return ErrorsComponent;
-}(ControlComponent);
-ErrorsComponent.meta = {
-  selector: 'errors-component',
-  inputs: ['control'],
-  template:
-  /* html */
-  "\n\t<div class=\"inner\" [style]=\"{ display: control.invalid && control.touched ? 'block' : 'none' }\">\n\t\t<div class=\"error\" *for=\"let [key, value] of control.errors\">\n\t\t\t<span [innerHTML]=\"getLabel(key, value)\"></span>\n\t\t\t<!-- <span class=\"key\" [innerHTML]=\"key\"></span> <span class=\"value\" [innerHTML]=\"value | json\"></span> -->\n\t\t</div>\n\t</div>\n\t"
-};var TestComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(TestComponent, _Component);
-
-  function TestComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = TestComponent.prototype;
-
-  _proto.onTest = function onTest(event) {
-    this.test.next(event);
-  };
-
-  _proto.onReset = function onReset(event) {
-    this.reset.next(event);
-  };
-
-  return TestComponent;
-}(rxcomp.Component);
-TestComponent.meta = {
-  selector: 'test-component',
-  inputs: ['form'],
-  outputs: ['test', 'reset'],
-  template:
-  /* html */
-  "\n\t<div class=\"test-component\" *if=\"!('production' | flag)\">\n\t\t<div class=\"test-component__title\">development mode</div>\n\t\t<code [innerHTML]=\"form.value | json\"></code>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onTest($event)\"><span>test</span></button>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onReset($event)\"><span>reset</span></button>\n\t</div>\n\t"
-};/*
-['quot', 'amp', 'apos', 'lt', 'gt', 'nbsp', 'iexcl', 'cent', 'pound', 'curren', 'yen', 'brvbar', 'sect', 'uml', 'copy', 'ordf', 'laquo', 'not', 'shy', 'reg', 'macr', 'deg', 'plusmn', 'sup2', 'sup3', 'acute', 'micro', 'para', 'middot', 'cedil', 'sup1', 'ordm', 'raquo', 'frac14', 'frac12', 'frac34', 'iquest', 'Agrave', 'Aacute', 'Acirc', 'Atilde', 'Auml', 'Aring', 'AElig', 'Ccedil', 'Egrave', 'Eacute', 'Ecirc', 'Euml', 'Igrave', 'Iacute', 'Icirc', 'Iuml', 'ETH', 'Ntilde', 'Ograve', 'Oacute', 'Ocirc', 'Otilde', 'Ouml', 'times', 'Oslash', 'Ugrave', 'Uacute', 'Ucirc', 'Uuml', 'Yacute', 'THORN', 'szlig', 'agrave', 'aacute', 'atilde', 'auml', 'aring', 'aelig', 'ccedil', 'egrave', 'eacute', 'ecirc', 'euml', 'igrave', 'iacute', 'icirc', 'iuml', 'eth', 'ntilde', 'ograve', 'oacute', 'ocirc', 'otilde', 'ouml', 'divide', 'oslash', 'ugrave', 'uacute', 'ucirc', 'uuml', 'yacute', 'thorn', 'yuml', 'amp', 'bull', 'deg', 'infin', 'permil', 'sdot', 'plusmn', 'dagger', 'mdash', 'not', 'micro', 'perp', 'par', 'euro', 'pound', 'yen', 'cent', 'copy', 'reg', 'trade', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi', 'Chi', 'Psi', 'Omega'];
-['"', '&', ''', '<', '>', ' ', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', '&', '•', '°', '∞', '‰', '⋅', '±', '†', '—', '¬', 'µ', '⊥', '∥', '€', '£', '¥', '¢', '©', '®', '™', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
-*/
-
-var HtmlPipe = /*#__PURE__*/function (_Pipe) {
-  _inheritsLoose(HtmlPipe, _Pipe);
-
-  function HtmlPipe() {
-    return _Pipe.apply(this, arguments) || this;
-  }
-
-  HtmlPipe.transform = function transform(value) {
-    if (value) {
-      value = value.replace(/&#(\d+);/g, function (m, n) {
-        return String.fromCharCode(parseInt(n));
-      });
-      var escapes = ['quot', 'amp', 'apos', 'lt', 'gt', 'nbsp', 'iexcl', 'cent', 'pound', 'curren', 'yen', 'brvbar', 'sect', 'uml', 'copy', 'ordf', 'laquo', 'not', 'shy', 'reg', 'macr', 'deg', 'plusmn', 'sup2', 'sup3', 'acute', 'micro', 'para', 'middot', 'cedil', 'sup1', 'ordm', 'raquo', 'frac14', 'frac12', 'frac34', 'iquest', 'Agrave', 'Aacute', 'Acirc', 'Atilde', 'Auml', 'Aring', 'AElig', 'Ccedil', 'Egrave', 'Eacute', 'Ecirc', 'Euml', 'Igrave', 'Iacute', 'Icirc', 'Iuml', 'ETH', 'Ntilde', 'Ograve', 'Oacute', 'Ocirc', 'Otilde', 'Ouml', 'times', 'Oslash', 'Ugrave', 'Uacute', 'Ucirc', 'Uuml', 'Yacute', 'THORN', 'szlig', 'agrave', 'aacute', 'atilde', 'auml', 'aring', 'aelig', 'ccedil', 'egrave', 'eacute', 'ecirc', 'euml', 'igrave', 'iacute', 'icirc', 'iuml', 'eth', 'ntilde', 'ograve', 'oacute', 'ocirc', 'otilde', 'ouml', 'divide', 'oslash', 'ugrave', 'uacute', 'ucirc', 'uuml', 'yacute', 'thorn', 'yuml', 'amp', 'bull', 'deg', 'infin', 'permil', 'sdot', 'plusmn', 'dagger', 'mdash', 'not', 'micro', 'perp', 'par', 'euro', 'pound', 'yen', 'cent', 'copy', 'reg', 'trade', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi', 'Chi', 'Psi', 'Omega'];
-      var unescapes = ['"', '&', '\'', '<', '>', ' ', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', '&', '•', '°', '∞', '‰', '⋅', '±', '†', '—', '¬', 'µ', '⊥', '∥', '€', '£', '¥', '¢', '©', '®', '™', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
-      var rx = new RegExp("(&" + escapes.join(';)|(&') + ";)", 'g');
-      value = value.replace(rx, function () {
-        for (var i = 1; i < arguments.length; i++) {
-          if (arguments[i]) {
-            // console.log(arguments[i], unescapes[i - 1]);
-            return unescapes[i - 1];
-          }
-        }
-      }); // console.log(value);
-
-      return value;
-    }
-  };
-
-  return HtmlPipe;
-}(rxcomp.Pipe);
-HtmlPipe.meta = {
-  name: 'html'
-};var IdDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(IdDirective, _Directive);
-
-  function IdDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = IdDirective.prototype;
-
-  _proto.onChanges = function onChanges() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    node.setAttribute('id', this.id);
-  };
-
-  return IdDirective;
-}(rxcomp.Directive);
-IdDirective.meta = {
-  selector: '[id]',
-  inputs: ['id']
-};var LabelForDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(LabelForDirective, _Directive);
-
-  function LabelForDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = LabelForDirective.prototype;
-
-  _proto.onChanges = function onChanges() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    node.setAttribute('for', this.labelFor);
-  };
-
-  return LabelForDirective;
-}(rxcomp.Directive);
-LabelForDirective.meta = {
-  selector: '[labelFor]',
-  inputs: ['labelFor']
-};var LocomotiveScrollService = /*#__PURE__*/function () {
-  function LocomotiveScrollService() {}
-
-  LocomotiveScrollService.scroll = function scroll(_scroll) {
-    // console.log('LocomotiveScrollService.scroll', scroll);
-    this.scroll$.next(_scroll);
-  };
-
-  LocomotiveScrollService.init = function init(node, options) {
-    options = Object.assign({
-      useKeyboard: true,
-      smoothMobile: true,
-      inertia: 0.5,
-      // name:'scroll',
-      // offset: [0,0], // bottom top
-      // repeat: false,
-      smooth: true,
-      // initPosition: { x: 0, y: 0 }
-      // direction: 'vertical',
-      lerp: 0.01,
-      getDirection: true,
-      // add direction to scroll event
-      getSpeed: true,
-      // add speed to scroll event
-      // class: 'is-inview',
-      initClass: 'has-scroll-init',
-      scrollingClass: 'has-scroll-scrolling',
-      draggingClass: 'has-scroll-dragging',
-      smoothClass: 'has-scroll-smooth',
-      scrollbarContainer: false,
-      scrollbarClass: 'c-scrollbar',
-      multiplier: 1,
-      firefoxMultiplier: 50,
-      touchMultiplier: 2,
-      scrollFromAnywhere: true,
-      gestureDirection: 'vertical',
-      reloadOnContextChange: false,
-      resetNativeScroll: true
-    }, options, {
-      el: node
-    });
-
-    if (this.useLocomotiveScroll()) {
-      var instance = new LocomotiveScroll(options);
-      LocomotiveScrollService.instance = instance;
-      return instance;
-    } else {
-      document.querySelector('html').classList.add('has-scroll-init');
-    }
-  };
-
-  LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
-    return window.innerWidth >= 768 && !this.isMacLike();
-  };
-
-  LocomotiveScrollService.isMacLike = function isMacLike() {
-    var isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
-    return isMacLike;
-  };
-
-  LocomotiveScrollService.isIOS = function isIOS() {
-    var isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
-    return isIOS;
-  };
-
-  LocomotiveScrollService.isMacOs = function isMacOs() {
-    var isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
-    return isMacOs;
-  };
-
-  LocomotiveScrollService.isSafari = function isSafari() {
-    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
-    return isSafari;
-  };
-
-  LocomotiveScrollService.init$ = function init$(node) {
-    return rxjs.fromEvent(window, 'load').pipe(operators.delay(1), operators.switchMap(function (_) {
-      // setTimeout(() => {
-      var instance = LocomotiveScrollService.init(node);
-
-      if (instance) {
-        instance.on('scroll', function (instance) {
-          LocomotiveScrollService.scroll(instance);
-        });
-      } else {
-        var event = {
-          direction: null,
-          scroll: {
-            x: 0,
-            y: 0
-          },
-          speed: 0
-        };
-        var body = document.querySelector('body');
-        var previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
-
-        body.addEventListener('scroll', function () {
-          var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
-
-          var direction = y > previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
-
-          previousY = y;
-          event.direction = direction;
-          event.scroll.y = y;
-          LocomotiveScrollService.scroll(event);
-        }, true);
-      }
-
-      return LocomotiveScrollService.scroll$; // }, 1);
-    }));
-  };
-
-  LocomotiveScrollService.update = function update() {
-    if (this.instance) {
-      this.instance.update();
-    }
-  };
-
-  LocomotiveScrollService.stop = function stop() {
-    if (this.instance) {
-      this.instance.stop();
-    }
-  };
-
-  LocomotiveScrollService.start = function start() {
-    if (this.instance) {
-      this.instance.start();
-    }
-  };
-
-  LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
-    if (this.instance) {
-      this.instance.scrollTo(target, options);
-    } else {
-      target.scrollIntoView();
-    }
-  };
-
-  return LocomotiveScrollService;
-}();
-
-_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var LocomotiveScrollDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(LocomotiveScrollDirective, _Directive);
-
-  function LocomotiveScrollDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = LocomotiveScrollDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    LocomotiveScrollService.init$(node).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('LocomotiveScrollDirective', event);
-    });
-    /*
-    window.onload = () => {
-    	setTimeout(() => {
-    		const instance = LocomotiveScrollService.init(node);
-    		if (instance) {
-    			instance.on('scroll', instance => {
-    				LocomotiveScrollService.scroll(instance.scroll.y);
-    			});
-    		} else {
-    			const body = document.querySelector('body');
-    			window.addEventListener('scroll', () => {
-    				const y = body.scrollTop; // window.pageYOffset
-    				LocomotiveScrollService.scroll(y);
-    			}, true);
-    		}
-    	}, 1);
-    };
-    */
-  };
-
-  return LocomotiveScrollDirective;
-}(rxcomp.Directive);
-LocomotiveScrollDirective.meta = {
-  selector: '[locomotive-scroll],[[locomotive-scroll]]'
-};var ScrollDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(ScrollDirective, _Directive);
-
-  function ScrollDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  var _proto = ScrollDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    if (LocomotiveScrollService.useLocomotiveScroll()) {
-      this.scroll$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('ScrollDirective', event);
-      });
-    }
-  };
-
-  _proto.scroll$ = function scroll$() {
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var speed = this.scrollSpeed ? parseFloat(this.scrollSpeed) : 1.5;
-    return LocomotiveScrollService.scroll$.pipe(operators.tap(function (scroll) {
-      var wh = window.innerHeight;
-      var wh2 = wh / 2;
-      var rect = node.getBoundingClientRect();
-      var currentY = gsap.getProperty(node, 'y');
-      var top = rect.top - currentY;
-      var bottom = rect.bottom - currentY;
-
-      if (top < wh && bottom > 0) {
-        var pow = (top - wh2) / wh2;
-        var y = pow * speed * 40;
-        gsap.set(node, {
-          y: y
-        });
-      }
-    }));
-  };
-
-  return ScrollDirective;
-}(rxcomp.Directive);
-ScrollDirective.meta = {
-  selector: '[scroll]',
-  inputs: ['scrollSpeed']
-};var ModalOutletComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ModalOutletComponent, _Component);
-
-  function ModalOutletComponent() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = ModalOutletComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    this.modalNode = node.querySelector('.modal-outlet__modal');
-    ModalService.modal$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (modal) {
-      _this.modal = modal;
-    });
-  };
-
-  _proto.reject = function reject(event) {
-    ModalService.reject();
-  };
-
-  _createClass(ModalOutletComponent, [{
-    key: "modal",
-    get: function get() {
-      return this.modal_;
-    },
-    set: function set(modal) {
-      // console.log('ModalOutletComponent set modal', modal, this);
-      var _getContext2 = rxcomp.getContext(this),
-          module = _getContext2.module;
-
-      if (this.modal_ && this.modal_.node) {
-        module.remove(this.modal_.node, this);
-        this.modalNode.removeChild(this.modal_.node);
-      }
-
-      if (modal && modal.node) {
-        this.modal_ = modal;
-        this.modalNode.appendChild(modal.node);
-        var instances = module.compile(modal.node);
-      }
-
-      this.modal_ = modal;
-      this.pushChanges();
-    }
-  }]);
-
-  return ModalOutletComponent;
-}(rxcomp.Component);
-ModalOutletComponent.meta = {
-  selector: '[modal-outlet]',
-  template:
-  /* html */
-  "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t</div>\n\t"
-};var SlugPipe = /*#__PURE__*/function (_Pipe) {
-  _inheritsLoose(SlugPipe, _Pipe);
-
-  function SlugPipe() {
-    return _Pipe.apply(this, arguments) || this;
-  }
-
-  SlugPipe.transform = function transform(key) {
-    var slug = environment.slug;
-    return slug[key] || "#" + key;
-  };
-
-  return SlugPipe;
-}(rxcomp.Pipe);
-SlugPipe.meta = {
-  name: 'slug'
-};var SwiperDirective = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(SwiperDirective, _Component);
-
-  function SwiperDirective() {
-    return _Component.apply(this, arguments) || this;
-  }
-
-  var _proto = SwiperDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    this.options = {
-      slidesPerView: 'auto',
-      spaceBetween: 0,
-      centeredSlides: true,
-      speed: 600,
-      autoplay: {
-        delay: 5000
-      },
-      keyboardControl: true,
-      mousewheelControl: false,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-      keyboard: {
-        enabled: true,
-        onlyInViewport: true
-      }
-    };
-    this.init_();
-  };
-
-  _proto.onChanges = function onChanges() {
-    this.swiperInitOrUpdate_();
-  };
-
-  _proto.onDestroy = function onDestroy() {
-    this.removeListeners_();
-    this.swiperDestroy_();
-  };
-
-  _proto.onBeforePrint = function onBeforePrint() {
-    this.swiperDestroy_();
-  };
-
-  _proto.slideToIndex = function slideToIndex(index) {
-    // console.log('SwiperDirective.slideToIndex', index);
-    if (this.swiper) {
-      this.swiper.slideTo(index);
-    }
-  };
-
-  _proto.hasPrev = function hasPrev() {
-    var swiper = this.swiper;
-
-    if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
-      // console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
-      return true;
-    }
-  };
-
-  _proto.hasNext = function hasNext() {
-    var swiper = this.swiper;
-
-    if (swiper) {
-      var slidesPerView = swiper.params.slidesPerView || 1; // console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
-
-      if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
-        return true;
-      }
-    }
-  };
-
-  _proto.slidePrev = function slidePrev() {
-    var swiper = this.swiper;
-
-    if (this.hasPrev()) {
-      // console.log('SwiperDirective.slidePrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
-      swiper.slideTo(swiper.activeIndex - 1);
-    }
-  };
-
-  _proto.slideNext = function slideNext() {
-    var swiper = this.swiper;
-
-    if (this.hasNext()) {
-      // console.log('SwiperDirective.slideNext', swiper.activeIndex, swiper.realIndex, swiper.slides);
-      swiper.slideTo(swiper.activeIndex + 1);
-    }
-  };
-
-  _proto.init_ = function init_(target) {
-    var _this = this;
-
-    this.events$ = new rxjs.Subject();
-
-    if (this.enabled) {
-      var _getContext = rxcomp.getContext(this),
-          node = _getContext.node;
-
-      target = target || node;
-      this.target = target;
-      gsap.set(target, {
-        opacity: 0
-      });
-      this.index = 0;
-      var on = this.options.on || {};
-
-      on.slideChange = function () {
-        var swiper = _this.swiper;
-
-        if (swiper) {
-          _this.index = swiper.activeIndex;
-
-          _this.events$.next(_this.index);
-
-          _this.pushChanges();
-        }
-      };
-
-      this.options.on = on;
-      this.addListeners_();
-    }
-  };
-
-  _proto.addListeners_ = function addListeners_() {
-    this.onBeforePrint = this.onBeforePrint.bind(this);
-    window.addEventListener('beforeprint', this.onBeforePrint);
-    /*
-    scope.$on('onResize', ($scope) => {
-    	this.onResize(scope, element, attributes);
-    });
-    */
-  };
-
-  _proto.removeListeners_ = function removeListeners_() {
-    window.removeEventListener('beforeprint', this.onBeforePrint);
-  };
-
-  _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
-    if (this.enabled) {
-      var target = this.target;
-
-      if (this.swiper) {
-        this.swiper.update();
-      } else {
-        var swiper;
-        var on = this.options.on || (this.options.on = {});
-        var callback = on.init;
-
-        if (!on.init || !on.init.swiperDirectiveInit) {
-          on.init = function () {
-            var _this2 = this;
-
-            gsap.to(target, {
-              duration: 0.4,
-              opacity: 1,
-              ease: Power2.easeOut
-            });
-            setTimeout(function () {
-              if (typeof callback === 'function') {
-                callback.apply(_this2, [swiper, element, scope]);
-              }
-            }, 1);
-          };
-
-          on.init.swiperDirectiveInit = true;
-        }
-
-        gsap.set(target, {
-          opacity: 1
-        });
-        swiper = new Swiper(target, this.options); // console.log(swiper);
-
-        this.swiper = swiper;
-        this.swiper._opening = true;
-        target.classList.add('swiper-init');
-      }
-    }
-  };
-
-  _proto.swiperDestroy_ = function swiperDestroy_() {
-    if (this.swiper) {
-      this.swiper.destroy();
-    }
-  };
-
-  _createClass(SwiperDirective, [{
-    key: "enabled",
-    get: function get() {
-      return !window.matchMedia('print').matches;
-    }
-  }]);
-
-  return SwiperDirective;
-}(rxcomp.Component);
-SwiperDirective.meta = {
-  selector: '[swiper]',
-  inputs: ['consumer']
-};var ID = 0;
-var ThronComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ThronComponent, _Component);
-
-  function ThronComponent() {
-    var _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
-
-    _defineProperty(_assertThisInitialized(_this), "playing_", false);
-
-    return _this;
-  }
-
-  var _proto = ThronComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    // console.log('ThronComponent.onInit');
-    var THRON = window.THRONContentExperience || window.THRONPlayer;
-
-    if (!THRON) {
-      return;
-    } // console.log('THRONContentExperience', window.THRONContentExperience, 'THRONPlayer', window.THRONPlayer);
-
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = this.target = node.querySelector('.video > .thron');
-    var id = target.id = "thron-" + ++ID;
-    var media = this.thron;
-
-    if (media.indexOf('pkey=') === -1) {
-      var splitted = media.split('/');
-      var clientId = splitted[6];
-      var xcontentId = splitted[7];
-      var pkey = splitted[8];
-      media = "https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=" + clientId + "&xcontentId=" + xcontentId + "&pkey=" + pkey;
-    }
-
-    var controls = this.controls = node.hasAttribute('controls') ? true : false,
-        loop = this.loop = node.hasAttribute('loop') ? true : false,
-        autoplay = this.autoplay = node.hasAttribute('autoplay') ? true : false;
-    var player = this.player = THRON(id, {
-      media: media,
-      loop: loop,
-      autoplay: autoplay,
-      muted: !controls,
-      displayLinked: 'close',
-      noSkin: !controls // lockBitrate: 'max',
-
-    });
-    this.onReady = this.onReady.bind(this);
-    this.onCanPlay = this.onCanPlay.bind(this);
-    this.onPlaying = this.onPlaying.bind(this);
-    this.onPlay = this.onPlay.bind(this);
-    this.onPause = this.onPause.bind(this);
-    this.onComplete = this.onComplete.bind(this);
-    player.on('ready', this.onReady);
-    player.on('canPlay', this.onCanPlay);
-    player.on('playing', this.onPlaying);
-    player.on('play', this.onPlay);
-    player.on('pause', this.onPause);
-    player.on('complete', this.onComplete);
-  };
-
-  _proto.onReady = function onReady() {
-    var _getContext2 = rxcomp.getContext(this),
-        node = _getContext2.node;
-
-    var id = this.target.id;
-    var player = this.player;
-
-    if (!this.controls) {
-      var mediaContainer = player.mediaContainer();
-      var video = mediaContainer.querySelector('video');
-      video.setAttribute('playsinline', 'true');
-      video.setAttribute('autoplay', 'true');
-    }
-
-    this.ready.next(id); // video.setAttribute('autoplay', 'true');
-  };
-
-  _proto.onCanPlay = function onCanPlay() {
-    var _getContext3 = rxcomp.getContext(this),
-        node = _getContext3.node;
-
-    var id = this.target.id; // console.log('ThronDirective.onCanPlay', id);
-
-    this.canPlay.next(id);
-  };
-
-  _proto.onPlaying = function onPlaying() {
-    var _getContext4 = rxcomp.getContext(this),
-        node = _getContext4.node;
-
-    var id = this.target.id;
-    var player = this.player;
-    player.off('playing', this.onPlaying);
-
-    if (!this.controls) {
-      var qualities = player.qualityLevels(); // console.log('ThronDirective.onPlaying', id, qualities);
-
-      if (qualities.length) {
-        var highestQuality = qualities[qualities.length - 1].index;
-        var lowestQuality = qualities[0].index;
-        player.currentQuality(highestQuality); // console.log('ThronDirective.onPlaying', id, 'currentQuality', player.currentQuality());
-      }
-    }
-  };
-
-  _proto.onPlay = function onPlay() {
-    var _getContext5 = rxcomp.getContext(this),
-        node = _getContext5.node;
-
-    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
-
-    this.playing = true;
-    this.play.next(id);
-  };
-
-  _proto.onPause = function onPause() {
-    var _getContext6 = rxcomp.getContext(this),
-        node = _getContext6.node;
-
-    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
-
-    this.playing = false;
-    this.pause.next(id);
-  };
-
-  _proto.onComplete = function onComplete() {
-    var _getContext7 = rxcomp.getContext(this),
-        node = _getContext7.node;
-
-    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
-
-    this.playing = false;
-    this.complete.next(id);
-  };
-
-  _proto.playVideo = function playVideo() {
-    var _getContext8 = rxcomp.getContext(this),
-        node = _getContext8.node;
-
-    var id = this.target.id;
-    var player = this.player;
-    var status = player.status(); // console.log('ThronDirective.playVideo', id, status);
-
-    if (status && !status.playing) {
-      player.play();
-    }
-  };
-
-  _proto.pauseVideo = function pauseVideo() {
-    var _getContext9 = rxcomp.getContext(this),
-        node = _getContext9.node;
-
-    var id = this.target.id;
-    var player = this.player;
-    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
-
-    if (status && status.playing) {
-      player.pause();
-    }
-  };
-
-  _proto.toggle = function toggle() {
-    var _getContext10 = rxcomp.getContext(this),
-        node = _getContext10.node;
-
-    var id = this.target.id;
-    var player = this.player;
-    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
-
-    if (status && status.playing) {
-      player.pause();
-    } else {
-      player.play();
-    }
-  };
-
-  _proto.play = function play(id) {
-    // console.log('ThronDirective.play', id, id, id === id);
-    var _getContext11 = rxcomp.getContext(this),
-        node = _getContext11.node;
-
-    if (id === this.target.id) {
-      this.playVideo();
-    }
-  };
-
-  _proto.pause = function pause(id) {
-    // console.log('ThronDirective.pause', id, id, id === id);
-    var _getContext12 = rxcomp.getContext(this),
-        node = _getContext12.node;
-
-    if (id === this.target.id) {
-      this.pauseVideo();
-    }
-  };
-
-  _proto.onDestroy = function onDestroy() {
-    var player = this.player;
-
-    if (player) {
-      player.off('ready', this.onReady);
-      player.off('canPlay', this.onCanPlay);
-      player.off('playing', this.onPlaying);
-      player.off('play', this.onPlay);
-      player.off('pause', this.onPause);
-      player.off('complete', this.onComplete);
-    }
-  };
-
-  _createClass(ThronComponent, [{
-    key: "playing",
-    get: function get() {
-      return this.playing_;
-    },
-    set: function set(playing) {
-      if (this.playing_ !== playing) {
-        this.playing_ = playing;
-
-        var _getContext13 = rxcomp.getContext(this),
-            node = _getContext13.node;
-
-        if (node) {
-          playing ? node.classList.add('playing') : node.classList.remove('playing');
-        }
-      }
-    }
-  }]);
-
-  return ThronComponent;
-}(rxcomp.Component);
-ThronComponent.meta = {
-  selector: '[thron],[[thron]]',
-  outputs: ['ready', 'canPlay', 'play', 'pause', 'complete'],
-  inputs: ['thron', 'm3u8'],
-  template:
-  /* html */
-  ""
-};var TitleDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(TitleDirective, _Directive);
-
-  function TitleDirective() {
-    return _Directive.apply(this, arguments) || this;
-  }
-
-  _createClass(TitleDirective, [{
-    key: "title",
-    get: function get() {
-      return this.title_;
-    },
-    set: function set(title) {
-      if (this.title_ !== title) {
-        this.title_ = title;
-
-        var _getContext = rxcomp.getContext(this),
-            node = _getContext.node;
-
-        title ? node.setAttribute('title', title) : node.removeAttribute('title');
-      }
-    }
-  }]);
-
-  return TitleDirective;
-}(rxcomp.Directive);
-TitleDirective.meta = {
-  selector: '[[title]]',
-  inputs: ['title']
 };var FilterMode = {
   SELECT: 'select',
   AND: 'and',
@@ -2734,7 +1255,148 @@ var FilterItem = /*#__PURE__*/function () {
   };
 
   return FormService;
-}();var AmbienceService = /*#__PURE__*/function () {
+}();var LocomotiveScrollService = /*#__PURE__*/function () {
+  function LocomotiveScrollService() {}
+
+  LocomotiveScrollService.scroll = function scroll(_scroll) {
+    // console.log('LocomotiveScrollService.scroll', scroll);
+    this.scroll$.next(_scroll);
+  };
+
+  LocomotiveScrollService.init = function init(node, options) {
+    options = Object.assign({
+      useKeyboard: true,
+      smoothMobile: true,
+      inertia: 0.5,
+      // name:'scroll',
+      // offset: [0,0], // bottom top
+      // repeat: false,
+      smooth: true,
+      // initPosition: { x: 0, y: 0 }
+      // direction: 'vertical',
+      lerp: 0.01,
+      getDirection: true,
+      // add direction to scroll event
+      getSpeed: true,
+      // add speed to scroll event
+      // class: 'is-inview',
+      initClass: 'has-scroll-init',
+      scrollingClass: 'has-scroll-scrolling',
+      draggingClass: 'has-scroll-dragging',
+      smoothClass: 'has-scroll-smooth',
+      scrollbarContainer: false,
+      scrollbarClass: 'c-scrollbar',
+      multiplier: 1,
+      firefoxMultiplier: 50,
+      touchMultiplier: 2,
+      scrollFromAnywhere: true,
+      gestureDirection: 'vertical',
+      reloadOnContextChange: false,
+      resetNativeScroll: true
+    }, options, {
+      el: node
+    });
+
+    if (this.useLocomotiveScroll()) {
+      var instance = new LocomotiveScroll(options);
+      LocomotiveScrollService.instance = instance;
+      return instance;
+    } else {
+      document.querySelector('html').classList.add('has-scroll-init');
+    }
+  };
+
+  LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
+    return window.innerWidth >= 768 && !this.isMacLike();
+  };
+
+  LocomotiveScrollService.isMacLike = function isMacLike() {
+    var isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isMacLike;
+  };
+
+  LocomotiveScrollService.isIOS = function isIOS() {
+    var isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isIOS;
+  };
+
+  LocomotiveScrollService.isMacOs = function isMacOs() {
+    var isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
+    return isMacOs;
+  };
+
+  LocomotiveScrollService.isSafari = function isSafari() {
+    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
+    return isSafari;
+  };
+
+  LocomotiveScrollService.init$ = function init$(node) {
+    return rxjs.fromEvent(window, 'load').pipe(operators.delay(1), operators.switchMap(function (_) {
+      // setTimeout(() => {
+      var instance = LocomotiveScrollService.init(node);
+
+      if (instance) {
+        instance.on('scroll', function (instance) {
+          LocomotiveScrollService.scroll(instance);
+        });
+      } else {
+        var event = {
+          direction: null,
+          scroll: {
+            x: 0,
+            y: 0
+          },
+          speed: 0
+        };
+        var body = document.querySelector('body');
+        var previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+        body.addEventListener('scroll', function () {
+          var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+          var direction = y > previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+
+          previousY = y;
+          event.direction = direction;
+          event.scroll.y = y;
+          LocomotiveScrollService.scroll(event);
+        }, true);
+      }
+
+      return LocomotiveScrollService.scroll$; // }, 1);
+    }));
+  };
+
+  LocomotiveScrollService.update = function update() {
+    if (this.instance) {
+      this.instance.update();
+    }
+  };
+
+  LocomotiveScrollService.stop = function stop() {
+    if (this.instance) {
+      this.instance.stop();
+    }
+  };
+
+  LocomotiveScrollService.start = function start() {
+    if (this.instance) {
+      this.instance.start();
+    }
+  };
+
+  LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
+    if (this.instance) {
+      this.instance.scrollTo(target, options);
+    } else {
+      target.scrollIntoView();
+    }
+  };
+
+  return LocomotiveScrollService;
+}();
+
+_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var AmbienceService = /*#__PURE__*/function () {
   function AmbienceService() {}
 
   AmbienceService.all$ = function all$() {
@@ -6512,6 +5174,205 @@ StoreLocatorComponent.meta = {
 }(rxcomp.Directive);
 SubmenuDirective.meta = {
   selector: '[submenu]'
+};var SwiperDirective = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(SwiperDirective, _Component);
+
+  function SwiperDirective() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = SwiperDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.options = {
+      slidesPerView: 'auto',
+      spaceBetween: 0,
+      centeredSlides: true,
+      speed: 600,
+      autoplay: {
+        delay: 5000
+      },
+      keyboardControl: true,
+      mousewheelControl: false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      }
+    };
+    this.init_();
+  };
+
+  _proto.onChanges = function onChanges() {
+    this.swiperInitOrUpdate_();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    this.removeListeners_();
+    this.swiperDestroy_();
+  };
+
+  _proto.onBeforePrint = function onBeforePrint() {
+    this.swiperDestroy_();
+  };
+
+  _proto.slideToIndex = function slideToIndex(index) {
+    // console.log('SwiperDirective.slideToIndex', index);
+    if (this.swiper) {
+      this.swiper.slideTo(index);
+    }
+  };
+
+  _proto.hasPrev = function hasPrev() {
+    var swiper = this.swiper;
+
+    if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
+      // console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      return true;
+    }
+  };
+
+  _proto.hasNext = function hasNext() {
+    var swiper = this.swiper;
+
+    if (swiper) {
+      var slidesPerView = swiper.params.slidesPerView || 1; // console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
+
+      if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
+        return true;
+      }
+    }
+  };
+
+  _proto.slidePrev = function slidePrev() {
+    var swiper = this.swiper;
+
+    if (this.hasPrev()) {
+      // console.log('SwiperDirective.slidePrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      swiper.slideTo(swiper.activeIndex - 1);
+    }
+  };
+
+  _proto.slideNext = function slideNext() {
+    var swiper = this.swiper;
+
+    if (this.hasNext()) {
+      // console.log('SwiperDirective.slideNext', swiper.activeIndex, swiper.realIndex, swiper.slides);
+      swiper.slideTo(swiper.activeIndex + 1);
+    }
+  };
+
+  _proto.init_ = function init_(target) {
+    var _this = this;
+
+    this.events$ = new rxjs.Subject();
+
+    if (this.enabled) {
+      var _getContext = rxcomp.getContext(this),
+          node = _getContext.node;
+
+      target = target || node;
+      this.target = target;
+      gsap.set(target, {
+        opacity: 0
+      });
+      this.index = 0;
+      var on = this.options.on || {};
+
+      on.slideChange = function () {
+        var swiper = _this.swiper;
+
+        if (swiper) {
+          _this.index = swiper.activeIndex;
+
+          _this.events$.next(_this.index);
+
+          _this.pushChanges();
+        }
+      };
+
+      this.options.on = on;
+      this.addListeners_();
+    }
+  };
+
+  _proto.addListeners_ = function addListeners_() {
+    this.onBeforePrint = this.onBeforePrint.bind(this);
+    window.addEventListener('beforeprint', this.onBeforePrint);
+    /*
+    scope.$on('onResize', ($scope) => {
+    	this.onResize(scope, element, attributes);
+    });
+    */
+  };
+
+  _proto.removeListeners_ = function removeListeners_() {
+    window.removeEventListener('beforeprint', this.onBeforePrint);
+  };
+
+  _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
+    if (this.enabled) {
+      var target = this.target;
+
+      if (this.swiper) {
+        this.swiper.update();
+      } else {
+        var swiper;
+        var on = this.options.on || (this.options.on = {});
+        var callback = on.init;
+
+        if (!on.init || !on.init.swiperDirectiveInit) {
+          on.init = function () {
+            var _this2 = this;
+
+            gsap.to(target, {
+              duration: 0.4,
+              opacity: 1,
+              ease: Power2.easeOut
+            });
+            setTimeout(function () {
+              if (typeof callback === 'function') {
+                callback.apply(_this2, [swiper, element, scope]);
+              }
+            }, 1);
+          };
+
+          on.init.swiperDirectiveInit = true;
+        }
+
+        gsap.set(target, {
+          opacity: 1
+        });
+        swiper = new Swiper(target, this.options); // console.log(swiper);
+
+        this.swiper = swiper;
+        this.swiper._opening = true;
+        target.classList.add('swiper-init');
+      }
+    }
+  };
+
+  _proto.swiperDestroy_ = function swiperDestroy_() {
+    if (this.swiper) {
+      this.swiper.destroy();
+    }
+  };
+
+  _createClass(SwiperDirective, [{
+    key: "enabled",
+    get: function get() {
+      return !window.matchMedia('print').matches;
+    }
+  }]);
+
+  return SwiperDirective;
+}(rxcomp.Component);
+SwiperDirective.meta = {
+  selector: '[swiper]',
+  inputs: ['consumer']
 };var SwiperGalleryDirective = /*#__PURE__*/function (_SwiperDirective) {
   _inheritsLoose(SwiperGalleryDirective, _SwiperDirective);
 
@@ -6753,72 +5614,6 @@ SwiperProductsPropositionDirective.meta = {
 }(SwiperDirective);
 SwiperProjectsPropositionDirective.meta = {
   selector: '[swiper-projects-proposition]'
-};var ToggleDirective = /*#__PURE__*/function (_Directive) {
-  _inheritsLoose(ToggleDirective, _Directive);
-
-  function ToggleDirective() {
-    var _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _Directive.call.apply(_Directive, [this].concat(args)) || this;
-
-    _defineProperty(_assertThisInitialized(_this), "toggle_", false);
-
-    return _this;
-  }
-
-  var _proto = ToggleDirective.prototype;
-
-  _proto.onInit = function onInit() {
-    this.onToggle = this.onToggle.bind(this);
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    this.toggle ? node.classList.add('active') : node.classList.remove('active');
-    node.addEventListener('click', this.onToggle);
-  };
-
-  _proto.onDestroy = function onDestroy() {
-    var _getContext2 = rxcomp.getContext(this),
-        node = _getContext2.node;
-
-    node.removeEventListener('click', this.onToggle);
-  };
-
-  _proto.onToggle = function onToggle(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.toggle = !this.toggle;
-  };
-
-  _createClass(ToggleDirective, [{
-    key: "toggle",
-    get: function get() {
-      return this.toggle_;
-    },
-    set: function set(toggle) {
-      if (this.toggle_ !== toggle) {
-        this.toggle_ = toggle;
-
-        var _getContext3 = rxcomp.getContext(this),
-            node = _getContext3.node;
-
-        if (node) {
-          toggle ? node.classList.add('active') : node.classList.remove('active');
-        }
-      }
-    }
-  }]);
-
-  return ToggleDirective;
-}(rxcomp.Directive);
-ToggleDirective.meta = {
-  selector: '[toggle]',
-  inputs: ['toggle']
 };var TreeComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(TreeComponent, _Component);
 
@@ -6943,6 +5738,64 @@ TreeComponent.meta = {
 UserForgotComponent.meta = {
   selector: '[user-forgot]',
   outputs: ['forgot', 'viewSignIn', 'viewSignUp']
+};var ModalOutletComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ModalOutletComponent, _Component);
+
+  function ModalOutletComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ModalOutletComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    this.modalNode = node.querySelector('.modal-outlet__modal');
+    ModalService.modal$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (modal) {
+      _this.modal = modal;
+    });
+  };
+
+  _proto.reject = function reject(event) {
+    ModalService.reject();
+  };
+
+  _createClass(ModalOutletComponent, [{
+    key: "modal",
+    get: function get() {
+      return this.modal_;
+    },
+    set: function set(modal) {
+      // console.log('ModalOutletComponent set modal', modal, this);
+      var _getContext2 = rxcomp.getContext(this),
+          module = _getContext2.module;
+
+      if (this.modal_ && this.modal_.node) {
+        module.remove(this.modal_.node, this);
+        this.modalNode.removeChild(this.modal_.node);
+      }
+
+      if (modal && modal.node) {
+        this.modal_ = modal;
+        this.modalNode.appendChild(modal.node);
+        var instances = module.compile(modal.node);
+      }
+
+      this.modal_ = modal;
+      this.pushChanges();
+    }
+  }]);
+
+  return ModalOutletComponent;
+}(rxcomp.Component);
+ModalOutletComponent.meta = {
+  selector: '[modal-outlet]',
+  template:
+  /* html */
+  "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t</div>\n\t"
 };var UserComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserComponent, _Component);
 
@@ -7308,6 +6161,1113 @@ UserSigninComponent.meta = {
 UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn']
+};var DROPDOWN_ID = 1000000;
+var DropdownDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(DropdownDirective, _Directive);
+
+  function DropdownDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = DropdownDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var trigger = node.getAttribute('dropdown-trigger');
+    this.trigger = trigger ? node.querySelector(trigger) : node;
+    this.opened = null;
+    this.onClick = this.onClick.bind(this);
+    this.onDocumentClick = this.onDocumentClick.bind(this);
+    this.openDropdown = this.openDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
+    this.addListeners();
+    DropdownDirective.dropdown$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (id) {
+      // console.log('DropdownDirective', id, this['dropdown-item']);
+      if (_this.id === id) {
+        node.classList.add('dropped');
+      } else {
+        node.classList.remove('dropped');
+      }
+    });
+  };
+
+  _proto.onClick = function onClick(event) {
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    if (this.opened === null) {
+      this.openDropdown();
+    } else {
+      var dropdownItemNode = node.querySelector('[dropdown-item]'); // console.log('dropdownItemNode', dropdownItemNode);
+
+      if (!dropdownItemNode) {
+        // if (this.trigger !== node) {
+        this.closeDropdown();
+      }
+    }
+  };
+
+  _proto.onDocumentClick = function onDocumentClick(event) {
+    var _getContext3 = rxcomp.getContext(this),
+        node = _getContext3.node;
+
+    var clickedInside = node === event.target || node.contains(event.target);
+
+    if (!clickedInside) {
+      this.closeDropdown();
+    }
+  };
+
+  _proto.openDropdown = function openDropdown() {
+    if (this.opened === null) {
+      this.opened = true;
+      this.addDocumentListeners();
+      DropdownDirective.dropdown$.next(this.id);
+      this.dropped.next(this.id);
+    }
+  };
+
+  _proto.closeDropdown = function closeDropdown() {
+    if (this.opened !== null) {
+      this.removeDocumentListeners();
+      this.opened = null;
+
+      if (DropdownDirective.dropdown$.getValue() === this.id) {
+        DropdownDirective.dropdown$.next(null);
+        this.dropped.next(null);
+      }
+    }
+  };
+
+  _proto.addListeners = function addListeners() {
+    this.trigger.addEventListener('click', this.onClick);
+  };
+
+  _proto.addDocumentListeners = function addDocumentListeners() {
+    document.addEventListener('click', this.onDocumentClick);
+  };
+
+  _proto.removeListeners = function removeListeners() {
+    this.trigger.removeEventListener('click', this.onClick);
+  };
+
+  _proto.removeDocumentListeners = function removeDocumentListeners() {
+    document.removeEventListener('click', this.onDocumentClick);
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    this.removeListeners();
+    this.removeDocumentListeners();
+  };
+
+  DropdownDirective.nextId = function nextId() {
+    return DROPDOWN_ID++;
+  };
+
+  _createClass(DropdownDirective, [{
+    key: "id",
+    get: function get() {
+      return this.dropdown || this.id_ || (this.id_ = DropdownDirective.nextId());
+    }
+  }]);
+
+  return DropdownDirective;
+}(rxcomp.Directive);
+DropdownDirective.meta = {
+  selector: '[dropdown]',
+  inputs: ['dropdown', 'dropdown-trigger'],
+  outputs: ['dropped']
+};
+DropdownDirective.dropdown$ = new rxjs.BehaviorSubject(null);var DropdownItemDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(DropdownItemDirective, _Directive);
+
+  function DropdownItemDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = DropdownItemDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.classList.add('dropdown-item');
+    DropdownDirective.dropdown$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (id) {
+      // console.log('DropdownItemDirective', id, this['dropdown-item']);
+      if (_this.id === id) {
+        node.classList.add('dropped');
+      } else {
+        node.classList.remove('dropped');
+      }
+    });
+  };
+
+  _createClass(DropdownItemDirective, [{
+    key: "id",
+    get: function get() {
+      return this['dropdown-item'];
+    }
+  }]);
+
+  return DropdownItemDirective;
+}(rxcomp.Directive);
+DropdownItemDirective.meta = {
+  selector: '[dropdown-item], [[dropdown-item]]',
+  inputs: ['dropdown-item']
+};var EnvPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(EnvPipe, _Pipe);
+
+  function EnvPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  EnvPipe.transform = function transform(keypath) {
+    var env = environment;
+    var keys = keypath.split('.');
+    var k = keys.shift();
+
+    while (keys.length > 0 && env[k]) {
+      env = env[k];
+      k = keys.shift();
+    }
+
+    var value = env[k] || null;
+    return value;
+  };
+
+  return EnvPipe;
+}(rxcomp.Pipe);
+EnvPipe.meta = {
+  name: 'env'
+};var FlagPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(FlagPipe, _Pipe);
+
+  function FlagPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  FlagPipe.transform = function transform(key) {
+    var flags = environment.flags;
+    return flags[key] || false;
+  };
+
+  return FlagPipe;
+}(rxcomp.Pipe);
+FlagPipe.meta = {
+  name: 'flag'
+};var ControlComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ControlComponent, _Component);
+
+  function ControlComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlComponent.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node; // console.log(this, node, this.control);
+
+
+    var control = this.control;
+    var flags = control.flags;
+    Object.keys(flags).forEach(function (key) {
+      flags[key] ? node.classList.add(key) : node.classList.remove(key);
+    });
+  };
+
+  return ControlComponent;
+}(rxcomp.Component);
+ControlComponent.meta = {
+  selector: '[control]',
+  inputs: ['control']
+};var ControlCheckboxComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlCheckboxComponent, _ControlComponent);
+
+  function ControlCheckboxComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlCheckboxComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+  };
+
+  return ControlCheckboxComponent;
+}(ControlComponent);
+ControlCheckboxComponent.meta = {
+  selector: '[control-checkbox]',
+  inputs: ['control', 'label'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input type=\"checkbox\" class=\"control--checkbox\" [id]=\"control.name\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var KeyboardService = /*#__PURE__*/function () {
+  function KeyboardService() {}
+
+  KeyboardService.keydown$ = function keydown$() {
+    if (!this.keydown$_) {
+      this.keydown$_ = rxjs.fromEvent(window, 'keydown').pipe(operators.shareReplay(1));
+    }
+
+    return this.keydown$_;
+  };
+
+  KeyboardService.keyup$ = function keyup$() {
+    if (!this.keyup$_) {
+      this.keyup$_ = rxjs.fromEvent(window, 'keyup').pipe(operators.shareReplay(1));
+    }
+
+    return this.keyup$_;
+  };
+
+  KeyboardService.keys$ = function keys$() {
+    var _this = this;
+
+    if (!this.keys$_) {
+      this.keys$_ = rxjs.merge(this.keydown$(), this.keyup$()).pipe(operators.map(function (event) {
+        var keys = _this.keys;
+
+        if (event.type === 'keydown') {
+          keys[event.key] = true;
+        } else {
+          delete keys[event.key];
+        }
+
+        return _this.keys;
+      }), operators.startWith(this.keys), operators.shareReplay(1));
+    }
+
+    return this.keys$_;
+  };
+
+  KeyboardService.key$ = function key$() {
+    if (!this.key$_) {
+      var regexp = /\w/;
+      this.key$_ = this.keydown$().pipe(operators.filter(function (event) {
+        return event.key && event.key.match(regexp);
+      }), operators.map(function (event) {
+        return event.key;
+      }), operators.shareReplay(1));
+    }
+
+    return this.key$_;
+  };
+
+  KeyboardService.typing$ = function typing$() {
+    if (!this.typing$_) {
+      var typing = '',
+          to;
+      this.typing$_ = this.key$().pipe(operators.map(function (key) {
+        if (to) {
+          clearTimeout(to);
+        }
+
+        typing += key;
+        to = setTimeout(function () {
+          typing = '';
+        }, 1500);
+        return typing;
+      }), operators.shareReplay(1));
+    }
+
+    return this.typing$_;
+  };
+
+  return KeyboardService;
+}();
+
+_defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlCustomSelectComponent, _ControlComponent);
+
+  function ControlCustomSelectComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlCustomSelectComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.label = this.label || 'label';
+    this.dropped = false;
+    this.dropdownId = DropdownDirective.nextId();
+    KeyboardService.typing$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (word) {
+      _this.scrollToWord(word);
+    });
+    /*
+    KeyboardService.key$().pipe(
+    	takeUntil(this.unsubscribe$)
+    ).subscribe(key => {
+    	this.scrollToKey(key);
+    });
+    */
+  }
+  /*
+  onChanges() {
+  	// console.log('ControlCustomSelectComponent.onChanges');
+  }
+  */
+  ;
+
+  _proto.scrollToWord = function scrollToWord(word) {
+    // console.log('ControlCustomSelectComponent.scrollToWord', word);
+    var items = this.control.options || [];
+    var index = -1;
+
+    for (var i = 0; i < items.length; i++) {
+      var x = items[i];
+
+      if (x.name.toLowerCase().indexOf(word.toLowerCase()) === 0) {
+        // console.log(word, x.name);
+        index = i;
+        break;
+      }
+    }
+
+    if (index !== -1) {
+      var _getContext = rxcomp.getContext(this),
+          node = _getContext.node;
+
+      var dropdown = node.querySelector('.dropdown');
+      var navDropdown = node.querySelector('.nav--dropdown');
+      var item = navDropdown.children[index];
+      dropdown.scrollTo(0, item.offsetTop);
+    }
+  };
+
+  _proto.setOption = function setOption(item) {
+    // console.log('setOption', item, this.isMultiple);
+    var value;
+
+    if (this.isMultiple) {
+      var _value = this.control.value || [];
+
+      var index = _value.indexOf(item.id);
+
+      if (index !== -1) {
+        // if (value.length > 1) {
+        _value.splice(index, 1); // }
+
+      } else {
+        _value.push(item.id);
+      }
+
+      _value.length ? _value.slice() : null, _readOnlyError("value");
+    } else {
+      value = item.id; // DropdownDirective.dropdown$.next(null);
+    }
+
+    this.control.value = value;
+    this.change.next(value);
+  };
+
+  _proto.hasOption = function hasOption(item) {
+    if (this.isMultiple) {
+      var values = this.control.value || [];
+      return values.indexOf(item.id) !== -1;
+    } else {
+      return this.control.value === item.id;
+    }
+  };
+
+  _proto.getLabel = function getLabel() {
+    var value = this.control.value;
+    var items = this.control.options || [];
+
+    if (this.isMultiple) {
+      value = value || [];
+
+      if (value.length) {
+        return value.map(function (v) {
+          var item = items.find(function (x) {
+            return x.id === v || x.name === v;
+          });
+          return item ? item.name : '';
+        }).join(', ');
+      } else {
+        return 'select'; // LabelPipe.transform('select');
+      }
+    } else {
+      var item = items.find(function (x) {
+        return x.id === value || x.name === value;
+      });
+
+      if (item) {
+        return item.name;
+      } else {
+        return 'select'; // LabelPipe.transform('select');
+      }
+    }
+  };
+
+  _proto.onDropped = function onDropped($event) {
+    // console.log('ControlCustomSelectComponent.onDropped', id);
+    if (this.dropped && $event === null) {
+      this.control.touched = true;
+    }
+
+    this.dropped = $event === this.dropdownId;
+  };
+
+  _createClass(ControlCustomSelectComponent, [{
+    key: "isMultiple",
+    get: function get() {
+      return this.multiple && this.multiple !== false && this.multiple !== 'false';
+    }
+  }]);
+
+  return ControlCustomSelectComponent;
+}(ControlComponent);
+ControlCustomSelectComponent.meta = {
+  selector: '[control-custom-select]',
+  outputs: ['change'],
+  inputs: ['control', 'label', 'multiple'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form--select\" [class]=\"{ required: control.validators.length, multiple: isMultiple }\" [dropdown]=\"dropdownId\" (dropped)=\"onDropped($event)\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--custom-select\" [innerHTML]=\"getLabel() | label\"></span>\n\t\t\t<svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [dropdown-item]=\"dropdownId\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\" [class]=\"{ multiple: isMultiple }\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of control.options\">\n\t\t\t\t\t<span [class]=\"{ active: hasOption(item) }\" [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
+};var ControlEmailComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlEmailComponent, _ControlComponent);
+
+  function ControlEmailComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlEmailComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+  };
+
+  return ControlEmailComponent;
+}(ControlComponent);
+ControlEmailComponent.meta = {
+  selector: '[control-email]',
+  inputs: ['control', 'label'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ControlPasswordComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlPasswordComponent, _ControlComponent);
+
+  function ControlPasswordComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlPasswordComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+  };
+
+  return ControlPasswordComponent;
+}(ControlComponent);
+ControlPasswordComponent.meta = {
+  selector: '[control-password]',
+  inputs: ['control', 'label'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlSearchComponent, _ControlComponent);
+
+  function ControlSearchComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlSearchComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+    this.disabled = this.disabled || false;
+  };
+
+  return ControlSearchComponent;
+}(ControlComponent);
+ControlSearchComponent.meta = {
+  selector: '[control-search]',
+  inputs: ['control', 'label', 'disabled'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<svg class=\"search\"><use xlink:href=\"#search\"></use></svg>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t"
+};var ControlTextComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlTextComponent, _ControlComponent);
+
+  function ControlTextComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlTextComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+    this.disabled = this.disabled || false;
+  };
+
+  return ControlTextComponent;
+}(ControlComponent);
+ControlTextComponent.meta = {
+  selector: '[control-text]',
+  inputs: ['control', 'label', 'disabled'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ControlTextareaComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlTextareaComponent, _ControlComponent);
+
+  function ControlTextareaComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlTextareaComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+    this.disabled = this.disabled || false;
+  };
+
+  return ControlTextareaComponent;
+}(ControlComponent);
+ControlTextareaComponent.meta = {
+  selector: '[control-textarea]',
+  inputs: ['control', 'label', 'disabled'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<textarea class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ErrorsComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ErrorsComponent, _ControlComponent);
+
+  function ErrorsComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ErrorsComponent.prototype;
+
+  _proto.getLabel = function getLabel(key, value) {
+    var label = LabelPipe.transform("error_" + key);
+    return label;
+  };
+
+  return ErrorsComponent;
+}(ControlComponent);
+ErrorsComponent.meta = {
+  selector: 'errors-component',
+  inputs: ['control'],
+  template:
+  /* html */
+  "\n\t<div class=\"inner\" [style]=\"{ display: control.invalid && control.touched ? 'block' : 'none' }\">\n\t\t<div class=\"error\" *for=\"let [key, value] of control.errors\">\n\t\t\t<span [innerHTML]=\"getLabel(key, value)\"></span>\n\t\t\t<!-- <span class=\"key\" [innerHTML]=\"key\"></span> <span class=\"value\" [innerHTML]=\"value | json\"></span> -->\n\t\t</div>\n\t</div>\n\t"
+};var TestComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(TestComponent, _Component);
+
+  function TestComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = TestComponent.prototype;
+
+  _proto.onTest = function onTest(event) {
+    this.test.next(event);
+  };
+
+  _proto.onReset = function onReset(event) {
+    this.reset.next(event);
+  };
+
+  return TestComponent;
+}(rxcomp.Component);
+TestComponent.meta = {
+  selector: 'test-component',
+  inputs: ['form'],
+  outputs: ['test', 'reset'],
+  template:
+  /* html */
+  "\n\t<div class=\"test-component\" *if=\"!('production' | flag)\">\n\t\t<div class=\"test-component__title\">development mode</div>\n\t\t<code [innerHTML]=\"form.value | json\"></code>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onTest($event)\"><span>test</span></button>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onReset($event)\"><span>reset</span></button>\n\t</div>\n\t"
+};/*
+['quot', 'amp', 'apos', 'lt', 'gt', 'nbsp', 'iexcl', 'cent', 'pound', 'curren', 'yen', 'brvbar', 'sect', 'uml', 'copy', 'ordf', 'laquo', 'not', 'shy', 'reg', 'macr', 'deg', 'plusmn', 'sup2', 'sup3', 'acute', 'micro', 'para', 'middot', 'cedil', 'sup1', 'ordm', 'raquo', 'frac14', 'frac12', 'frac34', 'iquest', 'Agrave', 'Aacute', 'Acirc', 'Atilde', 'Auml', 'Aring', 'AElig', 'Ccedil', 'Egrave', 'Eacute', 'Ecirc', 'Euml', 'Igrave', 'Iacute', 'Icirc', 'Iuml', 'ETH', 'Ntilde', 'Ograve', 'Oacute', 'Ocirc', 'Otilde', 'Ouml', 'times', 'Oslash', 'Ugrave', 'Uacute', 'Ucirc', 'Uuml', 'Yacute', 'THORN', 'szlig', 'agrave', 'aacute', 'atilde', 'auml', 'aring', 'aelig', 'ccedil', 'egrave', 'eacute', 'ecirc', 'euml', 'igrave', 'iacute', 'icirc', 'iuml', 'eth', 'ntilde', 'ograve', 'oacute', 'ocirc', 'otilde', 'ouml', 'divide', 'oslash', 'ugrave', 'uacute', 'ucirc', 'uuml', 'yacute', 'thorn', 'yuml', 'amp', 'bull', 'deg', 'infin', 'permil', 'sdot', 'plusmn', 'dagger', 'mdash', 'not', 'micro', 'perp', 'par', 'euro', 'pound', 'yen', 'cent', 'copy', 'reg', 'trade', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi', 'Chi', 'Psi', 'Omega'];
+['"', '&', ''', '<', '>', ' ', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', '&', '•', '°', '∞', '‰', '⋅', '±', '†', '—', '¬', 'µ', '⊥', '∥', '€', '£', '¥', '¢', '©', '®', '™', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
+*/
+
+var HtmlPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(HtmlPipe, _Pipe);
+
+  function HtmlPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  HtmlPipe.transform = function transform(value) {
+    if (value) {
+      value = value.replace(/&#(\d+);/g, function (m, n) {
+        return String.fromCharCode(parseInt(n));
+      });
+      var escapes = ['quot', 'amp', 'apos', 'lt', 'gt', 'nbsp', 'iexcl', 'cent', 'pound', 'curren', 'yen', 'brvbar', 'sect', 'uml', 'copy', 'ordf', 'laquo', 'not', 'shy', 'reg', 'macr', 'deg', 'plusmn', 'sup2', 'sup3', 'acute', 'micro', 'para', 'middot', 'cedil', 'sup1', 'ordm', 'raquo', 'frac14', 'frac12', 'frac34', 'iquest', 'Agrave', 'Aacute', 'Acirc', 'Atilde', 'Auml', 'Aring', 'AElig', 'Ccedil', 'Egrave', 'Eacute', 'Ecirc', 'Euml', 'Igrave', 'Iacute', 'Icirc', 'Iuml', 'ETH', 'Ntilde', 'Ograve', 'Oacute', 'Ocirc', 'Otilde', 'Ouml', 'times', 'Oslash', 'Ugrave', 'Uacute', 'Ucirc', 'Uuml', 'Yacute', 'THORN', 'szlig', 'agrave', 'aacute', 'atilde', 'auml', 'aring', 'aelig', 'ccedil', 'egrave', 'eacute', 'ecirc', 'euml', 'igrave', 'iacute', 'icirc', 'iuml', 'eth', 'ntilde', 'ograve', 'oacute', 'ocirc', 'otilde', 'ouml', 'divide', 'oslash', 'ugrave', 'uacute', 'ucirc', 'uuml', 'yacute', 'thorn', 'yuml', 'amp', 'bull', 'deg', 'infin', 'permil', 'sdot', 'plusmn', 'dagger', 'mdash', 'not', 'micro', 'perp', 'par', 'euro', 'pound', 'yen', 'cent', 'copy', 'reg', 'trade', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi', 'Chi', 'Psi', 'Omega'];
+      var unescapes = ['"', '&', '\'', '<', '>', ' ', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', '&', '•', '°', '∞', '‰', '⋅', '±', '†', '—', '¬', 'µ', '⊥', '∥', '€', '£', '¥', '¢', '©', '®', '™', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
+      var rx = new RegExp("(&" + escapes.join(';)|(&') + ";)", 'g');
+      value = value.replace(rx, function () {
+        for (var i = 1; i < arguments.length; i++) {
+          if (arguments[i]) {
+            // console.log(arguments[i], unescapes[i - 1]);
+            return unescapes[i - 1];
+          }
+        }
+      }); // console.log(value);
+
+      return value;
+    }
+  };
+
+  return HtmlPipe;
+}(rxcomp.Pipe);
+HtmlPipe.meta = {
+  name: 'html'
+};var IdDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(IdDirective, _Directive);
+
+  function IdDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = IdDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('id', this.id);
+  };
+
+  return IdDirective;
+}(rxcomp.Directive);
+IdDirective.meta = {
+  selector: '[id]',
+  inputs: ['id']
+};var LabelForDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(LabelForDirective, _Directive);
+
+  function LabelForDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = LabelForDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('for', this.labelFor);
+  };
+
+  return LabelForDirective;
+}(rxcomp.Directive);
+LabelForDirective.meta = {
+  selector: '[labelFor]',
+  inputs: ['labelFor']
+};var LocomotiveScrollDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(LocomotiveScrollDirective, _Directive);
+
+  function LocomotiveScrollDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = LocomotiveScrollDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    LocomotiveScrollService.init$(node).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('LocomotiveScrollDirective', event);
+    });
+    /*
+    window.onload = () => {
+    	setTimeout(() => {
+    		const instance = LocomotiveScrollService.init(node);
+    		if (instance) {
+    			instance.on('scroll', instance => {
+    				LocomotiveScrollService.scroll(instance.scroll.y);
+    			});
+    		} else {
+    			const body = document.querySelector('body');
+    			window.addEventListener('scroll', () => {
+    				const y = body.scrollTop; // window.pageYOffset
+    				LocomotiveScrollService.scroll(y);
+    			}, true);
+    		}
+    	}, 1);
+    };
+    */
+  };
+
+  return LocomotiveScrollDirective;
+}(rxcomp.Directive);
+LocomotiveScrollDirective.meta = {
+  selector: '[locomotive-scroll],[[locomotive-scroll]]'
+};var ScrollDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(ScrollDirective, _Directive);
+
+  function ScrollDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = ScrollDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    if (LocomotiveScrollService.useLocomotiveScroll()) {
+      this.scroll$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('ScrollDirective', event);
+      });
+    }
+  };
+
+  _proto.scroll$ = function scroll$() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var speed = this.scrollSpeed ? parseFloat(this.scrollSpeed) : 1.5;
+    return LocomotiveScrollService.scroll$.pipe(operators.tap(function (scroll) {
+      var wh = window.innerHeight;
+      var wh2 = wh / 2;
+      var rect = node.getBoundingClientRect();
+      var currentY = gsap.getProperty(node, 'y');
+      var top = rect.top - currentY;
+      var bottom = rect.bottom - currentY;
+
+      if (top < wh && bottom > 0) {
+        var pow = (top - wh2) / wh2;
+        var y = pow * speed * 40;
+        gsap.set(node, {
+          y: y
+        });
+      }
+    }));
+  };
+
+  return ScrollDirective;
+}(rxcomp.Directive);
+ScrollDirective.meta = {
+  selector: '[scroll]',
+  inputs: ['scrollSpeed']
+};var SlugPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(SlugPipe, _Pipe);
+
+  function SlugPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  SlugPipe.transform = function transform(key) {
+    var slug = environment.slug;
+    return slug[key] || "#" + key;
+  };
+
+  return SlugPipe;
+}(rxcomp.Pipe);
+SlugPipe.meta = {
+  name: 'slug'
+};var ID = 0;
+var ThronComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ThronComponent, _Component);
+
+  function ThronComponent() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "playing_", false);
+
+    return _this;
+  }
+
+  var _proto = ThronComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    // console.log('ThronComponent.onInit');
+    var THRON = window.THRONContentExperience || window.THRONPlayer;
+
+    if (!THRON) {
+      return;
+    } // console.log('THRONContentExperience', window.THRONContentExperience, 'THRONPlayer', window.THRONPlayer);
+
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = this.target = node.querySelector('.video > .thron');
+    var id = target.id = "thron-" + ++ID;
+    var media = this.thron;
+
+    if (media.indexOf('pkey=') === -1) {
+      var splitted = media.split('/');
+      var clientId = splitted[6];
+      var xcontentId = splitted[7];
+      var pkey = splitted[8];
+      media = "https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=" + clientId + "&xcontentId=" + xcontentId + "&pkey=" + pkey;
+    }
+
+    var controls = this.controls = node.hasAttribute('controls') ? true : false,
+        loop = this.loop = node.hasAttribute('loop') ? true : false,
+        autoplay = this.autoplay = node.hasAttribute('autoplay') ? true : false;
+    var player = this.player = THRON(id, {
+      media: media,
+      loop: loop,
+      autoplay: autoplay,
+      muted: !controls,
+      displayLinked: 'close',
+      noSkin: !controls // lockBitrate: 'max',
+
+    });
+    this.onReady = this.onReady.bind(this);
+    this.onCanPlay = this.onCanPlay.bind(this);
+    this.onPlaying = this.onPlaying.bind(this);
+    this.onPlay = this.onPlay.bind(this);
+    this.onPause = this.onPause.bind(this);
+    this.onComplete = this.onComplete.bind(this);
+    player.on('ready', this.onReady);
+    player.on('canPlay', this.onCanPlay);
+    player.on('playing', this.onPlaying);
+    player.on('play', this.onPlay);
+    player.on('pause', this.onPause);
+    player.on('complete', this.onComplete);
+  };
+
+  _proto.onReady = function onReady() {
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var id = this.target.id;
+    var player = this.player;
+
+    if (!this.controls) {
+      var mediaContainer = player.mediaContainer();
+      var video = mediaContainer.querySelector('video');
+      video.setAttribute('playsinline', 'true');
+      video.setAttribute('autoplay', 'true');
+    }
+
+    this.ready.next(id); // video.setAttribute('autoplay', 'true');
+  };
+
+  _proto.onCanPlay = function onCanPlay() {
+    var _getContext3 = rxcomp.getContext(this),
+        node = _getContext3.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onCanPlay', id);
+
+    this.canPlay.next(id);
+  };
+
+  _proto.onPlaying = function onPlaying() {
+    var _getContext4 = rxcomp.getContext(this),
+        node = _getContext4.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    player.off('playing', this.onPlaying);
+
+    if (!this.controls) {
+      var qualities = player.qualityLevels(); // console.log('ThronDirective.onPlaying', id, qualities);
+
+      if (qualities.length) {
+        var highestQuality = qualities[qualities.length - 1].index;
+        var lowestQuality = qualities[0].index;
+        player.currentQuality(highestQuality); // console.log('ThronDirective.onPlaying', id, 'currentQuality', player.currentQuality());
+      }
+    }
+  };
+
+  _proto.onPlay = function onPlay() {
+    var _getContext5 = rxcomp.getContext(this),
+        node = _getContext5.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.playing = true;
+    this.play.next(id);
+  };
+
+  _proto.onPause = function onPause() {
+    var _getContext6 = rxcomp.getContext(this),
+        node = _getContext6.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.playing = false;
+    this.pause.next(id);
+  };
+
+  _proto.onComplete = function onComplete() {
+    var _getContext7 = rxcomp.getContext(this),
+        node = _getContext7.node;
+
+    var id = this.target.id; // console.log('ThronDirective.onComplete', id);
+
+    this.playing = false;
+    this.complete.next(id);
+  };
+
+  _proto.playVideo = function playVideo() {
+    var _getContext8 = rxcomp.getContext(this),
+        node = _getContext8.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.playVideo', id, status);
+
+    if (status && !status.playing) {
+      player.play();
+    }
+  };
+
+  _proto.pauseVideo = function pauseVideo() {
+    var _getContext9 = rxcomp.getContext(this),
+        node = _getContext9.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
+
+    if (status && status.playing) {
+      player.pause();
+    }
+  };
+
+  _proto.toggle = function toggle() {
+    var _getContext10 = rxcomp.getContext(this),
+        node = _getContext10.node;
+
+    var id = this.target.id;
+    var player = this.player;
+    var status = player.status(); // console.log('ThronDirective.pauseVideo', id, status);
+
+    if (status && status.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
+  };
+
+  _proto.play = function play(id) {
+    // console.log('ThronDirective.play', id, id, id === id);
+    var _getContext11 = rxcomp.getContext(this),
+        node = _getContext11.node;
+
+    if (id === this.target.id) {
+      this.playVideo();
+    }
+  };
+
+  _proto.pause = function pause(id) {
+    // console.log('ThronDirective.pause', id, id, id === id);
+    var _getContext12 = rxcomp.getContext(this),
+        node = _getContext12.node;
+
+    if (id === this.target.id) {
+      this.pauseVideo();
+    }
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    var player = this.player;
+
+    if (player) {
+      player.off('ready', this.onReady);
+      player.off('canPlay', this.onCanPlay);
+      player.off('playing', this.onPlaying);
+      player.off('play', this.onPlay);
+      player.off('pause', this.onPause);
+      player.off('complete', this.onComplete);
+    }
+  };
+
+  _createClass(ThronComponent, [{
+    key: "playing",
+    get: function get() {
+      return this.playing_;
+    },
+    set: function set(playing) {
+      if (this.playing_ !== playing) {
+        this.playing_ = playing;
+
+        var _getContext13 = rxcomp.getContext(this),
+            node = _getContext13.node;
+
+        if (node) {
+          playing ? node.classList.add('playing') : node.classList.remove('playing');
+        }
+      }
+    }
+  }]);
+
+  return ThronComponent;
+}(rxcomp.Component);
+ThronComponent.meta = {
+  selector: '[thron],[[thron]]',
+  outputs: ['ready', 'canPlay', 'play', 'pause', 'complete'],
+  inputs: ['thron', 'm3u8'],
+  template:
+  /* html */
+  ""
+};var TitleDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(TitleDirective, _Directive);
+
+  function TitleDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  _createClass(TitleDirective, [{
+    key: "title",
+    get: function get() {
+      return this.title_;
+    },
+    set: function set(title) {
+      if (this.title_ !== title) {
+        this.title_ = title;
+
+        var _getContext = rxcomp.getContext(this),
+            node = _getContext.node;
+
+        title ? node.setAttribute('title', title) : node.removeAttribute('title');
+      }
+    }
+  }]);
+
+  return TitleDirective;
+}(rxcomp.Directive);
+TitleDirective.meta = {
+  selector: '[[title]]',
+  inputs: ['title']
+};var factories = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlPasswordComponent, // ControlSelectComponent,
+ControlSearchComponent, ControlTextareaComponent, ControlTextComponent, // DisabledDirective,
+// DropDirective,
+DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
+ErrorsComponent, IdDirective, LabelForDirective, // LanguageComponent,
+// LazyDirective,
+LocomotiveScrollDirective, // ModalComponent,
+ModalOutletComponent, ScrollDirective, // SvgIconStructure,
+SwiperDirective, TestComponent, ThronComponent, TitleDirective // UploadItemComponent,
+// ValueDirective,
+// VirtualStructure
+];
+var pipes = [EnvPipe, FlagPipe, HtmlPipe, LabelPipe, SlugPipe];
+var SharedModule = /*#__PURE__*/function (_Module) {
+  _inheritsLoose(SharedModule, _Module);
+
+  function SharedModule() {
+    return _Module.apply(this, arguments) || this;
+  }
+
+  return SharedModule;
+}(rxcomp.Module);
+SharedModule.meta = {
+  imports: [],
+  declarations: [].concat(factories, pipes),
+  exports: [].concat(factories, pipes)
 };var AppModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(AppModule, _Module);
 
@@ -7318,18 +7278,7 @@ UserSignupComponent.meta = {
   return AppModule;
 }(rxcomp.Module);
 AppModule.meta = {
-  imports: [rxcomp.CoreModule, rxcompForm.FormModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlPasswordComponent, // ControlSelectComponent,
-  ControlSearchComponent, ControlTextareaComponent, ControlTextComponent, DesignersComponent, // DisabledDirective,
-  // DropDirective,
-  DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
-  EnvPipe, ErrorsComponent, FlagPipe, HeaderComponent, HtmlPipe, IdDirective, LabelForDirective, LabelPipe, // LanguageComponent,
-  // LazyDirective,
-  LocomotiveScrollDirective, MapComponent, MaterialsComponent, MenuDirective, // ModalComponent,
-  ModalOutletComponent, NewsComponent, NewsletterPropositionComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ReservedAreaComponent, ScrollDirective, SlugPipe, StoreLocatorComponent, SubmenuDirective, // SvgIconStructure,
-  SwiperDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, TestComponent, ThronComponent, TitleDirective, ToggleDirective, TreeComponent, // UploadItemComponent,
-  UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent // ValueDirective,
-  // VirtualStructure
-  ],
+  imports: [rxcomp.CoreModule, rxcompForm.FormModule, SharedModule],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, DesignersComponent, HeaderComponent, MapComponent, MaterialsComponent, MenuDirective, NewsComponent, NewsletterPropositionComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ReservedAreaComponent, StoreLocatorComponent, SubmenuDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, SwiperGalleryDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

@@ -1,7 +1,7 @@
 import { getContext } from 'rxcomp';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
-import { ModalOutletComponent } from '../../core/modal/modal-outlet.component';
-import { ModalService } from '../../core/modal/modal.service';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
+import { ModalOutletComponent } from '../../shared/modal/modal-outlet.component';
+import { ModalService } from '../../shared/modal/modal.service';
 import { UserComponent } from './user.component';
 import { UserViews } from './user.service';
 

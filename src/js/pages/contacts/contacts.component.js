@@ -1,9 +1,9 @@
 import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { FormService } from '../../core/forms/form.service';
-import { GtmService } from '../../core/gtm/gtm.service';
-import { LocomotiveScrollService } from '../../core/locomotive-scroll/locomotive-scroll.service';
+import { FormService } from '../../shared/forms/form.service';
+import { GtmService } from '../../shared/gtm/gtm.service';
+import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
 import { ContactsService } from './contacts.service';
 
 export class ContactsComponent extends Component {

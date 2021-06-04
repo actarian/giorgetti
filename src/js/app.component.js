@@ -1,8 +1,8 @@
 import { Component, getContext } from 'rxcomp';
 import { takeUntil } from 'rxjs/operators';
-import { ModalResolveEvent, ModalService } from './core/modal/modal.service';
 import { environment } from './environment';
 import { UserService } from './pages/user/user.service';
+import { ModalResolveEvent, ModalService } from './shared/modal/modal.service';
 
 export class AppComponent extends Component {
 
