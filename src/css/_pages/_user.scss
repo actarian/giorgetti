@@ -68,6 +68,7 @@
 
 		.modal__inner {
 			height: 600px;
+			max-height: 100%;
 			overflow-x: hidden;
 			overflow-y: auto;
 			@include scrollbar();
@@ -76,6 +77,7 @@
 		.modal__content {
 			flex: 1 1 50%;
 			height: 600px;
+			max-height: 100%;
 		}
 
 	}
@@ -116,7 +118,19 @@
 		margin-bottom: 25px;
 		font-family: $font-secondary;
 		font-size: 48px;
-		line-height: 1.2;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		text-transform: uppercase;
+		text-align: left;
+		color: #000000;
+	}
+
+	.subtitle,
+	.section--form .subtitle {
+		margin-bottom: 25px;
+		font-family: $font-secondary;
+		font-size: 32px;
+		line-height: 1;
 		letter-spacing: -0.03em;
 		text-transform: uppercase;
 		text-align: left;
@@ -134,6 +148,22 @@
 	}
 
 	.btn--link {
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-secondary, #000000);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 5px 0;
+		height: 100%;
+		min-width: 180px;
+		padding: 15px 25px;
+		font-size: 14px;
+		line-height: 1;
+		text-align: center;
+		letter-spacing: 0.043em;
+		text-transform: uppercase;
+		border: 2px solid $foreground;
+
+		/*
 		@extend %btn-link;
 		font-size: 14px;
 		font-weight: 600;
@@ -149,6 +179,7 @@
 				transform: scale(1, 1);
 			}
 		}
+		*/
 	}
 }
 

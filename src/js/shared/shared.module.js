@@ -1,68 +1,41 @@
 import { Module } from 'rxcomp';
-import { DropdownItemDirective } from './dropdown/dropdown-item.directive';
-import { DropdownDirective } from './dropdown/dropdown.directive';
-import { EnvPipe } from './env/env.pipe';
-import { FlagPipe } from './flag/flag.pipe';
-import { ControlCheckboxComponent } from './forms/control-checkbox.component';
-import { ControlCustomSelectComponent } from './forms/control-custom-select.component';
-import { ControlEmailComponent } from './forms/control-email.component';
-import { ControlPasswordComponent } from './forms/control-password.component';
-import { ControlSearchComponent } from './forms/control-search.component';
-import { ControlTextComponent } from './forms/control-text.component';
-import { ControlTextareaComponent } from './forms/control-textarea.component';
-import { ErrorsComponent } from './forms/errors.component';
-import { TestComponent } from './forms/test.component';
-import { HtmlPipe } from './html/html.pipe';
-import { IdDirective } from './id/id.directive';
-import { LabelForDirective } from './label-for/label-for.directive';
-import { LabelPipe } from './label/label.pipe';
-import { LocomotiveScrollDirective } from './locomotive-scroll/locomotive-scroll.directive';
-import { ScrollDirective } from './locomotive-scroll/scroll.directive';
-import { ModalOutletComponent } from './modal/modal-outlet.component';
-import { SlugPipe } from './slug/slug.pipe';
-import { SwiperDirective } from './swiper/swiper.directive';
-import { ThronComponent } from './thron/thron.component';
-import { TitleDirective } from './title/title.directive';
+import { MapComponent } from '../partials/map/map.component';
+import { SwiperGalleryDirective } from '../partials/swiper-gallery/swiper-gallery.directive';
+import { SwiperHomepageDirective } from '../partials/swiper-homepage/swiper-homepage.directive';
+import { SwiperNewsPropositionDirective } from '../partials/swiper-news-proposition/swiper-news-proposition.directive';
+import { SwiperProductsPropositionDirective } from '../partials/swiper-products-proposition/swiper-products-proposition.directive';
+import { SwiperProjectsPropositionDirective } from '../partials/swiper-projects-proposition/swiper-projects-proposition.directive';
+import { HeaderComponent } from './header/header.component';
+import { MenuDirective } from './menu/menu.directive';
+import { NewsletterPropositionComponent } from './newsletter-proposition/newsletter-proposition.component';
+import { SubmenuDirective } from './submenu/submenu.directive';
+import { TreeComponent } from './tree/tree.component';
+import { UserForgotComponent } from './user/user-forgot.component';
+import { UserModalComponent } from './user/user-modal.component';
+import { UserSigninComponent } from './user/user-signin.component';
+import { UserSignupComponent } from './user/user-signup.component';
+import { UserComponent } from './user/user.component';
 
 const factories = [
-	ControlCheckboxComponent,
-	ControlCustomSelectComponent,
-	ControlEmailComponent,
-	ControlPasswordComponent,
-	// ControlSelectComponent,
-	ControlSearchComponent,
-	ControlTextareaComponent,
-	ControlTextComponent,
-	// DisabledDirective,
-	// DropDirective,
-	DropdownDirective,
-	DropdownItemDirective,
-	// DropdownItemDirective,
-	ErrorsComponent,
-	IdDirective,
-	LabelForDirective,
-	// LanguageComponent,
-	// LazyDirective,
-	LocomotiveScrollDirective,
-	// ModalComponent,
-	ModalOutletComponent,
-	ScrollDirective,
-	// SvgIconStructure,
-	SwiperDirective,
-	TestComponent,
-	ThronComponent,
-	TitleDirective,
-	// UploadItemComponent,
-	// ValueDirective,
-	// VirtualStructure
+	HeaderComponent,
+	MapComponent,
+	MenuDirective,
+	NewsletterPropositionComponent,
+	SubmenuDirective,
+	SwiperGalleryDirective,
+	SwiperHomepageDirective,
+	SwiperNewsPropositionDirective,
+	SwiperProductsPropositionDirective,
+	SwiperProjectsPropositionDirective,
+	TreeComponent,
+	UserComponent,
+	UserForgotComponent,
+	UserModalComponent,
+	UserSigninComponent,
+	UserSignupComponent,
 ];
 
 const pipes = [
-	EnvPipe,
-	FlagPipe,
-	HtmlPipe,
-	LabelPipe,
-	SlugPipe,
 ];
 
 export class SharedModule extends Module { }

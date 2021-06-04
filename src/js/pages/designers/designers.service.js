@@ -1,4 +1,4 @@
-import { ApiService } from '../../shared/api/api.service';
+import { ApiService } from '../../common/api/api.service';
 
 export class DesignersService {
 

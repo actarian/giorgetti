@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { ApiService } from '../../shared/api/api.service';
+import { ApiService } from '../../common/api/api.service';
 
 export class StoreLocatorService {
 

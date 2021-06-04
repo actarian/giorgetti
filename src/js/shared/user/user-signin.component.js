@@ -1,17 +1,18 @@
 import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil } from 'rxjs/operators';
-import { GtmService } from '../../shared/gtm/gtm.service';
-import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
+import { GtmService } from '../../common/gtm/gtm.service';
+import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { UserService } from './user.service';
 
-export class UserForgotComponent extends Component {
+export class UserSigninComponent extends Component {
 
 	onInit() {
 		this.error = null;
 		this.success = false;
 		const form = this.form = new FormGroup({
 			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
+			password: new FormControl(null, Validators.RequiredValidator()),
 			checkRequest: window.antiforgery,
 			checkField: '',
 		});
@@ -28,6 +29,7 @@ export class UserForgotComponent extends Component {
 		const form = this.form;
 		form.patch({
 			email: 'jhonappleseed@gmail.com',
+			password: '********',
 		});
 	}
 
@@ -38,22 +40,22 @@ export class UserForgotComponent extends Component {
 
 	onSubmit() {
 		const form = this.form;
-		console.log('UserForgotComponent.onSubmit', form.value);
+		console.log('UserSigninComponent.onSubmit', form.value);
 		if (form.valid) {
 			form.submitted = true;
-			UserService.forgot$(form.value).pipe(
+			UserService.signin$(form.value).pipe(
 				first(),
 			).subscribe(response => {
-				console.log('UserForgotComponent.onSubmit', response);
+				console.log('UserSigninComponent.onSubmit', response);
 				this.success = true;
 				GtmService.push({
-					'event': "Forgot",
-					'form_name': "Recupero Password"
+					'event': "Signin",
+					'form_name': "Login"
 				});
 				form.reset();
-				this.forgot.next(true);
+				this.signIn.next(response);
 			}, error => {
-				console.log('UserForgotComponent.error', error);
+				console.log('UserSigninComponent.error', error);
 				this.error = error;
 				form.submitted = false;
 				this.pushChanges();
@@ -64,16 +66,16 @@ export class UserForgotComponent extends Component {
 		}
 	}
 
-	onSignIn() {
-		this.viewSignIn.next();
+	onForgot(event) {
+		this.viewForgot.next();
 	}
 
-	onSignUp() {
+	onSignUp(event) {
 		this.viewSignUp.next();
 	}
 }
 
-UserForgotComponent.meta = {
-	selector: '[user-forgot]',
-	outputs: ['forgot', 'viewSignIn', 'viewSignUp'],
+UserSigninComponent.meta = {
+	selector: '[user-signin]',
+	outputs: ['signIn', 'viewForgot', 'viewSignUp'],
 };

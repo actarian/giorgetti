@@ -1,7 +1,7 @@
 import { Component, getContext } from 'rxcomp';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { LocomotiveScrollService } from '../../shared/locomotive-scroll/locomotive-scroll.service';
-import { UserService } from '../user/user.service';
+import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { UserService } from '../../shared/user/user.service';
 import { ReservedAreaService } from './reserved-area.service';
 
 export class ReservedAreaComponent extends Component {

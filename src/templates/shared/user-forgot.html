@@ -20,7 +20,7 @@
 				</button>
 			</div>
 			<div class="group--info">
-				Ricordi la password? <button type="button" class="btn--link" (click)="onSignIn($event)"><span>Accedi</span></button>
+				<p>Ricordi la password?</p> <button type="button" class="btn--link" (click)="onSignIn($event)"><span>Accedi</span></button>
 			</div>
 			<!-- <test-component [form]="form" (test)="test($event)" (reset)="reset($event)"></test-component> -->
 		</form>
@@ -31,7 +31,8 @@
 			Abbiamo inviato la password all'indirizzo email fornito.
 		</div>
 		<div class="group--info">
-			Torna al <button type="button" class="btn--link" (click)="onSignIn($event)"><span>Login</span></button>
+			<p>Torna al</p>
+			<button type="button" class="btn--link" (click)="onSignIn($event)"><span>Login</span></button>
 		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 import { getContext } from 'rxcomp';
-import { SwiperDirective } from '../../shared/swiper/swiper.directive';
+import { SwiperDirective } from '../../common/swiper/swiper.directive';
 
 export class SwiperProjectsPropositionDirective extends SwiperDirective {
 
