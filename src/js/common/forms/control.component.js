@@ -4,7 +4,6 @@ export class ControlComponent extends Component {
 
 	onChanges() {
 		const { node } = getContext(this);
-		// console.log(this, node, this.control);
 		const control = this.control;
 		const flags = control.flags;
 		Object.keys(flags).forEach((key) => {

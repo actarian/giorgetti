@@ -1159,8 +1159,7 @@ FlagPipe.meta = {
 
   _proto.onChanges = function onChanges() {
     var _getContext = rxcomp.getContext(this),
-        node = _getContext.node; // console.log(this, node, this.control);
-
+        node = _getContext.node;
 
     var control = this.control;
     var flags = control.flags;

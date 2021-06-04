@@ -41,8 +41,7 @@ const pipes = [
 export class SharedModule extends Module { }
 
 SharedModule.meta = {
-	imports: [
-	],
+	imports: [],
 	declarations: [
 		...factories,
 		...pipes,
