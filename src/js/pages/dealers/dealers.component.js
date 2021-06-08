@@ -63,8 +63,8 @@ export class DealersComponent extends Component {
 							case 'search':
 								return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
 									// item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-									item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-									(item.countries && item.countries.find(x => x.name.toLowerCase().indexOf(value.toLowerCase()) !== -1))
+									(item.city && item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
+									(item.countries && item.countries.find(x => x.label.toLowerCase().indexOf(value.toLowerCase()) !== -1))
 							default:
 						}
 					};

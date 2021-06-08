@@ -3372,8 +3372,8 @@ ContactsComponent.meta = {
 
               case 'search':
                 return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-                item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
-                  return x.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+                item.city && item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
+                  return x.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
                 });
             }
           };

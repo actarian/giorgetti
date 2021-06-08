@@ -8608,7 +8608,8 @@ test-component code {
   .card--store-locator .card__email {
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 4px; }
+    margin-bottom: 4px;
+    transition: none; }
   .card--store-locator .card__cta {
     margin-top: 20px; }
   @media (max-width: 767.98px) {
@@ -8855,7 +8856,8 @@ test-component code {
   .card--dealer .card__email {
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 4px; }
+    margin-bottom: 4px;
+    transition: none; }
   .card--dealer .card__cta {
     margin-top: 20px; }
   @media (max-width: 767.98px) {
@@ -9046,7 +9048,8 @@ test-component code {
   .card--contact .card__email {
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 4px; }
+    margin-bottom: 4px;
+    transition: none; }
     .card--contact .card__phone:after,
     .card--contact .card__fax:after,
     .card--contact .card__email:after {
