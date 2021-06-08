@@ -77,6 +77,12 @@
 		margin-bottom: 30px;
 	}
 
+	.card__content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.card__name {
 		display: block;
 		width: 100%;
@@ -85,13 +91,30 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		margin-right: 20px;
 	}
 
-	.btn--download {
-		@extend %btn-link;
-		font-size: 12px;
-		font-weight: 600;
-		margin-bottom: 4px;
+	.card__cta {
+		display: flex;
+		align-items: center;
+	}
+
+	.btn--action {
+		@extend %btn;
+
+		svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.add,
+		.remove {
+			margin-bottom: -1px;
+		}
+	}
+
+	.btn--action+.btn--action {
+		margin-left: 10px;
 	}
 
 	@include media-down(xs) {
@@ -108,9 +131,6 @@
 			&>.card__content {
 				flex: 1 1 100%;
 				width: 100%;
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
 			}
 		}
 	}
@@ -163,6 +183,27 @@
 
 		@include media-down(xs) {
 			min-width: 280px;
+		}
+	}
+
+	.group--info {
+		display: flex;
+		align-items: center;
+		font-family: $font-secondary;
+		font-size: 24px;
+		text-transform: uppercase;
+		line-height: 1;
+
+		svg {
+			width: 48px;
+			height: 48px;
+			margin-right: 10px;
+		}
+
+		@include media-up(md) {
+			height: 100%;
+			border-left: 2px solid $border;
+			padding-left: 20px;
 		}
 	}
 }
@@ -233,4 +274,159 @@
 			margin-bottom: 70px;
 		}
 	}
+}
+
+.files {
+	position: fixed;
+	bottom: 0;
+	z-index: 1000;
+	width: 100%;
+	background: $background-tertiary;
+	padding: 15px 0;
+	border-top: 1px solid $border;
+
+	.group--headline,
+	.group--cta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.group--cta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.btn--title {
+		@extend %btn;
+		display: flex;
+		align-items: center;
+		font-family: $font-secondary;
+		font-size: 24px;
+		line-height: 1.2;
+		letter-spacing: -0.027em;
+		text-transform: uppercase;
+		color: #232221;
+
+		svg {
+			width: 1em;
+			height: 1em;
+			transition: transform ease-in-out $fast;
+		}
+
+		&.active {
+			svg {
+				transform: rotate(180deg);
+			}
+		}
+
+		@include media-down(sm) {
+			font-size: 14px;
+		}
+	}
+
+	.abstract {
+		font-size: 14px;
+	}
+
+	.btn--secondary {
+		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px;
+		font-size: 14px;
+		line-height: 1;
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		border: 2px solid #232221;
+
+		@include media-down(sm) {
+			padding: 5px;
+			font-size: 12px;
+		}
+	}
+
+	.btn--secondary+.btn--secondary {
+		margin-left: 10px;
+	}
+
+	.card--file {
+		padding: 0 0 10px 0;
+
+		.card__name {
+			font-size: 14px;
+		}
+	}
+
+	.listing--files {
+		padding-top: 20px;
+		max-height: 160px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		@include scrollbar();
+
+		&>.listing__item {
+			margin-bottom: 10px;
+		}
+
+		@include media-up(xl) {
+			$gutter: 70px;
+			margin-left: - $gutter / 2;
+			margin-right: - $gutter / 2;
+			align-items: stretch;
+
+			&>.listing__item {
+				@include as-col(3, 12, $gutter);
+			}
+		}
+
+		@include media-between(md, lg) {
+			$gutter: 60px;
+			margin-left: - $gutter / 2;
+			margin-right: - $gutter / 2;
+			align-items: stretch;
+
+			&>.listing__item {
+				@include as-col(4, 12, $gutter);
+			}
+		}
+
+		@include media-between(sm, md) {
+			$gutter: 50px;
+			margin-left: - $gutter / 2;
+			margin-right: - $gutter / 2;
+			align-items: stretch;
+
+			&>.listing__item {
+				@include as-col(6, 12, $gutter);
+			}
+		}
+
+		@include media-between(xs, sm) {
+			$gutter: 40px;
+			margin-left: - $gutter / 2;
+			margin-right: - $gutter / 2;
+			align-items: stretch;
+
+			&>.listing__item {
+				@include as-col(6, 12, $gutter);
+			}
+		}
+
+		@include media-down(xs) {
+			$gutter: 40px;
+			margin-left: - $gutter / 2;
+			margin-right: - $gutter / 2;
+			align-items: stretch;
+
+			&>.listing__item {
+				@include as-col(12, 12, $gutter);
+				margin-bottom: 10px;
+			}
+		}
+	}
+
 }

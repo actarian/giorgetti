@@ -16,10 +16,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
-					<div class="background expand--right">
-						<!-- <img src="/giorgetti/img/pictogram.png" /> -->
-						<!-- <svg class="pictogram"><use xlink:href="#pictogram"></use></svg> -->
-					</div>
+					<div class="background expand--right"></div>
 				</div>
 				<div class="col-md-6">
 					<div class="title">Area Riservata</div>
@@ -90,6 +87,9 @@
 						<ul class="nav--files" [tree]="tree" (open)="onOpen($event)"></ul>
 					</div>
 					<div class="col-md-9">
+						<div class="group--info" *if="!item">
+							<svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg> <span>Seleziona una categoria</span>
+						</div>
 						<div *if="item">
 							<div class="title" [innerHTML]="item.title"></div>
 							<!-- files -->
@@ -102,7 +102,13 @@
 										<div class="card__content">
 											<div class="card__name" [innerHTML]="file.title" [title]="file.title"></div>
 											<div class="card__cta">
-												<a class="btn--download" [href]="file.url" dowload>download</a>
+												<a class="btn--action" [href]="file.url" [download]="file.title" target="_blank" title="Scarica">
+													<svg class="download"><use xlink:href="#download"></use></svg>
+												</a>
+												<button type="button" class="btn--action" (click)="onToggleFile(file)" [title]="hasFile(file) ? 'Rimuovi da files' : 'Aggiungi a files'">
+													<svg class="add" *if="!hasFile(file)"><use xlink:href="#add"></use></svg>
+													<svg class="remove" *if="hasFile(file)"><use xlink:href="#remove"></use></svg>
+												</button>
 											</div>
 										</div>
 									</div>

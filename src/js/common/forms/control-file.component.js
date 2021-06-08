@@ -44,8 +44,8 @@ ControlFileComponent.meta = {
 	template: /* html */ `
 		<div class="group--form--file" [class]="{ required: control.validators.length }">
 			<label for="file" [innerHTML]="label"></label>
-			<span class="control--select" [innerHTML]="file?.name || labels.select_file"></span>
-			<svg class="icon icon--upload"><use xlink:href="#upload"></use></svg>
+			<span class="control--text" [innerHTML]="file?.name || labels.select_file"></span>
+			<svg class="upload"><use xlink:href="#upload"></use></svg>
 			<span class="required__badge" [innerHTML]="'required' | label"></span>
 			<input name="file" type="file" accept=".pdf,.doc,.docx,*.txt" class="control--file" (change)="onInputDidChange($event)" />
 		</div>

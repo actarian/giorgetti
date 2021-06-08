@@ -1,0 +1,37 @@
+<!-- files -->
+<div files>
+	<div class="files" *if="user && files.length">
+		<div class="container">
+			<div class="group--headline">
+				<div class="group--left">
+					<button type="button" class="btn--title" [class]="{ active: showFiles }" (click)="onToggleFiles($event)"><svg class="caret-down"><use xlink:href="#caret-down"></use></svg> I tuoi files (<span [innerHTML]="files.length"></span>)</button>
+					<!-- <div class="abstract">Raggruppa e scarica da qui i file selezionati nelle singole cartelle.</div> -->
+				</div>
+				<div class="group--right">
+					<div class="group--cta">
+						<button type="button" class="btn--secondary" (click)="onDownloadAll($event)">Scarica tutti</button>
+						<button type="button" class="btn--secondary" (click)="onRemoveAll($event)">Rimuovi tutti</button>
+					</div>
+				</div>
+			</div>
+			<div class="listing--files" *if="showFiles">
+				<div class="listing__item" *for="let file of files">
+					<div class="card--file">
+						<div class="card__content">
+							<div class="card__name" [innerHTML]="file.title" [title]="file.title"></div>
+							<div class="card__cta">
+								<a class="btn--action" [href]="file.url" [download]="file.title" target="_blank" title="Scarica">
+									<svg class="download"><use xlink:href="#download"></use></svg>
+								</a>
+								<button type="button" class="btn--action" (click)="onToggleFile(file)" [title]="hasFile(file) ? 'Rimuovi da files' : 'Aggiungi a files'">
+									<svg class="add" *if="!hasFile(file)"><use xlink:href="#add"></use></svg>
+									<svg class="remove" *if="hasFile(file)"><use xlink:href="#remove"></use></svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,6 +1,9 @@
 import { Component, getContext } from 'rxcomp';
 import { first, takeUntil, tap } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { ModalService } from '../../common/modal/modal.service';
+import { environment } from '../../environment';
+import { FilesService } from '../../shared/files/files.service';
 import { UserService } from '../../shared/user/user.service';
 import { ReservedAreaService } from './reserved-area.service';
 
@@ -62,7 +65,28 @@ export class ReservedAreaComponent extends Component {
 	}
 
 	onProjectRegistration(event) {
-		console.log('ReservedAreaComponent.onProjectRegistration', event);
+		ModalService.open$({ src: environment.template.modal.projectsRegistrationModal }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('ReservedAreaComponent.onProjectRegistration', event);
+			/*
+			if (event instanceof ModalResolveEvent) {
+				// window.location.href = environment.slug.reservedArea;
+			}
+			*/
+		});
+	}
+
+	onToggleFile(file) {
+		(this.hasFile(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(
+			first(),
+		).subscribe(_ => {
+			this.pushChanges();
+		});
+	}
+
+	hasFile(file) {
+		return FilesService.hasFile(file);
 	}
 
 	scrollTo(selector, event) {

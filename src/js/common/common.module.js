@@ -1,4 +1,5 @@
 import { Module } from 'rxcomp';
+import { DownloadDirective } from './download/download.directive';
 import { DropdownItemDirective } from './dropdown/dropdown-item.directive';
 import { DropdownDirective } from './dropdown/dropdown.directive';
 import { EnvPipe } from './env/env.pipe';
@@ -6,6 +7,7 @@ import { FlagPipe } from './flag/flag.pipe';
 import { ControlCheckboxComponent } from './forms/control-checkbox.component';
 import { ControlCustomSelectComponent } from './forms/control-custom-select.component';
 import { ControlEmailComponent } from './forms/control-email.component';
+import { ControlFileComponent } from './forms/control-file.component';
 import { ControlPasswordComponent } from './forms/control-password.component';
 import { ControlSearchComponent } from './forms/control-search.component';
 import { ControlTextComponent } from './forms/control-text.component';
@@ -28,12 +30,14 @@ const factories = [
 	ControlCheckboxComponent,
 	ControlCustomSelectComponent,
 	ControlEmailComponent,
+	ControlFileComponent,
 	ControlPasswordComponent,
 	// ControlSelectComponent,
 	ControlSearchComponent,
 	ControlTextareaComponent,
 	ControlTextComponent,
 	// DisabledDirective,
+	DownloadDirective,
 	// DropDirective,
 	DropdownDirective,
 	DropdownItemDirective,

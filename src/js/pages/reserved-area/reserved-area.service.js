@@ -1,5 +1,7 @@
+import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { FilesService } from '../../shared/files/files.service';
 
 export class ReservedAreaService {
 
@@ -11,6 +13,23 @@ export class ReservedAreaService {
 				});
 				return items;
 			}),
+		);
+	}
+
+	static all_$() {
+		return combineLatest([ReservedAreaService.get$(), FilesService.files$()]).pipe(
+			map(data => {
+				const items = data[0];
+				const files = data[1];
+				items.forEach(item => {
+					if (files.find(x => x.id === item.id)) {
+						item.added = true;
+					} else {
+						item.added = false;
+					}
+				});
+				return items;
+			})
 		);
 	}
 

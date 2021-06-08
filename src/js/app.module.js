@@ -5,12 +5,15 @@ import { CommonModule } from './common/common.module';
 import { AmbienceComponent } from './pages/ambience/ambience.component';
 import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers-and-stores.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { DealersComponent } from './pages/dealers/dealers.component';
 import { DesignersComponent } from './pages/designers/designers.component';
 import { MaterialsComponent } from './pages/materials/materials.component';
 import { NewsComponent } from './pages/news/news.component';
 import { ProductsConfigureComponent } from './pages/products-configure/products-configure.component';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { ProjectsRegistrationModalComponent } from './pages/projects-registration/projects-registration-modal.component';
+import { ProjectsRegistrationComponent } from './pages/projects-registration/projects-registration.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ReservedAreaComponent } from './pages/reserved-area/reserved-area.component';
 import { StoreLocatorComponent } from './pages/store-locator/store-locator.component';
@@ -29,6 +32,7 @@ AppModule.meta = {
 		AmbienceComponent,
 		AteliersAndStoresComponent,
 		ContactsComponent,
+		DealersComponent,
 		DesignersComponent,
 		MaterialsComponent,
 		NewsComponent,
@@ -36,6 +40,8 @@ AppModule.meta = {
 		ProductsConfigureComponent,
 		ProductsDetailComponent,
 		ProjectsComponent,
+		ProjectsRegistrationComponent,
+		ProjectsRegistrationModalComponent,
 		ReservedAreaComponent,
 		StoreLocatorComponent,
 	],

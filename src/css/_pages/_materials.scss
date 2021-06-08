@@ -64,10 +64,10 @@
 	}
 
 	@include media-up(md) {
-		padding: 100px 0 240px 0;
+		padding: 100px 0 160px 0;
 
 		.nav--secondary {
-			margin-bottom: 240px;
+			margin-top: 240px;
 		}
 	}
 
@@ -75,7 +75,7 @@
 		padding: 100px 0 100px 0;
 
 		.nav--secondary {
-			margin-bottom: 80px;
+			margin-top: 80px;
 		}
 	}
 }

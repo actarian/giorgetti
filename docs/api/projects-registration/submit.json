@@ -1,0 +1,23 @@
+{
+  "dealer": {
+    "fullName": "Agente Jhon Appleseed",
+    "country": 114,
+    "city": "Pesaro"
+  },
+  "client": {
+    "fullName": "Cliente Jhon Appleseed",
+    "country": 114,
+    "city": "Pesaro"
+  },
+  "architect": {
+    "fullName": "Architetto Jhon Appleseed",
+    "country": 114,
+    "city": "Pesaro",
+    "email": "jhonappleseed@gmail.com",
+    "telephone": "0721411112"
+  },
+  "type": "Hotel",
+  "destination": "Hospitality",
+  "products": "Adam, Clop",
+  "privacy": true
+}

@@ -1,0 +1,280 @@
+{
+  "country": {
+    "label": "Paese",
+    "mode": "select",
+    "options": [
+      {
+        "value": 114,
+        "label": "Italia"
+      },
+      {
+        "value": 2,
+        "label": "Albania"
+      },
+      {
+        "value": 7,
+        "label": "Antille Olandesi"
+      },
+      {
+        "value": 8,
+        "label": "Arabia Saudita"
+      },
+      {
+        "value": 9,
+        "label": "Argentina"
+      },
+      {
+        "value": 10,
+        "label": "Armenia"
+      },
+      {
+        "value": 13,
+        "label": "Austria"
+      },
+      {
+        "value": 14,
+        "label": "Azerbaigian"
+      },
+      {
+        "value": 15,
+        "label": "Bahamas"
+      },
+      {
+        "value": 16,
+        "label": "Bahrain"
+      },
+      {
+        "value": 19,
+        "label": "Belgio"
+      },
+      {
+        "value": 20,
+        "label": "Belize"
+      },
+      {
+        "value": 24,
+        "label": "Bielorussia"
+      },
+      {
+        "value": 26,
+        "label": "Bolivia"
+      },
+      {
+        "value": 27,
+        "label": "Bosnia-Herzeg."
+      },
+      {
+        "value": 30,
+        "label": "Brasile"
+      },
+      {
+        "value": 32,
+        "label": "Bulgaria"
+      },
+      {
+        "value": 40,
+        "label": "Cile"
+      },
+      {
+        "value": 41,
+        "label": "Cina"
+      },
+      {
+        "value": 45,
+        "label": "Colombia"
+      },
+      {
+        "value": 52,
+        "label": "Costa Rica"
+      },
+      {
+        "value": 53,
+        "label": "Croazia"
+      },
+      {
+        "value": 55,
+        "label": "Danimarca"
+      },
+      {
+        "value": 59,
+        "label": "El Salvador"
+      },
+      {
+        "value": 61,
+        "label": "Equador"
+      },
+      {
+        "value": 63,
+        "label": "Estonia"
+      },
+      {
+        "value": 67,
+        "label": "Francia"
+      },
+      {
+        "value": 70,
+        "label": "Georgia"
+      },
+      {
+        "value": 72,
+        "label": "Germania"
+      },
+      {
+        "value": 74,
+        "label": "Giamaica"
+      },
+      {
+        "value": 84,
+        "label": "Guatemala"
+      },
+      {
+        "value": 88,
+        "label": "Guyana"
+      },
+      {
+        "value": 90,
+        "label": "Honduras"
+      },
+      {
+        "value": 115,
+        "label": "Kazajstan"
+      },
+      {
+        "value": 120,
+        "label": "Kuwait"
+      },
+      {
+        "value": 123,
+        "label": "Lettonia"
+      },
+      {
+        "value": 128,
+        "label": "Lituania"
+      },
+      {
+        "value": 129,
+        "label": "Lussemburgo"
+      },
+      {
+        "value": 246,
+        "label": "Montenegro"
+      },
+      {
+        "value": 155,
+        "label": "Nicaragua"
+      },
+      {
+        "value": 159,
+        "label": "Norvegia"
+      },
+      {
+        "value": 163,
+        "label": "Paesi Bassi"
+      },
+      {
+        "value": 166,
+        "label": "Panama"
+      },
+      {
+        "value": 168,
+        "label": "Paraguay"
+      },
+      {
+        "value": 169,
+        "label": "Peru"
+      },
+      {
+        "value": 172,
+        "label": "Polonia"
+      },
+      {
+        "value": 173,
+        "label": "Portogallo"
+      },
+      {
+        "value": 174,
+        "label": "Puerto Rico"
+      },
+      {
+        "value": 95,
+        "label": "Regno Unito"
+      },
+      {
+        "value": 176,
+        "label": "Repubblica Ceca"
+      },
+      {
+        "value": 181,
+        "label": "Romania"
+      },
+      {
+        "value": 182,
+        "label": "Russia"
+      },
+      {
+        "value": 248,
+        "label": "Serbia"
+      },
+      {
+        "value": 199,
+        "label": "Slovacchia"
+      },
+      {
+        "value": 200,
+        "label": "Slovenia"
+      },
+      {
+        "value": 202,
+        "label": "Spagna"
+      },
+      {
+        "value": 207,
+        "label": "Surinam"
+      },
+      {
+        "value": 208,
+        "label": "Svezia"
+      },
+      {
+        "value": 209,
+        "label": "Svizzera"
+      },
+      {
+        "value": 220,
+        "label": "Trinidad e Tobago"
+      },
+      {
+        "value": 223,
+        "label": "Turkmenistan"
+      },
+      {
+        "value": 226,
+        "label": "Ucraina"
+      },
+      {
+        "value": 92,
+        "label": "Ungheria"
+      },
+      {
+        "value": 228,
+        "label": "Uruguay"
+      },
+      {
+        "value": 229,
+        "label": "Uzbekistan"
+      },
+      {
+        "value": 231,
+        "label": "Venezuela"
+      },
+      {
+        "value": 66231,
+        "label": "Center and south America"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}

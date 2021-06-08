@@ -1,0 +1,240 @@
+.card--dealer {
+	@extend %btn;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	.card__name {
+		display: block;
+		margin-bottom: 15px;
+		font-family: $font-secondary;
+		font-size: 24px;
+		line-height: 1.2;
+		text-transform: uppercase;
+		letter-spacing: -0.03em;
+	}
+
+	.card__country {
+		font-weight: 600;
+		margin-bottom: 20px;
+	}
+
+	.card__address,
+	.card__city,
+	.card__countries,
+	.card__regions {
+		font-size: 14px;
+	}
+
+	.card__countries,
+	.card__regions {
+		margin-top: 10px;
+	}
+
+	.card__phone,
+	.card__fax,
+	.card__email {
+		@extend %btn-link;
+		font-size: 12px;
+		font-weight: 600;
+		margin-bottom: 4px;
+	}
+
+	.card__cta {
+		margin-top: 20px;
+	}
+
+	@include media-down(xs) {
+		&>.card__content {
+			padding: 0 20px;
+			width: 100%;
+		}
+	}
+
+	@include media-up(sm) {
+		@media (-webkit-min-device-pixel-ratio:0) {
+			height: 100%;
+
+			&>.card__content {
+				flex: 1 1 100%;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+		}
+	}
+
+	padding: 22px 0 30px;
+	border-top: 2px solid $foreground;
+
+	&.primary {
+		padding: 20px 30px 30px 30px;
+		border: 2px solid $foreground;
+		border-radius: 8px;
+
+		@include media-down(xs) {
+			padding: 20px 30px 20px;
+		}
+	}
+}
+
+.section--dealers {
+	margin-bottom: -240px;
+	padding: 0 0 80px 0;
+
+	.title {
+		margin-bottom: 100px;
+		font-family: $font-secondary;
+		font-size: 72px;
+		line-height: 1.1;
+		text-align: center;
+		letter-spacing: -0.027em;
+		text-transform: uppercase;
+	}
+
+	.btn--more {
+		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 25px;
+		font-size: 16px;
+		line-height: 1;
+		font-size: 16px;
+		line-height: 1.1;
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+	}
+
+	.group--cta {
+		display: flex;
+		align-items: center;
+		margin-top: 80px;
+
+		&>.btn--more {
+			@include media-up(md) {
+				min-width: 280px;
+			}
+
+			@include media-between(sm, md) {
+				min-width: 200px;
+			}
+
+			@include media-down(xs) {
+				min-width: 280px;
+			}
+		}
+
+		@include media-up(sm) {
+			justify-content: center;
+		}
+
+		@include media-up(xl) {
+
+			&>*+* {
+				margin-left: 70px;
+			}
+		}
+
+		@include media-between(lg, xl) {
+
+			&>*+* {
+				margin-left: 60px;
+			}
+		}
+
+		@include media-between(md, lg) {
+
+			&>*+* {
+				margin-left: 50px;
+			}
+		}
+
+		@include media-between(sm, md) {
+
+			&>*+* {
+				margin-left: 40px;
+			}
+		}
+
+		@include media-down(xs) {
+			flex-direction: column;
+
+			&>*+* {
+				margin-top: 30px;
+			}
+		}
+	}
+}
+
+.listing--dealers {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	padding-top: 100px;
+	margin-bottom: -80px;
+
+	&>.listing__item {
+		margin-bottom: 80px;
+	}
+
+	@include media-up(xl) {
+		$gutter: 70px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(md, lg) {
+		$gutter: 60px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(sm, md) {
+		$gutter: 50px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(4, 12, $gutter);
+		}
+	}
+
+	@include media-between(xs, sm) {
+		$gutter: 40px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(6, 12, $gutter);
+		}
+	}
+
+	@include media-down(xs) {
+		$gutter: 40px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+		align-items: stretch;
+
+		&>.listing__item {
+			@include as-col(12, 12, $gutter);
+			margin-bottom: 70px;
+		}
+	}
+}

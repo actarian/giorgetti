@@ -114,24 +114,24 @@
 	@include media-down(xs) {
 		align-items: center;
 	}
-}
 
-.group--left {
-	flex: 1 1 calc(100% - 220px / 2);
+	.group--left {
+		flex: 1 1 calc(100% - 220px / 2);
 
-	@include media-up(sm) {
-		margin-top: 10px;
+		@include media-up(sm) {
+			margin-top: 10px;
+		}
 	}
-}
 
-.group--right {
-	flex: 1 1 calc(100% - 220px / 2);
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+	.group--right {
+		flex: 1 1 calc(100% - 220px / 2);
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 
-	@include media-up(sm) {
-		margin-top: 10px;
+		@include media-up(sm) {
+			margin-top: 10px;
+		}
 	}
 }
 

@@ -13,9 +13,9 @@
 
 	.caret-down {
 		width: 24px;
-		height: 25px;
-		fill: $foreground-tertiary;
+		height: 24px;
 		pointer-events: none;
+		margin-right: -7px;
 	}
 
 	@include media-down(xs) {

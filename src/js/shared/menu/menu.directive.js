@@ -8,6 +8,8 @@ export class MenuDirective extends Directive {
 		const { node } = getContext(this);
 		const submenus = this.submenus = document.querySelector(`.group--submenus`);
 		const target = this.target = document.querySelector(`#menu-${this.menu}`);
+		const preview = target.querySelector('[data-target]');
+		const previewSrc = this.previewSrc = preview.src;
 		const container = this.container = target.querySelector(`.container`);
 		this.onOver = this.onOver.bind(this);
 		this.onLeave = this.onLeave.bind(this);
@@ -21,6 +23,8 @@ export class MenuDirective extends Directive {
 		const submenus = this.submenus;
 		submenus.classList.add('active');
 		const target = this.target;
+		const preview = target.querySelector('[data-target]');
+		preview.src = this.previewSrc;
 		target.classList.add('active');
 		const container = this.container;
 		container.addEventListener('mouseleave', this.onLeave);

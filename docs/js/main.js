@@ -175,7 +175,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   template: {
     modal: {
-      userModal: '/template/common/user-modal.cshtml'
+      userModal: '/template/common/user-modal.cshtml',
+      projectsRegistrationModal: '/template/common/projects-registration-modal.cshtml'
     }
   },
   googleMaps: {
@@ -198,7 +199,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   template: {
     modal: {
-      userModal: '/giorgetti/user-modal.html'
+      userModal: '/giorgetti/user-modal.html',
+      projectsRegistrationModal: '/giorgetti/projects-registration-modal.html'
     }
   },
   googleMaps: {
@@ -944,10 +946,44 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
     UserService.signout$().pipe(first()).subscribe();
   };
 
+  _proto.onProjectRegistration = function onProjectRegistration(event) {
+    ModalService.open$({
+      src: environment.template.modal.projectsRegistrationModal
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('AppComponent.onProjectRegistration', event);
+      /*
+      if (event instanceof ModalResolveEvent) {
+      	// window.location.href = environment.slug.reservedArea;
+      }
+      */
+    });
+  };
+
   return AppComponent;
 }(rxcomp.Component);
 AppComponent.meta = {
   selector: '[app-component]'
+};var DownloadDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(DownloadDirective, _Directive);
+
+  function DownloadDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = DownloadDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('download', this.download);
+  };
+
+  return DownloadDirective;
+}(rxcomp.Directive);
+DownloadDirective.meta = {
+  selector: '[download]',
+  inputs: ['download']
 };var DROPDOWN_ID = 1000000;
 var DropdownDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(DropdownDirective, _Directive);
@@ -1440,6 +1476,55 @@ ControlEmailComponent.meta = {
   template:
   /* html */
   "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ControlFileComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlFileComponent, _ControlComponent);
+
+  function ControlFileComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlFileComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.label = this.label || 'label';
+    this.labels = window.labels || {};
+    this.file = null;
+    this.onReaderComplete = this.onReaderComplete.bind(this);
+  };
+
+  _proto.onInputDidChange = function onInputDidChange(event) {
+    var input = event.target;
+    var file = input.files[0];
+    this.file = {
+      name: file.name,
+      lastModified: file.lastModified,
+      lastModifiedDate: file.lastModifiedDate,
+      size: file.size,
+      type: file.type
+    };
+    var reader = new FileReader();
+    reader.addEventListener('load', this.onReaderComplete);
+    reader.readAsDataURL(file); // reader.readAsArrayBuffer() // Starts reading the contents of the specified Blob, once finished, the result attribute contains an ArrayBuffer representing the file's data.
+    // reader.readAsBinaryString() // Starts reading the contents of the specified Blob, once finished, the result attribute contains the raw binary data from the file as a string.
+    // reader.readAsDataURL() // Starts reading the contents of the specified Blob, once finished, the result attribute contains a data: URL representing the file's data.
+    // reader.readAsText() // Starts reading the contents of the specified Blob, once finished, the result attribute contains the contents of the file as a text string. An optional encoding name can be specified.
+  };
+
+  _proto.onReaderComplete = function onReaderComplete(event) {
+    var content = event.target.result;
+    this.file.content = content;
+    this.control.value = this.file; // console.log('ControlFileComponent.onReaderComplete', this.file);
+    // image/*,
+  };
+
+  return ControlFileComponent;
+}(ControlComponent);
+ControlFileComponent.meta = {
+  selector: '[control-file]',
+  inputs: ['control', 'label'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form--file\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label for=\"file\" [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--text\" [innerHTML]=\"file?.name || labels.select_file\"></span>\n\t\t\t<svg class=\"upload\"><use xlink:href=\"#upload\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input name=\"file\" type=\"file\" accept=\".pdf,.doc,.docx,*.txt\" class=\"control--file\" (change)=\"onInputDidChange($event)\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlPasswordComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlPasswordComponent, _ControlComponent);
 
@@ -2427,9 +2512,9 @@ ThronComponent.meta = {
 TitleDirective.meta = {
   selector: '[[title]]',
   inputs: ['title']
-};var factories = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlPasswordComponent, // ControlSelectComponent,
+};var factories = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlFileComponent, ControlPasswordComponent, // ControlSelectComponent,
 ControlSearchComponent, ControlTextareaComponent, ControlTextComponent, // DisabledDirective,
-// DropDirective,
+DownloadDirective, // DropDirective,
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 ErrorsComponent, IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
@@ -3206,6 +3291,157 @@ var GtmService = /*#__PURE__*/function () {
 }(rxcomp.Component);
 ContactsComponent.meta = {
   selector: '[contacts]'
+};var DealersService = /*#__PURE__*/function () {
+  function DealersService() {}
+
+  DealersService.all$ = function all$() {
+    return ApiService.get$('/dealers/all.json').pipe(operators.map(function (items) {
+      return items.sort(function (a, b) {
+        return b.regions.length - a.regions.length;
+      });
+    }));
+  };
+
+  DealersService.filters$ = function filters$() {
+    return ApiService.get$('/dealers/filters.json');
+  };
+
+  return DealersService;
+}();var DealersComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(DealersComponent, _Component);
+
+  function DealersComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = DealersComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.items = [];
+    this.filteredItems = [];
+    this.visibleItems = [];
+    this.filters = {};
+    var form = this.form = new rxcompForm.FormGroup({
+      country: new rxcompForm.FormControl(null),
+      search: new rxcompForm.FormControl(null)
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('DealersComponent.changes$', form.value);
+      _this.setFilterByKeyAndValue('country', form.value.country);
+
+      _this.setFilterByKeyAndValue('search', form.value.search);
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first()).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
+
+      _this.onLoad();
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([DealersService.all$(), DealersService.filters$()]);
+  };
+
+  _proto.onLoad = function onLoad() {
+    var _this2 = this;
+
+    var items = this.items;
+    var filters = this.filters;
+    Object.keys(filters).forEach(function (key) {
+      filters[key].mode = filters[key].mode || FilterMode.OR;
+    });
+    var initialParams = {};
+    var filterService = new FilterService(filters, initialParams, function (key, filter) {
+      switch (key) {
+        default:
+          filter.filter = function (item, value) {
+            switch (key) {
+              case 'country':
+                return item.countries && item.countries.find(function (x) {
+                  return x.value === value;
+                });
+
+              case 'search':
+                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
+                  return x.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+                });
+            }
+          };
+
+      }
+    });
+    this.filterService = filterService;
+    this.filters = filterService.filters;
+    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    this.form.patch({
+      country: country,
+      search: search
+    });
+    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
+      _this2.filteredItems = filteredItems;
+      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
+
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update(); // console.log('DealersComponent.filteredItems', filteredItems.length);
+    });
+  };
+
+  _proto.showMore = function showMore(event) {
+    this.visibleItems = this.filteredItems.slice();
+    this.pushChanges();
+    LocomotiveScrollService.update();
+  };
+
+  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
+    var filter = this.filters[key];
+
+    if (filter) {
+      if (filter.mode === FilterMode.QUERY) {
+        filter.set(value);
+      } else {
+        var option = filter.options.find(function (x) {
+          return x.value === value;
+        }); // console.log(filter.options, option);
+
+        if (option) {
+          filter.set(option);
+        } else {
+          filter.clear();
+        }
+      }
+    }
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('DealersComponent.onSearch', this.form.value);
+    this.setFilterByKeyAndValue('country', this.form.value.country);
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+    this.pushChanges();
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.pushChanges();
+  };
+
+  return DealersComponent;
+}(rxcomp.Component);
+DealersComponent.meta = {
+  selector: '[dealers]'
 };var DesignersService = /*#__PURE__*/function () {
   function DesignersService() {}
 
@@ -3351,6 +3587,36 @@ DesignersComponent.meta = {
     return ApiService.get$('/materials/filters.json');
   };
 
+  MaterialsService.fake$ = function fake$() {
+    return MaterialsService.all$().pipe(operators.map(function (items) {
+      items.forEach(function (item, i) {
+        item.collection = MaterialsService.toTitleCase(item.collection);
+        item.title = MaterialsService.toTitleCase(item.title);
+      });
+      console.log(JSON.stringify(items));
+      return items;
+    }));
+  };
+
+  MaterialsService.toTitleCase = function toTitleCase(sentence, seps) {
+    if (seps === void 0) {
+      seps = ' _-/';
+    }
+
+    var capitalize = function capitalize(str) {
+      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+    };
+
+    var escape = function escape(str) {
+      return str.replace(/./g, function (c) {
+        return "\\" + c;
+      });
+    };
+
+    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
+    return sentence.replace(wordPattern, capitalize);
+  };
+
   return MaterialsService;
 }();var MaterialsComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(MaterialsComponent, _Component);
@@ -3364,9 +3630,11 @@ DesignersComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
+    this.categories = [];
     this.selectedItem = null;
     this.items = [];
     this.filteredItems = [];
+    this.visibleItems = [];
     this.filters = {};
     var form = this.form = new rxcompForm.FormGroup({
       category: new rxcompForm.FormControl(null)
@@ -3415,6 +3683,7 @@ DesignersComponent.meta = {
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
+    this.categories = this.filters.category.options;
     var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
     this.form.patch({
       category: category,
@@ -3422,11 +3691,25 @@ DesignersComponent.meta = {
     });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
       _this2.filteredItems = filteredItems;
+      _this2.visibleItems = _this2.filteredItems.slice(0, Math.min(16, _this2.filteredItems.length));
 
       _this2.pushChanges();
 
       LocomotiveScrollService.update(); // console.log('MaterialsComponent.filteredItems', filteredItems.length);
     });
+  };
+
+  _proto.showMore = function showMore(event) {
+    var pageSize = 32;
+
+    if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
+      this.visibleItems = this.filteredItems.slice();
+    } else {
+      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+    }
+
+    this.pushChanges();
+    LocomotiveScrollService.update();
   };
 
   _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
@@ -3459,6 +3742,21 @@ DesignersComponent.meta = {
     */
 
     this.pushChanges();
+  };
+
+  _proto.setCategory = function setCategory(category, event) {
+    var _this3 = this;
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.controls.category.value = category.value;
+    setTimeout(function () {
+      LocomotiveScrollService.update();
+
+      _this3.scrollTo('#category-' + category.value);
+    }, 100);
   };
 
   _proto.scrollTo = function scrollTo(selector, event) {
@@ -3909,10 +4207,31 @@ ProductsConfigureComponent.meta = {
     }
   };
 
-  _proto.showVersions = function showVersions(event) {
-    this.visibleItems = this.items.slice();
+  _proto.showMore = function showMore(event) {
+    var pageSize = 12;
+
+    if (this.visibleItems.length + pageSize >= this.items.length) {
+      this.visibleItems = this.items.slice();
+    } else {
+      this.visibleItems = this.items.slice(0, Math.min(this.visibleItems.length + pageSize, this.items.length));
+    }
+
     this.pushChanges();
     LocomotiveScrollService.update();
+  };
+
+  _proto.scrollTo = function scrollTo(selector, event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var target = node.querySelector(selector);
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -160
+    });
   };
 
   _proto.configureProduct = function configureProduct(item) {
@@ -4079,6 +4398,193 @@ ProductsDetailComponent.meta = {
 ProductsComponent.meta = {
   selector: '[products]',
   inputs: ['categoryId']
+};var ProjectsRegistrationModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProjectsRegistrationModalComponent, _Component);
+
+  function ProjectsRegistrationModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProjectsRegistrationModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return ProjectsRegistrationModalComponent;
+}(rxcomp.Component);
+ProjectsRegistrationModalComponent.meta = {
+  selector: '[projects-registration-modal]'
+};var ProjectsRegistrationService = /*#__PURE__*/function () {
+  function ProjectsRegistrationService() {}
+
+  ProjectsRegistrationService.data$ = function data$() {
+    return ApiService.get$('/projects-registration/data.json');
+  };
+
+  ProjectsRegistrationService.submit$ = function submit$() {
+    return ApiService.get$('/projects-registration/submit.json');
+  };
+
+  return ProjectsRegistrationService;
+}();var ProjectsRegistrationComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProjectsRegistrationComponent, _Component);
+
+  function ProjectsRegistrationComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProjectsRegistrationComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      dealer: new rxcompForm.FormGroup({
+        fullName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+      }),
+      client: new rxcompForm.FormGroup({
+        fullName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+      }),
+      architect: new rxcompForm.FormGroup({
+        fullName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+        telephone: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+      }),
+      type: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      destination: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      products: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      picture: new rxcompForm.FormControl(null),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first(), operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return ProjectsRegistrationService.data$().pipe(operators.tap(function (data) {
+      var controls = _this2.controls;
+      controls.dealer.controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.client.controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.architect.controls.country.options = FormService.toSelectOptions(data.country.options);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var country = controls.dealer.controls.country.options.length > 1 ? controls.dealer.controls.country.options[1].id : null;
+    form.patch({
+      dealer: {
+        fullName: 'Agente Jhon Appleseed',
+        country: country,
+        city: 'Pesaro'
+      },
+      client: {
+        fullName: 'Cliente Jhon Appleseed',
+        country: country,
+        city: 'Pesaro'
+      },
+      architect: {
+        fullName: 'Architetto Jhon Appleseed',
+        country: country,
+        city: 'Pesaro',
+        email: 'jhonappleseed@gmail.com',
+        telephone: '0721411112'
+      },
+      type: 'Hotel',
+      destination: 'Hospitality',
+      products: 'Adam, Clop',
+      privacy: true
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit() {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('ProjectsRegistrationComponent.onSubmit', form.value);
+
+    if (form.valid) {
+      form.submitted = true;
+      ProjectsRegistrationService.submit$(form.value).pipe(operators.first()).subscribe(function (response) {
+        console.log('ProjectsRegistrationComponent.onSubmit', response);
+        _this3.success = true;
+        GtmService.push({
+          'event': "Project Registration",
+          'form_name': "Registrazione Progetto"
+        });
+
+        if (!_this3.isModal) {
+          form.reset();
+        } else {
+          _this3.pushChanges();
+        }
+      }, function (error) {
+        console.log('ProjectsRegistrationComponent.error', error);
+        _this3.error = error;
+        form.submitted = false;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  _proto.onClose = function onClose() {
+    this.close.next(this.form.value);
+  };
+
+  return ProjectsRegistrationComponent;
+}(rxcomp.Component);
+ProjectsRegistrationComponent.meta = {
+  selector: '[projects-registration]',
+  outputs: ['close'],
+  inputs: ['isModal']
 };var ProjectsService = /*#__PURE__*/function () {
   function ProjectsService() {}
 
@@ -4213,13 +4719,203 @@ ProductsComponent.meta = {
 }(rxcomp.Component);
 ProjectsComponent.meta = {
   selector: '[projects]'
-};var ReservedAreaService = /*#__PURE__*/function () {
+};var LocalStorageService = /*#__PURE__*/function () {
+  function LocalStorageService() {}
+
+  LocalStorageService.delete = function _delete(name) {
+    if (this.isLocalStorageSupported()) {
+      window.localStorage.removeItem(name);
+    }
+  };
+
+  LocalStorageService.exist = function exist(name) {
+    if (this.isLocalStorageSupported()) {
+      return window.localStorage[name] !== undefined;
+    }
+  };
+
+  LocalStorageService.get = function get(name) {
+    var value = null;
+
+    if (this.isLocalStorageSupported() && window.localStorage[name] !== undefined) {
+      try {
+        value = JSON.parse(window.localStorage[name]);
+      } catch (e) {
+        console.log('LocalStorageService.get.error parsing', name, e);
+      }
+    }
+
+    return value;
+  };
+
+  LocalStorageService.set = function set(name, value) {
+    if (this.isLocalStorageSupported()) {
+      try {
+        var cache = [];
+        var json = JSON.stringify(value, function (key, value) {
+          if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Circular reference found, discard key
+              return;
+            }
+
+            cache.push(value);
+          }
+
+          return value;
+        });
+        window.localStorage.setItem(name, json);
+      } catch (e) {
+        console.log('LocalStorageService.set.error serializing', name, value, e);
+      }
+    }
+  };
+
+  LocalStorageService.isLocalStorageSupported = function isLocalStorageSupported() {
+    if (this.supported) {
+      return true;
+    }
+
+    var supported = false;
+
+    try {
+      supported = 'localStorage' in window && window.localStorage !== null;
+
+      if (supported) {
+        window.localStorage.setItem('test', '1');
+        window.localStorage.removeItem('test');
+      } else {
+        supported = false;
+      }
+    } catch (e) {
+      supported = false;
+    }
+
+    this.supported = supported;
+    return supported;
+  };
+
+  return LocalStorageService;
+}();var FilesService = /*#__PURE__*/function () {
+  function FilesService() {}
+
+  FilesService.hasFile = function hasFile(file) {
+    var files = this.currentFiles;
+    var index = files.reduce(function (p, c, i) {
+      return p !== -1 ? p : c.id === file.id ? i : p;
+    }, -1);
+    return index !== -1;
+  };
+
+  FilesService.setFiles = function setFiles(files) {
+    if (files) {
+      LocalStorageService.set('files', files);
+    } else {
+      LocalStorageService.delete('files');
+    }
+
+    this.files$_.next(files);
+  };
+
+  FilesService.files$ = function files$() {
+    var _this = this;
+
+    var localFiles = LocalStorageService.get('files') || [];
+    return rxjs.of(localFiles).pipe(operators.switchMap(function (files) {
+      _this.setFiles(files);
+
+      return _this.files$_;
+    }));
+  };
+
+  FilesService.addFile$ = function addFile$(file) {
+    var _this2 = this;
+
+    return rxjs.of(file).pipe(operators.map(function (file) {
+      var files = _this2.currentFiles.slice();
+
+      var index = files.reduce(function (p, c, i) {
+        return p !== -1 ? p : c.id === file.id ? i : p;
+      }, -1);
+
+      if (index === -1) {
+        files.push(file);
+
+        _this2.setFiles(files);
+
+        return file;
+      } else {
+        return null;
+      }
+    }));
+  };
+
+  FilesService.removeFile$ = function removeFile$(file) {
+    var _this3 = this;
+
+    return rxjs.of(file).pipe(operators.map(function (file) {
+      var files = _this3.currentFiles.slice();
+
+      var index = files.reduce(function (p, c, i) {
+        return p !== -1 ? p : c.id === file.id ? i : p;
+      }, -1);
+
+      if (index !== -1) {
+        files.splice(index, 1);
+
+        _this3.setFiles(files);
+
+        return file;
+      } else {
+        return null;
+      }
+    }));
+  };
+
+  FilesService.removeAll$ = function removeAll$() {
+    var _this4 = this;
+
+    return rxjs.of([]).pipe(operators.map(function (files) {
+      _this4.setFiles(files);
+
+      return files;
+    }));
+  };
+
+  _createClass(FilesService, null, [{
+    key: "currentFiles",
+    get: function get() {
+      return this.files$_.getValue();
+    }
+  }]);
+
+  return FilesService;
+}();
+
+_defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var ReservedAreaService = /*#__PURE__*/function () {
   function ReservedAreaService() {}
 
   ReservedAreaService.all$ = function all$() {
     return ApiService.get$('/reserved-area/all.json').pipe(operators.map(function (items) {
       items.forEach(function (x) {
         x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));
+      });
+      return items;
+    }));
+  };
+
+  ReservedAreaService.all_$ = function all_$() {
+    return rxjs.combineLatest([ReservedAreaService.get$(), FilesService.files$()]).pipe(operators.map(function (data) {
+      var items = data[0];
+      var files = data[1];
+      items.forEach(function (item) {
+        if (files.find(function (x) {
+          return x.id === item.id;
+        })) {
+          item.added = true;
+        } else {
+          item.added = false;
+        }
       });
       return items;
     }));
@@ -4317,7 +5013,28 @@ ProjectsComponent.meta = {
   };
 
   _proto.onProjectRegistration = function onProjectRegistration(event) {
-    console.log('ReservedAreaComponent.onProjectRegistration', event);
+    ModalService.open$({
+      src: environment.template.modal.projectsRegistrationModal
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('ReservedAreaComponent.onProjectRegistration', event);
+      /*
+      if (event instanceof ModalResolveEvent) {
+      	// window.location.href = environment.slug.reservedArea;
+      }
+      */
+    });
+  };
+
+  _proto.onToggleFile = function onToggleFile(file) {
+    var _this4 = this;
+
+    (this.hasFile(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(operators.first()).subscribe(function (_) {
+      _this4.pushChanges();
+    });
+  };
+
+  _proto.hasFile = function hasFile(file) {
+    return FilesService.hasFile(file);
   };
 
   _proto.scrollTo = function scrollTo(selector, event) {
@@ -6526,6 +7243,80 @@ SwiperProductsPropositionDirective.meta = {
 }(SwiperDirective);
 SwiperProjectsPropositionDirective.meta = {
   selector: '[swiper-projects-proposition]'
+};var FilesComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(FilesComponent, _Component);
+
+  function FilesComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = FilesComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.showFiles = false;
+    this.user = null;
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      _this.user = user;
+
+      _this.pushChanges();
+    });
+    this.files = [];
+    FilesService.files$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (files) {
+      _this.files = files;
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.onToggleFiles = function onToggleFiles(event) {
+    this.showFiles = !this.showFiles;
+    this.pushChanges();
+  };
+
+  _proto.onToggleFile = function onToggleFile(file) {
+    var _this2 = this;
+
+    (this.hasFile(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(operators.first()).subscribe(function (_) {
+      _this2.pushChanges();
+    });
+  };
+
+  _proto.hasFile = function hasFile(file) {
+    return FilesService.hasFile(file);
+  };
+
+  _proto.onDownloadAll = function onDownloadAll(event) {
+    event.preventDefault();
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    FilesService.currentFiles.forEach(function (file) {
+      var link = document.createElement('a');
+      link.setAttribute('href', file.url);
+      link.setAttribute('download', file.title);
+      link.setAttribute('target', '_blank');
+      link.click();
+      /*
+      const item = node.querySelector(`[href]="${file.url}"`);
+      if (item) {
+      	item.click();
+      }
+      */
+      // window.open(file.url, '_blank');
+    });
+  };
+
+  _proto.onRemoveAll = function onRemoveAll() {
+    FilesService.removeAll$().pipe(operators.first()).subscribe();
+  };
+
+  return FilesComponent;
+}(rxcomp.Component);
+FilesComponent.meta = {
+  selector: '[files]'
 };var HeaderMode = {
   IDLE: 'idle',
   MENU: 'menu',
@@ -6660,6 +7451,8 @@ var MenuDirective = /*#__PURE__*/function (_Directive) {
 
     var submenus = this.submenus = document.querySelector(".group--submenus");
     var target = this.target = document.querySelector("#menu-" + this.menu);
+    var preview = target.querySelector('[data-target]');
+    var previewSrc = this.previewSrc = preview.src;
     var container = this.container = target.querySelector(".container");
     this.onOver = this.onOver.bind(this);
     this.onLeave = this.onLeave.bind(this);
@@ -6675,6 +7468,8 @@ var MenuDirective = /*#__PURE__*/function (_Directive) {
     var submenus = this.submenus;
     submenus.classList.add('active');
     var target = this.target;
+    var preview = target.querySelector('[data-target]');
+    preview.src = this.previewSrc;
     target.classList.add('active');
     var container = this.container;
     container.addEventListener('mouseleave', this.onLeave);
@@ -7275,7 +8070,7 @@ UserSigninComponent.meta = {
 UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn']
-};var factories$1 = [HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
+};var factories$1 = [FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
 var pipes$1 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(SharedModule, _Module);
@@ -7301,6 +8096,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, DesignersComponent, MaterialsComponent, NewsComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, NewsComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

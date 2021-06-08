@@ -132,7 +132,8 @@
 								<button type="button" class="btn--configure" (click)="configureProduct(item)">Personalizza</button>
 							</div>
 							<div class="card__cta" *if="!item.configurable">
-								<a [href]="item.url" download target="_blank" class="btn--download">Scarica il pdf</a>
+								<!-- <a [href]="item.url" download target="_blank" class="btn--download">Scarica il pdf</a> -->
+								<a href="/giorgetti/products-detail.html#insights" class="btn--download" (click)="scrollTo('#insights', $event)">Scarica il pdf</a>
 							</div>
 						</div>
 					</div>
@@ -140,7 +141,7 @@
 			</div>
 		</div>
 		<div class="group--cta">
-			<button type="button" class="btn--more" (click)="showVersions($event)" *if="items.length > visibleItems.length">Tutte le versioni</button>
+			<button type="button" class="btn--more" (click)="showMore($event)" *if="items.length > visibleItems.length">Mostra di più</button>
 			<!-- <button type="button" class="btn--configure" (click)="configureProduct($event)">Configura e acquista</button> -->
 		</div>
 	</div>
@@ -189,7 +190,7 @@
 	</div>
 
 	<!-- INSIGHTS -->
-	<div class="section--insights">
+	<div class="section--insights" id="insights">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">

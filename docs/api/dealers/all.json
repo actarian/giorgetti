@@ -1,0 +1,753 @@
+[
+  {
+    "id": 1,
+    "name": "De Baar d.o.o",
+    "address": "Ulica Lojzeta Spacala 40",
+    "city": "1000 Ljubljana",
+    "phone": "+386 41 605 860",
+    "fax": "+386 1 51 71 223",
+    "email": "debaar@siol.net",
+    "countries": [
+      {
+        "value": 2,
+        "label": "Albania"
+      },
+      {
+        "value": 27,
+        "label": "Bosnia-Herzeg."
+      },
+      {
+        "value": 32,
+        "label": "Bulgaria"
+      },
+      {
+        "value": 53,
+        "label": "Croazia"
+      },
+      {
+        "value": 246,
+        "label": "Montenegro"
+      },
+      {
+        "value": 172,
+        "label": "Polonia"
+      },
+      {
+        "value": 176,
+        "label": "Repubblica Ceca"
+      },
+      {
+        "value": 181,
+        "label": "Romania"
+      },
+      {
+        "value": 248,
+        "label": "Serbia"
+      },
+      {
+        "value": 199,
+        "label": "Slovacchia"
+      },
+      {
+        "value": 200,
+        "label": "Slovenia"
+      },
+      {
+        "value": 92,
+        "label": "Ungheria"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Hall Luxury Design",
+    "email": "office@hallluxurydesign.com",
+    "countries": [
+      {
+        "value": 173,
+        "label": "Portogallo"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Schiatti",
+    "address": "Via San Rocco 23",
+    "city": "20038 Seregno (MB)",
+    "phone": "+39 0362 328162",
+    "email": "info@schiatti.it",
+    "countries": [
+      {
+        "value": 6695,
+        "label": "Irlanda"
+      },
+      {
+        "value": 95,
+        "label": "Regno Unito"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Irina Kostroub",
+    "phone": "+7 919 1046378; +39 335 396620",
+    "email": "irina.kostroub@gmail.com",
+    "countries": [
+      {
+        "value": 182,
+        "label": "Russia"
+      },
+      {
+        "value": 226,
+        "label": "Ucraina"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Spacio Soluciones",
+    "phone": "+34 625 220606",
+    "email": "roberto.fernandez@spaciosoluciones.com",
+    "countries": [
+      {
+        "value": 202,
+        "label": "Spagna"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Gianni Fedrigo",
+    "phone": "+41 764211061",
+    "email": "gianni.fedrigo@bluewin.ch",
+    "countries": [
+      {
+        "value": 209,
+        "label": "Svizzera"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "GIORGETTI USA INC Corporate Office",
+    "phone": "+1 212 8893261",
+    "email": "info@giorgettiusa.com",
+    "countries": [
+      {
+        "value": 66231,
+        "label": "Center and south America"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "FORM75 Design",
+    "phone": "+45 2617 5999",
+    "email": "hansson@form75.dk",
+    "countries": [
+      {
+        "value": 55,
+        "label": "Danimarca"
+      },
+      {
+        "value": 159,
+        "label": "Norvegia"
+      },
+      {
+        "value": 208,
+        "label": "Svezia"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Giovanni Baleani",
+    "phone": "+39 335 30 49 89",
+    "email": "baleaniagency@gmail.com",
+    "countries": [
+      {
+        "value": 10208,
+        "label": "Algeria"
+      },
+      {
+        "value": 10208,
+        "label": "Libia"
+      },
+      {
+        "value": 10208,
+        "label": "Marocco"
+      },
+      {
+        "value": 10208,
+        "label": "Tunisia"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Thomas Graeper",
+    "phone": "+49 171 44 22 342",
+    "email": "thomas.graeper@giorgetti.eu",
+    "countries": [
+      {
+        "value": 10208,
+        "label": "Germany 0, 1, 2, 3, 48, 49"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Markus Knapp",
+    "phone": "+49 172 595 62 36",
+    "email": "service@agent-knapp.de",
+    "countries": [
+      {
+        "value": 10208,
+        "label": "Germany, 40-47, 5, 6"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Sebastian Denner",
+    "phone": "+49 173 937 3047",
+    "email": "denner@giorgetti.de",
+    "countries": [
+      {
+        "value": 10208,
+        "label": "Germany 7, 8, 9"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Sebastian Denner",
+    "phone": "+43 664 3435495",
+    "email": "denner@giorgetti.de",
+    "countries": [
+      {
+        "value": 13,
+        "label": "Austria"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Roberto La Bombarda",
+    "phone": "+966 505 691116",
+    "fax": "+39 348 2550719",
+    "email": "la.bombarda@tiscali.it",
+    "countries": [
+      {
+        "value": 8,
+        "label": "Arabia Saudita"
+      },
+      {
+        "value": 16,
+        "label": "Bahrain"
+      },
+      {
+        "value": 120,
+        "label": "Kuwait"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Mei Mei Mi",
+    "phone": "+86 15901285825",
+    "email": "meimei.mi@giorgetti.eu",
+    "countries": [
+      {
+        "value": 41,
+        "label": "Cina"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Witzier Agenturen",
+    "phone": "+31 639750718",
+    "email": "rob@witzieragenturen.nl",
+    "countries": [
+      {
+        "value": 163,
+        "label": "Paesi Bassi"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "DE5IGN AGENCY",
+    "phone": "+32 476737486",
+    "email": "info@de5ign.be",
+    "countries": [
+      {
+        "value": 19,
+        "label": "Belgio"
+      },
+      {
+        "value": 129,
+        "label": "Lussemburgo"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "STUDIO ERRE DI ROMANO UMBERTO",
+    "address": "Via dell'Epomeo, 460",
+    "city": "80126 Napoli",
+    "phone": "+39 081 5446413",
+    "email": "studioerreromano@gmail.com",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Campania"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Andrea Guffanti",
+    "phone": "+39 328 8614171",
+    "email": "guffanti.a@gmail.com",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Emilia Romagna"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Giovanni Urilli",
+    "address": "Via A.T. Segrè 8",
+    "city": "Tivoli (Roma)",
+    "phone": "+39 338 2863661",
+    "email": "gianniurilli@gmail.com",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Lazio"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Caruso Agenzia d’arredo Sas",
+    "address": "Via Francesco Melzi d’Eril 16",
+    "city": "Milano",
+    "phone": "+39 348 1515988",
+    "email": "christian.caruso@giorgetti.eu",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Lombardia (VA, SO, PV, MB, LC, MI, CO)"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Giorgio Tavolini",
+    "phone": "+39 338 6511042",
+    "email": "giorgio.tavolini@entisgroup.it",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Lombardia (BS, BG, CR, MN)"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "PINCINI FABRIZIO &amp;C. SAS",
+    "address": "Via Porta Zoppa 13",
+    "city": "62013 Civitanova Marche  MC",
+    "phone": "+39 336 837496",
+    "email": "agenziapincini@gmail.com",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Abruzzo"
+      },
+      {
+        "value": 2,
+        "label": "Marche"
+      },
+      {
+        "value": 2,
+        "label": "Molise"
+      },
+      {
+        "value": 2,
+        "label": "Umbria"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Sergio Gadaleta",
+    "phone": "+39 335 7419908",
+    "email": "sergio.gadaleta@giorgetti.eu",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Basilicata"
+      },
+      {
+        "value": 2,
+        "label": "Puglia"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Agatino e Luca Caponetto",
+    "address": "Corso Sicilia 40",
+    "city": "95131 Catania",
+    "phone": "+39 336 880333",
+    "email": "agatino.caponetto@tin.it",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Calabria"
+      },
+      {
+        "value": 2,
+        "label": "Sicilia"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "PALAZZINI PROBO &amp; C. S.A.S",
+    "address": "Via Ponte di Monsummano 60",
+    "city": "51018 Pieve a Nievole (PT)",
+    "phone": "+39 335  5956815",
+    "email": "probopa@tin.it",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Toscana"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "MOMA SNC DI MARCO CORAL &amp; C.",
+    "address": "Via Tavella di Pasiano 53/B",
+    "city": "33087 Pasiano di Pordenone PN",
+    "phone": "+39 348  2241551",
+    "email": "marcoral@libero.it",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Friuli-Venezia Giulia"
+      },
+      {
+        "value": 2,
+        "label": "Veneto"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "F.A.B. Furniture Agency Baltics",
+    "phone": "+37 068752593",
+    "email": "info@fabaltics.lt",
+    "countries": [
+      {
+        "value": 24,
+        "label": "Bielorussia"
+      },
+      {
+        "value": 63,
+        "label": "Estonia"
+      },
+      {
+        "value": 123,
+        "label": "Lettonia"
+      },
+      {
+        "value": 128,
+        "label": "Lituania"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Nicola Marinelli",
+    "phone": "+39 335 8191850",
+    "email": "n.marinelli@entistyle.it",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Lombardia (BS, BG, CR, MN)"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "ASTER Srl",
+    "phone": "+39 335 5648224",
+    "email": "aster@aster-srl.com",
+    "countries": [
+      {
+        "value": 10,
+        "label": "Armenia"
+      },
+      {
+        "value": 14,
+        "label": "Azerbaigian"
+      },
+      {
+        "value": 70,
+        "label": "Georgia"
+      },
+      {
+        "value": 115,
+        "label": "Kazajstan"
+      },
+      {
+        "value": 223,
+        "label": "Turkmenistan"
+      },
+      {
+        "value": 229,
+        "label": "Uzbekistan"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Pietro Maffini",
+    "phone": "+39 329 8825150",
+    "email": "pietro.maf@gmail.com",
+    "countries": [
+      {
+        "value": 1,
+        "label": "Italia"
+      }
+    ],
+    "regions": [
+      {
+        "value": 1,
+        "label": "Liguria"
+      },
+      {
+        "value": 2,
+        "label": "Piemonte"
+      },
+      {
+        "value": 2,
+        "label": "Valle d' Aosta"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Agostino Cicciarello",
+    "phone": "+507 66196597",
+    "email": "acicciarello@tin.it",
+    "countries": [
+      {
+        "value": 7,
+        "label": "Antille Olandesi"
+      },
+      {
+        "value": 9,
+        "label": "Argentina"
+      },
+      {
+        "value": 15,
+        "label": "Bahamas"
+      },
+      {
+        "value": 20,
+        "label": "Belize"
+      },
+      {
+        "value": 26,
+        "label": "Bolivia"
+      },
+      {
+        "value": 30,
+        "label": "Brasile"
+      },
+      {
+        "value": 40,
+        "label": "Cile"
+      },
+      {
+        "value": 45,
+        "label": "Colombia"
+      },
+      {
+        "value": 52,
+        "label": "Costa Rica"
+      },
+      {
+        "value": 59,
+        "label": "El Salvador"
+      },
+      {
+        "value": 61,
+        "label": "Equador"
+      },
+      {
+        "value": 74,
+        "label": "Giamaica"
+      },
+      {
+        "value": 84,
+        "label": "Guatemala"
+      },
+      {
+        "value": 88,
+        "label": "Guyana"
+      },
+      {
+        "value": 90,
+        "label": "Honduras"
+      },
+      {
+        "value": 155,
+        "label": "Nicaragua"
+      },
+      {
+        "value": 166,
+        "label": "Panama"
+      },
+      {
+        "value": 168,
+        "label": "Paraguay"
+      },
+      {
+        "value": 169,
+        "label": "Peru"
+      },
+      {
+        "value": 174,
+        "label": "Puerto Rico"
+      },
+      {
+        "value": 207,
+        "label": "Surinam"
+      },
+      {
+        "value": 228,
+        "label": "Uruguay"
+      },
+      {
+        "value": 231,
+        "label": "Venezuela"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Eric Serre",
+    "phone": "+33 6 07515278",
+    "email": "ag.france@giorgetti.eu",
+    "countries": [
+      {
+        "value": 67,
+        "label": "Francia"
+      }
+    ],
+    "regions": []
+  },
+  {
+    "id": 1,
+    "name": "Andrea Guffanti",
+    "email": "guffanti.a@gmail.com",
+    "countries": [],
+    "regions": []
+  }
+]

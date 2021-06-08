@@ -27,7 +27,7 @@
 	.card__title {
 		margin-bottom: 10px;
 		font-family: $font-secondary;
-		line-height: 1.1;
+		line-height: 1.0;
 		letter-spacing: -0.015em;
 		text-transform: uppercase;
 
@@ -97,6 +97,7 @@
 
 		.card__picture {
 			position: relative;
+			max-height: calc(100vh - 135px);
 		}
 
 		.card__content {
@@ -104,7 +105,7 @@
 		}
 
 		.card__title {
-			font-size: 160px;
+			font-size: 140px;
 
 			&>span {
 				font-size: 48px;

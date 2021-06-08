@@ -11,9 +11,11 @@ import { MaterialsService } from './materials.service';
 export class MaterialsComponent extends Component {
 
 	onInit() {
+		this.categories = [];
 		this.selectedItem = null;
 		this.items = [];
 		this.filteredItems = [];
+		this.visibleItems = [];
 		this.filters = {};
 		const form = this.form = new FormGroup({
 			category: new FormControl(null),
@@ -64,16 +66,29 @@ export class MaterialsComponent extends Component {
 		});
 		this.filterService = filterService;
 		this.filters = filterService.filters;
+		this.categories = this.filters.category.options;
 		const category = this.filters.category.values.length ? this.filters.category.values[0] : null;
 		this.form.patch({ category, search });
 		filterService.items$(items).pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(filteredItems => {
 			this.filteredItems = filteredItems;
+			this.visibleItems = this.filteredItems.slice(0, Math.min(16, this.filteredItems.length));
 			this.pushChanges();
 			LocomotiveScrollService.update();
 			// console.log('MaterialsComponent.filteredItems', filteredItems.length);
 		});
+	}
+
+	showMore(event) {
+		const pageSize = 32;
+		if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
+			this.visibleItems = this.filteredItems.slice();
+		} else {
+			this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+		}
+		this.pushChanges();
+		LocomotiveScrollService.update();
 	}
 
 	setFilterByKeyAndValue(key, value) {
@@ -102,6 +117,17 @@ export class MaterialsComponent extends Component {
 		}
 		*/
 		this.pushChanges();
+	}
+
+	setCategory(category, event) {
+		if (event) {
+			event.preventDefault();
+		}
+		this.controls.category.value = category.value;
+		setTimeout(() => {
+			LocomotiveScrollService.update();
+			this.scrollTo('#category-' + category.value);
+		}, 100);
 	}
 
 	scrollTo(selector, event) {

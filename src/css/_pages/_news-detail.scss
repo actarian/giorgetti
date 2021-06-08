@@ -186,11 +186,33 @@
 		font-size: 18px;
 
 		p {
-			margin: 0 0 80px;
+			margin: 0 0 60px;
 			padding: 0;
 
 			&:last-child {
 				margin: 0;
+			}
+		}
+	}
+
+	.description+.title {
+		margin-top: 60px;
+	}
+
+	.btn--link {
+		@extend %btn-link;
+		font-weight: 600;
+		margin-bottom: 4px;
+
+		&:after {
+			transform: scale(1, 1);
+			transform-origin: right;
+		}
+
+		&:hover,
+		&.active {
+			&:after {
+				transform: scale(0, 1);
 			}
 		}
 	}

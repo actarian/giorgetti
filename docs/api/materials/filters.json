@@ -5,35 +5,48 @@
     "options": [
       {
         "value": 1,
-        "label": "Tessuto"
+        "label": "Tessuto",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 2,
-        "label": "Pelle"
+        "label": "Legno",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p><p>In alcuni casi, il legno rimane il protagonista indiscusso dell’oggetto, in altri preferisce impreziosirsi con altri materiali, quasi per valorizzare la sua naturale vitalità. L’azienda si è sempre impegnata a selezionare la parte migliore del legno che viene impiegato prevalentemente in massiccio, il cui profumo riempie gli stabilimenti, richiamando alla mente gli antichi laboratori di falegnameria ed il rispetto per le autentiche tradizioni ebanistiche. </p><p>Giorgetti sintetizza l’arte dell’ebanisteria e l’innovazione, per realizzare collezioni uniche, di indiscusso valore qualitativo. Il prodotto finale nasce da un approccio all’artigianalità tanto raro quanto più prezioso; al contempo, l’innovazione viene costantemente applicata alle tecniche produttive con l’obiettivo di perfezionare la lavorazione del legno e la cura del dettaglio. </p><p>Giorgetti è particolarmente sensibile alla tutela dell’ambiente impegnandosi, innanzitutto, a ridurre gli scarti prodotti durante le fasi di lavorazione del legno. L’azienda riconosce l’importanza di una gestione responsabile delle foreste che si traduce nella scelta consapevole di avvalersi di fornitori di legname in linea con i principi della sostenibilità. </p><p>Il legno utilizzato da Giorgetti proviene da paesi europei ed esotici in cui vigono severe norme a tutela del patrimonio boschivo-forestale. Nello specifico, l’azienda acquista la materia prima solamente da foreste di coltura controllata, dove vengono immediatamente piantati nuovi alberi a sostituzione di quelli abbattuti. La gestione responsabile del patrimonio naturale è cruciale per ottenere un significativo miglioramento sia a livello ambientale che sociale: migliorare l’impatto del cambiamento climatico, garantire migliori condizioni di vita e combattere il commercio illegale di legno. </p>"
       },
       {
         "value": 3,
-        "label": "Cuoio"
+        "label": "Laccatura",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 4,
-        "label": "Marmo"
+        "label": "Metallo",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 5,
-        "label": "Metallo"
+        "label": "Marmo",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 6,
-        "label": "Laccatura"
+        "label": "Vetro",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 7,
-        "label": "Vetro"
+        "label": "Cuoio",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       },
       {
         "value": 8,
-        "label": "Legno"
+        "label": "Gomma liquida",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
+      },
+      {
+        "value": 9,
+        "label": "Eva",
+        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
       }
     ]
   }

@@ -28,6 +28,19 @@ export class AppComponent extends Component {
 			first(),
 		).subscribe();
 	}
+
+	onProjectRegistration(event) {
+		ModalService.open$({ src: environment.template.modal.projectsRegistrationModal }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('AppComponent.onProjectRegistration', event);
+			/*
+			if (event instanceof ModalResolveEvent) {
+				// window.location.href = environment.slug.reservedArea;
+			}
+			*/
+		});
+	}
 }
 
 AppComponent.meta = {

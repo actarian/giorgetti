@@ -26,10 +26,24 @@ export class ProductsDetailComponent extends Component {
 		}
 	}
 
-	showVersions(event) {
-		this.visibleItems = this.items.slice();
+	showMore(event) {
+		const pageSize = 12;
+		if (this.visibleItems.length + pageSize >= this.items.length) {
+			this.visibleItems = this.items.slice();
+		} else {
+			this.visibleItems = this.items.slice(0, Math.min(this.visibleItems.length + pageSize, this.items.length));
+		}
 		this.pushChanges();
 		LocomotiveScrollService.update();
+	}
+
+	scrollTo(selector, event) {
+		if (event) {
+			event.preventDefault();
+		}
+		const { node } = getContext(this);
+		const target = node.querySelector(selector);
+		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
 	}
 
 	configureProduct(item) {

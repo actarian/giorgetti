@@ -41,6 +41,12 @@
 		line-height: 1.1;
 		letter-spacing: -0.027em;
 		text-transform: uppercase;
+
+		em {
+			display: block;
+			font-style: normal;
+			color: #6A6A6A;
+		}
 	}
 
 	.abstract {

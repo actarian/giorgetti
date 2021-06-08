@@ -4,7 +4,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 60px;
 
 	.card__picture {
 		@extend %btn;
@@ -110,6 +109,11 @@
 	@include media-up(md) {
 		.card__picture {
 			position: relative;
+			max-height: calc(100vh - 135px);
+
+			img {
+				transition: none;
+			}
 		}
 
 		.card__content {
@@ -135,9 +139,6 @@
 		text-transform: uppercase;
 	}
 
-	@include media-up(md) {
-		padding: 0 0 80px 0;
-	}
 }
 
 .card--product-proposition {

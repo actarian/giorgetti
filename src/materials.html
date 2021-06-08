@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<div class="section--projects-detail">
+	<div class="section--gallery">
 		<div class="container">
 			<div class="title">Materie</div>
 			<div class="swiper-container" swiper-gallery>
@@ -69,18 +69,6 @@
 	</div>
 
 	<div class="section--materials">
-		<div class="container">
-			<ul class="nav--secondary">
-				<li class="nav__item"><a href="/giorgetti/materials.html#fabric" (click)="scrollTo('#fabric', $event)">Tessuto</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#soft-leather" (click)="scrollTo('#soft-leather', $event)">Pelle</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#leather" (click)="scrollTo('#leather', $event)">Cuoio</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#marble" (click)="scrollTo('#marble', $event)">Marmo</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#metal" (click)="scrollTo('#metal', $event)">Metallo</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#laquered" (click)="scrollTo('#laquered', $event)">Laccatura</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#glass" (click)="scrollTo('#glass', $event)">Vetro</a></li>
-				<li class="nav__item"><a href="/giorgetti/materials.html#wood" (click)="scrollTo('#wood', $event)">Legno</a></li>
-			</ul>
-		</div>
 		<div class="picture">
 			<img loading="lazy" src="/giorgetti/img/materials/materials-01.png" scroll scrollSpeed="-1.0" />
 			<img loading="lazy" src="/giorgetti/img/materials/materials-02.png" scroll scrollSpeed="-0.6" />
@@ -89,133 +77,48 @@
 			<img loading="lazy" src="/giorgetti/img/materials/materials-05.png" scroll scrollSpeed="0.6" />
 			<img loading="lazy" src="/giorgetti/img/materials/materials-06.png" scroll scrollSpeed="1" />
 		</div>
+		<div class="container">
+			<ul class="nav--secondary">
+				<li class="nav__item" *for="let category of categories"><a [href]="'/giorgetti/materials.html#category-' + category.value" (click)="setCategory(category, $event)" [innerHTML]="category.label"></a></li>
+			</ul>
+		</div>
 	</div>
 
-	<div class="section--text" id="fabric">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Tessuto</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
+	<div [id]="'category-' + category.value" *for="let category of categories">
+
+		<div class="section--text" *if="controls.category.value === category.value">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 offset-md-3">
+						<div class="title" [innerHTML]="category.label"></div>
+						<div class="description" [innerHTML]="category.description"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="section--text" id="soft-leather">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Pelle</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="leather">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Cuoio</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="marble">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Marmo</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="metal">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Metallo</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="laquered">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Laccatura</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="glass">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Vetro</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--text" id="wood">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Legno</div>
-					<div class="description">
-						<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>
-						<p>In alcuni casi, il legno rimane il protagonista indiscusso dell’oggetto, in altri preferisce impreziosirsi con altri materiali, quasi per valorizzare la sua naturale vitalità. L’azienda si è sempre impegnata a selezionare la parte migliore del legno che viene impiegato prevalentemente in massiccio, il cui profumo riempie gli stabilimenti, richiamando alla mente gli antichi laboratori di falegnameria ed il rispetto per le autentiche tradizioni ebanistiche. </p>
-						<p>Giorgetti sintetizza l’arte dell’ebanisteria e l’innovazione, per realizzare collezioni uniche, di indiscusso valore qualitativo. Il prodotto finale nasce da un approccio all’artigianalità tanto raro quanto più prezioso; al contempo, l’innovazione viene costantemente applicata alle tecniche produttive con l’obiettivo di perfezionare la lavorazione del legno e la cura del dettaglio. </p>
-						<p>Giorgetti è particolarmente sensibile alla tutela dell’ambiente impegnandosi, innanzitutto, a ridurre gli scarti prodotti durante le fasi di lavorazione del legno. L’azienda riconosce l’importanza di una gestione responsabile delle foreste che si traduce nella scelta consapevole di avvalersi di fornitori di legname in linea con i principi della sostenibilità. </p>
-						<p>Il legno utilizzato da Giorgetti proviene da paesi europei ed esotici in cui vigono severe norme a tutela del patrimonio boschivo-forestale. Nello specifico, l’azienda acquista la materia prima solamente da foreste di coltura controllata, dove vengono immediatamente piantati nuovi alberi a sostituzione di quelli abbattuti. La gestione responsabile del patrimonio naturale è cruciale per ottenere un significativo miglioramento sia a livello ambientale che sociale: migliorare l’impatto del cambiamento climatico, garantire migliori condizioni di vita e combattere il commercio illegale di legno. </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section--materials-listing">
-		<div class="container">
-			<div class="listing--materials">
-				<div class="listing__item" [class]="{ active: selectedItem == item }" *for="let item of filteredItems">
-					<div class="card--material" (click)="onToggle(item)" [id]="'cat-'+ item.category.id + '-' + item.id">
-						<div class="card__picture">
-							<img loading="lazy" [src]="item.image" />
-						</div>
-						<div class="card__content">
-							<div class="card__code" [innerHTML]="item.code"></div>
-							<div class="card__title" [innerHTML]="item.title"></div>
-							<div class="card__finish" [innerHTML]="item.finish"></div>
+		<div class="section--materials-listing" *if="controls.category.value === category.value">
+			<div class="container">
+				<div class="listing--materials">
+					<div class="listing__item" [class]="{ active: selectedItem == item }" *for="let item of visibleItems">
+						<div class="card--material" (click)="onToggle(item)" [id]="'cat-'+ item.category.id + '-' + item.id">
+							<div class="card__picture">
+								<img loading="lazy" [src]="item.image" />
+							</div>
+							<div class="card__content">
+								<div class="card__code" [innerHTML]="item.code"></div>
+								<div class="card__title" [innerHTML]="item.title"></div>
+								<div class="card__finish" [innerHTML]="item.finish"></div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="group--cta">
+					<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
+				</div>
 			</div>
 		</div>
+
 	</div>
 
 </main>

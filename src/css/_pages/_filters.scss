@@ -25,6 +25,11 @@
 			.required__badge {
 				display: none;
 			}
+
+			.caret-down {
+				fill: $foreground-tertiary;
+				margin-right: 0;
+			}
 		}
 
 		.control--custom-select {
@@ -72,6 +77,10 @@
 				@extend %control--text-negative;
 			}
 		}
+	}
+
+	.filters__cta {
+		display: none;
 	}
 
 	.group--form,
