@@ -176,7 +176,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   template: {
     modal: {
       userModal: '/template/common/user-modal.cshtml',
-      projectsRegistrationModal: '/template/common/projects-registration-modal.cshtml'
+      projectsRegistrationModal: '/template/common/projects-registration-modal.cshtml',
+      materialsModal: '/template/common/materials-modal.cshtml'
     }
   },
   googleMaps: {
@@ -200,7 +201,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   template: {
     modal: {
       userModal: '/giorgetti/user-modal.html',
-      projectsRegistrationModal: '/giorgetti/projects-registration-modal.html'
+      projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
+      materialsModal: '/giorgetti/materials-modal.html'
     }
   },
   googleMaps: {
@@ -3749,8 +3751,78 @@ DealersComponent.meta = {
 }(rxcomp.Component);
 DesignersComponent.meta = {
   selector: '[designers]'
-};// import { map } from 'rxjs/operators';
-var MaterialsService = /*#__PURE__*/function () {
+};var MaterialsModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MaterialsModalComponent, _Component);
+
+  function MaterialsModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MaterialsModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    this.item = null;
+    this.items = null;
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.item = data.item;
+      this.items = data.items; // console.log('MaterialsModalComponent.onInit', data);
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.hasPrev = function hasPrev() {
+    return true;
+  };
+
+  _proto.hasNext = function hasNext() {
+    return true;
+  };
+
+  _proto.onPrev = function onPrev() {
+    var index = this.items.indexOf(this.item);
+    index--;
+
+    if (index < 0) {
+      index = this.items.length - 1;
+    }
+
+    this.item = this.items[index];
+    this.pushChanges();
+  };
+
+  _proto.onNext = function onNext() {
+    var index = this.items.indexOf(this.item);
+    index++;
+
+    if (index === this.items.length) {
+      index = 0;
+    }
+
+    this.item = this.items[index];
+    this.pushChanges();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return MaterialsModalComponent;
+}(rxcomp.Component);
+MaterialsModalComponent.meta = {
+  selector: '[materials-modal]'
+};var MaterialsService = /*#__PURE__*/function () {
   function MaterialsService() {}
 
   MaterialsService.all$ = function all$() {
@@ -3759,29 +3831,47 @@ var MaterialsService = /*#__PURE__*/function () {
 
   MaterialsService.filters$ = function filters$() {
     return ApiService.get$('/materials/filters.json');
-  }
-  /*
-  static fake$() {
-  	return MaterialsService.all$().pipe(
-  		map(items => {
-  			items.forEach((item, i) => {
-  				item.collection = MaterialsService.toTitleCase(item.collection);
-  				item.title = MaterialsService.toTitleCase(item.title);
-  			});
-  			console.log(JSON.stringify(items));
-  			return items;
-  		})
-  	);
-  }
-  
-  static toTitleCase(sentence, seps = ' _-/') {
-  	const capitalize = str => str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
-  	const escape = str => str.replace(/./g, c => `\\${c}`);
-  	let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
-  	return sentence.replace(wordPattern, capitalize);
-  }
-  */
-  ;
+  };
+
+  MaterialsService.fake$ = function fake$() {
+    return rxjs.combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(operators.map(function (data) {
+      var items = data[0];
+      var items_ = data[1];
+      items.forEach(function (item, i) {
+        var item_ = items_.find(function (x) {
+          return x.id === item.id;
+        });
+
+        if (item_) {
+          item.image = item_.image.replace(/\s/g, '_').toLowerCase();
+          item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
+        } // item.collection = MaterialsService.toTitleCase(item.collection);
+        // item.title = MaterialsService.toTitleCase(item.title);
+
+      });
+      console.log(JSON.stringify(items));
+      return items;
+    }));
+  };
+
+  MaterialsService.toTitleCase = function toTitleCase(sentence, seps) {
+    if (seps === void 0) {
+      seps = ' _-/';
+    }
+
+    var capitalize = function capitalize(str) {
+      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+    };
+
+    var escape = function escape(str) {
+      return str.replace(/./g, function (c) {
+        return "\\" + c;
+      });
+    };
+
+    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
+    return sentence.replace(wordPattern, capitalize);
+  };
 
   return MaterialsService;
 }();var MaterialsComponent = /*#__PURE__*/function (_Component) {
@@ -3823,7 +3913,7 @@ var MaterialsService = /*#__PURE__*/function () {
   };
 
   _proto.load$ = function load$() {
-    return rxjs.combineLatest([MaterialsService.all$(), MaterialsService.filters$()]);
+    return rxjs.combineLatest([MaterialsService.fake$(), MaterialsService.filters$()]);
   };
 
   _proto.onLoad = function onLoad() {
@@ -3908,6 +3998,23 @@ var MaterialsService = /*#__PURE__*/function () {
     */
 
     this.pushChanges();
+  };
+
+  _proto.onOpen = function onOpen(item, items) {
+    ModalService.open$({
+      src: environment.template.modal.materialsModal,
+      data: {
+        item: item,
+        items: items
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('MaterialComponent.onOpen', event);
+      /*
+      if (event instanceof ModalResolveEvent) {
+      	window.location.href = environment.slug.reservedArea;
+      }
+      */
+    });
   };
 
   _proto.setCategory = function setCategory(category, event) {
@@ -8439,6 +8546,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

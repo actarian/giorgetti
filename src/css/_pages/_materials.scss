@@ -354,3 +354,211 @@
 		}
 	}
 }
+
+// modal
+
+.modal--materials {
+	position: relative;
+	background: $background;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	.modal__picture {
+		position: relative;
+		background: $background-tertiary;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #000000;
+			opacity: 0.03;
+		}
+
+		&>img {
+			object-fit: cover;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.group--navs {
+		position: absolute;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		bottom: 0;
+		z-index: 1;
+
+		.btn--prev,
+		.btn--next {
+			@include btn(rgba(255, 255, 255, 0.2), $foreground, $background, $foreground, rgba(255, 255, 255, 0.4), #232221);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 80px;
+			padding: 23px 17px;
+			font-size: 16px;
+			line-height: 1;
+			font-size: 16px;
+			line-height: 1.1;
+			text-align: center;
+			text-transform: uppercase;
+			letter-spacing: 0.043em;
+			opacity: 0.2;
+
+			svg {
+				width: 46px;
+				height: 13px;
+				fill: currentColor;
+			}
+
+			&.active {
+				opacity: 1;
+			}
+
+			&:not(.active) {
+				pointer-events: none;
+			}
+		}
+	}
+
+	.modal__content {
+		position: relative;
+		display: block;
+	}
+
+	.modal__header {
+		position: sticky;
+		z-index: 1;
+		padding: 10px;
+		width: 100%;
+		height: 50px;
+		top: 0;
+		margin-bottom: -50px;
+	}
+
+	.modal__inner {
+		display: block;
+		padding-top: 50px;
+		padding-bottom: 80px;
+	}
+
+	@include media-up(md) {
+		justify-content: space-between;
+		align-items: stretch;
+		max-width: calc(100vh - 320px);
+		max-height: calc(100vh - 200px);
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding-bottom: 10px;
+		@include scrollbar();
+
+		.modal__picture {
+			@include aspect-clip(1, 1);
+		}
+	}
+
+	@include media-down(sm) {
+		flex-direction: column;
+		max-height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding-bottom: 60px;
+		@include scrollbar();
+
+		.modal__picture {
+			@include aspect-clip(1, 1);
+		}
+	}
+
+	/*
+	<div class="group--headline">
+		<div class="title"><span class="collection" [innerHTML]="item.collection"></span> | <span class="name" [innerHTML]="item.title"></span></div>
+		<div class="code"><span *if="item.subcategory">Cat. <span [innerHTML]="item.subcategory"></span> | </span><span [innerHTML]="item.code"></span></div>
+	</div>
+	<div class="description" [innerHTML]="item.description"></div>
+	<div class="finish" [innerHTML]="item.finish"></div>
+	<div class="icons" [innerHTML]="item.icons"></div>
+	<div class="abstract" [innerHTML]="item.abstract"></div>
+	*/
+
+	.group--headline {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px 0;
+	}
+
+	.title,
+	.code {
+		font-size: 19px;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		text-align: left;
+		color: #000000;
+	}
+
+	.collection,
+	.category {
+		font-family: $font-secondary;
+		font-size: 24px;
+		text-transform: uppercase;
+	}
+
+	.description,
+	.finish {
+		margin-bottom: 25px;
+		line-height: 1.2;
+		text-transform: uppercase;
+
+		p {
+			margin: 0 0 5px 0;
+			padding: 0;
+		}
+	}
+
+	.listing--icons {
+		padding: 20px 0;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		font-size: 0;
+
+		&>.listing__item {
+			margin-right: 8px;
+		}
+
+		svg {
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	.abstract {
+		margin-bottom: 25px;
+		font-size: 16px;
+	}
+
+	.btn--close {
+		@include btn(rgba(255, 255, 255, 0.2), $foreground, $background, $foreground, rgba(255, 255, 255, 0.4), #232221);
+		line-height: 1;
+		width: 40px;
+		height: 40px;
+		margin-top: -10px;
+		margin-right: -10px;
+		padding: 0;
+
+		svg {
+			width: 24px;
+			height: 24px;
+			line-height: 1;
+			fill: currentColor;
+		}
+	}
+}

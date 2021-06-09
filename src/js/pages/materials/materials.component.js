@@ -6,6 +6,8 @@ import { FilterMode } from '../../common/filter/filter-item';
 import { FilterService } from '../../common/filter/filter.service';
 import { FormService } from '../../common/forms/form.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { ModalService } from '../../common/modal/modal.service';
+import { environment } from '../../environment';
 import { MaterialsService } from './materials.service';
 
 export class MaterialsComponent extends Component {
@@ -40,7 +42,7 @@ export class MaterialsComponent extends Component {
 
 	load$() {
 		return combineLatest([
-			MaterialsService.all$(),
+			MaterialsService.fake$(),
 			MaterialsService.filters$(),
 		]);
 	}
@@ -117,6 +119,19 @@ export class MaterialsComponent extends Component {
 		}
 		*/
 		this.pushChanges();
+	}
+
+	onOpen(item, items) {
+		ModalService.open$({ src: environment.template.modal.materialsModal, data: { item, items } }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('MaterialComponent.onOpen', event);
+			/*
+			if (event instanceof ModalResolveEvent) {
+				window.location.href = environment.slug.reservedArea;
+			}
+			*/
+		});
 	}
 
 	setCategory(category, event) {

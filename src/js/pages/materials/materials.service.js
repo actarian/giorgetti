@@ -1,4 +1,5 @@
-// import { map } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
 export class MaterialsService {
@@ -11,13 +12,19 @@ export class MaterialsService {
 		return ApiService.get$('/materials/filters.json');
 	}
 
-	/*
 	static fake$() {
-		return MaterialsService.all$().pipe(
-			map(items => {
+		return combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(
+			map(data => {
+				const items = data[0];
+				const items_ = data[1];
 				items.forEach((item, i) => {
-					item.collection = MaterialsService.toTitleCase(item.collection);
-					item.title = MaterialsService.toTitleCase(item.title);
+					const item_ = items_.find(x => x.id === item.id);
+					if (item_) {
+						item.image = item_.image.replace(/\s/g, '_').toLowerCase();
+						item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
+					}
+					// item.collection = MaterialsService.toTitleCase(item.collection);
+					// item.title = MaterialsService.toTitleCase(item.title);
 				});
 				console.log(JSON.stringify(items));
 				return items;
@@ -31,6 +38,5 @@ export class MaterialsService {
 		let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
 		return sentence.replace(wordPattern, capitalize);
 	}
-	*/
 
 }

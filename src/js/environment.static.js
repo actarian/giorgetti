@@ -18,6 +18,7 @@ export const environmentStatic = {
 		modal: {
 			userModal: '/giorgetti/user-modal.html',
 			projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
+			materialsModal: '/giorgetti/materials-modal.html',
 		}
 	},
 	googleMaps: {
