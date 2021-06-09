@@ -22,6 +22,19 @@
       { "value": 17, "label": "Complementi atmosphere" }
     ]
   },
+  "ambience": {
+    "label": "Ambiente",
+    "mode": "select",
+    "options": [
+      { "value": 1, "label": "Living" },
+      { "value": 2, "label": "Dining" },
+      { "value": 3, "label": "Home office" },
+      { "value": 4, "label": "Hall-entrance" },
+      { "value": 5, "label": "Bedroom" },
+      { "value": 6, "label": "Kitchen" },
+      { "value": 7, "label": "Pool and garden" }
+    ]
+  },
   "material": {
     "label": "Materiale",
     "mode": "select",

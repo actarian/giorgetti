@@ -93,14 +93,14 @@ export class ControlCustomSelectComponent extends ControlComponent {
 					return item ? item.name : '';
 				}).join(', ');
 			} else {
-				return 'select'; // LabelPipe.transform('select');
+				return this.select || 'select'; // LabelPipe.transform('select');
 			}
 		} else {
-			const item = items.find(x => x.id === value || x.name === value);
+			const item = value ? items.find(x => x.id === value || x.name === value) : null;
 			if (item) {
 				return item.name;
 			} else {
-				return 'select'; // LabelPipe.transform('select');
+				return this.select || 'select'; // LabelPipe.transform('select');
 			}
 		}
 	}
@@ -121,7 +121,7 @@ export class ControlCustomSelectComponent extends ControlComponent {
 ControlCustomSelectComponent.meta = {
 	selector: '[control-custom-select]',
 	outputs: ['change'],
-	inputs: ['control', 'label', 'multiple'],
+	inputs: ['control', 'label', 'multiple', 'select'],
 	template: /* html */ `
 		<div class="group--form--select" [class]="{ required: control.validators.length, multiple: isMultiple }" [dropdown]="dropdownId" (dropped)="onDropped($event)">
 			<label [innerHTML]="label"></label>

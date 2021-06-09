@@ -1,5 +1,9 @@
 [
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -22,6 +26,10 @@
     "title": "50250"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -44,6 +52,10 @@
     "title": "Adam <em>panca</em>"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -66,6 +78,10 @@
     "title": "Ala"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -88,6 +104,10 @@
     "title": "Alexa"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -110,6 +130,10 @@
     "title": "Alina"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -132,6 +156,10 @@
     "title": "All Around"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -154,6 +182,10 @@
     "title": "Arabella"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -176,6 +208,10 @@
     "title": "Aura"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -198,6 +234,10 @@
     "title": "Baron"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -220,6 +260,10 @@
     "title": "Bicolette"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -242,6 +286,10 @@
     "title": "Caddy"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -264,6 +312,10 @@
     "title": "Clip"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -286,6 +338,10 @@
     "title": "Cozy"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -308,6 +364,10 @@
     "title": "Denny"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -330,6 +390,10 @@
     "title": "Diana"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -352,6 +416,10 @@
     "title": "Dora"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -374,6 +442,10 @@
     "title": "Dry"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -396,6 +468,10 @@
     "title": "Elisa"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -418,6 +494,10 @@
     "title": "Eva"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -440,6 +520,10 @@
     "title": "Galet <em>pouf</em>"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -462,6 +546,10 @@
     "title": "Genius"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -484,6 +572,10 @@
     "title": "Giorgina"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -506,6 +598,10 @@
     "title": "Grand Tour"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -528,6 +624,10 @@
     "title": "Hug"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -550,6 +650,10 @@
     "title": "Ibla"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -572,6 +676,10 @@
     "title": "Ina"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -594,6 +702,10 @@
     "title": "Janet"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -616,6 +728,10 @@
     "title": "Lady"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -638,6 +754,10 @@
     "title": "Magica"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -660,6 +780,10 @@
     "title": "Margot"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -682,6 +806,10 @@
     "title": "Mobius 2011"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -704,6 +832,10 @@
     "title": "Mobius 2013"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -726,6 +858,10 @@
     "title": "Mobius 2014"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -748,6 +884,10 @@
     "title": "Mobius 2016"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -770,6 +910,10 @@
     "title": "Move"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -792,6 +936,10 @@
     "title": "Musa"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -814,6 +962,10 @@
     "title": "My"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -836,6 +988,10 @@
     "title": "Norah"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -858,6 +1014,10 @@
     "title": "Normal"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -880,6 +1040,10 @@
     "title": "Ode"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -902,6 +1066,10 @@
     "title": "Opus"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -924,6 +1092,10 @@
     "title": "Pamina"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -946,6 +1118,10 @@
     "title": "Progetti"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -968,6 +1144,10 @@
     "title": "Progetti Blossom"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -990,6 +1170,10 @@
     "title": "Progetti Fashion"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1012,6 +1196,10 @@
     "title": "Progetti Sense"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1034,6 +1222,10 @@
     "title": "Ripple"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1056,6 +1248,10 @@
     "title": "Roi"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1078,6 +1274,10 @@
     "title": "Sandy"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1100,6 +1300,10 @@
     "title": "Saphir e Topaze"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1122,6 +1326,10 @@
     "title": "Selectus"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1144,6 +1352,10 @@
     "title": "Selene"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1166,6 +1378,10 @@
     "title": "Sinbad"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1188,6 +1404,10 @@
     "title": "Spring"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1210,6 +1430,10 @@
     "title": "Springer"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1232,6 +1456,10 @@
     "title": "Swing"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1254,6 +1482,10 @@
     "title": "Teodora"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1276,6 +1508,10 @@
     "title": "Tiche"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1298,6 +1534,10 @@
     "title": "Tilt"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1320,6 +1560,10 @@
     "title": "Venus"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1342,6 +1586,10 @@
     "title": "Adam <em>divano</em>"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1364,6 +1612,10 @@
     "title": "Ago"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1386,6 +1638,10 @@
     "title": "Aton <em>divano</em>"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1408,6 +1664,10 @@
     "title": "Dhow"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1430,6 +1690,10 @@
     "title": "Drive"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1452,6 +1716,10 @@
     "title": "Fabula"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1474,6 +1742,10 @@
     "title": "Galet <em>divanetto</em>"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1496,6 +1768,10 @@
     "title": "Martini"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1518,6 +1794,10 @@
     "title": "Skyline <em>divano modulare</em>"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1540,6 +1820,10 @@
     "title": "Solemyidae"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1562,6 +1846,10 @@
     "title": "Tamino"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1584,6 +1872,10 @@
     "title": "Urban"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1606,6 +1898,10 @@
     "title": "Vittoria"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1628,6 +1924,10 @@
     "title": "Adam <em>letto</em>"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1650,6 +1950,10 @@
     "title": "Altea"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1672,6 +1976,10 @@
     "title": "Corium <em>Letto matrimoniale</em>"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1694,6 +2002,10 @@
     "title": "Frame <em>letto matrimoniale</em>"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1716,6 +2028,10 @@
     "title": "Hypnos"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1738,6 +2054,10 @@
     "title": "Ira"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1760,6 +2080,10 @@
     "title": "Kao"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1782,6 +2106,10 @@
     "title": "Pegaso"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1804,6 +2132,10 @@
     "title": "Rea"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1826,6 +2158,10 @@
     "title": "Archibald"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1848,6 +2184,10 @@
     "title": "Corium <em>Comodino</em>"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1870,6 +2210,10 @@
     "title": "Frame <em>comodino</em>"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1892,6 +2236,10 @@
     "title": "Mea"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1914,6 +2262,10 @@
     "title": "Morfeo"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1936,6 +2288,10 @@
     "title": "Oli 2016"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1958,6 +2314,10 @@
     "title": "Romeo"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1980,6 +2340,10 @@
     "title": "Syn"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2002,6 +2366,10 @@
     "title": "Ago <em>tavolo</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2024,6 +2392,10 @@
     "title": "Amadeus"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2046,6 +2418,10 @@
     "title": "Anteo"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2068,6 +2444,10 @@
     "title": "Bigwig"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2090,6 +2470,10 @@
     "title": "Blade"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2112,6 +2496,10 @@
     "title": "Disegual <em>tavolo</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2134,6 +2522,10 @@
     "title": "Erasmo <em>Tavolo rotondo</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2156,6 +2548,10 @@
     "title": "Fang"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2178,6 +2574,10 @@
     "title": "Gordon"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2200,6 +2600,10 @@
     "title": "Memos"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2222,6 +2626,10 @@
     "title": "Mizar"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2244,6 +2652,10 @@
     "title": "Alma"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2266,6 +2678,10 @@
     "title": "Erasmo <em>scrivania</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2288,6 +2704,10 @@
     "title": "Ion"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2310,6 +2730,10 @@
     "title": "Juliet"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2332,6 +2756,10 @@
     "title": "Mogul"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2354,6 +2782,10 @@
     "title": "Scriptor"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2376,6 +2808,10 @@
     "title": "Studium"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2398,6 +2834,10 @@
     "title": "Tenet"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2420,6 +2860,10 @@
     "title": "Tycoon"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2442,6 +2886,10 @@
     "title": "Zeno"
   },
   {
+    "category": {
+      "id": 5,
+      "name": "Divani"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2464,6 +2912,10 @@
     "title": "Ago"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2486,6 +2938,10 @@
     "title": "Amiral <em>tavolino</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2508,6 +2964,10 @@
     "title": "Athene"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2530,6 +2990,10 @@
     "title": "Aton <em>tavolino</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2552,6 +3016,10 @@
     "title": "Blend"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2574,6 +3042,10 @@
     "title": "Dual"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2596,6 +3068,10 @@
     "title": "Eos"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2618,6 +3094,10 @@
     "title": "Fit"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2640,6 +3120,10 @@
     "title": "Galet <em>tavolino</em>"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2662,6 +3146,10 @@
     "title": "Grand Tour"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2684,6 +3172,10 @@
     "title": "Ling"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2706,6 +3198,10 @@
     "title": "Magica"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2728,6 +3224,10 @@
     "title": "Oti"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2750,6 +3250,10 @@
     "title": "Romeo"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2772,6 +3276,10 @@
     "title": "Round"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2794,6 +3302,10 @@
     "title": "Scaleno"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2816,6 +3328,10 @@
     "title": "Skyline <em>tavolino</em>"
   },
   {
+    "category": {
+      "id": 8,
+      "name": "Scrittoi e vanity"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2838,6 +3354,10 @@
     "title": "Too"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2860,6 +3380,10 @@
     "title": "Aei"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2882,6 +3406,10 @@
     "title": "Aei"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2904,6 +3432,10 @@
     "title": "Aei"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2926,6 +3458,10 @@
     "title": "Alfred"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2948,6 +3484,10 @@
     "title": "Amiral <em>libreria</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2970,6 +3510,10 @@
     "title": "Amiral <em>specchiera</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2992,6 +3536,10 @@
     "title": "Bull"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3014,6 +3562,10 @@
     "title": "Charlotte"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3036,6 +3588,10 @@
     "title": "Clair de Lune"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3058,6 +3614,10 @@
     "title": "Corium <em>cassettiera</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3080,6 +3640,10 @@
     "title": "Dia"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3102,6 +3666,10 @@
     "title": "Domus"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3124,6 +3692,10 @@
     "title": "Eon"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3146,6 +3718,10 @@
     "title": "Eon Buffet"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3168,6 +3744,10 @@
     "title": "Frame <em>cassettiera</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3190,6 +3770,10 @@
     "title": "Frame <em>mobile contenitore</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3212,6 +3796,10 @@
     "title": "Frame <em>servomuto</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3234,6 +3822,10 @@
     "title": "Frame <em>specchiera</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3256,6 +3848,10 @@
     "title": "Host"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3278,6 +3874,10 @@
     "title": "Houdini"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3300,6 +3900,10 @@
     "title": "Ino"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3322,6 +3926,10 @@
     "title": "Kiri"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3344,6 +3952,10 @@
     "title": "Lia"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3366,6 +3978,10 @@
     "title": "Miyabi"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3388,6 +4004,10 @@
     "title": "Moore"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3410,6 +4030,10 @@
     "title": "Moore 2017"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3432,6 +4056,10 @@
     "title": "Myo"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3454,6 +4082,10 @@
     "title": "Narcisse"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3476,6 +4108,10 @@
     "title": "Nea"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3498,6 +4134,10 @@
     "title": "Nyn"
   },
   {
+    "category": {
+      "id": 11,
+      "name": "Letti"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3520,6 +4160,10 @@
     "title": "Oli 2016"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3542,6 +4186,10 @@
     "title": "Origami"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3564,6 +4212,10 @@
     "title": "Oro"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3586,6 +4238,10 @@
     "title": "Oscar"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3608,6 +4264,10 @@
     "title": "Reiwa"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3630,6 +4290,10 @@
     "title": "Rift"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3652,6 +4316,10 @@
     "title": "Skyline <em>cassettiera</em>"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3674,6 +4342,10 @@
     "title": "The cabinet of memories"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3696,6 +4368,10 @@
     "title": "Town"
   },
   {
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3718,6 +4394,10 @@
     "title": "Venus"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3740,6 +4420,10 @@
     "title": "Yang"
   },
   {
+    "category": {
+      "id": 15,
+      "name": "Cucine e accessori"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3762,6 +4446,10 @@
     "title": "GK.01"
   },
   {
+    "category": {
+      "id": 15,
+      "name": "Cucine e accessori"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3784,6 +4472,10 @@
     "title": "GK.02"
   },
   {
+    "category": {
+      "id": 15,
+      "name": "Cucine e accessori"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3806,6 +4498,10 @@
     "title": "GK.03"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3828,6 +4524,10 @@
     "title": "Chisel"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3850,6 +4550,10 @@
     "title": "Cross over"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3872,6 +4576,10 @@
     "title": "Doora"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3894,6 +4602,10 @@
     "title": "Edge"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3916,6 +4628,10 @@
     "title": "Geometric"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3938,6 +4654,10 @@
     "title": "Gradient Reflex"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3960,6 +4680,10 @@
     "title": "Hauban"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3982,6 +4706,10 @@
     "title": "Kaleido"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4004,6 +4732,10 @@
     "title": "Lolla"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4026,6 +4758,10 @@
     "title": "Match"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4048,6 +4784,10 @@
     "title": "Miro"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4070,6 +4810,10 @@
     "title": "Modular"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4092,6 +4836,10 @@
     "title": "Moonshadow"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4114,6 +4862,10 @@
     "title": "Mosaic"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4136,6 +4888,10 @@
     "title": "Perspective"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4158,6 +4914,10 @@
     "title": "Ribbon"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4180,6 +4940,10 @@
     "title": "Shades"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4202,6 +4966,10 @@
     "title": "Shighera"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4224,6 +4992,10 @@
     "title": "Stitch"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4246,6 +5018,10 @@
     "title": "Afo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4268,6 +5044,10 @@
     "title": "Kendama"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4290,6 +5070,10 @@
     "title": "Leaf"
   },
   {
+    "category": {
+      "id": 9,
+      "name": "Contenitori e librerie"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4312,6 +5096,10 @@
     "title": "Myo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4334,6 +5122,10 @@
     "title": "Nao"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4356,6 +5148,10 @@
     "title": "On Off"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4378,6 +5174,10 @@
     "title": "Shield"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4400,6 +5200,10 @@
     "title": "Sliver"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4422,6 +5226,10 @@
     "title": "Spaziotempo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4444,6 +5252,10 @@
     "title": "Swords"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4466,6 +5278,10 @@
     "title": "Amazonia"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4488,6 +5304,10 @@
     "title": "Ara"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4510,6 +5330,10 @@
     "title": "Bond"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4532,6 +5356,10 @@
     "title": "Clop"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4554,6 +5382,10 @@
     "title": "Corallo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4576,6 +5408,10 @@
     "title": "Cuckoo Clock"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4598,6 +5434,10 @@
     "title": "Godron"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4620,6 +5460,10 @@
     "title": "Haiiro - Hanami"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4642,6 +5486,10 @@
     "title": "Leggio"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4664,6 +5512,10 @@
     "title": "Shibori"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4686,6 +5538,10 @@
     "title": "Summa"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4708,6 +5564,10 @@
     "title": "Amorfo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4730,6 +5590,10 @@
     "title": "Area"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4752,6 +5616,10 @@
     "title": "Atena"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4774,6 +5642,10 @@
     "title": "Bar Tender"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4796,6 +5668,10 @@
     "title": "Blanc Bleu"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4818,6 +5694,10 @@
     "title": "Bubbles"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4840,6 +5720,10 @@
     "title": "Buds"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4862,6 +5746,10 @@
     "title": "Carina"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4884,6 +5772,10 @@
     "title": "Centro"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4906,6 +5798,10 @@
     "title": "Ciano"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4928,6 +5824,10 @@
     "title": "Clina"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4950,6 +5850,10 @@
     "title": "Crea"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4972,6 +5876,10 @@
     "title": "Crystal Stone"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4994,6 +5902,10 @@
     "title": "Desk Organiser Set"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5016,6 +5928,10 @@
     "title": "Flat"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5038,6 +5954,10 @@
     "title": "Hineri"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5060,6 +5980,10 @@
     "title": "Inside"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5082,6 +6006,10 @@
     "title": "Koi"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5104,6 +6032,10 @@
     "title": "Liquid Bark"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5126,6 +6058,10 @@
     "title": "Mila"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5148,6 +6084,10 @@
     "title": "Miu"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5170,6 +6110,10 @@
     "title": "Orbis"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5192,6 +6136,10 @@
     "title": "Philosophy"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5214,6 +6162,10 @@
     "title": "Ply"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5236,6 +6188,10 @@
     "title": "Rocco"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5258,6 +6214,10 @@
     "title": "Roman"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5280,6 +6240,10 @@
     "title": "Shine"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5302,6 +6266,10 @@
     "title": "Tube"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5324,6 +6292,10 @@
     "title": "Vanity"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5346,6 +6318,10 @@
     "title": "Wave"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5368,6 +6344,10 @@
     "title": "Woodstone"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5390,6 +6370,10 @@
     "title": "90° Minuto"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5412,6 +6396,10 @@
     "title": "Ali"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5434,6 +6422,10 @@
     "title": "Apollo"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5456,6 +6448,10 @@
     "title": "Bau'house"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5478,6 +6474,10 @@
     "title": "Centotto"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5500,6 +6500,10 @@
     "title": "Check-Mate"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5522,6 +6526,10 @@
     "title": "Fa'i'"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5544,6 +6552,10 @@
     "title": "Decorazione tessile"
   },
   {
+    "category": {
+      "id": 17,
+      "name": "Complementi atmosphere"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5566,6 +6578,10 @@
     "title": "Decorazione tessile Agnona X Giorgetti"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5588,6 +6604,10 @@
     "title": "Loop"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5610,6 +6630,10 @@
     "title": "Gea <em>Sedia</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5632,6 +6656,10 @@
     "title": "Gea <em>Poltroncina</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5654,6 +6682,10 @@
     "title": "Apsara <em>Modular system</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5676,6 +6708,10 @@
     "title": "Gea <em>Divano</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5698,6 +6734,10 @@
     "title": "Gea <em>Lettino</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5720,6 +6760,10 @@
     "title": "Apsara <em>Low Table</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5742,6 +6786,10 @@
     "title": "Break"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5764,6 +6812,10 @@
     "title": "Gea <em>Tavolo</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5786,6 +6838,10 @@
     "title": "Gea <em>Tavolino</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5808,6 +6864,10 @@
     "title": "Gea <em>Vassoio</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5830,6 +6890,10 @@
     "title": "Gea <em>Parasole</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -5852,6 +6916,10 @@
     "title": "Gea <em>Lampada</em>"
   },
   {
+    "category": {
+      "id": 16,
+      "name": "Open air"
+    },
     "ambience": {
       "id": 1,
       "name": "Living"

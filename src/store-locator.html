@@ -38,10 +38,10 @@
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.country" label="Paese"></div>
+						<div control-custom-select [control]="controls.country" label="Paese" select="Paese"></div>
 					</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.category" label="Tipologia"></div>
+						<div control-custom-select [control]="controls.category" label="Tipologia" select="Tipologia"></div>
 					</div>
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
@@ -65,7 +65,7 @@
 		</div>
 	</div>
 
-	<section class="section--store-locator">
+	<div class="section--store-locator">
 		<div class="container">
 			<!-- spinner -->
 			<div class="spinner" *if="items.length == 0"></div>
@@ -95,7 +95,7 @@
 				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
 			</div>
 		</div>
-	</section>
+	</div>
 
 </main>
 <!-- @@close-->

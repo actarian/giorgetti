@@ -12,6 +12,29 @@
       { "value": 7, "label": "Pool and garden" }
     ]
   },
+  "category": {
+    "label": "Tipologia",
+    "mode": "select",
+    "options": [
+      { "value": 1, "label": "Sedie e sgabelli" },
+      { "value": 2, "label": "Poltrone" },
+      { "value": 3, "label": "Poltrone da ufficio" },
+      { "value": 4, "label": "Pouf e panche" },
+      { "value": 5, "label": "Divani" },
+      { "value": 6, "label": "Tavolini e carrelli" },
+      { "value": 7, "label": "Tavoli" },
+      { "value": 8, "label": "Scrittoi e vanity" },
+      { "value": 9, "label": "Contenitori e librerie" },
+      { "value": 10, "label": "Sistemi" },
+      { "value": 11, "label": "Letti" },
+      { "value": 12, "label": "Comodini" },
+      { "value": 13, "label": "Armadi e cabine" },
+      { "value": 14, "label": "Complementi" },
+      { "value": 15, "label": "Cucine e accessori" },
+      { "value": 16, "label": "Open air" },
+      { "value": 17, "label": "Complementi atmosphere" }
+    ]
+  },
   "material": {
     "label": "Materiale",
     "mode": "select",

@@ -1,6 +1,13 @@
 <!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
 <!-- @@block = main-->
 
+<!--
+	!!! IMPORTANT
+	to apply a filter by category use ambienceId parameter
+	example:
+
+	<main class="main" ambience [ambienceId]="1">
+-->
 <main class="main" ambience>
 
 	<div class="section--breadcrumb">
@@ -116,13 +123,16 @@
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__select" *if="!ambienceId">
-						<div control-custom-select [control]="controls.ambience" label="Tipologia"></div>
+						<div control-custom-select [control]="controls.ambience" label="Ambiente" select="Ambiente"></div>
 					</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.material" label="Materiale"></div>
+						<div control-custom-select [control]="controls.category" label="Categoria" select="Categoria"></div>
+					</div>
+					<div class="filters__select" *if="false">
+						<div control-custom-select [control]="controls.material" label="Materiale" select="Materiale"></div>
 					</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.designer" label="Designer"></div>
+						<div control-custom-select [control]="controls.designer" label="Designer" select="Designer"></div>
 					</div>
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
@@ -135,7 +145,7 @@
 		</div>
 	</div>
 
-	<section class="section--projects">
+	<div class="section--projects">
 		<div class="container">
 			<!-- spinner -->
 			<div class="spinner" *if="items.length == 0"></div>
@@ -156,7 +166,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 
 </main>
 <!-- @@close-->

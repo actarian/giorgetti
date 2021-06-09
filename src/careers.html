@@ -1,0 +1,98 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<script>
+window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
+
+</script>
+
+<main class="main" careers>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Lavora con noi</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--intro-sm">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Careers</div>
+					<div class="description">
+						<p>Lavorare per Giorgetti significa creare idee, apportare le proprie capacità in un contesto giovane e dinamico in cui le prerogative fondamentali sono professionalità e spirito di squadra. Se vuoi conoscerci più da vicino e valutare nuove opportunità professionali, invia il tuo Curriculum Vitae. I cv privi del consenso per il trattamento dei dati personali ai sensi della legge 2016/679 “GDPR”. non saranno presi in considerazione.</p>
+					</div>
+					<div class="group--cta">
+						<a href="/giorgetti/careers.html#work-with-us" class="btn--more" (click)="scrollTo('#work-with-us', $event)">Compila il form</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--text">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="title">Siamo spiacenti ma al momento non ci sono posizioni aperte.</div>
+					<div class="description">
+						<p>
+							In ogni caso, puoi comunque inviarci la tua candidatura spontanea nel form sottostante.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--form" id="work-with-us">
+		<div class="container" *if="!success">
+			<div class="title">Lavora con noi</div>
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<form class="form" [formGroup]="form" (submit)="onSubmit($event)" name="form" role="form" novalidate autocomplete="off">
+						<div class="listing--form-compact">
+							<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
+							<div control-text [control]="controls.firstName" label="Nome"></div>
+							<div control-text [control]="controls.lastName" label="Cognome"></div>
+							<div control-text [control]="controls.email" label="Email"></div>
+							<div control-text [control]="controls.telephone" label="Telefono"></div>
+							<div control-custom-select [control]="controls.country" label="Paese"></div>
+							<div control-text [control]="controls.city" label="Città"></div>
+							<div control-custom-select [control]="controls.domain" label="Area di interesse"></div>
+							<div control-file [control]="controls.cv" label="Curriculum Vitae"></div>
+							<div control-textarea [control]="controls.message" label="Messaggio"></div>
+							<div class="full" control-checkbox [control]="controls.privacy" label="Ho letto l&amp;#39;&amp;lt;a href=&amp;quot;/privacy/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa&amp;lt;/a&gt; e do il consenso al trattamento del dato"></div>
+						</div>
+						<div class="group--error" *if="error">
+							<span class="status-code" [innerHTML]="error.statusCode"></span>
+							<span class="status-message" [innerHTML]="error.statusMessage"></span>
+							<span class="friendly-message" [innerHTML]="error.friendlyMessage"></span>
+						</div>
+						<div class="group--cta">
+							<button type="submit" class="btn--submit" data-title="Invia" *if="!form.submitted">
+								<span>Invia</span>
+							</button>
+							<button type="submit" class="btn--submit" data-title="Inviato!" *if="form.submitted">
+								<span>Inviato!</span>
+							</button>
+						</div>
+						<test-component [form]="form" (test)="test($event)" (reset)="reset($event)"></test-component>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="container" *if="success">
+			<div class="title">Richiesta Inviata</div>
+			<div class="abstract">Grazie per averci contattato. La tua richiesta è stata inviata correttamente.</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

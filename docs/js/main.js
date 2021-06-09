@@ -1415,17 +1415,17 @@ _defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = 
           return item ? item.name : '';
         }).join(', ');
       } else {
-        return 'select'; // LabelPipe.transform('select');
+        return this.select || 'select'; // LabelPipe.transform('select');
       }
     } else {
-      var item = items.find(function (x) {
+      var item = value ? items.find(function (x) {
         return x.id === value || x.name === value;
-      });
+      }) : null;
 
       if (item) {
         return item.name;
       } else {
-        return 'select'; // LabelPipe.transform('select');
+        return this.select || 'select'; // LabelPipe.transform('select');
       }
     }
   };
@@ -1451,7 +1451,7 @@ _defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = 
 ControlCustomSelectComponent.meta = {
   selector: '[control-custom-select]',
   outputs: ['change'],
-  inputs: ['control', 'label', 'multiple'],
+  inputs: ['control', 'label', 'multiple', 'select'],
   template:
   /* html */
   "\n\t\t<div class=\"group--form--select\" [class]=\"{ required: control.validators.length, multiple: isMultiple }\" [dropdown]=\"dropdownId\" (dropped)=\"onDropped($event)\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--custom-select\" [innerHTML]=\"getLabel() | label\"></span>\n\t\t\t<svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [dropdown-item]=\"dropdownId\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\" [class]=\"{ multiple: isMultiple }\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of control.options\">\n\t\t\t\t\t<span [class]=\"{ active: hasOption(item) }\" [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
@@ -2236,7 +2236,30 @@ SlugPipe.meta = {
 SwiperDirective.meta = {
   selector: '[swiper]',
   inputs: ['consumer']
-};var ID = 0;
+};// <script src='https://gruppoconcorde-cdn.thron.com/shared/ce/bootstrap/1/scripts/embeds-min.js'></script>
+
+var ThronService = /*#__PURE__*/function () {
+  function ThronService() {}
+
+  ThronService.thron$ = function thron$() {
+    var thron = window.THRONContentExperience || window.THRONPlayer;
+
+    if (thron) {
+      return rxjs.of(thron);
+    } else {
+      var script = document.createElement('script');
+      script.setAttribute('type', 'text/javascript');
+      script.setAttribute('src', 'https://gruppoconcorde-cdn.thron.com/shared/ce/bootstrap/1/scripts/embeds-min.js');
+      var loaded$ = rxjs.fromEvent(script, 'load').pipe( // tap(event => console.log(event, window.THRONContentExperience || window.THRONPlayer)),
+      operators.map(function (event) {
+        return window.THRONContentExperience || window.THRONPlayer;
+      }), operators.shareReplay(1));
+      return document.head.appendChild(script) && loaded$;
+    }
+  };
+
+  return ThronService;
+}();var ID = 0;
 var ThronComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ThronComponent, _Component);
 
@@ -2258,52 +2281,59 @@ var ThronComponent = /*#__PURE__*/function (_Component) {
 
   _proto.onInit = function onInit() {
     // console.log('ThronComponent.onInit');
-    var THRON = window.THRONContentExperience || window.THRONPlayer;
+    this.init$().pipe(operators.first()).subscribe();
+  };
 
-    if (!THRON) {
-      return;
-    } // console.log('THRONContentExperience', window.THRONContentExperience, 'THRONPlayer', window.THRONPlayer);
+  _proto.init$ = function init$() {
+    var _this2 = this;
+
+    return ThronService.thron$().pipe(operators.tap(function (THRON) {
+      // const THRON = window.THRONContentExperience || window.THRONPlayer;
+      if (!THRON) {
+        return;
+      } // console.log('THRONContentExperience', window.THRONContentExperience, 'THRONPlayer', window.THRONPlayer);
 
 
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
+      var _getContext = rxcomp.getContext(_this2),
+          node = _getContext.node;
 
-    var target = this.target = node.querySelector('.video > .thron');
-    var id = target.id = "thron-" + ++ID;
-    var media = this.thron;
+      var target = _this2.target = node.querySelector('.video > .thron');
+      var id = target.id = "thron-" + ++ID;
+      var media = _this2.thron;
 
-    if (media.indexOf('pkey=') === -1) {
-      var splitted = media.split('/');
-      var clientId = splitted[6];
-      var xcontentId = splitted[7];
-      var pkey = splitted[8];
-      media = "https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=" + clientId + "&xcontentId=" + xcontentId + "&pkey=" + pkey;
-    }
+      if (media.indexOf('pkey=') === -1) {
+        var splitted = media.split('/');
+        var clientId = splitted[6];
+        var xcontentId = splitted[7];
+        var pkey = splitted[8];
+        media = "https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=" + clientId + "&xcontentId=" + xcontentId + "&pkey=" + pkey;
+      }
 
-    var controls = this.controls = node.hasAttribute('controls') ? true : false,
-        loop = this.loop = node.hasAttribute('loop') ? true : false,
-        autoplay = this.autoplay = node.hasAttribute('autoplay') ? true : false;
-    var player = this.player = THRON(id, {
-      media: media,
-      loop: loop,
-      autoplay: autoplay,
-      muted: !controls,
-      displayLinked: 'close',
-      noSkin: !controls // lockBitrate: 'max',
+      var controls = _this2.controls = node.hasAttribute('controls') ? true : false,
+          loop = _this2.loop = node.hasAttribute('loop') ? true : false,
+          autoplay = _this2.autoplay = node.hasAttribute('autoplay') ? true : false;
+      var player = _this2.player = THRON(id, {
+        media: media,
+        loop: loop,
+        autoplay: autoplay,
+        muted: !controls,
+        displayLinked: 'close',
+        noSkin: !controls // lockBitrate: 'max',
 
-    });
-    this.onReady = this.onReady.bind(this);
-    this.onCanPlay = this.onCanPlay.bind(this);
-    this.onPlaying = this.onPlaying.bind(this);
-    this.onPlay = this.onPlay.bind(this);
-    this.onPause = this.onPause.bind(this);
-    this.onComplete = this.onComplete.bind(this);
-    player.on('ready', this.onReady);
-    player.on('canPlay', this.onCanPlay);
-    player.on('playing', this.onPlaying);
-    player.on('play', this.onPlay);
-    player.on('pause', this.onPause);
-    player.on('complete', this.onComplete);
+      });
+      _this2.onReady = _this2.onReady.bind(_this2);
+      _this2.onCanPlay = _this2.onCanPlay.bind(_this2);
+      _this2.onPlaying = _this2.onPlaying.bind(_this2);
+      _this2.onPlay = _this2.onPlay.bind(_this2);
+      _this2.onPause = _this2.onPause.bind(_this2);
+      _this2.onComplete = _this2.onComplete.bind(_this2);
+      player.on('ready', _this2.onReady);
+      player.on('canPlay', _this2.onCanPlay);
+      player.on('playing', _this2.onPlaying);
+      player.on('play', _this2.onPlay);
+      player.on('pause', _this2.onPause);
+      player.on('complete', _this2.onComplete);
+    }));
   };
 
   _proto.onReady = function onReady() {
@@ -2875,6 +2905,7 @@ var FilterItem = /*#__PURE__*/function () {
     this.filters = {};
     var form = this.form = new rxcompForm.FormGroup({
       ambience: new rxcompForm.FormControl(null),
+      category: new rxcompForm.FormControl(null),
       material: new rxcompForm.FormControl(null),
       designer: new rxcompForm.FormControl(null),
       search: new rxcompForm.FormControl(null)
@@ -2883,6 +2914,8 @@ var FilterItem = /*#__PURE__*/function () {
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       // console.log('AmbienceComponent.changes$', form.value);
       _this.setFilterByKeyAndValue('ambience', form.value.ambience);
+
+      _this.setFilterByKeyAndValue('category', form.value.category);
 
       _this.setFilterByKeyAndValue('material', form.value.material);
 
@@ -2896,6 +2929,7 @@ var FilterItem = /*#__PURE__*/function () {
       _this.items = data[0];
       _this.filters = data[1];
       controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
+      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
       controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
       controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
 
@@ -2926,6 +2960,9 @@ var FilterItem = /*#__PURE__*/function () {
               case 'ambience':
                 return item.ambience.id === value;
 
+              case 'category':
+                return item.category.id === value;
+
               case 'material':
                 return item.materials.indexOf(value) !== -1;
 
@@ -2942,11 +2979,13 @@ var FilterItem = /*#__PURE__*/function () {
     this.filterService = filterService;
     this.filters = filterService.filters;
     var ambience = this.ambienceId ? this.ambienceId : this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
+    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
     var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
     var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
     var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
       ambience: ambience,
+      category: category,
       material: material,
       designer: designer,
       search: search
@@ -2983,6 +3022,7 @@ var FilterItem = /*#__PURE__*/function () {
   _proto.onSearch = function onSearch(model) {
     // console.log('AmbienceComponent.onSearch', this.form.value);
     this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
+    this.setFilterByKeyAndValue('category', this.form.value.category);
     this.setFilterByKeyAndValue('material', this.form.value.material);
     this.setFilterByKeyAndValue('designer', this.form.value.designer);
     this.setFilterByKeyAndValue('search', this.form.value.search);
@@ -3169,7 +3209,140 @@ var GtmService = /*#__PURE__*/function () {
   };
 
   return GtmService;
-}();var ContactsService = /*#__PURE__*/function () {
+}();var CareersService = /*#__PURE__*/function () {
+  function CareersService() {}
+
+  CareersService.data$ = function data$() {
+    return ApiService.get$('/careers/data.json');
+  };
+
+  CareersService.submit$ = function submit$() {
+    return ApiService.post$('/careers/submit.json');
+  };
+
+  return CareersService;
+}();var CareersComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(CareersComponent, _Component);
+
+  function CareersComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = CareersComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      telephone: new rxcompForm.FormControl(null),
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      domain: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      cv: new rxcompForm.FormControl(null),
+      message: new rxcompForm.FormControl(null),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return CareersService.data$().pipe(operators.tap(function (data) {
+      var controls = _this2.controls;
+      controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.domain.options = FormService.toSelectOptions(data.domain.options);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var domain = controls.domain.options.length > 1 ? controls.domain.options[1].id : null;
+    form.patch({
+      firstName: 'Jhon',
+      lastName: 'Appleseed',
+      email: 'jhonappleseed@gmail.com',
+      telephone: '0721 411112',
+      country: country,
+      city: 'Pesaro',
+      domain: domain,
+      message: 'Hi!',
+      privacy: true,
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit(model) {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('CareersComponent.onSubmit', form.value); // console.log('CareersComponent.onSubmit', 'form.valid', valid);
+
+    if (form.valid) {
+      // console.log('CareersComponent.onSubmit', form.value);
+      form.submitted = true;
+      CareersService.submit$(form.value).pipe(operators.first()).subscribe(function (_) {
+        _this3.success = true;
+        form.reset();
+        GtmService.push({
+          'event': "Careers",
+          'form_name': "Lavora con noi"
+        });
+      }, function (error) {
+        console.log('CareersComponent.error', error);
+        _this3.error = error;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  _proto.scrollTo = function scrollTo(selector, event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector(selector);
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -160
+    });
+  };
+
+  return CareersComponent;
+}(rxcomp.Component);
+CareersComponent.meta = {
+  selector: '[careers]'
+};var ContactsService = /*#__PURE__*/function () {
   function ContactsService() {}
 
   ContactsService.data$ = function data$() {
@@ -3576,7 +3749,8 @@ DealersComponent.meta = {
 }(rxcomp.Component);
 DesignersComponent.meta = {
   selector: '[designers]'
-};var MaterialsService = /*#__PURE__*/function () {
+};// import { map } from 'rxjs/operators';
+var MaterialsService = /*#__PURE__*/function () {
   function MaterialsService() {}
 
   MaterialsService.all$ = function all$() {
@@ -3585,37 +3759,29 @@ DesignersComponent.meta = {
 
   MaterialsService.filters$ = function filters$() {
     return ApiService.get$('/materials/filters.json');
-  };
-
-  MaterialsService.fake$ = function fake$() {
-    return MaterialsService.all$().pipe(operators.map(function (items) {
-      items.forEach(function (item, i) {
-        item.collection = MaterialsService.toTitleCase(item.collection);
-        item.title = MaterialsService.toTitleCase(item.title);
-      });
-      console.log(JSON.stringify(items));
-      return items;
-    }));
-  };
-
-  MaterialsService.toTitleCase = function toTitleCase(sentence, seps) {
-    if (seps === void 0) {
-      seps = ' _-/';
-    }
-
-    var capitalize = function capitalize(str) {
-      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
-    };
-
-    var escape = function escape(str) {
-      return str.replace(/./g, function (c) {
-        return "\\" + c;
-      });
-    };
-
-    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
-    return sentence.replace(wordPattern, capitalize);
-  };
+  }
+  /*
+  static fake$() {
+  	return MaterialsService.all$().pipe(
+  		map(items => {
+  			items.forEach((item, i) => {
+  				item.collection = MaterialsService.toTitleCase(item.collection);
+  				item.title = MaterialsService.toTitleCase(item.title);
+  			});
+  			console.log(JSON.stringify(items));
+  			return items;
+  		})
+  	);
+  }
+  
+  static toTitleCase(sentence, seps = ' _-/') {
+  	const capitalize = str => str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+  	const escape = str => str.replace(/./g, c => `\\${c}`);
+  	let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
+  	return sentence.replace(wordPattern, capitalize);
+  }
+  */
+  ;
 
   return MaterialsService;
 }();var MaterialsComponent = /*#__PURE__*/function (_Component) {
@@ -3918,6 +4084,147 @@ MaterialsComponent.meta = {
 }(rxcomp.Component);
 NewsComponent.meta = {
   selector: '[news]'
+};var NewsletterService = /*#__PURE__*/function () {
+  function NewsletterService() {}
+
+  NewsletterService.data$ = function data$() {
+    return ApiService.get$('/newsletter/data.json');
+  };
+
+  NewsletterService.submit$ = function submit$() {
+    return ApiService.post$('/newsletter/submit.json');
+  };
+
+  return NewsletterService;
+}();var NewsletterComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(NewsletterComponent, _Component);
+
+  function NewsletterComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = NewsletterComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var email = LocationService.deserialize('email'); // console.log('NewsletterComponent', email);
+
+    var form = this.form = new rxcompForm.FormGroup({
+      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      email: new rxcompForm.FormControl(email, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      telephone: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      engagement: new rxcompForm.FormControl(null),
+      newsletter: true,
+      newsletterLanguage: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return NewsletterService.data$().pipe(operators.tap(function (data) {
+      var controls = _this2.controls;
+      controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
+      controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.engagement.options = FormService.toSelectOptions(data.engagement.options);
+      controls.newsletterLanguage.options = FormService.toSelectOptions(data.newsletterLanguage.options);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
+    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var engagement = controls.engagement.options.length > 1 ? controls.engagement.options[1].id : null;
+    var newsletterLanguage = controls.newsletterLanguage.options.length > 1 ? controls.newsletterLanguage.options[1].id : null;
+    form.patch({
+      firstName: 'Jhon',
+      lastName: 'Appleseed',
+      email: 'jhonappleseed@gmail.com',
+      telephone: '0721 411112',
+      occupation: occupation,
+      country: country,
+      city: 'Pesaro',
+      engagement: engagement,
+      newsletterLanguage: newsletterLanguage,
+      privacy: true,
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit(model) {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('NewsletterComponent.onSubmit', form.value); // console.log('NewsletterComponent.onSubmit', 'form.valid', valid);
+
+    if (form.valid) {
+      // console.log('NewsletterComponent.onSubmit', form.value);
+      form.submitted = true;
+      NewsletterService.submit$(form.value).pipe(operators.first()).subscribe(function (_) {
+        _this3.success = true;
+        form.reset();
+        GtmService.push({
+          'event': "Newsletter",
+          'form_name': "Newsletter"
+        });
+      }, function (error) {
+        console.log('NewsletterComponent.error', error);
+        _this3.error = error;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  _proto.scrollTo = function scrollTo(selector, event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.querySelector(selector);
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -160
+    });
+  };
+
+  return NewsletterComponent;
+}(rxcomp.Component);
+NewsletterComponent.meta = {
+  selector: '[newsletter]'
 };var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;";
 var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
 var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;";
@@ -4242,7 +4549,8 @@ ProductsConfigureComponent.meta = {
 }(rxcomp.Component);
 ProductsDetailComponent.meta = {
   selector: '[products-detail]'
-};var ProductsService = /*#__PURE__*/function () {
+};// import { combineLatest } from 'rxjs';
+var ProductsService = /*#__PURE__*/function () {
   function ProductsService() {}
 
   ProductsService.all$ = function all$() {
@@ -4251,7 +4559,29 @@ ProductsDetailComponent.meta = {
 
   ProductsService.filters$ = function filters$() {
     return ApiService.get$('/products/filters.json');
-  };
+  }
+  /*
+  static fake$() {
+  	return combineLatest([ProductsService.all$(), ApiService.get$('/products/all_.json')]).pipe(
+  		map(data => {
+  			const items = data[0];
+  			const items_ = data[1];
+  			items.forEach((item, i) => {
+  				const other = items_.find(x => x.title === item.title);
+  				if (other) {
+  					item.category = {
+  						id: 1,
+  						name: other.url.replace('https://www.giorgettimeda.com/it/prodotti/', '').split('/')[0],
+  					};
+  				}
+  			});
+  			console.log(JSON.stringify(items));
+  			return items;
+  		})
+  	);
+  }
+  */
+  ;
 
   return ProductsService;
 }();var ProductsComponent = /*#__PURE__*/function (_Component) {
@@ -4272,6 +4602,7 @@ ProductsDetailComponent.meta = {
     this.filters = {};
     var form = this.form = new rxcompForm.FormGroup({
       category: new rxcompForm.FormControl(null),
+      ambience: new rxcompForm.FormControl(null),
       material: new rxcompForm.FormControl(null),
       designer: new rxcompForm.FormControl(null),
       search: new rxcompForm.FormControl(null)
@@ -4280,6 +4611,8 @@ ProductsDetailComponent.meta = {
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       // console.log('ProductsComponent.changes$', form.value);
       _this.setFilterByKeyAndValue('category', form.value.category);
+
+      _this.setFilterByKeyAndValue('ambience', form.value.ambience);
 
       _this.setFilterByKeyAndValue('material', form.value.material);
 
@@ -4293,6 +4626,7 @@ ProductsDetailComponent.meta = {
       _this.items = data[0];
       _this.filters = data[1];
       controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
+      controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
       controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
       controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
 
@@ -4323,6 +4657,9 @@ ProductsDetailComponent.meta = {
               case 'category':
                 return item.category.id === value;
 
+              case 'ambience':
+                return item.ambience.id === value;
+
               case 'material':
                 return item.materials.indexOf(value) !== -1;
 
@@ -4339,11 +4676,13 @@ ProductsDetailComponent.meta = {
     this.filterService = filterService;
     this.filters = filterService.filters;
     var category = this.categoryId ? this.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null;
+    var ambience = this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
     var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
     var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
     var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
       category: category,
+      ambience: ambience,
       material: material,
       designer: designer,
       search: search
@@ -4380,6 +4719,7 @@ ProductsDetailComponent.meta = {
   _proto.onSearch = function onSearch(model) {
     // console.log('ProductsComponent.onSearch', this.form.value);
     this.setFilterByKeyAndValue('category', this.form.value.category);
+    this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
     this.setFilterByKeyAndValue('material', this.form.value.material);
     this.setFilterByKeyAndValue('designer', this.form.value.designer);
     this.setFilterByKeyAndValue('search', this.form.value.search);
@@ -7524,12 +7864,15 @@ MenuDirective.meta = {
 
   _proto.onNewsletter = function onNewsletter(event) {
     console.log('NewsletterPropositionComponent.onNewsletter', this.form.value);
+    var encoded = LocationService.encode('email', this.form.value.email, {});
+    window.location.href = this.action + "?params=" + encoded;
   };
 
   return NewsletterPropositionComponent;
 }(rxcomp.Component);
 NewsletterPropositionComponent.meta = {
-  selector: '[newsletter-proposition]'
+  selector: '[newsletter-proposition]',
+  inputs: ['action']
 };var SubmenuDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(SubmenuDirective, _Directive);
 
@@ -8096,6 +8439,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, NewsComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

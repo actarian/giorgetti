@@ -45,7 +45,6 @@
 		padding-bottom: 80px;
 	}
 
-
 	.listing--form-compact {
 		$gutter: 30px;
 		display: block;
@@ -111,6 +110,10 @@
 
 	.form .group--info {
 		text-align: left;
+	}
+
+	.form .group--cta {
+		justify-content: flex-start;
 	}
 
 	.title,

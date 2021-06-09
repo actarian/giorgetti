@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+// import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
 export class MaterialsService {
@@ -11,6 +11,7 @@ export class MaterialsService {
 		return ApiService.get$('/materials/filters.json');
 	}
 
+	/*
 	static fake$() {
 		return MaterialsService.all$().pipe(
 			map(items => {
@@ -30,5 +31,6 @@ export class MaterialsService {
 		let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
 		return sentence.replace(wordPattern, capitalize);
 	}
+	*/
 
 }

@@ -3779,6 +3779,7 @@ h6 {
 
 .form .group--cta {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 100%;
   margin: 0;
@@ -6852,6 +6853,9 @@ test-component code {
 .modal--projects-registration .form .group--info {
   text-align: left; }
 
+.modal--projects-registration .form .group--cta {
+  justify-content: flex-start; }
+
 .modal--projects-registration .title,
 .modal--projects-registration .section--form .title {
   margin-bottom: 25px;
@@ -9176,7 +9180,7 @@ test-component code {
     text-align: center; }
   .section--form .group--form--select {
     margin-bottom: 0;
-    padding: 10px 0 7px 0;
+    padding: 10px 0;
     border-bottom: 2px solid var(--border); }
   .section--form .btn--submit {
     display: flex;
@@ -9651,6 +9655,10 @@ test-component code {
 .modal--user .form .group--info,
 .section--auth .form .group--info {
   text-align: left; }
+
+.modal--user .form .group--cta,
+.section--auth .form .group--cta {
+  justify-content: flex-start; }
 
 .modal--user .title,
 .modal--user .section--form .title,

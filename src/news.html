@@ -50,7 +50,7 @@ window.environment = {
 				<div class="group--filters">
 					<div class="filters__title">Cerca news relative a</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.country" label="Paese"></div>
+						<div control-custom-select [control]="controls.country" label="Paese" select="Paese"></div>
 					</div>
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
@@ -63,7 +63,7 @@ window.environment = {
 		</div>
 	</div>
 
-	<section class="section--news">
+	<div class="section--news">
 		<div class="container">
 			<!-- spinner -->
 			<div class="spinner" *if="items.length == 0"></div>
@@ -88,7 +88,7 @@ window.environment = {
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 
 </main>
 <!-- @@close-->

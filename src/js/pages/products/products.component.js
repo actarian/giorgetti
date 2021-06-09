@@ -17,6 +17,7 @@ export class ProductsComponent extends Component {
 		this.filters = {};
 		const form = this.form = new FormGroup({
 			category: new FormControl(null),
+			ambience: new FormControl(null),
 			material: new FormControl(null),
 			designer: new FormControl(null),
 			search: new FormControl(null),
@@ -27,6 +28,7 @@ export class ProductsComponent extends Component {
 		).subscribe((_) => {
 			// console.log('ProductsComponent.changes$', form.value);
 			this.setFilterByKeyAndValue('category', form.value.category);
+			this.setFilterByKeyAndValue('ambience', form.value.ambience);
 			this.setFilterByKeyAndValue('material', form.value.material);
 			this.setFilterByKeyAndValue('designer', form.value.designer);
 			this.setFilterByKeyAndValue('search', form.value.search);
@@ -38,6 +40,7 @@ export class ProductsComponent extends Component {
 			this.items = data[0];
 			this.filters = data[1];
 			controls.category.options = FormService.toSelectOptions(this.filters.category.options);
+			controls.ambience.options = FormService.toSelectOptions(this.filters.ambience.options);
 			controls.material.options = FormService.toSelectOptions(this.filters.material.options);
 			controls.designer.options = FormService.toSelectOptions(this.filters.designer.options);
 			this.onLoad();
@@ -66,6 +69,8 @@ export class ProductsComponent extends Component {
 						switch (key) {
 							case 'category':
 								return item.category.id === value;
+							case 'ambience':
+								return item.ambience.id === value;
 							case 'material':
 								return item.materials.indexOf(value) !== -1;
 							case 'designer':
@@ -80,10 +85,11 @@ export class ProductsComponent extends Component {
 		this.filterService = filterService;
 		this.filters = filterService.filters;
 		const category = this.categoryId ? this.categoryId : (this.filters.category.values.length ? this.filters.category.values[0] : null);
+		const ambience = this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
 		const material = this.filters.material.values.length ? this.filters.material.values[0] : null;
 		const designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
 		const search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-		this.form.patch({ category, material, designer, search });
+		this.form.patch({ category, ambience, material, designer, search });
 		filterService.items$(items).pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(filteredItems => {
@@ -114,6 +120,7 @@ export class ProductsComponent extends Component {
 	onSearch(model) {
 		// console.log('ProductsComponent.onSearch', this.form.value);
 		this.setFilterByKeyAndValue('category', this.form.value.category);
+		this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
 		this.setFilterByKeyAndValue('material', this.form.value.material);
 		this.setFilterByKeyAndValue('designer', this.form.value.designer);
 		this.setFilterByKeyAndValue('search', this.form.value.search);

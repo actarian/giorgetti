@@ -1,7 +1,14 @@
 <!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
 <!-- @@block = main-->
 
-<main class="main" products [categoryId]="1">
+<!--
+	!!! IMPORTANT
+	to apply a filter by category use categoryId parameter
+	example:
+
+	<main class="main" products [categoryId]="1">
+-->
+<main class="main" products>
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -37,13 +44,16 @@
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__select" *if="!categoryId">
-						<div control-custom-select [control]="controls.category" label="Tipologia"></div>
+						<div control-custom-select [control]="controls.category" label="Tipologia" select="Tipologia"></div>
 					</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.material" label="Materiale"></div>
+						<div control-custom-select [control]="controls.ambience" label="Ambiente" select="Ambiente"></div>
+					</div>
+					<div class="filters__select" *if="false">
+						<div control-custom-select [control]="controls.material" label="Materiale" select="Materiale"></div>
 					</div>
 					<div class="filters__select">
-						<div control-custom-select [control]="controls.designer" label="Designer"></div>
+						<div control-custom-select [control]="controls.designer" label="Designer" select="Designer"></div>
 					</div>
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
@@ -56,7 +66,7 @@
 		</div>
 	</div>
 
-	<section class="section--projects">
+	<div class="section--projects">
 		<div class="container">
 			<!-- spinner -->
 			<div class="spinner" *if="items.length == 0"></div>
@@ -77,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 
 </main>
 <!-- @@close-->
