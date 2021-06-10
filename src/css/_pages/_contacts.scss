@@ -199,6 +199,8 @@
 	}
 
 	.btn--submit {
+		@extend %btn-primary;
+		/*
 		@include btn(#232221, $foreground-negative, #000000, $foreground-negative, #232221, $foreground-tertiary);
 		display: flex;
 		align-items: center;
@@ -212,6 +214,11 @@
 		text-align: center;
 		letter-spacing: 0.043em;
 		text-transform: uppercase;
+		*/
+	}
+
+	.btn--submit+.btn--submit {
+		margin-top: 15px;
 	}
 
 	[control-text],

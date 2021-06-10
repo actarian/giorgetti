@@ -121,17 +121,58 @@ export class MaterialsComponent extends Component {
 		this.pushChanges();
 	}
 
-	onOpen(item, items) {
-		ModalService.open$({ src: environment.template.modal.materialsModal, data: { item, items } }).pipe(
-			takeUntil(this.unsubscribe$)
-		).subscribe(event => {
-			console.log('MaterialComponent.onOpen', event);
-			/*
-			if (event instanceof ModalResolveEvent) {
-				window.location.href = environment.slug.reservedArea;
+	onOpenItem(item, items) {
+		if (item.items) {
+			const active = !item.active;
+			this.filteredItems.forEach(item_ => {
+				if (item_ !== item) {
+					item_.active = false;
+					const node = document.querySelector(`#material-${item_.id}`);
+					if (node) {
+						node.style.marginBottom = `0px`;
+					}
+				} else {
+					item.active = active;
+				}
+			});
+			if (active) {
+				this.pushChanges();
 			}
-			*/
-		});
+			const node = document.querySelector(`#material-${item.id}`);
+			if (node) {
+				const target = node.querySelector('.group--subitems');
+				if (target) {
+					const targetRect = target.getBoundingClientRect();
+					const height = targetRect.height + 40;
+					if (!active) {
+						this.pushChanges();
+					}
+					const from = { pow: active ? 0 : 1 };
+					gsap.to(from, {
+						pow: active ? 1 : 0,
+						duration: height / 5000,
+						ease: Power2.easeOut,
+						onUpdate: () => {
+							node.style.marginBottom = `${from.pow * height}px`;
+						},
+						onComplete: () => {
+							this.scrollTo(`#material-${item.id} .group--subitems`);
+						},
+					});
+				}
+			}
+		} else {
+			ModalService.open$({ src: environment.template.modal.materialsModal, data: { item, items } }).pipe(
+				takeUntil(this.unsubscribe$)
+			).subscribe(event => {
+				console.log('MaterialComponent.onOpen', event);
+				/*
+				if (event instanceof ModalResolveEvent) {
+					window.location.href = environment.slug.reservedArea;
+				}
+				*/
+			});
+		}
 	}
 
 	setCategory(category, event) {

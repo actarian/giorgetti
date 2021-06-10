@@ -49,12 +49,12 @@
 	</div>
 	<div class="container" *if="success">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 offset-md-3">
 				<div class="title"><span>Richiesta Inviata</span></div>
 				<div class="abstract">Grazie per la vostra richiesta. Verificheremo i dati e riceverete un e-mail di conferma ad attivazione avvenuta.</div>
 				<div class="group--cta" *if="isModal">
 					<button type="button" class="btn--submit" (click)="onClose()">
-						<span>Invia</span>
+						<span>Chiudi</span>
 					</button>
 				</div>
 			</div>

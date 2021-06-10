@@ -126,7 +126,7 @@
 		}
 	}
 
-	@include media-down(md) {
+	@include media-down(sm) {
 
 		.filters__title {
 			margin-bottom: 30px;

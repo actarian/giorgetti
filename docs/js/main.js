@@ -4345,25 +4345,78 @@ MaterialsModalComponent.meta = {
     this.pushChanges();
   };
 
-  _proto.onOpen = function onOpen(item, items) {
-    ModalService.open$({
-      src: environment.template.modal.materialsModal,
-      data: {
-        item: item,
-        items: items
+  _proto.onOpenItem = function onOpenItem(item, items) {
+    var _this3 = this;
+
+    if (item.items) {
+      var active = !item.active;
+      this.filteredItems.forEach(function (item_) {
+        if (item_ !== item) {
+          item_.active = false;
+
+          var _node = document.querySelector("#material-" + item_.id);
+
+          if (_node) {
+            _node.style.marginBottom = "0px";
+          }
+        } else {
+          item.active = active;
+        }
+      });
+
+      if (active) {
+        this.pushChanges();
       }
-    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
-      console.log('MaterialComponent.onOpen', event);
-      /*
-      if (event instanceof ModalResolveEvent) {
-      	window.location.href = environment.slug.reservedArea;
+
+      var node = document.querySelector("#material-" + item.id);
+
+      if (node) {
+        var target = node.querySelector('.group--subitems');
+
+        if (target) {
+          var targetRect = target.getBoundingClientRect();
+          var height = targetRect.height + 40;
+
+          if (!active) {
+            this.pushChanges();
+          }
+
+          var from = {
+            pow: active ? 0 : 1
+          };
+          gsap.to(from, {
+            pow: active ? 1 : 0,
+            duration: height / 5000,
+            ease: Power2.easeOut,
+            onUpdate: function onUpdate() {
+              node.style.marginBottom = from.pow * height + "px";
+            },
+            onComplete: function onComplete() {
+              _this3.scrollTo("#material-" + item.id + " .group--subitems");
+            }
+          });
+        }
       }
-      */
-    });
+    } else {
+      ModalService.open$({
+        src: environment.template.modal.materialsModal,
+        data: {
+          item: item,
+          items: items
+        }
+      }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+        console.log('MaterialComponent.onOpen', event);
+        /*
+        if (event instanceof ModalResolveEvent) {
+        	window.location.href = environment.slug.reservedArea;
+        }
+        */
+      });
+    }
   };
 
   _proto.setCategory = function setCategory(category, event) {
-    var _this3 = this;
+    var _this4 = this;
 
     if (event) {
       event.preventDefault();
@@ -4373,7 +4426,7 @@ MaterialsModalComponent.meta = {
     setTimeout(function () {
       LocomotiveScrollService.update();
 
-      _this3.scrollTo('#category-' + category.value);
+      _this4.scrollTo('#category-' + category.value);
     }, 100);
   };
 
@@ -5894,7 +5947,14 @@ ReservedAreaComponent.meta = {
   };
 
   _proto.showMore = function showMore(event) {
-    this.visibleItems = this.filteredItems.slice();
+    var pageSize = 32;
+
+    if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
+      this.visibleItems = this.filteredItems.slice();
+    } else {
+      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+    }
+
     this.pushChanges();
     LocomotiveScrollService.update();
   };

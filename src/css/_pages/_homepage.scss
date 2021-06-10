@@ -61,31 +61,7 @@
 	}
 
 	.btn--cta {
-		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+		@extend %btn-primary-negative;
 	}
 
 	@include media-down(sm) {
@@ -260,32 +236,7 @@
 	}
 
 	.btn--cta {
-		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-		border: 1px solid #232221;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+		@extend %btn-secondary;
 	}
 
 	.btn--prev,
@@ -827,32 +778,7 @@
 	}
 
 	.btn--cta {
-		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-		border: 1px solid #232221;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+		@extend %btn-secondary;
 	}
 
 	@include media-up(md) {

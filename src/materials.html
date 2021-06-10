@@ -149,8 +149,8 @@
 		<div class="section--materials-listing" *if="controls.category.value === category.value">
 			<div class="container">
 				<div class="listing--materials">
-					<div class="listing__item" [class]="{ active: selectedItem == item }" *for="let item of visibleItems">
-						<div class="card--material" (click)="onOpen(item, filteredItems)" [id]="'cat-'+ item.category.id + '-' + item.id">
+					<div class="listing__item" [id]="'material-' + item.id" [class]="{ active: selectedItem == item }" *for="let item of visibleItems">
+						<div class="card--material" (click)="onOpenItem(item, filteredItems)" [id]="'cat-'+ item.category.id + '-' + item.id">
 							<div class="card__picture">
 								<img loading="lazy" [src]="item.image" />
 							</div>
@@ -158,6 +158,23 @@
 								<div class="card__code" [innerHTML]="item.code"></div>
 								<div class="card__title" [innerHTML]="item.name"></div>
 								<div class="card__finish" [innerHTML]="item.finish"></div>
+							</div>
+						</div>
+						<div class="group--subitems" *if="item.items && item.active">
+							<div class="title" [innerHTML]="item.name"></div>
+							<div class="listing--materials">
+								<div class="listing__item" [class]="{ active: selectedItem == item }" *for="let subItem of item.items">
+									<div [id]="'material-' + item.id" class="card--material" (click)="onOpenItem(subItem, item.items)" [id]="'cat-'+ subItem.category.id + '-' + subItem.id">
+										<div class="card__picture">
+											<img loading="lazy" [src]="subItem.image" />
+										</div>
+										<div class="card__content">
+											<div class="card__code" [innerHTML]="subItem.code"></div>
+											<div class="card__title" [innerHTML]="subItem.name"></div>
+											<div class="card__finish" [innerHTML]="subItem.finish"></div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

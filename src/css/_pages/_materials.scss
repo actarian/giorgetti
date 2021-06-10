@@ -282,31 +282,7 @@
 	}
 
 	.btn--more {
-		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+		@extend %btn-primary;
 	}
 
 	.group--cta {
@@ -562,4 +538,13 @@
 			fill: currentColor;
 		}
 	}
+}
+
+.group--subitems {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	padding: 60px 0 40px 0;
+	border-bottom: 1px solid $border;
+	z-index: 1;
 }

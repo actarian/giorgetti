@@ -54,31 +54,11 @@
 	}
 
 	.btn--more {
-		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
+		@extend %btn-primary;
+	}
 
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+	.btn--secondary {
+		@extend %btn-secondary;
 	}
 
 	.scroll-proposition {
@@ -127,7 +107,10 @@
 			align-items: center;
 		}
 
-		.btn--more+.btn--more {
+		.btn--more+.btn--more,
+		.btn--more+.btn--secondary,
+		.btn--secondary+.btn--more,
+		.btn--secondary+.btn--secondary {
 			margin-left: 20px;
 		}
 	}
@@ -167,7 +150,10 @@
 			margin-bottom: 60px;
 		}
 
-		.btn--more+.btn--more {
+		.btn--more+.btn--more,
+		.btn--more+.btn--secondary,
+		.btn--secondary+.btn--more,
+		.btn--secondary+.btn--secondary {
 			margin-top: 20px;
 		}
 	}
@@ -212,6 +198,10 @@
 
 	.card__cta {
 		margin-top: 20px;
+	}
+
+	.btn--more {
+		min-width: 0 !important;
 	}
 
 	@include media-down(xs) {
@@ -299,40 +289,13 @@
 	}
 
 	.btn--more {
-		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
+		@extend %btn-primary;
 	}
 
 	.group--cta {
 		display: flex;
 		align-items: center;
 		margin-top: 80px;
-
-		&>.btn--more {
-			@include media-up(md) {
-				min-width: 280px;
-			}
-
-			@include media-between(sm, md) {
-				min-width: 200px;
-			}
-
-			@include media-down(xs) {
-				display: block;
-				width: 100%;
-			}
-		}
 
 		@include media-up(sm) {
 			justify-content: center;

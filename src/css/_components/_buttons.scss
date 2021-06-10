@@ -314,6 +314,113 @@
 	}
 }
 
+%btn-primary {
+	// @include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
+	@include btn($background-secondary, $foreground-negative, $background-secondary, $foreground-negative, $background-secondary, $foreground-negative);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 25px;
+	font-size: 16px;
+	line-height: 1;
+	font-size: 16px;
+	line-height: 1.1;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.043em;
+	border: 1px solid $background-secondary;
+
+	svg {
+		margin-right: 10px;
+		width: 24px;
+		height: 24px;
+	}
+
+	@include media-up(md) {
+		min-width: 280px;
+	}
+
+	@include media-between(sm, md) {
+		min-width: 200px;
+	}
+
+	@include media-down(xs) {
+		display: flex;
+		width: 100%;
+	}
+}
+
+%btn-primary-negative {
+	@include btn($background, $foreground, $background-secondary, $foreground-negative, $background-secondary, $foreground-negative);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 25px;
+	font-size: 16px;
+	line-height: 1;
+	font-size: 16px;
+	line-height: 1.1;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.043em;
+	border: 1px solid $background;
+
+	svg {
+		margin-right: 10px;
+		width: 24px;
+		height: 24px;
+	}
+
+	@include media-up(md) {
+		min-width: 280px;
+	}
+
+	@include media-between(sm, md) {
+		min-width: 200px;
+	}
+
+	@include media-down(xs) {
+		display: flex;
+		width: 100%;
+	}
+}
+
+%btn-secondary {
+	// @include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
+	@include btn($background, #232221, $background-secondary, $foreground-negative, $background-secondary, $foreground-negative);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 25px;
+	font-size: 16px;
+	line-height: 1;
+	font-size: 16px;
+	line-height: 1.1;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.043em;
+	border: 1px solid $background-secondary;
+
+	svg {
+		margin-right: 10px;
+		width: 24px;
+		height: 24px;
+	}
+
+	@include media-up(md) {
+		min-width: 280px;
+	}
+
+	@include media-between(sm, md) {
+		min-width: 200px;
+	}
+
+	@include media-down(xs) {
+		display: flex;
+		width: 100%;
+	}
+}
+
 .btn {
 	@extend %btn;
 }

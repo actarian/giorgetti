@@ -160,31 +160,7 @@
 	}
 
 	.btn--more {
-		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 15px 25px;
-		font-size: 16px;
-		line-height: 1;
-		font-size: 16px;
-		line-height: 1.1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
-		@include media-down(xs) {
-			display: block;
-			width: 100%;
-		}
+		@extend %btn-primary;
 	}
 
 	.group--info {
@@ -332,17 +308,12 @@
 	}
 
 	.btn--secondary {
-		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
+		@extend %btn-secondary;
+
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 10px;
-		font-size: 14px;
-		line-height: 1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-		border: 2px solid #232221;
+		width: 100%;
+		min-width: 0 !important;
+		white-space: nowrap;
 
 		@include media-down(sm) {
 			padding: 5px;

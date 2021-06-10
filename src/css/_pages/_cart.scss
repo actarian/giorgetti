@@ -204,18 +204,11 @@
 	}
 
 	.btn--buy {
-		@include btn($background-negative, $foreground-negative, #232221, $foreground-negative, $background-negative, $foreground-negative);
+		@extend %btn-primary;
+
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 100%;
-		padding: 10px;
-		font-size: 14px;
-		line-height: 1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-		border: 2px solid #232221;
+		min-width: 0 !important;
 
 		@include media-down(sm) {
 			padding: 5px;
@@ -224,18 +217,11 @@
 	}
 
 	.btn--secondary {
-		@include btn($background, #232221, #232221, $foreground-negative, $background-negative, $foreground-negative);
+		@extend %btn-secondary;
+
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 100%;
-		padding: 10px;
-		font-size: 14px;
-		line-height: 1;
-		text-align: center;
-		text-transform: uppercase;
-		letter-spacing: 0.043em;
-		border: 2px solid #232221;
+		min-width: 0 !important;
 
 		@include media-down(sm) {
 			padding: 5px;

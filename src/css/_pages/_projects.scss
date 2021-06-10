@@ -259,6 +259,12 @@
 	padding-top: 100px;
 	margin-bottom: -140px;
 
+	.card--product-proposition {
+		.card__title {
+			text-align: center;
+		}
+	}
+
 	&>.listing__item {
 		margin-bottom: 140px;
 	}

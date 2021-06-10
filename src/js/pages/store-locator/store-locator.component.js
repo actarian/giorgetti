@@ -93,7 +93,12 @@ export class StoreLocatorComponent extends Component {
 	}
 
 	showMore(event) {
-		this.visibleItems = this.filteredItems.slice();
+		const pageSize = 32;
+		if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
+			this.visibleItems = this.filteredItems.slice();
+		} else {
+			this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+		}
 		this.pushChanges();
 		LocomotiveScrollService.update();
 	}

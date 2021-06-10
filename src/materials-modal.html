@@ -12,7 +12,7 @@
 	<div class="modal__content">
 		<div class="container">
 			<div class="group--headline">
-				<div class="title"><span class="collection" [innerHTML]="item.collection"></span> | <span class="name" [innerHTML]="item.name"></span></div>
+				<div class="title"><span class="collection" [innerHTML]="item.collection.name"></span> | <span class="name" [innerHTML]="item.name"></span></div>
 				<div class="code"><span class="category" *if="item.subcategory">Cat. <span [innerHTML]="item.subcategory"></span> | </span><span [innerHTML]="item.code"></span></div>
 			</div>
 			<div class="description" *if="item.description" [innerHTML]="item.description"></div>
