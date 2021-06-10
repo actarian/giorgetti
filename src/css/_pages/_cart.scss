@@ -104,6 +104,7 @@
 	.card__cta {
 		display: flex;
 		align-items: center;
+		@include unselectable();
 	}
 
 	.count {

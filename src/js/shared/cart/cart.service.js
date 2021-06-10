@@ -98,15 +98,15 @@ export class CartService {
 		return of(Object.assign({ qty: 1 }, item)).pipe(
 			map(item => {
 				const items = CartService.currentItems.slice();
-				const index = items.reduce((p, c, i) => {
-					return p !== -1 ? p : (c.id === item.id ? i : p);
-				}, -1);
-				if (index === -1) {
+				const item_ = items.find(item_ => item_.id === item.id);
+				if (item_) {
+					item_.qty += item.qty;
+					CartService.setItems(items);
+					return item_;
+				} else {
 					items.push(item);
 					CartService.setItems(items);
 					return item;
-				} else {
-					return null;
 				}
 			}),
 		)

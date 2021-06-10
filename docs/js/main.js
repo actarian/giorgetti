@@ -461,16 +461,18 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
       qty: 1
     }, item)).pipe(operators.map(function (item) {
       var items = CartService.currentItems.slice();
-      var index = items.reduce(function (p, c, i) {
-        return p !== -1 ? p : c.id === item.id ? i : p;
-      }, -1);
+      var item_ = items.find(function (item_) {
+        return item_.id === item.id;
+      });
 
-      if (index === -1) {
+      if (item_) {
+        item_.qty += item.qty;
+        CartService.setItems(items);
+        return item_;
+      } else {
         items.push(item);
         CartService.setItems(items);
         return item;
-      } else {
-        return null;
       }
     }));
   };
@@ -7941,40 +7943,20 @@ SwiperProjectsPropositionDirective.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
-    this.showCart = false;
     this.items = [];
     CartService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
-      if (CartService.active) {
-        _this.items = items;
+      _this.items = items;
 
-        _this.pushChanges();
-      }
+      _this.pushChanges();
     });
-  };
-
-  _proto.onToggleCart = function onToggleCart(event) {
-    this.showCart = !this.showCart;
-    this.pushChanges();
-  };
-
-  _proto.isAddedToCart = function isAddedToCart(item) {
-    return CartService.hasItem(item);
   };
 
   _proto.onIncrement = function onIncrement(item) {
-    var _this2 = this;
-
-    CartService.incrementItem$(item).pipe(operators.first()).subscribe(function (_) {
-      _this2.pushChanges();
-    });
+    CartService.incrementItem$(item).pipe(operators.first()).subscribe();
   };
 
   _proto.onDecrement = function onDecrement(item) {
-    var _this3 = this;
-
-    CartService.decrementItem$(item).pipe(operators.first()).subscribe(function (_) {
-      _this3.pushChanges();
-    });
+    CartService.decrementItem$(item).pipe(operators.first()).subscribe();
   };
 
   _proto.onRemoveAll = function onRemoveAll() {
