@@ -175,6 +175,22 @@
 		margin-top: 57px;
 	}
 
+	.group--reacap {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		padding: 20px 0;
+		line-height: 1;
+
+		.price {
+			padding: 5px 10px;
+			border-radius: 15px;
+			background: $background-negative;
+			color: $foreground-negative;
+		}
+	}
+
 	.btn--close {
 		@include btn(rgba(255, 255, 255, 0.2), $foreground, $background, $foreground, rgba(255, 255, 255, 0.4), #232221);
 

@@ -1804,14 +1804,18 @@ ModalOutletComponent.meta = {
     return _Pipe.apply(this, arguments) || this;
   }
 
-  NumberPipe.transform = function transform(value, suffix) {
+  NumberPipe.transform = function transform(value, language, options) {
+    if (language === void 0) {
+      language = 'en-IN';
+    }
+
+    if (options === void 0) {
+      options = {};
+    }
 
     if (value != null) {
       // !!! keep losing
-      return new Intl.NumberFormat('it-IT', {
-        style: 'currency',
-        currency: 'EUR'
-      }).format(value);
+      return new Intl.NumberFormat(language, options).format(value);
     }
   };
 
@@ -7980,6 +7984,16 @@ SwiperProjectsPropositionDirective.meta = {
   _proto.onClose = function onClose(event) {
     CartService.setActive(false);
   };
+
+  _createClass(CartMiniComponent, [{
+    key: "total",
+    get: function get() {
+      var items = this.items || [];
+      return items.reduce(function (p, c, i) {
+        return p + c.price * c.qty;
+      }, 0);
+    }
+  }]);
 
   return CartMiniComponent;
 }(rxcomp.Component);

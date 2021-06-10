@@ -10627,6 +10627,18 @@ test-component code {
         font-size: 14px; } }
   .section--cart-mini .abstract {
     margin-top: 57px; }
+  .section--cart-mini .group--reacap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+    line-height: 1; }
+    .section--cart-mini .group--reacap .price {
+      padding: 5px 10px;
+      border-radius: 15px;
+      background: var(--background-negative);
+      color: var(--foreground-negative); }
   .section--cart-mini .btn--close, .section--cart-mini .btn--close:active, .section--cart-mini .btn--close:focus, .section--cart-mini .btn--close:visited {
     background-color: rgba(255, 255, 255, 0.2);
     color: var(--foreground); }
@@ -10806,7 +10818,7 @@ test-component code {
   .nav--index {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-template-rows: repeat(8, 0);
+    grid-template-rows: repeat(10, 0);
     grid-auto-flow: column; } }
 
 @media (min-width: 1920px) {

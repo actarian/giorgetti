@@ -4,6 +4,13 @@ import { CartService } from './cart.service';
 
 export class CartMiniComponent extends Component {
 
+	get total() {
+		const items = this.items || [];
+		return items.reduce((p, c, i) => {
+			return p + c.price * c.qty;
+		}, 0);
+	}
+
 	onInit() {
 		this.showCart = false;
 		this.items = [];

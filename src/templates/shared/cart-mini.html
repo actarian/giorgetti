@@ -15,7 +15,7 @@
 								<div class="over">
 									<div class="over__title" [innerHTML]="item.title"></div>
 								</div>
-								<div class="price" *if="item.price" [innerHTML]="item.price | number : ' €'"></div>
+								<div class="price" *if="item.price" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
 							</div>
 							<div class="card__content">
 								<a [href]="item.url" class="card__title" [innerHTML]="item.title" [title]="item.title"></a>
@@ -31,6 +31,10 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="group--reacap">
+					<span>Totale</span>
+					<span class="price" [innerHTML]="total | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
 				</div>
 				<div class="group--cta">
 					<button type="button" class="btn--buy" (click)="onBuy($event)">Acquista</button>

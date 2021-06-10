@@ -2,10 +2,9 @@ import { Pipe } from 'rxcomp';
 
 export class NumberPipe extends Pipe {
 
-	static transform(value, suffix = '') {
+	static transform(value, language = 'en-IN', options = {}) {
 		if (value != null) { // !!! keep losing
-			return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(value);
-			return `${value}${suffix}`;
+			return new Intl.NumberFormat(language, options).format(value);
 		}
 	}
 
