@@ -1825,6 +1825,126 @@ ModalOutletComponent.meta = {
 }(rxcomp.Pipe);
 NumberPipe.meta = {
   name: 'number'
+};var ShareDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(ShareDirective, _Directive);
+
+  function ShareDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = ShareDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    console.log('ShareComponent.onInit', this.share, this.title);
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var href = this.href;
+    node.setAttribute('href', href);
+
+    if (this.share !== 'mailTo') {
+      node.setAttribute('target', '_blank');
+      rxjs.fromEvent(node, 'click').pipe(operators.tap(function (event) {
+        event.preventDefault();
+        window.open(href, 'ShareWindow', window.innerWidth >= 768 ? 'width=640,height=480' : '');
+      }), operators.takeUntil(this.unsubscribe$)).subscribe();
+    }
+  }
+  /*
+  onChanges() {
+  	console.log('ShareComponent.onChanges', this.share, this.shareTitle);
+  }
+  */
+  ;
+
+  _proto.encodeURI = function encodeURI(text) {
+    return encodeURIComponent(text).replace(/[!'()*]/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  };
+
+  _createClass(ShareDirective, [{
+    key: "href",
+    get: function get() {
+      switch (this.share) {
+        case 'facebook':
+          return this.facebookUrl;
+
+        case 'pinterest':
+          return this.pinterestUrl;
+
+        case 'linkedIn':
+          return this.linkedInUrl;
+
+        case 'twitter':
+          return this.twitterUrl;
+
+        case 'whatsapp':
+          return this.whatsappUrl;
+
+        case 'mailTo':
+          return this.mailToUrl;
+      }
+    }
+  }, {
+    key: "facebookUrl",
+    get: function get() {
+      return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
+    }
+  }, {
+    key: "pinterestUrl",
+    get: function get() {
+      return "https://www.pinterest.com/pin/create/button/?url=" + this.url + "&media=&description=" + this.title;
+    }
+  }, {
+    key: "linkedInUrl",
+    get: function get() {
+      return "https://www.linkedin.com/shareArticle?mini=true&url=" + this.url + "&title=" + this.title;
+    }
+  }, {
+    key: "twitterUrl",
+    get: function get() {
+      return "https://twitter.com/intent/tweet?text=" + this.title + "%20" + this.url;
+    }
+  }, {
+    key: "whatsappUrl",
+    get: function get() {
+      return "https://api.whatsapp.com/send?text=" + this.url;
+    }
+  }, {
+    key: "mailToUrl",
+    get: function get() {
+      return "mailto:?subject=" + this.title + "&body=" + this.url;
+    }
+  }, {
+    key: "title",
+    get: function get() {
+      var title = this.shareTitle ? this.shareTitle : document.title;
+      return this.encodeURI(title);
+    }
+  }, {
+    key: "url",
+    get: function get() {
+      var url = this.shareUrl;
+
+      if (url) {
+        if (url.indexOf(window.location.origin) === -1) {
+          url = window.location.origin + (url.indexOf('/') === 0 ? url : '/' + url);
+        }
+      } else {
+        url = window.location.href;
+      }
+
+      return this.encodeURI(url);
+    }
+  }]);
+
+  return ShareDirective;
+}(rxcomp.Directive);
+ShareDirective.meta = {
+  selector: '[share]',
+  inputs: ['share', 'shareUrl', 'shareTitle']
 };var SlugPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(SlugPipe, _Pipe);
 
@@ -2351,7 +2471,7 @@ DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
 LocomotiveScrollDirective, // ModalComponent,
-ModalOutletComponent, ScrollDirective, // SvgIconStructure,
+ModalOutletComponent, ScrollDirective, ShareDirective, // SvgIconStructure,
 SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];

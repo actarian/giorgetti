@@ -12,6 +12,7 @@ import { LocomotiveScrollDirective } from './locomotive-scroll/locomotive-scroll
 import { ScrollDirective } from './locomotive-scroll/scroll.directive';
 import { ModalOutletComponent } from './modal/modal-outlet.component';
 import { NumberPipe } from './number/number.pipe';
+import ShareDirective from './share/share.directive';
 import { SlugPipe } from './slug/slug.pipe';
 import { SwiperDirective } from './swiper/swiper.directive';
 import { ThronComponent } from './thron/thron.component';
@@ -31,6 +32,7 @@ const factories = [
 	// ModalComponent,
 	ModalOutletComponent,
 	ScrollDirective,
+	ShareDirective,
 	// SvgIconStructure,
 	SwiperDirective,
 	ThronComponent,
