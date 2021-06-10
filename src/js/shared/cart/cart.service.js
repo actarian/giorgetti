@@ -95,7 +95,7 @@ export class CartService {
 	}
 
 	static addItem$(item) {
-		return of(Object.assign({}, item, { qty: 1 })).pipe(
+		return of(Object.assign({ qty: 1 }, item)).pipe(
 			map(item => {
 				const items = CartService.currentItems.slice();
 				const index = items.reduce((p, c, i) => {

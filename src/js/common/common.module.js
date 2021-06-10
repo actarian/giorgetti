@@ -11,6 +11,7 @@ import { LabelPipe } from './label/label.pipe';
 import { LocomotiveScrollDirective } from './locomotive-scroll/locomotive-scroll.directive';
 import { ScrollDirective } from './locomotive-scroll/scroll.directive';
 import { ModalOutletComponent } from './modal/modal-outlet.component';
+import { NumberPipe } from './number/number.pipe';
 import { SlugPipe } from './slug/slug.pipe';
 import { SwiperDirective } from './swiper/swiper.directive';
 import { ThronComponent } from './thron/thron.component';
@@ -43,6 +44,7 @@ const pipes = [
 	FlagPipe,
 	HtmlPipe,
 	LabelPipe,
+	NumberPipe,
 	SlugPipe,
 ];
 

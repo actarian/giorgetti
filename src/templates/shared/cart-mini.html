@@ -10,12 +10,13 @@
 				<div class="listing--cart-mini">
 					<div class="listing__item" *for="let item of items">
 						<div class="card--cart-item">
-							<span class="card__picture">
+							<div class="card__picture">
 								<img loading="lazy" [src]="item.image" />
-								<span class="over">
-									<span class="over__title" [innerHTML]="item.title"></span>
-								</span>
-							</span>
+								<div class="over">
+									<div class="over__title" [innerHTML]="item.title"></div>
+								</div>
+								<div class="price" *if="item.price" [innerHTML]="item.price | number : ' €'"></div>
+							</div>
 							<div class="card__content">
 								<a [href]="item.url" class="card__title" [innerHTML]="item.title" [title]="item.title"></a>
 								<div class="card__cta">

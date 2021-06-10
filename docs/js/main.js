@@ -457,9 +457,9 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   };
 
   CartService.addItem$ = function addItem$(item) {
-    return rxjs.of(Object.assign({}, item, {
+    return rxjs.of(Object.assign({
       qty: 1
-    })).pipe(operators.map(function (item) {
+    }, item)).pipe(operators.map(function (item) {
       var items = CartService.currentItems.slice();
       var index = items.reduce(function (p, c, i) {
         return p !== -1 ? p : c.id === item.id ? i : p;
@@ -1797,6 +1797,28 @@ ModalOutletComponent.meta = {
   template:
   /* html */
   "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t</div>\n\t"
+};var NumberPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(NumberPipe, _Pipe);
+
+  function NumberPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  NumberPipe.transform = function transform(value, suffix) {
+
+    if (value != null) {
+      // !!! keep losing
+      return new Intl.NumberFormat('it-IT', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(value);
+    }
+  };
+
+  return NumberPipe;
+}(rxcomp.Pipe);
+NumberPipe.meta = {
+  name: 'number'
 };var SlugPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(SlugPipe, _Pipe);
 
@@ -2327,7 +2349,7 @@ ModalOutletComponent, ScrollDirective, // SvgIconStructure,
 SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];
-var pipes = [EnvPipe, FlagPipe, HtmlPipe, LabelPipe, SlugPipe];
+var pipes = [EnvPipe, FlagPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
 var CommonModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(CommonModule, _Module);
 
