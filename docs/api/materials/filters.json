@@ -37,16 +37,248 @@
         "value": 1,
         "label": "Tessuto",
         "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
+      }
+    ]
+  },
+  "collection": {
+    "label": "Collezioni",
+    "mode": "select",
+    "options": [
+      {
+        "value": 1001,
+        "label": "Adamo & Eva"
       },
       {
-        "value": 8,
-        "label": "Gomma liquida",
-        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
+        "value": 1002,
+        "label": "Anilina Nubuck"
       },
       {
-        "value": 9,
-        "label": "Eva",
-        "description": "<p>In più di un secolo di storia, Giorgetti ha sviluppato un’indiscussa sapienza ebanistica. La profonda conoscenza della versatilità del legno ha portato l’azienda ad esplorare le molteplici potenzialità di lavorazione della materia, per realizzare collezioni sempre più ricercate ed esclusive. </p>"
+        "value": 1003,
+        "label": "Anilina Sense"
+      },
+      {
+        "value": 1004,
+        "label": "Artemis"
+      },
+      {
+        "value": 1005,
+        "label": "Baltimora"
+      },
+      {
+        "value": 1006,
+        "label": "Barkley"
+      },
+      {
+        "value": 1007,
+        "label": "Brisa"
+      },
+      {
+        "value": 1008,
+        "label": "Coco"
+      },
+      {
+        "value": 1009,
+        "label": "Dante"
+      },
+      {
+        "value": 1010,
+        "label": "Dehors Natté"
+      },
+      {
+        "value": 1011,
+        "label": "Dehors Twill"
+      },
+      {
+        "value": 1012,
+        "label": "Drake"
+      },
+      {
+        "value": 1013,
+        "label": "Dundee"
+      },
+      {
+        "value": 1014,
+        "label": "Eclipse"
+      },
+      {
+        "value": 1015,
+        "label": "Fanello"
+      },
+      {
+        "value": 1016,
+        "label": "Fantasy"
+      },
+      {
+        "value": 1017,
+        "label": "Flavia"
+      },
+      {
+        "value": 1018,
+        "label": "Jimmiz Melange"
+      },
+      {
+        "value": 1019,
+        "label": "Jimmiz Plain"
+      },
+      {
+        "value": 1020,
+        "label": "Livia"
+      },
+      {
+        "value": 1021,
+        "label": "Loft"
+      },
+      {
+        "value": 1022,
+        "label": "Maya"
+      },
+      {
+        "value": 1023,
+        "label": "Palermo"
+      },
+      {
+        "value": 1024,
+        "label": "Pelle"
+      },
+      {
+        "value": 1025,
+        "label": "Penny"
+      },
+      {
+        "value": 1026,
+        "label": "Sandiego"
+      },
+      {
+        "value": 1027,
+        "label": "Sicily • Alicudi"
+      },
+      {
+        "value": 1028,
+        "label": "Sicily • Filicudi"
+      },
+      {
+        "value": 1029,
+        "label": "Sicily • Panarea"
+      },
+      {
+        "value": 1030,
+        "label": "Sicily • Salina"
+      },
+      {
+        "value": 1031,
+        "label": "Stuoia"
+      },
+      {
+        "value": 1032,
+        "label": "Tabularasa"
+      },
+      {
+        "value": 1033,
+        "label": "Tinto"
+      },
+      {
+        "value": 1034,
+        "label": "Valentino"
+      },
+      {
+        "value": 1035,
+        "label": "Acero"
+      },
+      {
+        "value": 1036,
+        "label": "Afrormosia"
+      },
+      {
+        "value": 1037,
+        "label": "Betulla"
+      },
+      {
+        "value": 1038,
+        "label": "Ciliegio"
+      },
+      {
+        "value": 1039,
+        "label": "Eucalipto"
+      },
+      {
+        "value": 1040,
+        "label": "Faggio"
+      },
+      {
+        "value": 1041,
+        "label": "Frassino"
+      },
+      {
+        "value": 1042,
+        "label": "Noce"
+      },
+      {
+        "value": 1043,
+        "label": "Palissandro"
+      },
+      {
+        "value": 1044,
+        "label": "Pau Ferro"
+      },
+      {
+        "value": 1045,
+        "label": "Rovere Fossile"
+      },
+      {
+        "value": 1046,
+        "label": "Sapelli Pommelé"
+      },
+      {
+        "value": 1047,
+        "label": "Decorazione Dorata In Foglia"
+      },
+      {
+        "value": 1048,
+        "label": "Laccatura Opaca"
+      },
+      {
+        "value": 1049,
+        "label": "Laccatura Opaca Satinata"
+      },
+      {
+        "value": 1050,
+        "label": "Laccatura Opaca Antiscivolo"
+      },
+      {
+        "value": 1051,
+        "label": "Laccatura Lucida"
+      },
+      {
+        "value": 1052,
+        "label": "Laccatura Lucida Sfumata"
+      },
+      {
+        "value": 1053,
+        "label": "Laccatura Effetto Camoscio"
+      },
+      {
+        "value": 1054,
+        "label": "Metallo"
+      },
+      {
+        "value": 1055,
+        "label": "Marmo"
+      },
+      {
+        "value": 1056,
+        "label": "Vetro"
+      },
+      {
+        "value": 1057,
+        "label": "Cuoio"
+      },
+      {
+        "value": 1058,
+        "label": "Gomma Liquida"
+      },
+      {
+        "value": 1059,
+        "label": "Eva"
       }
     ]
   }

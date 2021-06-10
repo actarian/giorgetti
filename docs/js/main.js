@@ -4144,20 +4144,58 @@ MaterialsModalComponent.meta = {
     return rxjs.combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(operators.map(function (data) {
       var items = data[0];
       var items_ = data[1];
-      items.forEach(function (item, i) {
-        var item_ = items_.find(function (x) {
-          return x.id === item.id;
-        });
-
-        if (item_) {
-          item.image = item_.image.replace(/\s/g, '_').toLowerCase();
-          item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
-        } // item.collection = MaterialsService.toTitleCase(item.collection);
-        // item.title = MaterialsService.toTitleCase(item.title);
-
+      items = items.filter(function (x) {
+        return x.category.name !== 'Tessuto' || !x.collection;
+      });
+      items.forEach(function (item) {
+        if (item.category.name === 'Tessuto') {
+          item.items = items_.filter(function (x) {
+            return x.collection && x.collection.id === item.id;
+          });
+          console.log(item.items);
+        }
       });
       console.log(JSON.stringify(items));
       return items;
+      /*
+      let collectionId = 1000;
+      const fabrics = [];
+      const collections = [];
+      items_.forEach(item_ => {
+      	let collection = collections.find(x => x.name === item_.collection);
+      	if (!collection) {
+      		collection = {
+      			id: ++collectionId,
+      			name: item_.collection,
+      		};
+      		collections.push(collection);
+      		if (item_.category.name === 'Tessuto') {
+      			fabrics.push(Object.assign({
+      				image: `/giorgetti/img/materials/tessuto/${collection.name.toLowerCase().replace(/\s/g, '_')}_512.jpg`,
+      				category: item_.category,
+      			}, collection));
+      		}
+      	}
+      });
+      console.log(fabrics);
+      items.forEach((item, i) => {
+      	const item_ = items_.find(x => x.id === item.id);
+      	// if (item_) {
+      	//	item.image = item_.image.replace(/\s/g, '_').toLowerCase();
+      	//	item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
+      	// }
+      	const collection = collections.find(x => x.name === item.collection);
+      	console.log(collection);
+      	if (collection) {
+      		item.collection = collection;
+      	}
+      	// item.collection = MaterialsService.toTitleCase(item.collection);
+      	// item.title = MaterialsService.toTitleCase(item.title);
+      });
+      items = items.concat(fabrics);
+      console.log(JSON.stringify(items));
+      return items;
+      */
     }));
   };
 
@@ -4220,7 +4258,7 @@ MaterialsModalComponent.meta = {
   };
 
   _proto.load$ = function load$() {
-    return rxjs.combineLatest([MaterialsService.fake$(), MaterialsService.filters$()]);
+    return rxjs.combineLatest([MaterialsService.all$(), MaterialsService.filters$()]);
   };
 
   _proto.onLoad = function onLoad() {

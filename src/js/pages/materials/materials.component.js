@@ -42,7 +42,7 @@ export class MaterialsComponent extends Component {
 
 	load$() {
 		return combineLatest([
-			MaterialsService.fake$(),
+			MaterialsService.all$(),
 			MaterialsService.filters$(),
 		]);
 	}
