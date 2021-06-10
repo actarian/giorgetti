@@ -2,6 +2,7 @@ import { CoreModule, Module } from 'rxcomp';
 import { FormModule } from 'rxcomp-form';
 import { AppComponent } from './app.component';
 import { CommonModule } from './common/common.module';
+import { ControlsModule } from './controls/controls.module';
 import { AmbienceComponent } from './pages/ambience/ambience.component';
 import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers-and-stores.component';
 import { CareersComponent } from './pages/careers/careers.component';
@@ -29,6 +30,7 @@ AppModule.meta = {
 		CoreModule,
 		FormModule,
 		CommonModule,
+		ControlsModule,
 		SharedModule,
 	],
 	declarations: [

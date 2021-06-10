@@ -105,9 +105,9 @@
 												<a class="btn--action" [href]="file.url" [download]="file.title" target="_blank" title="Scarica">
 													<svg class="download"><use xlink:href="#download"></use></svg>
 												</a>
-												<button type="button" class="btn--action" (click)="onToggleFile(file)" [title]="hasFile(file) ? 'Rimuovi da files' : 'Aggiungi a files'">
-													<svg class="add" *if="!hasFile(file)"><use xlink:href="#add"></use></svg>
-													<svg class="remove" *if="hasFile(file)"><use xlink:href="#remove"></use></svg>
+												<button type="button" class="btn--action" (click)="onToggleFile(file)" [title]="isAddedToFiles(file) ? 'Rimuovi da files' : 'Aggiungi a files'">
+													<svg class="add" *if="!isAddedToFiles(file)"><use xlink:href="#add"></use></svg>
+													<svg class="remove" *if="isAddedToFiles(file)"><use xlink:href="#remove"></use></svg>
 												</button>
 											</div>
 										</div>

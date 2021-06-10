@@ -1,9 +1,9 @@
 import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { FormService } from '../../common/forms/form.service';
 import { GtmService } from '../../common/gtm/gtm.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { FormService } from '../../controls/form.service';
 import { ProjectsRegistrationService } from './projects-registration.service';
 
 export class ProjectsRegistrationComponent extends Component {

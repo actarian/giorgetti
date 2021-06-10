@@ -5,6 +5,7 @@ import { SwiperHomepageDirective } from '../partials/swiper-homepage/swiper-home
 import { SwiperNewsPropositionDirective } from '../partials/swiper-news-proposition/swiper-news-proposition.directive';
 import { SwiperProductsPropositionDirective } from '../partials/swiper-products-proposition/swiper-products-proposition.directive';
 import { SwiperProjectsPropositionDirective } from '../partials/swiper-projects-proposition/swiper-projects-proposition.directive';
+import { CartMiniComponent } from './cart/cart-mini.component';
 import { FilesComponent } from './files/files.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuDirective } from './menu/menu.directive';
@@ -18,6 +19,7 @@ import { UserSignupComponent } from './user/user-signup.component';
 import { UserComponent } from './user/user.component';
 
 const factories = [
+	CartMiniComponent,
 	FilesComponent,
 	HeaderComponent,
 	MapComponent,

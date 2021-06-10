@@ -3,6 +3,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
+import { CartService } from '../cart/cart.service';
 import { UserService } from '../user/user.service';
 
 export const HeaderMode = {
@@ -58,6 +59,7 @@ export class HeaderComponent extends Component {
 			this.user = user;
 			this.pushChanges();
 		});
+		this.cart = CartService;
 	}
 
 	onLogin() {
@@ -88,8 +90,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onToggleCart() {
-		this.show = this.show === HeaderMode.CART ? HeaderMode.IDLE : HeaderMode.CART;
-		this.pushChanges();
+		CartService.setActive(!CartService.active);
 	}
 }
 

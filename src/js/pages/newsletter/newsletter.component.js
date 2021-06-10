@@ -1,10 +1,10 @@
 import { Component, getContext } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { FormService } from '../../common/forms/form.service';
 import { GtmService } from '../../common/gtm/gtm.service';
 import { LocationService } from '../../common/location/location.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { FormService } from '../../controls/form.service';
 import { NewsletterService } from './newsletter.service';
 
 export class NewsletterComponent extends Component {
@@ -115,7 +115,7 @@ export class NewsletterComponent extends Component {
 		}
 		const { node } = getContext(this);
 		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
+		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 }
 

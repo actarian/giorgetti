@@ -11,6 +11,7 @@ export class ControlComponent extends Component {
 			flags[key] ? node.classList.add(key) : node.classList.remove(key);
 		});
 	}
+
 }
 
 ControlComponent.meta = {

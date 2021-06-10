@@ -69,23 +69,18 @@ export class ReservedAreaComponent extends Component {
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
 			console.log('ReservedAreaComponent.onProjectRegistration', event);
-			/*
-			if (event instanceof ModalResolveEvent) {
-				// window.location.href = environment.slug.reservedArea;
-			}
-			*/
 		});
 	}
 
 	onToggleFile(file) {
-		(this.hasFile(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(
+		(this.isAddedToFiles(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(
 			first(),
 		).subscribe(_ => {
 			this.pushChanges();
 		});
 	}
 
-	hasFile(file) {
+	isAddedToFiles(file) {
 		return FilesService.hasFile(file);
 	}
 
@@ -95,7 +90,7 @@ export class ReservedAreaComponent extends Component {
 		}
 		const { node } = getContext(this);
 		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
+		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 }
 

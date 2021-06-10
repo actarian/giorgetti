@@ -4,8 +4,8 @@ import { combineLatest } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { FilterMode } from '../../common/filter/filter-item';
 import { FilterService } from '../../common/filter/filter.service';
-import { FormService } from '../../common/forms/form.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { FormService } from '../../controls/form.service';
 import { AteliersAndStoresService } from './ateliers-and-stores.service';
 
 export class AteliersAndStoresComponent extends Component {

@@ -2,6 +2,7 @@ import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { environment } from '../../environment';
+import { CartService } from '../../shared/cart/cart.service';
 import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {
@@ -16,6 +17,22 @@ export class ProductsDetailComponent extends Component {
 			this.visibleItems = this.items.slice(0, Math.min(4, this.items.length));
 			this.pushChanges();
 		});
+	}
+
+	isAddedToCart(item) {
+		return CartService.hasItem(item);
+	}
+
+	onAddToCart(item) {
+		if (this.isAddedToCart(item)) {
+			CartService.setActive(true);
+		} else {
+			CartService.addItem$(item).pipe(
+				first(),
+			).subscribe(_ => {
+				this.pushChanges();
+			});
+		}
 	}
 
 	scrollTo(id) {
@@ -43,7 +60,7 @@ export class ProductsDetailComponent extends Component {
 		}
 		const { node } = getContext(this);
 		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
+		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 
 	configureProduct(item) {

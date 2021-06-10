@@ -29,14 +29,14 @@ export class FilesComponent extends Component {
 	}
 
 	onToggleFile(file) {
-		(this.hasFile(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(
+		(this.isAddedToFiles(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(
 			first(),
 		).subscribe(_ => {
 			this.pushChanges();
 		});
 	}
 
-	hasFile(file) {
+	isAddedToFiles(file) {
 		return FilesService.hasFile(file);
 	}
 

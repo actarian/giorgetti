@@ -10,7 +10,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		overflow: hidden;
+		overflow: visible;
 		width: 100%;
 
 		&>img {
@@ -31,10 +31,11 @@
 		letter-spacing: -0.015em;
 		text-transform: uppercase;
 
-		&>span {
+		&>em {
 			display: block;
 			margin-bottom: 72px;
 			font-family: $font-secondary;
+			font-style: normal;
 			line-height: 1.2;
 			letter-spacing: 0.03em;
 			color: #6A6A6A;
@@ -67,16 +68,9 @@
 			height: 24px;
 		}
 
-		@include media-up(md) {
-			min-width: 280px;
-		}
-
-		@include media-between(sm, md) {
-			min-width: 200px;
-		}
-
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 
@@ -107,9 +101,22 @@
 		.card__title {
 			font-size: 140px;
 
-			&>span {
+			&>em {
 				font-size: 48px;
 			}
+		}
+
+		.card__cta {
+			display: flex;
+			align-items: center;
+
+			.btn--more {
+				flex: 1 1 280px;
+			}
+		}
+
+		.btn--more+.btn--more {
+			margin-left: 20px;
 		}
 	}
 
@@ -126,6 +133,21 @@
 
 		.card__title {
 			font-size: 72px;
+		}
+
+		.card__cta {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			margin-bottom: 60px;
+
+			.btn--more {
+				min-width: 280px;
+			}
+		}
+
+		.btn--more+.btn--more {
+			margin-top: 20px;
 		}
 	}
 }
@@ -238,10 +260,11 @@
 		text-align: center;
 		text-transform: uppercase;
 
-		&>span {
+		&>em {
 			display: block;
 			margin-bottom: 20px;
 			color: #6A6A6A;
+			font-style: normal;
 		}
 	}
 
@@ -557,7 +580,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 
@@ -661,7 +685,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 }

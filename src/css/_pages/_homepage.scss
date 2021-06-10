@@ -83,7 +83,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 
@@ -207,7 +208,7 @@
 		line-height: 1.2;
 		text-transform: uppercase;
 
-		em {
+		&>em {
 			font-style: normal;
 			color: #6a6a6a;
 		}
@@ -282,7 +283,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 
@@ -848,7 +850,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 

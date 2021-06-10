@@ -32,7 +32,8 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 						<p>Prodotti funzionali, contemporanei e dallo stile atipico e inconfondibile, in grado di conciliare la più alta tradizione ebanistica con l’impiego di sofisticate tecnologie produttive.</p>
 					</div>
 					<div class="group--cta">
-						<a href="/giorgetti/dealers.html" class="btn--more">Cerca Agenti</button>
+						<a href="/giorgetti/dealers.html" class="btn--more">Cerca Agenti</a>
+						<a href="/giorgetti/contacts.html#contacts" class="btn--more" (click)="scrollTo('#contacts', $event)">Contattaci</a>
 					</div>
 				</div>
 			</div>
@@ -145,7 +146,7 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 		</div>
 	</div>
 
-	<div class="section--form" contacts>
+	<div class="section--form" id="contacts">
 		<div class="container" *if="!success">
 			<div class="title">Richiesta Di Contatto</div>
 			<div class="row">

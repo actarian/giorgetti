@@ -1,7 +1,8 @@
 import { Component, getContext } from 'rxcomp';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { ModalResolveEvent, ModalService } from './common/modal/modal.service';
 import { environment } from './environment';
+import { CartService } from './shared/cart/cart.service';
 import { UserService } from './shared/user/user.service';
 
 export class AppComponent extends Component {
@@ -10,6 +11,16 @@ export class AppComponent extends Component {
 		const { node } = getContext(this);
 		node.classList.remove('hidden');
 		console.log('AppComponent.onInit');
+		this.showCart = false;
+		CartService.active$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(active => {
+			this.showCart = active;
+			this.pushChanges();
+		});
+		CartService.items$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(_ => this.pushChanges());
 	}
 
 	onLogin() {
@@ -41,6 +52,19 @@ export class AppComponent extends Component {
 			*/
 		});
 	}
+
+	onAddToCart(item) {
+		CartService.addItem$(item).pipe(
+			first(),
+		).subscribe(_ => {
+			this.pushChanges();
+		});
+	}
+
+	onOpenMiniCart() {
+		CartService.setActive(true);
+	}
+
 }
 
 AppComponent.meta = {

@@ -28,10 +28,10 @@
 						<button type="button" (click)="onToggleSearch($event)"><svg class="search"><use xlink:href="#search"></use></svg></button>
 					</li>
 					<li class="nav__item">
-						<button type="button" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg></button>
+						<button type="button" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
 					</li>
 				</ul>
-				<button type="button" class="btn--cart" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg></button>
+				<button type="button" class="btn--cart" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
 			</div>
 		</div>
 		<div class="group--main" [class]="{ active: show == 'menu' }">

@@ -1,0 +1,41 @@
+<!-- cart-mini -->
+<div cart-mini *if="showCart">
+	<div class="section--cart-mini">
+		<div class="container">
+			<div class="group--cart-mini">
+				<div class="title"><span>Carrello (<em [innerHTML]="items.length"></em>)</span> <button type="button" class="btn--close" (click)="onClose($event)"><svg class="close"><use xlink:href="#close"></use></svg></button></div>
+				<div class="abstract" *if="items.length === 0">
+					Il carrello è vuoto.
+				</div>
+				<div class="listing--cart-mini">
+					<div class="listing__item" *for="let item of items">
+						<div class="card--cart-item">
+							<span class="card__picture">
+								<img loading="lazy" [src]="item.image" />
+								<span class="over">
+									<span class="over__title" [innerHTML]="item.title"></span>
+								</span>
+							</span>
+							<div class="card__content">
+								<a [href]="item.url" class="card__title" [innerHTML]="item.title" [title]="item.title"></a>
+								<div class="card__cta">
+									<button type="button" class="btn--action" (click)="onDecrement(item)">
+										<svg class="decrement"><use xlink:href="#decrement"></use></svg>
+									</button>
+									<div class="count" [innerHTML]="item.qty"></div>
+									<button type="button" class="btn--action" (click)="onIncrement(item)">
+										<svg class="increment"><use xlink:href="#increment"></use></svg>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="group--cta">
+					<button type="button" class="btn--buy" (click)="onBuy($event)">Acquista</button>
+					<button type="button" class="btn--secondary" (click)="onRemoveAll($event)">Rimuovi tutti</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

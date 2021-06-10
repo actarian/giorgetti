@@ -1,7 +1,7 @@
 import { getContext } from 'rxcomp';
 import { takeUntil } from 'rxjs/operators';
-import { DropdownDirective } from '../dropdown/dropdown.directive';
-import { KeyboardService } from '../keyboard/keyboard.service';
+import { DropdownDirective } from '../common/dropdown/dropdown.directive';
+import { KeyboardService } from '../common/keyboard/keyboard.service';
 import { ControlComponent } from './control.component';
 
 export class ControlCustomSelectComponent extends ControlComponent {
@@ -116,6 +116,7 @@ export class ControlCustomSelectComponent extends ControlComponent {
 	get isMultiple() {
 		return this.multiple && this.multiple !== false && this.multiple !== 'false';
 	}
+
 }
 
 ControlCustomSelectComponent.meta = {

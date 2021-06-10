@@ -17,6 +17,7 @@ export class ControlsComponent extends Component {
 	getControl(name) {
 		return this.group.get(name);
 	}
+
 }
 
 ControlsComponent.meta = {

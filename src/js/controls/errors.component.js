@@ -1,11 +1,13 @@
-import { LabelPipe } from '../label/label.pipe';
+import { LabelPipe } from '../common/label/label.pipe';
 import { ControlComponent } from './control.component';
 
 export class ErrorsComponent extends ControlComponent {
+
 	getLabel(key, value) {
 		const label = LabelPipe.transform(`error_${key}`);
 		return label;
 	}
+
 }
 
 ErrorsComponent.meta = {

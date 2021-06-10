@@ -41,8 +41,6 @@
 
 	.modal__inner {
 		display: block;
-		padding-top: 50px;
-		padding-bottom: 80px;
 	}
 
 	.fieldset {
@@ -66,6 +64,7 @@
 		max-height: calc(100vh - 200px);
 
 		.modal__inner {
+			padding: 50px 30px 80px 30px;
 			height: 600px;
 			max-height: 100%;
 			overflow-x: hidden;
@@ -110,7 +109,7 @@
 		}
 
 		.modal__inner {
-			padding-bottom: 120px;
+			padding: 50px 0 120px 0;
 		}
 
 		.listing--form {

@@ -4,16 +4,6 @@ import { DropdownItemDirective } from './dropdown/dropdown-item.directive';
 import { DropdownDirective } from './dropdown/dropdown.directive';
 import { EnvPipe } from './env/env.pipe';
 import { FlagPipe } from './flag/flag.pipe';
-import { ControlCheckboxComponent } from './forms/control-checkbox.component';
-import { ControlCustomSelectComponent } from './forms/control-custom-select.component';
-import { ControlEmailComponent } from './forms/control-email.component';
-import { ControlFileComponent } from './forms/control-file.component';
-import { ControlPasswordComponent } from './forms/control-password.component';
-import { ControlSearchComponent } from './forms/control-search.component';
-import { ControlTextComponent } from './forms/control-text.component';
-import { ControlTextareaComponent } from './forms/control-textarea.component';
-import { ErrorsComponent } from './forms/errors.component';
-import { TestComponent } from './forms/test.component';
 import { HtmlPipe } from './html/html.pipe';
 import { IdDirective } from './id/id.directive';
 import { LabelForDirective } from './label-for/label-for.directive';
@@ -27,22 +17,11 @@ import { ThronComponent } from './thron/thron.component';
 import { TitleDirective } from './title/title.directive';
 
 const factories = [
-	ControlCheckboxComponent,
-	ControlCustomSelectComponent,
-	ControlEmailComponent,
-	ControlFileComponent,
-	ControlPasswordComponent,
-	// ControlSelectComponent,
-	ControlSearchComponent,
-	ControlTextareaComponent,
-	ControlTextComponent,
-	// DisabledDirective,
 	DownloadDirective,
 	// DropDirective,
 	DropdownDirective,
 	DropdownItemDirective,
 	// DropdownItemDirective,
-	ErrorsComponent,
 	IdDirective,
 	LabelForDirective,
 	// LanguageComponent,
@@ -53,11 +32,9 @@ const factories = [
 	ScrollDirective,
 	// SvgIconStructure,
 	SwiperDirective,
-	TestComponent,
 	ThronComponent,
 	TitleDirective,
 	// UploadItemComponent,
-	// ValueDirective,
 	// VirtualStructure
 ];
 

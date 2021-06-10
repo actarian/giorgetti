@@ -182,7 +182,8 @@
 		}
 
 		@include media-down(xs) {
-			min-width: 280px;
+			display: block;
+			width: 100%;
 		}
 	}
 

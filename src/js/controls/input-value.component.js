@@ -3,6 +3,7 @@ import { fromEvent, interval, merge, race } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 export class InputValueComponent extends Component {
+
 	onInit() {
 		this.label = this.label || 'label';
 		this.value = this.value || 0;
@@ -96,14 +97,17 @@ export class InputValueComponent extends Component {
 			})
 		);
 	}
+
 	getValue() {
 		return this.value.toFixed(this.precision);
 	}
+
 	setValue(sign) {
 		this.value += this.increment * sign;
 		this.update.next(this.value);
 		this.pushChanges();
 	}
+
 }
 
 InputValueComponent.meta = {

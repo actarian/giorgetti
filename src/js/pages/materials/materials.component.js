@@ -4,9 +4,9 @@ import { combineLatest } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { FilterMode } from '../../common/filter/filter-item';
 import { FilterService } from '../../common/filter/filter.service';
-import { FormService } from '../../common/forms/form.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalService } from '../../common/modal/modal.service';
+import { FormService } from '../../controls/form.service';
 import { environment } from '../../environment';
 import { MaterialsService } from './materials.service';
 
@@ -151,7 +151,7 @@ export class MaterialsComponent extends Component {
 		}
 		const { node } = getContext(this);
 		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 160 });
+		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 
 	clearFilter(event, filter) {

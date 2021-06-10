@@ -1,11 +1,11 @@
 import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil, tap } from 'rxjs/operators';
-import { FormService } from '../../common/forms/form.service';
-import MatchValidator from '../../common/forms/match.validator';
-import RequiredIfValidator from '../../common/forms/required-if.validator';
 import { GtmService } from '../../common/gtm/gtm.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { FormService } from '../../controls/form.service';
+import MatchValidator from '../../controls/match.validator';
+import RequiredIfValidator from '../../controls/required-if.validator';
 import { UserService } from './user.service';
 
 export class UserSignupComponent extends Component {
