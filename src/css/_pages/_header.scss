@@ -452,7 +452,7 @@
 				transition: transform ease-in-out $fast;
 			}
 
-			&:not([data-picture]) {
+			&.all {
 				font-weight: $font-bold;
 
 				&:after {
@@ -469,7 +469,7 @@
 					transform: scale(1, 1);
 				}
 
-				&:not([data-picture]) {
+				&.all {
 					font-weight: $font-bold;
 					transform: scale(1, 1);
 

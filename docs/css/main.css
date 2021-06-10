@@ -4629,17 +4629,17 @@ test-component code {
         transform: scale(0, 1);
         transform-origin: left;
         transition: transform ease-in-out 250ms; }
-      .nav--submenu > .nav__item > a:not([data-picture]) {
+      .nav--submenu > .nav__item > a.all {
         font-weight: var(--font-bold); }
-        .nav--submenu > .nav__item > a:not([data-picture]):after {
+        .nav--submenu > .nav__item > a.all:after {
           transform-origin: right;
           transform: scale(1, 1); }
     .nav--submenu > .nav__item:hover > a:after, .nav--submenu > .nav__item.active > a:after {
       transform: scale(1, 1); }
-    .nav--submenu > .nav__item:hover > a:not([data-picture]), .nav--submenu > .nav__item.active > a:not([data-picture]) {
+    .nav--submenu > .nav__item:hover > a.all, .nav--submenu > .nav__item.active > a.all {
       font-weight: var(--font-bold);
       transform: scale(1, 1); }
-      .nav--submenu > .nav__item:hover > a:not([data-picture]):after, .nav--submenu > .nav__item.active > a:not([data-picture]):after {
+      .nav--submenu > .nav__item:hover > a.all:after, .nav--submenu > .nav__item.active > a.all:after {
         transform: scale(0, 1); }
   @media (max-width: 767.98px) {
     .nav--submenu {

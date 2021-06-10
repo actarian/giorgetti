@@ -32,11 +32,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--reacap">
+				<div class="group--reacap" *if="items.length">
 					<span>Totale</span>
 					<span class="price" [innerHTML]="total | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
 				</div>
-				<div class="group--cta">
+				<div class="group--cta" *if="items.length">
 					<button type="button" class="btn--buy" (click)="onBuy($event)">Acquista</button>
 					<button type="button" class="btn--secondary" (click)="onRemoveAll($event)">Rimuovi tutti</button>
 				</div>
