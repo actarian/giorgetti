@@ -1,14 +1,10 @@
 import { Component, getContext } from 'rxcomp';
-import { first } from 'rxjs/operators';
-import { HttpService } from '../../common/http/http.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;`;
 const titleStyle = `letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;`;
 const designerStyle = `font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;`;
 const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;`;
-
-const key = 'a9$hhVGHxos';
 
 export class ProductsConfigureComponent extends Component {
 
@@ -23,13 +19,15 @@ export class ProductsConfigureComponent extends Component {
 		}
 		this.onEvent = this.onEvent.bind(this);
 
+		/*
 		HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', { grant_type: 'client_credentials' }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(
 			first(),
 		).subscribe(response => {
 			console.log(response);
 		});
+		*/
 
-		const sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
+		const sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
 		sfy.init();
 		console.log('ProductsConfigureComponent.onInit', sfy, iframe);
 	}
@@ -228,4 +226,5 @@ export class ProductsConfigureComponent extends Component {
 
 ProductsConfigureComponent.meta = {
 	selector: '[products-configure]',
+	inputs: ['token'],
 };

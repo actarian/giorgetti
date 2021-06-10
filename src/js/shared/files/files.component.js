@@ -59,7 +59,7 @@ export class FilesComponent extends Component {
 		});
 	}
 
-	onRemoveAll() {
+	onRemoveAll(event) {
 		FilesService.removeAll$().pipe(
 			first(),
 		).subscribe();

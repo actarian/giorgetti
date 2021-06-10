@@ -33,7 +33,11 @@ export class CartMiniComponent extends Component {
 		).subscribe();
 	}
 
-	onRemoveAll() {
+	onBuy(event) {
+		console.log('CartMiniComponent.onBuy');
+	}
+
+	onRemoveAll(event) {
 		CartService.removeAll$().pipe(
 			first(),
 		).subscribe();

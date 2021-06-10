@@ -4734,7 +4734,6 @@ NewsletterComponent.meta = {
 var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
 var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;";
 var descriptionStyle = "font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;";
-var key = 'a9$hhVGHxos';
 var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ProductsConfigureComponent, _Component);
 
@@ -4759,12 +4758,15 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     }
 
     this.onEvent = this.onEvent.bind(this);
-    HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', {
-      grant_type: 'client_credentials'
-    }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(operators.first()).subscribe(function (response) {
-      console.log(response);
+    /*
+    HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', { grant_type: 'client_credentials' }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(
+    	first(),
+    ).subscribe(response => {
+    	console.log(response);
     });
-    var sfy = this.sfy = new SFYFrame(iframe, key, this.onEvent);
+    */
+
+    var sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
     sfy.init();
     console.log('ProductsConfigureComponent.onInit', sfy, iframe);
   };
@@ -4975,7 +4977,8 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   return ProductsConfigureComponent;
 }(rxcomp.Component);
 ProductsConfigureComponent.meta = {
-  selector: '[products-configure]'
+  selector: '[products-configure]',
+  inputs: ['token']
 };var ProductsDetailService = /*#__PURE__*/function () {
   function ProductsDetailService() {}
 
@@ -8057,7 +8060,11 @@ SwiperProjectsPropositionDirective.meta = {
     CartService.decrementItem$(item).pipe(operators.first()).subscribe();
   };
 
-  _proto.onRemoveAll = function onRemoveAll() {
+  _proto.onBuy = function onBuy(event) {
+    console.log('CartMiniComponent.onBuy');
+  };
+
+  _proto.onRemoveAll = function onRemoveAll(event) {
     CartService.removeAll$().pipe(operators.first()).subscribe();
   };
 
@@ -8145,7 +8152,7 @@ CartMiniComponent.meta = {
     });
   };
 
-  _proto.onRemoveAll = function onRemoveAll() {
+  _proto.onRemoveAll = function onRemoveAll(event) {
     FilesService.removeAll$().pipe(operators.first()).subscribe();
   };
 
