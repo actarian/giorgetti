@@ -86,8 +86,8 @@ export class LocomotiveScrollService {
 					instance.on('scroll', instance => {
 						LocomotiveScrollService.scroll(instance);
 						if (showefy) {
-							const isShowefyDisable = instance.speed > 0.5;
-							if (isShowefyDisable) {
+							const isShowefyDisabled = instance.speed > 0.1;
+							if (isShowefyDisabled) {
 								if (showefy.style.pointerEvents !== 'none') {
 									showefy.style.pointerEvents = 'none';
 								}

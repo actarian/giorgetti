@@ -1629,9 +1629,9 @@ LabelForDirective.meta = {
           LocomotiveScrollService.scroll(instance);
 
           if (showefy) {
-            var isShowefyDisable = instance.speed > 0.5;
+            var isShowefyDisabled = instance.speed > 0.1;
 
-            if (isShowefyDisable) {
+            if (isShowefyDisabled) {
               if (showefy.style.pointerEvents !== 'none') {
                 showefy.style.pointerEvents = 'none';
               }
@@ -5115,6 +5115,12 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 
   _proto.onButtonPressed = function onButtonPressed(event) {
     console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
+
+    switch (event.data.id) {
+      case 'order':
+        this.sfy.getProductExtData();
+        break;
+    }
   };
 
   _proto.onSetButtonStatus = function onSetButtonStatus(event) {
@@ -5127,6 +5133,19 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 
   _proto.onGetProductExtData = function onGetProductExtData(event) {
     console.log('ProductsConfigureComponent.onGetProductExtData', event);
+    console.log('ProductsConfigureComponent.getProductExtData', event.status, event.data);
+
+    if (event.status === 0) {
+      var data = event.data;
+      var cartItem = this.product;
+      cartItem.showefy = data;
+
+      if (data.image) {
+        cartItem.image = data.image;
+      }
+
+      CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
+    }
   };
 
   _proto.onGetFastProductExtData = function onGetFastProductExtData(event) {
@@ -5235,7 +5254,7 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 }(rxcomp.Component);
 ProductsConfigureComponent.meta = {
   selector: '[products-configure]',
-  inputs: ['token']
+  inputs: ['token', 'product']
 };var ProductsDetailService = /*#__PURE__*/function () {
   function ProductsDetailService() {}
 

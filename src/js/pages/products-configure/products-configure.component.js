@@ -1,5 +1,7 @@
 import { Component, getContext } from 'rxcomp';
+import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { CartService } from '../../shared/cart/cart.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;`;
 const titleStyle = `letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;`;
@@ -114,6 +116,11 @@ export class ProductsConfigureComponent extends Component {
 
 	onButtonPressed(event) {
 		console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
+		switch (event.data.id) {
+			case 'order':
+				this.sfy.getProductExtData();
+				break;
+		}
 	}
 
 	onSetButtonStatus(event) {
@@ -126,6 +133,18 @@ export class ProductsConfigureComponent extends Component {
 
 	onGetProductExtData(event) {
 		console.log('ProductsConfigureComponent.onGetProductExtData', event);
+		console.log('ProductsConfigureComponent.getProductExtData', event.status, event.data);
+		if (event.status === 0) {
+			const data = event.data;
+			const cartItem = this.product;
+			cartItem.showefy = data;
+			if (data.image) {
+				cartItem.image = data.image;
+			}
+			CartService.addItem$(cartItem).pipe(
+				first(),
+			).subscribe();
+		}
 	}
 
 	onGetFastProductExtData(event) {
@@ -226,5 +245,5 @@ export class ProductsConfigureComponent extends Component {
 
 ProductsConfigureComponent.meta = {
 	selector: '[products-configure]',
-	inputs: ['token'],
+	inputs: ['token', 'product'],
 };

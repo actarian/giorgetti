@@ -6196,7 +6196,7 @@ test-component code {
   border: none;
   background: none;
   width: 100%;
-  min-height: 1024px; }
+  height: calc(100vh - 130px); }
   .section--products-configure iframe .header {
     display: none; }
 
