@@ -1,14 +1,60 @@
 [swiper-gallery] {
 	@extend %swiper-hero;
+	align-items: stretch;
 	overflow: visible;
-	margin-left: -50px;
-	margin-right: -50px;
-	width: calc(100% + 100px);
-	padding: 0 50px;
 
 	.swiper-slide {
 		width: auto;
+		height: auto;
 		max-width: 100%;
+
+		.card--gallery {
+			height: 100%;
+
+			&>.card__picture {
+				flex: 1 0 auto;
+			}
+		}
+	}
+
+	@include media-up(xl) {
+		$gutter: 70px;
+		margin: 0px -$gutter;
+		margin-bottom: $gutter;
+		width: calc(100% + #{2 * $gutter});
+		padding: 0 $gutter;
+	}
+
+	@include media-between(lg, xl) {
+		$gutter: 60px;
+		margin: 0px -$gutter;
+		margin-bottom: $gutter;
+		width: calc(100% + #{2 * $gutter});
+		padding: 0 $gutter;
+	}
+
+	@include media-between(md, lg) {
+		$gutter: 50px;
+		margin: 0px -$gutter;
+		margin-bottom: $gutter;
+		width: calc(100% + #{2 * $gutter});
+		padding: 0 $gutter;
+	}
+
+	@include media-between(sm, md) {
+		$gutter: 40px;
+		margin: 0px -$gutter;
+		margin-bottom: $gutter;
+		width: calc(100% + #{2 * $gutter});
+		padding: 0 $gutter;
+	}
+
+	@include media-down(xs) {
+		$gutter: 30px;
+		margin: 0px -$gutter;
+		margin-bottom: $gutter;
+		width: calc(100% + #{2 * $gutter});
+		padding: 0 $gutter;
 	}
 }
 
@@ -17,7 +63,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	margin-bottom: 60px;
 	max-width: 100%;
 
 	&>.card__picture {
@@ -26,8 +71,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 69vh;
-		max-height: 720px;
+		// height: 69vh;
+		// max-height: 720px;
+		max-height: 69vh;
 		max-width: 100%;
 		overflow: hidden;
 
