@@ -5001,6 +5001,14 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   var _proto = ProductsConfigureComponent.prototype;
 
   _proto.onInit = function onInit() {
+    this.codprod = LocationService.get('codprod');
+    this.sl = LocationService.get('sl');
+    console.log(this.codprod);
+
+    if (!this.codprod) {
+      throw 'ProductsConfigureComponent.error missing codprod';
+    }
+
     this.isReady = false;
     this.isComplete = false;
     this.isConfiguring = false;
@@ -5196,7 +5204,8 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     buttons.element[index].visibility = true;
     buttons.element[index].id = 'order';
     buttons.element[index].label = new sfy.LABEL();
-    buttons.element[index].label.en = 'ADD TO CART';
+    buttons.element[index].label.it = 'Aggiungi al carrello';
+    buttons.element[index].label.en = 'Add to cart';
     index++;
     /*
     buttons.element[index] = new sfy.PROPERTIES();
@@ -5259,6 +5268,15 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   }
   */
   ;
+
+  _createClass(ProductsConfigureComponent, [{
+    key: "showefyUrl",
+    get: function get() {
+      if (this.codprod) {
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=P&codprod=" + this.codprod + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+      }
+    }
+  }]);
 
   return ProductsConfigureComponent;
 }(rxcomp.Component);
@@ -5338,13 +5356,14 @@ ProductsConfigureComponent.meta = {
   };
 
   _proto.configureProduct = function configureProduct(item) {
-    window.location.href = environment.slug.configureProduct;
+    window.location.href = environment.slug.configureProduct + "?codprod=" + this.product.code;
   };
 
   return ProductsDetailComponent;
 }(rxcomp.Component);
 ProductsDetailComponent.meta = {
-  selector: '[products-detail]'
+  selector: '[products-detail]',
+  inputs: ['product']
 };// import { combineLatest } from 'rxjs';
 var ProductsService = /*#__PURE__*/function () {
   function ProductsService() {}
@@ -8323,6 +8342,11 @@ SwiperProjectsPropositionDirective.meta = {
 
   _proto.onDecrement = function onDecrement(item) {
     CartService.decrementItem$(item).pipe(operators.first()).subscribe();
+  };
+
+  _proto.onEdit = function onEdit(item) {
+    console.log('CartMiniComponent.onEdit', item);
+    window.location.href = environment.slug.configureProduct + "?codprod=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   };
 
   _proto.onBuy = function onBuy(event) {

@@ -1,6 +1,8 @@
 import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
+import { LocationService } from '../../common/location/location.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { environment } from '../../environment';
 import { CartService } from '../../shared/cart/cart.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;`;
@@ -10,7 +12,19 @@ const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px
 
 export class ProductsConfigureComponent extends Component {
 
+	get showefyUrl() {
+		if (this.codprod) {
+			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=P&codprod=${this.codprod}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
+		}
+	}
+
 	onInit() {
+		this.codprod = LocationService.get('codprod');
+		this.sl = LocationService.get('sl');
+		console.log(this.codprod);
+		if (!this.codprod) {
+			throw ('ProductsConfigureComponent.error missing codprod');
+		}
 		this.isReady = false;
 		this.isComplete = false;
 		this.isConfiguring = false;
@@ -188,7 +202,8 @@ export class ProductsConfigureComponent extends Component {
 		buttons.element[index].visibility = true;
 		buttons.element[index].id = 'order';
 		buttons.element[index].label = new sfy.LABEL();
-		buttons.element[index].label.en = 'ADD TO CART';
+		buttons.element[index].label.it = 'Aggiungi al carrello';
+		buttons.element[index].label.en = 'Add to cart';
 		index++;
 
 		/*

@@ -10,10 +10,10 @@
 				<div class="listing--cart-mini">
 					<div class="listing__item" *for="let item of items">
 						<div class="card--cart-item">
-							<div class="card__picture">
+							<div class="card__picture" (click)="onEdit(item)">
 								<img loading="lazy" [src]="item.image" />
 								<div class="over">
-									<div class="over__title" [innerHTML]="item.title"></div>
+									<div class="over__title">Configura</div>
 								</div>
 								<div class="price" *if="item.price" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
 							</div>

@@ -1,5 +1,6 @@
 import { Component } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
+import { environment } from '../../environment';
 import { CartService } from './cart.service';
 
 export class CartMiniComponent extends Component {
@@ -31,6 +32,11 @@ export class CartMiniComponent extends Component {
 		CartService.decrementItem$(item).pipe(
 			first(),
 		).subscribe();
+	}
+
+	onEdit(item) {
+		console.log('CartMiniComponent.onEdit', item);
+		window.location.href = `${environment.slug.configureProduct}?codprod=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
 	}
 
 	onBuy(event) {

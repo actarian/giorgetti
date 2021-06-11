@@ -1,7 +1,7 @@
 <!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
 <!-- @@block = main-->
 
-<main class="main" products-detail>
+<main class="main" products-detail [product]="{ 'id': 1, 'code': 63230, 'url': '/giorgetti/products-detail.html', 'image': '/giorgetti/img/products/572_n_LISTING_progetti.jpg', 'title': 'Progetti', 'price': 899, 'qty': 1 }">
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -28,7 +28,7 @@
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
 							<div class="card__cta">
 								<button type="button" class="btn--more" (locomotiveScrollTo)="'#versions'">Scopri le versioni</button>
-								<button type="button" class="btn--more" (click)="onAddToCart({ 'id': 1, 'url' : '/giorgetti/products-detail.html' , 'image' : '/giorgetti/img/products/3775_n_LISTING_adam.jpg' , 'title' : 'Adam <em>Divano</em>', 'price': 3999, 'qty': 1 })">
+								<button type="button" class="btn--more" (click)="onAddToCart(product)">
 									<span *if="!isAddedToCart({ 'id': 1 })">Acquista</span>
 									<span *if="isAddedToCart({ 'id': 1 })">Vai al carrello</span>
 								</button>

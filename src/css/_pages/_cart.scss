@@ -7,6 +7,7 @@
 		display: block;
 		@include aspect-clip(1, 1);
 		margin-bottom: 20px;
+		cursor: pointer;
 
 		img {
 			transition: transform ease-in-out $fast;
@@ -44,9 +45,9 @@
 			transition: opacity ease-in-out $fast;
 
 			&__title {
-				margin-bottom: 20px;
+				margin-top: 20px;
 				font-family: $font-secondary;
-				font-size: 48px;
+				font-size: 19px;
 				line-height: 1.2;
 				text-align: center;
 				letter-spacing: -0.041em;
@@ -89,7 +90,7 @@
 			}
 
 			.over {
-				opacity: 0;
+				opacity: 1;
 			}
 		}
 	}

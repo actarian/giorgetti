@@ -10265,7 +10265,8 @@ test-component code {
     width: 100%;
     padding-top: 100%;
     overflow: hidden;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    cursor: pointer; }
     .card--cart-item > .card__picture > img,
     .card--cart-item > .card__picture > svg,
     .card--cart-item > .card__picture > video,
@@ -10312,9 +10313,9 @@ test-component code {
       pointer-events: none;
       transition: opacity ease-in-out 250ms; }
       .card--cart-item > .card__picture .over__title {
-        margin-bottom: 20px;
+        margin-top: 20px;
         font-family: var(--font-secondary);
-        font-size: 48px;
+        font-size: 19px;
         line-height: 1.2;
         text-align: center;
         letter-spacing: -0.041em;
@@ -10341,7 +10342,7 @@ test-component code {
   .card--cart-item:hover > .card__picture img {
     transform: scale(1.1, 1.1); }
   .card--cart-item:hover > .card__picture .over {
-    opacity: 0; }
+    opacity: 1; }
   .card--cart-item > .card__content {
     display: flex;
     justify-content: space-between;

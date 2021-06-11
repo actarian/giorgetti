@@ -55,10 +55,11 @@ export class ProductsDetailComponent extends Component {
 	}
 
 	configureProduct(item) {
-		window.location.href = environment.slug.configureProduct;
+		window.location.href = `${environment.slug.configureProduct}?codprod=${this.product.code}`;
 	}
 }
 
 ProductsDetailComponent.meta = {
 	selector: '[products-detail]',
+	inputs: ['product'],
 };
