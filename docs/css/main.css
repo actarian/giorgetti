@@ -6191,16 +6191,14 @@ test-component code {
 .hidden {
   display: none; }
 
-.section--products-configure {
-  padding: 240px 0; }
-  .section--products-configure iframe {
-    position: relative;
-    border: none;
-    background: none;
-    width: 100%;
-    min-height: 1024px; }
-    .section--products-configure iframe .header {
-      display: none; }
+.section--products-configure iframe {
+  position: relative;
+  border: none;
+  background: none;
+  width: 100%;
+  min-height: 1024px; }
+  .section--products-configure iframe .header {
+    display: none; }
 
 .card--hero-project {
   position: relative;

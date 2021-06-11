@@ -1624,8 +1624,23 @@ LabelForDirective.meta = {
       var instance = LocomotiveScrollService.init(node);
 
       if (instance) {
+        var showefy = document.querySelector('#showefy');
         instance.on('scroll', function (instance) {
           LocomotiveScrollService.scroll(instance);
+
+          if (showefy) {
+            var isShowefyDisable = instance.speed > 0.5;
+
+            if (isShowefyDisable) {
+              if (showefy.style.pointerEvents !== 'none') {
+                showefy.style.pointerEvents = 'none';
+              }
+            } else {
+              if (showefy.style.pointerEvents === 'none') {
+                showefy.style.pointerEvents = 'auto';
+              }
+            }
+          }
         });
       } else {
         var event = {

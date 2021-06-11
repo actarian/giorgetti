@@ -82,8 +82,21 @@ export class LocomotiveScrollService {
 				// setTimeout(() => {
 				const instance = LocomotiveScrollService.init(node);
 				if (instance) {
+					const showefy = document.querySelector('#showefy');
 					instance.on('scroll', instance => {
 						LocomotiveScrollService.scroll(instance);
+						if (showefy) {
+							const isShowefyDisable = instance.speed > 0.5;
+							if (isShowefyDisable) {
+								if (showefy.style.pointerEvents !== 'none') {
+									showefy.style.pointerEvents = 'none';
+								}
+							} else {
+								if (showefy.style.pointerEvents === 'none') {
+									showefy.style.pointerEvents = 'auto';
+								}
+							}
+						}
 					});
 				} else {
 					const event = { direction: null, scroll: { x: 0, y: 0 }, speed: 0 };
