@@ -59,7 +59,12 @@ export class ReservedAreaComponent extends Component {
 	}
 
 	showMore(event) {
-		this.visibleFiles = this.files.slice();
+		const pageSize = 32;
+		if (this.visibleFiles.length + pageSize >= this.files.length) {
+			this.visibleFiles = this.files.slice();
+		} else {
+			this.visibleFiles = this.files.slice(0, Math.min(this.visibleFiles.length + pageSize, this.files.length));
+		}
 		this.pushChanges();
 		LocomotiveScrollService.update();
 	}

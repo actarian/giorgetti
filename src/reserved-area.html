@@ -96,8 +96,8 @@
 							<div class="listing--files">
 								<div class="listing__item" *for="let file of visibleFiles">
 									<div class="card--file">
-										<div class="card__picture" *if="file.url.indexOf('.jpg') !== -1">
-											<img loading="lazy" [src]="file.url" />
+										<div class="card__picture" *if="file.image">
+											<img loading="lazy" [src]="file.image" />
 										</div>
 										<div class="card__content">
 											<div class="card__name" [innerHTML]="file.title" [title]="file.title"></div>

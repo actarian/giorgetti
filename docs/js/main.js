@@ -5914,7 +5914,14 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
   };
 
   _proto.showMore = function showMore(event) {
-    this.visibleFiles = this.files.slice();
+    var pageSize = 32;
+
+    if (this.visibleFiles.length + pageSize >= this.files.length) {
+      this.visibleFiles = this.files.slice();
+    } else {
+      this.visibleFiles = this.files.slice(0, Math.min(this.visibleFiles.length + pageSize, this.files.length));
+    }
+
     this.pushChanges();
     LocomotiveScrollService.update();
   };
