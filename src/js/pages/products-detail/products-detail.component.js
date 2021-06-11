@@ -54,15 +54,6 @@ export class ProductsDetailComponent extends Component {
 		LocomotiveScrollService.update();
 	}
 
-	scrollTo(selector, event) {
-		if (event) {
-			event.preventDefault();
-		}
-		const { node } = getContext(this);
-		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
-	}
-
 	configureProduct(item) {
 		window.location.href = environment.slug.configureProduct;
 	}

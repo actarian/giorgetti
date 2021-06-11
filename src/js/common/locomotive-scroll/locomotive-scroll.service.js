@@ -123,11 +123,40 @@ export class LocomotiveScrollService {
 		}
 	}
 
-	static scrollTo(target, options) {
+	static scrollTo(target, options = { offset: -130 }) {
 		if (this.instance) {
 			this.instance.scrollTo(target, options);
 		} else {
-			target.scrollIntoView();
+			const body = document.querySelector('body');
+			const currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+			const targetTop = currentTop + target.getBoundingClientRect().top + options.offset;
+			const distance = targetTop - currentTop;
+			const o = { pow: 0 };
+			gsap.set(body, {
+				'scroll-behavior': 'auto'
+			});
+			gsap.to(o, {
+				duration: Math.abs(distance) / 3000,
+				pow: 1,
+				ease: Quad.easeOut,
+				overwrite: 'all',
+				onUpdate: () => {
+					window.scrollTo(0, currentTop + distance * o.pow);
+				},
+				onComplete: () => {
+					gsap.set(body, {
+						'scroll-behavior': 'smooth'
+					});
+				}
+			});
+			// target.scrollIntoView();
+		}
+	}
+
+	static scrollToSelector(selector, options) {
+		const target = document.querySelector(selector);
+		if (target) {
+			LocomotiveScrollService.scrollTo(target, options);
 		}
 	}
 

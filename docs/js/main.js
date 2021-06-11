@@ -162,6 +162,12 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   flags: {
     production: true
   },
+  markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
+  defaultMarket: 'IT',
+  currentMarket: 'IT',
+  languages: ['it', 'en', 'de', 'ch'],
+  defaultLanguage: 'it',
+  currentLanguage: 'it',
   api: '/api',
   assets: '/Client/docs/',
   workers: {
@@ -175,9 +181,10 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   template: {
     modal: {
-      userModal: '/template/common/user-modal.cshtml',
-      projectsRegistrationModal: '/template/common/projects-registration-modal.cshtml',
-      materialsModal: '/template/common/materials-modal.cshtml'
+      userModal: '/template/modals/user-modal.cshtml',
+      projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
+      materialsModal: '/template/modals/materials-modal.cshtml',
+      marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.html'
     }
   },
   googleMaps: {
@@ -187,6 +194,12 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   flags: {
     production: false
   },
+  markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
+  defaultMarket: 'IT',
+  currentMarket: 'IT',
+  languages: ['it', 'en', 'de', 'ch'],
+  defaultLanguage: 'it',
+  currentLanguage: 'it',
   api: '/giorgetti/api',
   assets: '/giorgetti/',
   workers: {
@@ -202,7 +215,8 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     modal: {
       userModal: '/giorgetti/user-modal.html',
       projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
-      materialsModal: '/giorgetti/materials-modal.html'
+      materialsModal: '/giorgetti/materials-modal.html',
+      marketsAndLanguagesModal: '/giorgetti/markets-and-languages-modal.html'
     }
   },
   googleMaps: {
@@ -278,8 +292,12 @@ var defaultOptions = {
     heroku: HEROKU
   },
   slug: {},
+  markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
+  defaultMarket: 'IT',
+  currentMarket: 'IT',
   languages: ['it', 'en'],
   defaultLanguage: 'it',
+  currentLanguage: 'it',
   labels: {
     select: 'Seleziona',
     browse: 'Sfoglia',
@@ -1169,6 +1187,14 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
     });
   };
 
+  _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
+    ModalService.open$({
+      src: environment.template.modal.marketsAndLanguagesModal
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('AppComponent.onOpenMarketAndLanguage', event);
+    });
+  };
+
   _proto.onLogin = function onLogin() {
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -1648,17 +1674,110 @@ LabelForDirective.meta = {
   };
 
   LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
+    if (options === void 0) {
+      options = {
+        offset: -130
+      };
+    }
+
     if (this.instance) {
       this.instance.scrollTo(target, options);
     } else {
-      target.scrollIntoView();
+      var body = document.querySelector('body');
+      var currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+      var targetTop = currentTop + target.getBoundingClientRect().top + options.offset;
+      var distance = targetTop - currentTop;
+      var o = {
+        pow: 0
+      };
+      gsap.set(body, {
+        'scroll-behavior': 'auto'
+      });
+      gsap.to(o, {
+        duration: Math.abs(distance) / 3000,
+        pow: 1,
+        ease: Quad.easeOut,
+        overwrite: 'all',
+        onUpdate: function onUpdate() {
+          window.scrollTo(0, currentTop + distance * o.pow);
+        },
+        onComplete: function onComplete() {
+          gsap.set(body, {
+            'scroll-behavior': 'smooth'
+          });
+        }
+      }); // target.scrollIntoView();
+    }
+  };
+
+  LocomotiveScrollService.scrollToSelector = function scrollToSelector(selector, options) {
+    var target = document.querySelector(selector);
+
+    if (target) {
+      LocomotiveScrollService.scrollTo(target, options);
     }
   };
 
   return LocomotiveScrollService;
 }();
 
-_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var LocomotiveScrollDirective = /*#__PURE__*/function (_Directive) {
+_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var LocomotiveScrollToDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(LocomotiveScrollToDirective, _Directive);
+
+  function LocomotiveScrollToDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = LocomotiveScrollToDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    this.initialFocus = false;
+
+    var _getContext = rxcomp.getContext(this),
+        module = _getContext.module,
+        node = _getContext.node;
+
+    var expression = this.expression = node.getAttribute("(locomotiveScrollTo)");
+    this.outputFunction = module.makeFunction(expression, ['$event']);
+    this.scrollTo$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.scrollTo$ = function scrollTo$() {
+    var _this = this;
+
+    var _getContext2 = rxcomp.getContext(this),
+        module = _getContext2.module,
+        node = _getContext2.node,
+        parentInstance = _getContext2.parentInstance;
+
+    return rxjs.fromEvent(node, 'click').pipe(operators.tap(function (event) {
+      if (event) {
+        event.preventDefault();
+      }
+
+      var selector = module.resolve(_this.outputFunction, parentInstance, event);
+
+      if (typeof selector === 'string') {
+        var target = node.querySelector(selector) || document.querySelector(selector);
+
+        if (target) {
+          var offset = _this.offset;
+          var options = offset ? {
+            offset: offset
+          } : undefined;
+          LocomotiveScrollService.scrollTo(target, options);
+        }
+      }
+    }));
+  };
+
+  return LocomotiveScrollToDirective;
+}(rxcomp.Directive);
+LocomotiveScrollToDirective.meta = {
+  selector: "[(locomotiveScrollTo)]",
+  inputs: ['offset']
+};var LocomotiveScrollDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(LocomotiveScrollDirective, _Directive);
 
   function LocomotiveScrollDirective() {
@@ -2470,7 +2589,7 @@ TitleDirective.meta = {
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
-LocomotiveScrollDirective, // ModalComponent,
+LocomotiveScrollDirective, LocomotiveScrollToDirective, // ModalComponent,
 ModalOutletComponent, ScrollDirective, ShareDirective, // SvgIconStructure,
 SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
@@ -3739,20 +3858,6 @@ var GtmService = /*#__PURE__*/function () {
     }
   };
 
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
-  };
-
   return CareersComponent;
 }(rxcomp.Component);
 CareersComponent.meta = {
@@ -3875,20 +3980,6 @@ CareersComponent.meta = {
     }
   };
 
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
-  };
-
   return ContactsComponent;
 }(rxcomp.Component);
 ContactsComponent.meta = {
@@ -4001,7 +4092,14 @@ ContactsComponent.meta = {
   };
 
   _proto.showMore = function showMore(event) {
-    this.visibleItems = this.filteredItems.slice();
+    var pageSize = 32;
+
+    if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
+      this.visibleItems = this.filteredItems.slice();
+    } else {
+      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+    }
+
     this.pushChanges();
     LocomotiveScrollService.update();
   };
@@ -4178,6 +4276,63 @@ DealersComponent.meta = {
 }(rxcomp.Component);
 DesignersComponent.meta = {
   selector: '[designers]'
+};var MarketsAndLanguagesService = /*#__PURE__*/function () {
+  function MarketsAndLanguagesService() {}
+
+  MarketsAndLanguagesService.all$ = function all$() {
+    return ApiService.get$('/markets-and-languages/all.json');
+  };
+
+  return MarketsAndLanguagesService;
+}();var MarketsAndLanguagesModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MarketsAndLanguagesModalComponent, _Component);
+
+  function MarketsAndLanguagesModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MarketsAndLanguagesModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+    }
+
+    LocomotiveScrollService.stop();
+    this.currentMarket = environment.currentMarket;
+    this.currentLanguage = environment.currentLanguage;
+    this.markets = [];
+    MarketsAndLanguagesService.all$().pipe(operators.first()).subscribe(function (markets) {
+      _this.markets = markets;
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.setMarket = function setMarket(market) {
+    this.currentMarket = market.code;
+    this.pushChanges();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return MarketsAndLanguagesModalComponent;
+}(rxcomp.Component);
+MarketsAndLanguagesModalComponent.meta = {
+  selector: '[markets-and-languages-modal]'
 };var MaterialsModalComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(MaterialsModalComponent, _Component);
 
@@ -4458,7 +4613,7 @@ MaterialsModalComponent.meta = {
     /*
     if (this.selectedItem) {
     	const selector = '#cat-' + item.category.id + '-' + item.id;
-    	this.scrollTo(selector);
+    	LocomotiveScrollService.scrollToSelector(selector);
     }
     */
 
@@ -4466,8 +4621,6 @@ MaterialsModalComponent.meta = {
   };
 
   _proto.onOpenItem = function onOpenItem(item, items) {
-    var _this3 = this;
-
     if (item.items) {
       var active = !item.active;
       this.filteredItems.forEach(function (item_) {
@@ -4512,7 +4665,7 @@ MaterialsModalComponent.meta = {
               node.style.marginBottom = from.pow * height + "px";
             },
             onComplete: function onComplete() {
-              _this3.scrollTo("#material-" + item.id + " .group--subitems");
+              LocomotiveScrollService.scrollToSelector("#material-" + item.id + " .group--subitems");
             }
           });
         }
@@ -4536,8 +4689,6 @@ MaterialsModalComponent.meta = {
   };
 
   _proto.setCategory = function setCategory(category, event) {
-    var _this4 = this;
-
     if (event) {
       event.preventDefault();
     }
@@ -4545,23 +4696,8 @@ MaterialsModalComponent.meta = {
     this.controls.category.value = category.value;
     setTimeout(function () {
       LocomotiveScrollService.update();
-
-      _this4.scrollTo('#category-' + category.value);
+      LocomotiveScrollService.scrollToSelector('#category-' + category.value);
     }, 100);
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
   };
 
   _proto.clearFilter = function clearFilter(event, filter) {
@@ -4830,20 +4966,6 @@ NewsComponent.meta = {
     } else {
       form.touched = true;
     }
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
   };
 
   return NewsletterComponent;
@@ -5169,20 +5291,6 @@ ProductsConfigureComponent.meta = {
 
     this.pushChanges();
     LocomotiveScrollService.update();
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext2 = rxcomp.getContext(this),
-        node = _getContext2.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
   };
 
   _proto.configureProduct = function configureProduct(item) {
@@ -5944,20 +6052,6 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
 
   _proto.isAddedToFiles = function isAddedToFiles(file) {
     return FilesService.hasFile(file);
-  };
-
-  _proto.scrollTo = function scrollTo(selector, event) {
-    if (event) {
-      event.preventDefault();
-    }
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var target = node.querySelector(selector);
-    LocomotiveScrollService.scrollTo(target, {
-      offset: -130
-    });
   };
 
   return ReservedAreaComponent;
@@ -8336,6 +8430,14 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
     this.cart = CartService;
   };
 
+  _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
+    ModalService.open$({
+      src: environment.template.modal.marketsAndLanguagesModal
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('HeaderComponent.onOpenMarketAndLanguage', event);
+    });
+  };
+
   _proto.onLogin = function onLogin() {
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -9069,6 +9171,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

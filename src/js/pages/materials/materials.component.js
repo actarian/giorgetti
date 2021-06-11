@@ -1,4 +1,4 @@
-import { Component, getContext } from 'rxcomp';
+import { Component } from 'rxcomp';
 import { FormControl, FormGroup } from 'rxcomp-form';
 import { combineLatest } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
@@ -115,7 +115,7 @@ export class MaterialsComponent extends Component {
 		/*
 		if (this.selectedItem) {
 			const selector = '#cat-' + item.category.id + '-' + item.id;
-			this.scrollTo(selector);
+			LocomotiveScrollService.scrollToSelector(selector);
 		}
 		*/
 		this.pushChanges();
@@ -156,7 +156,7 @@ export class MaterialsComponent extends Component {
 							node.style.marginBottom = `${from.pow * height}px`;
 						},
 						onComplete: () => {
-							this.scrollTo(`#material-${item.id} .group--subitems`);
+							LocomotiveScrollService.scrollToSelector(`#material-${item.id} .group--subitems`);
 						},
 					});
 				}
@@ -182,17 +182,8 @@ export class MaterialsComponent extends Component {
 		this.controls.category.value = category.value;
 		setTimeout(() => {
 			LocomotiveScrollService.update();
-			this.scrollTo('#category-' + category.value);
+			LocomotiveScrollService.scrollToSelector('#category-' + category.value);
 		}, 100);
-	}
-
-	scrollTo(selector, event) {
-		if (event) {
-			event.preventDefault();
-		}
-		const { node } = getContext(this);
-		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 
 	clearFilter(event, filter) {

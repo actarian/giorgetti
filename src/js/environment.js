@@ -65,8 +65,12 @@ const defaultOptions = {
 		heroku: HEROKU,
 	},
 	slug: {},
+	markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
+	defaultMarket: 'IT',
+	currentMarket: 'IT',
 	languages: ['it', 'en'],
 	defaultLanguage: 'it',
+	currentLanguage: 'it',
 	labels: {
 		select: 'Seleziona',
 		browse: 'Sfoglia',

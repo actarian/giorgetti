@@ -2476,7 +2476,7 @@ html.has-scroll-dragging {
   to {
     transform: translateY(-10px); } }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a,
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--markets > li > a, .nav--markets > .nav__item ul > li > a,
 .nav--language > li > button,
 .nav--service > li > button,
 .nav--main > li > button,
@@ -2485,6 +2485,8 @@ html.has-scroll-dragging {
 .nav--breadcrumb > li > button,
 .nav--share > li > button,
 .nav--secondary > li > button,
+.nav--markets > li > button,
+.nav--markets > .nav__item ul > li > button,
 .nav--language > li > span,
 .nav--service > li > span,
 .nav--main > li > span,
@@ -2492,7 +2494,9 @@ html.has-scroll-dragging {
 .nav--colophon > li > span,
 .nav--breadcrumb > li > span,
 .nav--share > li > span,
-.nav--secondary > li > span, .nav--footer-menu > li > a,
+.nav--secondary > li > span,
+.nav--markets > li > span,
+.nav--markets > .nav__item ul > li > span, .nav--footer-menu > li > a,
 .nav--footer-menu > li > button,
 .nav--footer-menu > li > span, .nav--dropdown > li > a,
 .nav--dropdown > li > span {
@@ -2505,7 +2509,7 @@ html.has-scroll-dragging {
   z-index: 1;
   transition: ease-in-out 250ms;
   transition-property: background-color, color, border, opacity; }
-  .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus,
+  .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--markets > li > a:focus, .nav--markets > .nav__item ul > li > a:focus,
   .nav--language > li > button:focus,
   .nav--service > li > button:focus,
   .nav--main > li > button:focus,
@@ -2514,6 +2518,8 @@ html.has-scroll-dragging {
   .nav--breadcrumb > li > button:focus,
   .nav--share > li > button:focus,
   .nav--secondary > li > button:focus,
+  .nav--markets > li > button:focus,
+  .nav--markets > .nav__item ul > li > button:focus,
   .nav--language > li > span:focus,
   .nav--service > li > span:focus,
   .nav--main > li > span:focus,
@@ -2521,20 +2527,22 @@ html.has-scroll-dragging {
   .nav--colophon > li > span:focus,
   .nav--breadcrumb > li > span:focus,
   .nav--share > li > span:focus,
-  .nav--secondary > li > span:focus, .nav--footer-menu > li > a:focus,
+  .nav--secondary > li > span:focus,
+  .nav--markets > li > span:focus,
+  .nav--markets > .nav__item ul > li > span:focus, .nav--footer-menu > li > a:focus,
   .nav--footer-menu > li > button:focus,
   .nav--footer-menu > li > span:focus, .nav--dropdown > li > a:focus,
   .nav--dropdown > li > span:focus {
     outline: 0; }
 
-.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share, .nav--secondary, .nav--footer-menu, .nav--dropdown, .nav--submenu, .nav--files,
+.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share, .nav--secondary, .nav--markets, .nav--markets > .nav__item ul, .nav--footer-menu, .nav--dropdown, .nav--submenu, .nav--files,
 .nav--files ul, .nav--index {
   list-style: none;
   padding: 0;
   margin: 0; }
-  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li, .nav--share > li, .nav--secondary > li, .nav--footer-menu > li, .nav--dropdown > li, .nav--submenu > li, .nav--files > li, .nav--files ul > li, .nav--index > li {
+  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li, .nav--share > li, .nav--secondary > li, .nav--markets > li, .nav--markets > .nav__item ul > li, .nav--footer-menu > li, .nav--dropdown > li, .nav--submenu > li, .nav--files > li, .nav--files ul > li, .nav--index > li {
     display: block; }
-    .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
+    .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--markets > li > a, .nav--markets > .nav__item ul > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
     .nav--language > li > button,
     .nav--service > li > button,
     .nav--main > li > button,
@@ -2543,6 +2551,8 @@ html.has-scroll-dragging {
     .nav--breadcrumb > li > button,
     .nav--share > li > button,
     .nav--secondary > li > button,
+    .nav--markets > li > button,
+    .nav--markets > .nav__item ul > li > button,
     .nav--footer-menu > li > button,
     .nav--dropdown > li > button,
     .nav--submenu > li > button,
@@ -2557,6 +2567,8 @@ html.has-scroll-dragging {
     .nav--breadcrumb > li > span,
     .nav--share > li > span,
     .nav--secondary > li > span,
+    .nav--markets > li > span,
+    .nav--markets > .nav__item ul > li > span,
     .nav--footer-menu > li > span,
     .nav--dropdown > li > span,
     .nav--submenu > li > span,
@@ -2565,7 +2577,7 @@ html.has-scroll-dragging {
     .nav--index > li > span {
       transition: ease-in-out 250ms;
       transition-property: background-color, color, border, opacity; }
-      .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--footer-menu > li > a:focus, .nav--dropdown > li > a:focus, .nav--submenu > li > a:focus, .nav--files > li > a:focus, .nav--files ul > li > a:focus, .nav--index > li > a:focus,
+      .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--markets > li > a:focus, .nav--markets > .nav__item ul > li > a:focus, .nav--footer-menu > li > a:focus, .nav--dropdown > li > a:focus, .nav--submenu > li > a:focus, .nav--files > li > a:focus, .nav--files ul > li > a:focus, .nav--index > li > a:focus,
       .nav--language > li > button:focus,
       .nav--service > li > button:focus,
       .nav--main > li > button:focus,
@@ -2574,6 +2586,8 @@ html.has-scroll-dragging {
       .nav--breadcrumb > li > button:focus,
       .nav--share > li > button:focus,
       .nav--secondary > li > button:focus,
+      .nav--markets > li > button:focus,
+      .nav--markets > .nav__item ul > li > button:focus,
       .nav--footer-menu > li > button:focus,
       .nav--dropdown > li > button:focus,
       .nav--submenu > li > button:focus,
@@ -2588,6 +2602,8 @@ html.has-scroll-dragging {
       .nav--breadcrumb > li > span:focus,
       .nav--share > li > span:focus,
       .nav--secondary > li > span:focus,
+      .nav--markets > li > span:focus,
+      .nav--markets > .nav__item ul > li > span:focus,
       .nav--footer-menu > li > span:focus,
       .nav--dropdown > li > span:focus,
       .nav--submenu > li > span:focus,
@@ -2596,7 +2612,7 @@ html.has-scroll-dragging {
       .nav--index > li > span:focus {
         outline: 0; }
 
-.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share, .nav--secondary {
+.nav--language, .nav--service, .nav--main, .nav--social, .nav--colophon, .nav--breadcrumb, .nav--share, .nav--secondary, .nav--markets, .nav--markets > .nav__item ul {
   display: flex;
   justify-content: flex-start;
   /*
@@ -2610,7 +2626,7 @@ html.has-scroll-dragging {
 		// margin-bottom: 100px;
 	}
 	*/ }
-  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li, .nav--share > li, .nav--secondary > li {
+  .nav--language > li, .nav--service > li, .nav--main > li, .nav--social > li, .nav--colophon > li, .nav--breadcrumb > li, .nav--share > li, .nav--secondary > li, .nav--markets > li, .nav--markets > .nav__item ul > li {
     position: relative;
     display: block; }
 
@@ -2880,7 +2896,7 @@ h6 {
     opacity: 1;
     transform: translateX(0); } }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--markets > li > a, .nav--markets > .nav__item ul > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
 .nav--language > li > button,
 .nav--service > li > button,
 .nav--main > li > button,
@@ -2889,6 +2905,8 @@ h6 {
 .nav--breadcrumb > li > button,
 .nav--share > li > button,
 .nav--secondary > li > button,
+.nav--markets > li > button,
+.nav--markets > .nav__item ul > li > button,
 .nav--footer-menu > li > button,
 .nav--dropdown > li > button,
 .nav--submenu > li > button,
@@ -2907,7 +2925,7 @@ h6 {
 .section--news-proposition .btn--next, .card--project-proposition, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--dealer, .section--dealers .btn--more, .card--contact, .modal--materials .group--navs .btn--prev,
 .modal--materials .group--navs .btn--next, .modal--materials .btn--close, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
-.section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .section--index .title, .nav--index > .nav__item > a,
+.section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   display: inline-block;
   padding: 0;
@@ -2919,7 +2937,7 @@ h6 {
   font: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
-  .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
+  .nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--markets > li > a, .nav--markets > .nav__item ul > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
   .nav--language > li > button,
   .nav--service > li > button,
   .nav--main > li > button,
@@ -2928,6 +2946,8 @@ h6 {
   .nav--breadcrumb > li > button,
   .nav--share > li > button,
   .nav--secondary > li > button,
+  .nav--markets > li > button,
+  .nav--markets > .nav__item ul > li > button,
   .nav--footer-menu > li > button,
   .nav--dropdown > li > button,
   .nav--submenu > li > button,
@@ -2946,8 +2966,8 @@ h6 {
   .section--news-proposition .btn--next, .card--project-proposition, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--dealer, .section--dealers .btn--more, .card--contact, .modal--materials .group--navs .btn--prev,
   .modal--materials .group--navs .btn--next, .modal--materials .btn--close, .modal--user .btn--close,
   .section--auth .btn--close, .modal--user .btn--link,
-  .section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .section--index .title, .nav--index > .nav__item > a,
-  .nav--index > .nav__item > span, .nav--language > li > a:active, .nav--service > li > a:active, .nav--main > li > a:active, .nav--social > li > a:active, .nav--colophon > li > a:active, .nav--breadcrumb > li > a:active, .nav--share > li > a:active, .nav--secondary > li > a:active, .nav--footer-menu > li > a:active, .nav--dropdown > li > a:active, .nav--submenu > li > a:active, .nav--files > li > a:active, .nav--files ul > li > a:active, .nav--index > li > a:active,
+  .section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .section--index .title, .nav--index > .nav__item > a,
+  .nav--index > .nav__item > span, .nav--language > li > a:active, .nav--service > li > a:active, .nav--main > li > a:active, .nav--social > li > a:active, .nav--colophon > li > a:active, .nav--breadcrumb > li > a:active, .nav--share > li > a:active, .nav--secondary > li > a:active, .nav--markets > li > a:active, .nav--markets > .nav__item ul > li > a:active, .nav--footer-menu > li > a:active, .nav--dropdown > li > a:active, .nav--submenu > li > a:active, .nav--files > li > a:active, .nav--files ul > li > a:active, .nav--index > li > a:active,
   .nav--language > li > button:active,
   .nav--service > li > button:active,
   .nav--main > li > button:active,
@@ -2956,6 +2976,8 @@ h6 {
   .nav--breadcrumb > li > button:active,
   .nav--share > li > button:active,
   .nav--secondary > li > button:active,
+  .nav--markets > li > button:active,
+  .nav--markets > .nav__item ul > li > button:active,
   .nav--footer-menu > li > button:active,
   .nav--dropdown > li > button:active,
   .nav--submenu > li > button:active,
@@ -2974,8 +2996,8 @@ h6 {
   .section--news-proposition .btn--next:active, .card--project-proposition:active, .card--hero-products-detail .card__picture:active, .card--version:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--more:active, .card--project:active, .card--design:active, .modal--projects-registration .btn--close:active, .modal--projects-registration .btn--link:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--more:active, .card--news:active, .card--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery .btn--more:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .modal--materials .group--navs .btn--prev:active,
   .modal--materials .group--navs .btn--next:active, .modal--materials .btn--close:active, .modal--user .btn--close:active,
   .section--auth .btn--close:active, .modal--user .btn--link:active,
-  .section--auth .btn--link:active, .card--file:active, .card--file .btn--action:active, .files .btn--title:active, .card--cart-item .card__title:active, .card--cart-item .btn--action:active, .section--cart-mini .btn--close:active, .section--index .title:active, .nav--index > .nav__item > a:active,
-  .nav--index > .nav__item > span:active, .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--footer-menu > li > a:focus, .nav--dropdown > li > a:focus, .nav--submenu > li > a:focus, .nav--files > li > a:focus, .nav--files ul > li > a:focus, .nav--index > li > a:focus,
+  .section--auth .btn--link:active, .card--file:active, .card--file .btn--action:active, .files .btn--title:active, .card--cart-item .card__title:active, .card--cart-item .btn--action:active, .section--cart-mini .btn--close:active, .modal--markets-and-languages .btn--logo:active, .modal--markets-and-languages .btn--close:active, .section--index .title:active, .nav--index > .nav__item > a:active,
+  .nav--index > .nav__item > span:active, .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--markets > li > a:focus, .nav--markets > .nav__item ul > li > a:focus, .nav--footer-menu > li > a:focus, .nav--dropdown > li > a:focus, .nav--submenu > li > a:focus, .nav--files > li > a:focus, .nav--files ul > li > a:focus, .nav--index > li > a:focus,
   .nav--language > li > button:focus,
   .nav--service > li > button:focus,
   .nav--main > li > button:focus,
@@ -2984,6 +3006,8 @@ h6 {
   .nav--breadcrumb > li > button:focus,
   .nav--share > li > button:focus,
   .nav--secondary > li > button:focus,
+  .nav--markets > li > button:focus,
+  .nav--markets > .nav__item ul > li > button:focus,
   .nav--footer-menu > li > button:focus,
   .nav--dropdown > li > button:focus,
   .nav--submenu > li > button:focus,
@@ -3002,8 +3026,8 @@ h6 {
   .section--news-proposition .btn--next:focus, .card--project-proposition:focus, .card--hero-products-detail .card__picture:focus, .card--version:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--more:focus, .card--project:focus, .card--design:focus, .modal--projects-registration .btn--close:focus, .modal--projects-registration .btn--link:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--more:focus, .card--news:focus, .card--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery .btn--more:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .modal--materials .group--navs .btn--prev:focus,
   .modal--materials .group--navs .btn--next:focus, .modal--materials .btn--close:focus, .modal--user .btn--close:focus,
   .section--auth .btn--close:focus, .modal--user .btn--link:focus,
-  .section--auth .btn--link:focus, .card--file:focus, .card--file .btn--action:focus, .files .btn--title:focus, .card--cart-item .card__title:focus, .card--cart-item .btn--action:focus, .section--cart-mini .btn--close:focus, .section--index .title:focus, .nav--index > .nav__item > a:focus,
-  .nav--index > .nav__item > span:focus, .nav--language > li > a:hover, .nav--service > li > a:hover, .nav--main > li > a:hover, .nav--social > li > a:hover, .nav--colophon > li > a:hover, .nav--breadcrumb > li > a:hover, .nav--share > li > a:hover, .nav--secondary > li > a:hover, .nav--footer-menu > li > a:hover, .nav--dropdown > li > a:hover, .nav--submenu > li > a:hover, .nav--files > li > a:hover, .nav--files ul > li > a:hover, .nav--index > li > a:hover,
+  .section--auth .btn--link:focus, .card--file:focus, .card--file .btn--action:focus, .files .btn--title:focus, .card--cart-item .card__title:focus, .card--cart-item .btn--action:focus, .section--cart-mini .btn--close:focus, .modal--markets-and-languages .btn--logo:focus, .modal--markets-and-languages .btn--close:focus, .section--index .title:focus, .nav--index > .nav__item > a:focus,
+  .nav--index > .nav__item > span:focus, .nav--language > li > a:hover, .nav--service > li > a:hover, .nav--main > li > a:hover, .nav--social > li > a:hover, .nav--colophon > li > a:hover, .nav--breadcrumb > li > a:hover, .nav--share > li > a:hover, .nav--secondary > li > a:hover, .nav--markets > li > a:hover, .nav--markets > .nav__item ul > li > a:hover, .nav--footer-menu > li > a:hover, .nav--dropdown > li > a:hover, .nav--submenu > li > a:hover, .nav--files > li > a:hover, .nav--files ul > li > a:hover, .nav--index > li > a:hover,
   .nav--language > li > button:hover,
   .nav--service > li > button:hover,
   .nav--main > li > button:hover,
@@ -3012,6 +3036,8 @@ h6 {
   .nav--breadcrumb > li > button:hover,
   .nav--share > li > button:hover,
   .nav--secondary > li > button:hover,
+  .nav--markets > li > button:hover,
+  .nav--markets > .nav__item ul > li > button:hover,
   .nav--footer-menu > li > button:hover,
   .nav--dropdown > li > button:hover,
   .nav--submenu > li > button:hover,
@@ -3030,8 +3056,8 @@ h6 {
   .section--news-proposition .btn--next:hover, .card--project-proposition:hover, .card--hero-products-detail .card__picture:hover, .card--version:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--more:hover, .card--project:hover, .card--design:hover, .modal--projects-registration .btn--close:hover, .modal--projects-registration .btn--link:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--more:hover, .card--news:hover, .card--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery .btn--more:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .modal--materials .group--navs .btn--prev:hover,
   .modal--materials .group--navs .btn--next:hover, .modal--materials .btn--close:hover, .modal--user .btn--close:hover,
   .section--auth .btn--close:hover, .modal--user .btn--link:hover,
-  .section--auth .btn--link:hover, .card--file:hover, .card--file .btn--action:hover, .files .btn--title:hover, .card--cart-item .card__title:hover, .card--cart-item .btn--action:hover, .section--cart-mini .btn--close:hover, .section--index .title:hover, .nav--index > .nav__item > a:hover,
-  .nav--index > .nav__item > span:hover, .nav--language > li > a:visited, .nav--service > li > a:visited, .nav--main > li > a:visited, .nav--social > li > a:visited, .nav--colophon > li > a:visited, .nav--breadcrumb > li > a:visited, .nav--share > li > a:visited, .nav--secondary > li > a:visited, .nav--footer-menu > li > a:visited, .nav--dropdown > li > a:visited, .nav--submenu > li > a:visited, .nav--files > li > a:visited, .nav--files ul > li > a:visited, .nav--index > li > a:visited,
+  .section--auth .btn--link:hover, .card--file:hover, .card--file .btn--action:hover, .files .btn--title:hover, .card--cart-item .card__title:hover, .card--cart-item .btn--action:hover, .section--cart-mini .btn--close:hover, .modal--markets-and-languages .btn--logo:hover, .modal--markets-and-languages .btn--close:hover, .section--index .title:hover, .nav--index > .nav__item > a:hover,
+  .nav--index > .nav__item > span:hover, .nav--language > li > a:visited, .nav--service > li > a:visited, .nav--main > li > a:visited, .nav--social > li > a:visited, .nav--colophon > li > a:visited, .nav--breadcrumb > li > a:visited, .nav--share > li > a:visited, .nav--secondary > li > a:visited, .nav--markets > li > a:visited, .nav--markets > .nav__item ul > li > a:visited, .nav--footer-menu > li > a:visited, .nav--dropdown > li > a:visited, .nav--submenu > li > a:visited, .nav--files > li > a:visited, .nav--files ul > li > a:visited, .nav--index > li > a:visited,
   .nav--language > li > button:visited,
   .nav--service > li > button:visited,
   .nav--main > li > button:visited,
@@ -3040,6 +3066,8 @@ h6 {
   .nav--breadcrumb > li > button:visited,
   .nav--share > li > button:visited,
   .nav--secondary > li > button:visited,
+  .nav--markets > li > button:visited,
+  .nav--markets > .nav__item ul > li > button:visited,
   .nav--footer-menu > li > button:visited,
   .nav--dropdown > li > button:visited,
   .nav--submenu > li > button:visited,
@@ -3058,13 +3086,13 @@ h6 {
   .section--news-proposition .btn--next:visited, .card--project-proposition:visited, .card--hero-products-detail .card__picture:visited, .card--version:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--more:visited, .card--project:visited, .card--design:visited, .modal--projects-registration .btn--close:visited, .modal--projects-registration .btn--link:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--more:visited, .card--news:visited, .card--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery .btn--more:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .modal--materials .group--navs .btn--prev:visited,
   .modal--materials .group--navs .btn--next:visited, .modal--materials .btn--close:visited, .modal--user .btn--close:visited,
   .section--auth .btn--close:visited, .modal--user .btn--link:visited,
-  .section--auth .btn--link:visited, .card--file:visited, .card--file .btn--action:visited, .files .btn--title:visited, .card--cart-item .card__title:visited, .card--cart-item .btn--action:visited, .section--cart-mini .btn--close:visited, .section--index .title:visited, .nav--index > .nav__item > a:visited,
+  .section--auth .btn--link:visited, .card--file:visited, .card--file .btn--action:visited, .files .btn--title:visited, .card--cart-item .card__title:visited, .card--cart-item .btn--action:visited, .section--cart-mini .btn--close:visited, .modal--markets-and-languages .btn--logo:visited, .modal--markets-and-languages .btn--close:visited, .section--index .title:visited, .nav--index > .nav__item > a:visited,
   .nav--index > .nav__item > span:visited {
     color: inherit;
     text-decoration: none;
     outline: none; }
 
-.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
+.nav--language > li > a, .nav--service > li > a, .nav--main > li > a, .nav--social > li > a, .nav--colophon > li > a, .nav--breadcrumb > li > a, .nav--share > li > a, .nav--secondary > li > a, .nav--markets > li > a, .nav--markets > .nav__item ul > li > a, .nav--footer-menu > li > a, .nav--dropdown > li > a, .nav--submenu > li > a, .nav--files > li > a, .nav--files ul > li > a, .nav--index > li > a,
 .nav--language > li > button,
 .nav--service > li > button,
 .nav--main > li > button,
@@ -3073,6 +3101,8 @@ h6 {
 .nav--breadcrumb > li > button,
 .nav--share > li > button,
 .nav--secondary > li > button,
+.nav--markets > li > button,
+.nav--markets > .nav__item ul > li > button,
 .nav--footer-menu > li > button,
 .nav--dropdown > li > button,
 .nav--submenu > li > button,
@@ -3091,14 +3121,14 @@ h6 {
 .section--news-proposition .btn--next, .card--project-proposition, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--more, .card--project, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--more, .card--news, .card--news .btn--more, .card--gallery > .card__picture, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--dealer, .section--dealers .btn--more, .card--contact, .modal--materials .group--navs .btn--prev,
 .modal--materials .group--navs .btn--next, .modal--materials .btn--close, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
-.section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .section--index .title, .nav--index > .nav__item > a,
+.section--auth .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--submenu > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--submenu > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .section--text .btn--link svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--store-locator .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .card--hero-homepage .card__picture svg, .card--product-proposition svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .modal--materials .group--navs .btn--prev svg, .modal--materials .group--navs .btn--next svg, .modal--materials .btn--close svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--submenu > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--submenu > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .section--text .btn--link svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--store-locator .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .card--hero-homepage .card__picture svg, .card--product-proposition svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--more svg, .card--project svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--more svg, .card--news svg, .card--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .modal--materials .group--navs .btn--prev svg, .modal--materials .group--navs .btn--next svg, .modal--materials .btn--close svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
-  .nav--language > li > a[disabled], .nav--service > li > a[disabled], .nav--main > li > a[disabled], .nav--social > li > a[disabled], .nav--colophon > li > a[disabled], .nav--breadcrumb > li > a[disabled], .nav--share > li > a[disabled], .nav--secondary > li > a[disabled], .nav--footer-menu > li > a[disabled], .nav--dropdown > li > a[disabled], .nav--submenu > li > a[disabled], .nav--files > li > a[disabled], .nav--files ul > li > a[disabled], .nav--index > li > a[disabled],
+  .nav--language > li > a[disabled], .nav--service > li > a[disabled], .nav--main > li > a[disabled], .nav--social > li > a[disabled], .nav--colophon > li > a[disabled], .nav--breadcrumb > li > a[disabled], .nav--share > li > a[disabled], .nav--secondary > li > a[disabled], .nav--markets > li > a[disabled], .nav--markets > .nav__item ul > li > a[disabled], .nav--footer-menu > li > a[disabled], .nav--dropdown > li > a[disabled], .nav--submenu > li > a[disabled], .nav--files > li > a[disabled], .nav--files ul > li > a[disabled], .nav--index > li > a[disabled],
   .nav--language > li > button[disabled],
   .nav--service > li > button[disabled],
   .nav--main > li > button[disabled],
@@ -3107,6 +3137,8 @@ h6 {
   .nav--breadcrumb > li > button[disabled],
   .nav--share > li > button[disabled],
   .nav--secondary > li > button[disabled],
+  .nav--markets > li > button[disabled],
+  .nav--markets > .nav__item ul > li > button[disabled],
   .nav--footer-menu > li > button[disabled],
   .nav--dropdown > li > button[disabled],
   .nav--submenu > li > button[disabled],
@@ -3125,7 +3157,7 @@ h6 {
   .section--news-proposition .btn--next[disabled], .card--project-proposition[disabled], .card--hero-products-detail .card__picture[disabled], .card--version[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--more[disabled], .card--project[disabled], .card--design[disabled], .modal--projects-registration .btn--close[disabled], .modal--projects-registration .btn--link[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--more[disabled], .card--news[disabled], .card--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery .btn--more[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .modal--materials .group--navs .btn--prev[disabled],
   .modal--materials .group--navs .btn--next[disabled], .modal--materials .btn--close[disabled], .modal--user .btn--close[disabled],
   .section--auth .btn--close[disabled], .modal--user .btn--link[disabled],
-  .section--auth .btn--link[disabled], .card--file[disabled], .card--file .btn--action[disabled], .files .btn--title[disabled], .card--cart-item .card__title[disabled], .card--cart-item .btn--action[disabled], .section--cart-mini .btn--close[disabled], .section--index .title[disabled], .nav--index > .nav__item > a[disabled],
+  .section--auth .btn--link[disabled], .card--file[disabled], .card--file .btn--action[disabled], .files .btn--title[disabled], .card--cart-item .card__title[disabled], .card--cart-item .btn--action[disabled], .section--cart-mini .btn--close[disabled], .modal--markets-and-languages .btn--logo[disabled], .modal--markets-and-languages .btn--close[disabled], .section--index .title[disabled], .nav--index > .nav__item > a[disabled],
   .nav--index > .nav__item > span[disabled] {
     opacity: 0.5;
     pointer-events: none; }
@@ -4860,21 +4892,21 @@ test-component code {
     justify-content: center;
     margin-top: 15px; } }
 
-.page > .pictogram {
+.page > .pictogram, .modal--markets-and-languages .pictogram {
   position: fixed;
   opacity: 0.1;
   animation: linear-rotate 480000ms linear infinite; }
-  .page > .pictogram > img {
+  .page > .pictogram > img, .modal--markets-and-languages .pictogram > img {
     width: 100%;
     height: 100%; }
   @media (min-width: 1024px) {
-    .page > .pictogram {
+    .page > .pictogram, .modal--markets-and-languages .pictogram {
       top: 0;
       right: -10vw;
       width: 60vw;
       height: 60vw; } }
   @media (max-width: 1023.98px) {
-    .page > .pictogram {
+    .page > .pictogram, .modal--markets-and-languages .pictogram {
       top: 20vw;
       right: -10vw;
       width: 80vw;
@@ -10470,6 +10502,256 @@ test-component code {
   transition: transform ease-in-out 350ms; }
   .page.cart-mini-active {
     transform: translateX(-300px); }
+
+.modal--markets-and-languages {
+  position: relative;
+  background: var(--background);
+  display: flex;
+  width: auto;
+  overflow: hidden; }
+  .modal--markets-and-languages .pictogram {
+    position: absolute; }
+    @media (min-width: 1024px) {
+      .modal--markets-and-languages .pictogram {
+        top: 50%;
+        left: 50%;
+        margin-top: -30vw;
+        margin-left: -30vw; } }
+    @media (max-width: 1023.98px) {
+      .modal--markets-and-languages .pictogram {
+        top: 50%;
+        left: 50%;
+        margin-top: -40vw;
+        margin-left: -40vw; } }
+  .modal--markets-and-languages .modal__content {
+    position: relative;
+    display: block; }
+  .modal--markets-and-languages .modal__header {
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    width: 100%;
+    height: 50px; }
+  .modal--markets-and-languages .modal__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent; }
+  .modal--markets-and-languages .group--cta {
+    justify-content: center; }
+  .modal--markets-and-languages .btn--logo {
+    padding: 0 18px;
+    margin-bottom: 30px; }
+    .modal--markets-and-languages .btn--logo svg {
+      width: 220px;
+      height: 63px;
+      color: currentColor;
+      transition: all ease-in-out 250ms; }
+  .modal--markets-and-languages .title,
+  .modal--markets-and-languages .subtitle {
+    margin: 25px 0;
+    font-family: var(--font-secondary);
+    line-height: 1;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1px solid var(--background-tertiary);
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0; }
+  .modal--markets-and-languages .subtitle {
+    font-size: 19px; }
+  .modal--markets-and-languages .btn--close svg {
+    width: 24px;
+    height: 24px; }
+  @media (min-width: 768px) {
+    .modal--markets-and-languages {
+      justify-content: space-between;
+      align-items: stretch;
+      max-width: calc(100% - 200px);
+      max-height: calc(100vh - 200px); }
+      .modal--markets-and-languages .modal__inner {
+        padding: 50px 60px 80px;
+        height: 600px;
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto; }
+        .modal--markets-and-languages .modal__inner::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+          border-radius: 3px; }
+        .modal--markets-and-languages .modal__inner::-webkit-scrollbar-button {
+          display: none; }
+        .modal--markets-and-languages .modal__inner::-webkit-scrollbar-button:hover {
+          display: none; }
+        .modal--markets-and-languages .modal__inner::-webkit-scrollbar-thumb {
+          background-color: var(--black-40);
+          box-shadow: none;
+          border-radius: 2px; }
+          .modal--markets-and-languages .modal__inner::-webkit-scrollbar-thumb:hover {
+            background-color: var(--black-40); }
+        .modal--markets-and-languages .modal__inner::-webkit-scrollbar-track {
+          background-color: transparent;
+          border-radius: 2px; }
+          .modal--markets-and-languages .modal__inner::-webkit-scrollbar-track:hover {
+            background-color: transparent; }
+      .modal--markets-and-languages .modal__content {
+        height: 600px;
+        max-height: 100%; }
+      .modal--markets-and-languages .title {
+        font-size: 48px; } }
+  @media (min-width: 768px) and (max-width: 1439.98px) {
+    .modal--markets-and-languages {
+      max-width: calc(100% - 120px); } }
+  @media (max-width: 767.98px) {
+    .modal--markets-and-languages {
+      flex-direction: column;
+      width: calc(100vw - 40px);
+      max-width: 100%;
+      max-height: 100%;
+      max-height: calc(100vh - 80px);
+      overflow-x: hidden;
+      overflow-y: auto; }
+      .modal--markets-and-languages::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px; }
+      .modal--markets-and-languages::-webkit-scrollbar-button {
+        display: none; }
+      .modal--markets-and-languages::-webkit-scrollbar-button:hover {
+        display: none; }
+      .modal--markets-and-languages::-webkit-scrollbar-thumb {
+        background-color: var(--black-40);
+        box-shadow: none;
+        border-radius: 2px; }
+        .modal--markets-and-languages::-webkit-scrollbar-thumb:hover {
+          background-color: var(--black-40); }
+      .modal--markets-and-languages::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 2px; }
+        .modal--markets-and-languages::-webkit-scrollbar-track:hover {
+          background-color: transparent; }
+      .modal--markets-and-languages .modal__inner {
+        padding: 50px 40px 120px 40px; }
+      .modal--markets-and-languages .title {
+        font-size: 32px; } }
+
+.group--markets-and-languages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.nav--markets {
+  position: relative;
+  margin-bottom: 130px; }
+  .nav--markets > .nav__item {
+    position: static; }
+    .nav--markets > .nav__item > span {
+      justify-content: center;
+      font-family: var(--font-secondary);
+      font-size: 19px;
+      text-transform: uppercase;
+      padding: 5px 0; }
+      .nav--markets > .nav__item > span:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        width: 100%;
+        height: 3px;
+        background: var(--background-negative);
+        transform: scale(0, 1);
+        transform-origin: center;
+        transition: transform ease-in-out 250ms; }
+      .nav--markets > .nav__item > span:hover:after, .nav--markets > .nav__item > span.active:after {
+        transform: scale(1, 1); }
+    .nav--markets > .nav__item .group--languages {
+      position: absolute;
+      left: 50%;
+      width: 100%;
+      transform: translateX(-50%); }
+    .nav--markets > .nav__item ul {
+      justify-content: center; }
+      .nav--markets > .nav__item ul > .nav__item > a {
+        white-space: nowrap;
+        padding: 3px 0; }
+        .nav--markets > .nav__item ul > .nav__item > a:after {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: 0px;
+          width: 100%;
+          height: 1px;
+          background: var(--background-negative);
+          transform: scale(0, 1);
+          transform-origin: center;
+          transition: transform ease-in-out 250ms; }
+        .nav--markets > .nav__item ul > .nav__item > a:hover:after, .nav--markets > .nav__item ul > .nav__item > a.active:after {
+          transform: scale(1, 1); }
+  .nav--markets > .nav__item ul {
+    top: 30px; }
+    .nav--markets > .nav__item ul > .nav__item + .nav__item {
+      margin-left: 30px; }
+  .nav--markets > .nav__item + .nav__item {
+    margin-left: 30px; }
+  @media (min-width: 768px) {
+    .nav--markets > .nav__item ul {
+      top: 40px; }
+      .nav--markets > .nav__item ul > .nav__item + .nav__item {
+        margin-left: 40px; }
+    .nav--markets > .nav__item + .nav__item {
+      margin-left: 40px; } }
+  @media (min-width: 1024px) {
+    .nav--markets > .nav__item ul {
+      top: 50px; }
+      .nav--markets > .nav__item ul > .nav__item + .nav__item {
+        margin-left: 50px; }
+    .nav--markets > .nav__item + .nav__item {
+      margin-left: 50px; } }
+  @media (min-width: 1440px) {
+    .nav--markets > .nav__item ul {
+      top: 60px; }
+      .nav--markets > .nav__item ul > .nav__item + .nav__item {
+        margin-left: 60px; }
+    .nav--markets > .nav__item + .nav__item {
+      margin-left: 60px; } }
+  @media (min-width: 1920px) {
+    .nav--markets > .nav__item ul {
+      top: 70px; }
+      .nav--markets > .nav__item ul > .nav__item + .nav__item {
+        margin-left: 70px; }
+    .nav--markets > .nav__item + .nav__item {
+      margin-left: 70px; } }
+  @media (min-width: 768px) {
+    .nav--markets {
+      margin-bottom: 130px; } }
+  @media (max-width: 767.98px) {
+    .nav--markets {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0; }
+      .nav--markets > .nav__item ul {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 60px; }
+        .nav--markets > .nav__item ul > .nav__item + .nav__item {
+          margin-left: 0; }
+      .nav--markets > .nav__item .group--languages {
+        position: relative; }
+      .nav--markets > .nav__item + .nav__item {
+        margin-left: 0; } }
+
+.group--languages {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
 
 .section--index {
   padding: 0 0 80px 0; }

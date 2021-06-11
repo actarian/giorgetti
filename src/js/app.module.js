@@ -9,6 +9,7 @@ import { CareersComponent } from './pages/careers/careers.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { DealersComponent } from './pages/dealers/dealers.component';
 import { DesignersComponent } from './pages/designers/designers.component';
+import { MarketsAndLanguagesModalComponent } from './pages/markets-and-languages/markets-and-languages-modal.component';
 import { MaterialsModalComponent } from './pages/materials/materials-modal.component';
 import { MaterialsComponent } from './pages/materials/materials.component';
 import { NewsComponent } from './pages/news/news.component';
@@ -40,6 +41,7 @@ AppModule.meta = {
 		ContactsComponent,
 		DealersComponent,
 		DesignersComponent,
+		MarketsAndLanguagesModalComponent,
 		MaterialsComponent,
 		MaterialsModalComponent,
 		NewsComponent,

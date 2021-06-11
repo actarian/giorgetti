@@ -27,7 +27,7 @@
 							<div class="card__title">Adam <em>Divano</em></div>
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
 							<div class="card__cta">
-								<button type="button" class="btn--more" (click)="scrollTo('#versions')">Scopri le versioni</button>
+								<button type="button" class="btn--more" (locomotiveScrollTo)="'#versions'">Scopri le versioni</button>
 								<button type="button" class="btn--more" (click)="onAddToCart({ 'id': 1, 'url' : '/giorgetti/products-detail.html' , 'image' : '/giorgetti/img/products/3775_n_LISTING_adam.jpg' , 'title' : 'Adam <em>Divano</em>', 'price': 3999, 'qty': 1 })">
 									<span *if="!isAddedToCart({ 'id': 1 })">Acquista</span>
 									<span *if="isAddedToCart({ 'id': 1 })">Vai al carrello</span>
@@ -145,7 +145,7 @@
 							</div>
 							<div class="card__cta" *if="!item.configurable">
 								<!-- <a [href]="item.url" download target="_blank" class="btn--download">Scarica il pdf</a> -->
-								<a href="/giorgetti/products-detail.html#insights" class="btn--download" (click)="scrollTo('#insights', $event)">Scarica il pdf</a>
+								<a href="/giorgetti/products-detail.html#insights" class="btn--download" (locomotiveScrollTo)="'#insights'">Scarica il pdf</a>
 							</div>
 						</div>
 					</div>

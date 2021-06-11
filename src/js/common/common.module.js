@@ -8,6 +8,7 @@ import { HtmlPipe } from './html/html.pipe';
 import { IdDirective } from './id/id.directive';
 import { LabelForDirective } from './label-for/label-for.directive';
 import { LabelPipe } from './label/label.pipe';
+import { LocomotiveScrollToDirective } from './locomotive-scroll/locomotive-scroll-to.directive';
 import { LocomotiveScrollDirective } from './locomotive-scroll/locomotive-scroll.directive';
 import { ScrollDirective } from './locomotive-scroll/scroll.directive';
 import { ModalOutletComponent } from './modal/modal-outlet.component';
@@ -29,6 +30,7 @@ const factories = [
 	// LanguageComponent,
 	// LazyDirective,
 	LocomotiveScrollDirective,
+	LocomotiveScrollToDirective,
 	// ModalComponent,
 	ModalOutletComponent,
 	ScrollDirective,

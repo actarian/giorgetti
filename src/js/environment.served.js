@@ -3,6 +3,12 @@ export const environmentServed = {
 	flags: {
 		production: true,
 	},
+	markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
+	defaultMarket: 'IT',
+	currentMarket: 'IT',
+	languages: ['it', 'en', 'de', 'ch'],
+	defaultLanguage: 'it',
+	currentLanguage: 'it',
 	api: '/api',
 	assets: '/Client/docs/',
 	workers: {
@@ -16,9 +22,10 @@ export const environmentServed = {
 	},
 	template: {
 		modal: {
-			userModal: '/template/common/user-modal.cshtml',
-			projectsRegistrationModal: '/template/common/projects-registration-modal.cshtml',
-			materialsModal: '/template/common/materials-modal.cshtml',
+			userModal: '/template/modals/user-modal.cshtml',
+			projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
+			materialsModal: '/template/modals/materials-modal.cshtml',
+			marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.html',
 		}
 	},
 	googleMaps: {

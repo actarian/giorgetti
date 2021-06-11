@@ -23,6 +23,14 @@ export class AppComponent extends Component {
 		).subscribe(_ => this.pushChanges());
 	}
 
+	onOpenMarketAndLanguage() {
+		ModalService.open$({ src: environment.template.modal.marketsAndLanguagesModal }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('AppComponent.onOpenMarketAndLanguage', event);
+		});
+	}
+
 	onLogin() {
 		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
 			takeUntil(this.unsubscribe$)

@@ -1,4 +1,4 @@
-import { Component, getContext } from 'rxcomp';
+import { Component } from 'rxcomp';
 import { first, takeUntil, tap } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalService } from '../../common/modal/modal.service';
@@ -89,14 +89,6 @@ export class ReservedAreaComponent extends Component {
 		return FilesService.hasFile(file);
 	}
 
-	scrollTo(selector, event) {
-		if (event) {
-			event.preventDefault();
-		}
-		const { node } = getContext(this);
-		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
-	}
 }
 
 ReservedAreaComponent.meta = {

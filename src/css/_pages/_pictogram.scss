@@ -1,4 +1,4 @@
-.page>.pictogram {
+%pictogram {
 	position: fixed;
 	opacity: 0.1;
 	animation: linear-rotate 480000ms linear infinite;
@@ -31,4 +31,8 @@
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+.page>.pictogram {
+	@extend %pictogram;
 }

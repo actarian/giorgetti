@@ -1,4 +1,4 @@
-import { Component, getContext } from 'rxcomp';
+import { Component } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { first, takeUntil, tap } from 'rxjs/operators';
 import { GtmService } from '../../common/gtm/gtm.service';
@@ -100,15 +100,6 @@ export class ContactsComponent extends Component {
 		} else {
 			form.touched = true;
 		}
-	}
-
-	scrollTo(selector, event) {
-		if (event) {
-			event.preventDefault();
-		}
-		const { node } = getContext(this);
-		const target = node.querySelector(selector);
-		LocomotiveScrollService.scrollTo(target, { offset: - 130 });
 	}
 
 }
