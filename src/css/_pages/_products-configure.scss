@@ -6,7 +6,9 @@
 		border: none;
 		background: none;
 		width: 100%;
-		height: calc(100vh - 130px);
+		height: calc(100vh - 280px) !important;
+		overflow: hidden !important;
+
 		// min-height: 1024px;
 
 		.header {

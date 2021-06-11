@@ -419,16 +419,16 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
 
   CartService.setItems = function setItems(items) {
     if (items) {
-      LocalStorageService.set('items', items);
+      LocalStorageService.set('cartItems', items);
     } else {
-      LocalStorageService.delete('items');
+      LocalStorageService.delete('cartItems');
     }
 
     CartService.items$_.next(items);
   };
 
   CartService.items$ = function items$() {
-    var localItems = LocalStorageService.get('items') || [];
+    var localItems = LocalStorageService.get('cartItems') || [];
     return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
       CartService.setItems(items);
       return CartService.items$_;
@@ -4987,10 +4987,10 @@ NewsComponent.meta = {
 }(rxcomp.Component);
 NewsletterComponent.meta = {
   selector: '[newsletter]'
-};var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;";
+};var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;";
 var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
-var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;";
-var descriptionStyle = "font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;";
+var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase; display: none;";
+var descriptionStyle = "font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em; display: none;";
 var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ProductsConfigureComponent, _Component);
 
@@ -5093,10 +5093,10 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 
   _proto.onReady = function onReady(event) {
     console.log('ProductsConfigureComponent.onReady', event);
-    this.isReady = true;
-    this.addTexts();
-    this.addButtons();
-    this.addBreadcrumb();
+    this.isReady = true; // this.addTexts();
+
+    this.addButtons(); // this.addBreadcrumb();
+
     return;
   };
 
@@ -5132,24 +5132,31 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onGetProductExtData = function onGetProductExtData(event) {
-    console.log('ProductsConfigureComponent.onGetProductExtData', event);
-    console.log('ProductsConfigureComponent.getProductExtData', event.status, event.data);
+    console.log('ProductsConfigureComponent.onGetProductExtData', event.status, event.data);
 
     if (event.status === 0) {
-      var data = event.data;
-      var cartItem = this.product;
-      cartItem.showefy = data;
-
-      if (data.image) {
-        cartItem.image = data.image;
-      }
-
-      CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
+      this.onAddToCart(event.data);
     }
   };
 
   _proto.onGetFastProductExtData = function onGetFastProductExtData(event) {
-    console.log('ProductsConfigureComponent.onGetFastProductExtData', event);
+    console.log('ProductsConfigureComponent.onGetFastProductExtData', event.status, event.data);
+
+    if (event.status === 0) {
+      this.onAddToCart(event.data);
+    }
+  };
+
+  _proto.onAddToCart = function onAddToCart(data) {
+    var cartItem = this.product;
+    cartItem.showefy = data;
+
+    if (data.image) {
+      cartItem.image = data.image;
+    }
+
+    console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+    CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
   };
 
   _proto.findPos = function findPos(obj) {
@@ -5191,12 +5198,15 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     buttons.element[index].label = new sfy.LABEL();
     buttons.element[index].label.en = 'ADD TO CART';
     index++;
+    /*
     buttons.element[index] = new sfy.PROPERTIES();
     buttons.element[index].visibility = true;
     buttons.element[index].id = 'save_configuration';
     buttons.element[index].label = new sfy.LABEL();
     buttons.element[index].label.en = 'SAVE CONFIGURATION';
     index++;
+    */
+
     sfy.setButtonStatus(buttons);
   };
 
@@ -5232,23 +5242,23 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     breadcrumb.element[index].style = breadcumbStyle;
     index++;
     sfy.printBreadcumb(breadcrumb);
-  };
-
-  _proto.getCartData = function getCartData() {
-    var sfy = this.sfy;
-
-    if (sfy) {
-      sfy.getProductExtData();
-    }
-  };
-
-  _proto.getFastData = function getFastData() {
-    var sfy = this.sfy;
-
-    if (sfy) {
-      sfy.getFastProductExtData();
-    }
-  };
+  }
+  /*
+  getCartData() {
+  	const sfy = this.sfy;
+  	if (sfy) {
+  		sfy.getProductExtData();
+  	}
+  }
+  
+  getFastData() {
+  	const sfy = this.sfy;
+  	if (sfy) {
+  		sfy.getFastProductExtData();
+  	}
+  }
+  */
+  ;
 
   return ProductsConfigureComponent;
 }(rxcomp.Component);

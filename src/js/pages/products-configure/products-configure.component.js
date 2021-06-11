@@ -3,10 +3,10 @@ import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { CartService } from '../../shared/cart/cart.service';
 
-const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b;`;
+const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;`;
 const titleStyle = `letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;`;
-const designerStyle = `font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase;`;
-const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em;`;
+const designerStyle = `font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase; display: none;`;
+const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px; letter-spacing: 0.05em; display: none;`;
 
 export class ProductsConfigureComponent extends Component {
 
@@ -86,9 +86,9 @@ export class ProductsConfigureComponent extends Component {
 	onReady(event) {
 		console.log('ProductsConfigureComponent.onReady', event);
 		this.isReady = true;
-		this.addTexts();
+		// this.addTexts();
 		this.addButtons();
-		this.addBreadcrumb();
+		// this.addBreadcrumb();
 		return;
 		const iframeDocument = this.getIframeDocument(this.iframe);
 		console.log(iframeDocument.querySelector('head'));
@@ -132,23 +132,29 @@ export class ProductsConfigureComponent extends Component {
 	}
 
 	onGetProductExtData(event) {
-		console.log('ProductsConfigureComponent.onGetProductExtData', event);
-		console.log('ProductsConfigureComponent.getProductExtData', event.status, event.data);
+		console.log('ProductsConfigureComponent.onGetProductExtData', event.status, event.data);
 		if (event.status === 0) {
-			const data = event.data;
-			const cartItem = this.product;
-			cartItem.showefy = data;
-			if (data.image) {
-				cartItem.image = data.image;
-			}
-			CartService.addItem$(cartItem).pipe(
-				first(),
-			).subscribe();
+			this.onAddToCart(event.data);
 		}
 	}
 
 	onGetFastProductExtData(event) {
-		console.log('ProductsConfigureComponent.onGetFastProductExtData', event);
+		console.log('ProductsConfigureComponent.onGetFastProductExtData', event.status, event.data);
+		if (event.status === 0) {
+			this.onAddToCart(event.data);
+		}
+	}
+
+	onAddToCart(data) {
+		const cartItem = this.product;
+		cartItem.showefy = data;
+		if (data.image) {
+			cartItem.image = data.image;
+		}
+		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+		CartService.addItem$(cartItem).pipe(
+			first(),
+		).subscribe();
 	}
 
 	findPos(obj) {
@@ -185,12 +191,14 @@ export class ProductsConfigureComponent extends Component {
 		buttons.element[index].label.en = 'ADD TO CART';
 		index++;
 
+		/*
 		buttons.element[index] = new sfy.PROPERTIES();
 		buttons.element[index].visibility = true;
 		buttons.element[index].id = 'save_configuration';
 		buttons.element[index].label = new sfy.LABEL();
 		buttons.element[index].label.en = 'SAVE CONFIGURATION';
 		index++;
+		*/
 
 		sfy.setButtonStatus(buttons);
 	}
@@ -228,6 +236,7 @@ export class ProductsConfigureComponent extends Component {
 		sfy.printBreadcumb(breadcrumb);
 	}
 
+	/*
 	getCartData() {
 		const sfy = this.sfy;
 		if (sfy) {
@@ -241,6 +250,7 @@ export class ProductsConfigureComponent extends Component {
 			sfy.getFastProductExtData();
 		}
 	}
+	*/
 }
 
 ProductsConfigureComponent.meta = {

@@ -41,15 +41,15 @@ export class CartService {
 
 	static setItems(items) {
 		if (items) {
-			LocalStorageService.set('items', items);
+			LocalStorageService.set('cartItems', items);
 		} else {
-			LocalStorageService.delete('items');
+			LocalStorageService.delete('cartItems');
 		}
 		CartService.items$_.next(items);
 	}
 
 	static items$() {
-		const localItems = LocalStorageService.get('items') || [];
+		const localItems = LocalStorageService.get('cartItems') || [];
 		return of(localItems).pipe(
 			switchMap(items => {
 				CartService.setItems(items);
