@@ -1932,7 +1932,7 @@
     "zoom": "/giorgetti/img/materials/gomma-liquida/liquid_rubber_gl_white_1024.jpg"
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/adamo_&_eva_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/adamo&eva_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
@@ -5103,7 +5103,7 @@
     ]
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/dehors_natté_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/dehors_natte_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
@@ -9131,7 +9131,7 @@
     ]
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/alicudi_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/sicily_alicudi_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
@@ -9289,7 +9289,7 @@
     ]
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/filicudi_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/sicily_filicudi_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
@@ -9447,7 +9447,7 @@
     ]
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/panarea_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/sicily_panarea_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
@@ -9605,7 +9605,7 @@
     ]
   },
   {
-    "image": "/giorgetti/img/materials/tessuto/salina_512.jpg",
+    "image": "/giorgetti/img/materials/tessuto/sicily_salina_512.jpg",
     "category": {
       "id": 1,
       "name": "Tessuto"
