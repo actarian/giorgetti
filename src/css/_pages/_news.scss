@@ -217,7 +217,6 @@
 
 	@include media-down(xs) {
 		&>.card__content {
-			padding: 0 20px;
 			width: 100%;
 		}
 	}
@@ -323,8 +322,12 @@
 	}
 
 	@include media-down(xs) {
+		$gutter: 30px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+
 		&>.listing__item {
-			@include as-col(12, 12, 0px);
+			@include as-col(12, 12, $gutter);
 			margin-bottom: 70px;
 		}
 	}

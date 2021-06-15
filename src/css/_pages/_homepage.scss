@@ -372,6 +372,12 @@
 		height: 128px;
 		margin: -64px 0 0 -64px;
 		z-index: 1;
+
+		@include media-down(xs) {
+			width: 64px;
+			height: 64px;
+			margin: -32px 0 0 -32px;
+		}
 	}
 
 	&:hover {

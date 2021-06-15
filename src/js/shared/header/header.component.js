@@ -4,6 +4,7 @@ import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomoti
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
 import { CartService } from '../cart/cart.service';
+import { MenuService } from '../menu/menu.service';
 import { UserService } from '../user/user.service';
 
 export const HeaderMode = {
@@ -59,6 +60,13 @@ export class HeaderComponent extends Component {
 			this.user = user;
 			this.pushChanges();
 		});
+		this.menu = MenuService.currentMenu;
+		MenuService.menu$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(menu => {
+			this.menu = menu;
+			this.pushChanges();
+		});
 		this.cart = CartService;
 	}
 
@@ -87,18 +95,22 @@ export class HeaderComponent extends Component {
 		).subscribe();
 	}
 
-	onToggleMenu() {
+	onToggleMenu(event) {
 		this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
 		this.pushChanges();
 	}
 
-	onToggleSearch() {
+	onToggleSearch(event) {
 		this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
 		this.pushChanges();
 	}
 
-	onToggleCart() {
+	onToggleCart(event) {
 		CartService.setActive(!CartService.active);
+	}
+
+	onBack(event) {
+		MenuService.onBack();
 	}
 }
 

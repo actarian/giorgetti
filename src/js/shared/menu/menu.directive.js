@@ -1,50 +1,64 @@
 import { Directive, getContext } from 'rxcomp';
-
-const MENUS = [];
+import { takeUntil } from 'rxjs/operators';
+import { MenuService } from './menu.service';
 
 export class MenuDirective extends Directive {
 
 	onInit() {
 		const { node } = getContext(this);
-		const submenus = this.submenus = document.querySelector(`.group--submenus`);
 		const target = this.target = document.querySelector(`#menu-${this.menu}`);
 		const preview = target.querySelector('[data-target]');
 		const previewSrc = this.previewSrc = preview.src;
 		const container = this.container = target.querySelector(`.container`);
-		this.onOver = this.onOver.bind(this);
+		this.onClick = this.onClick.bind(this);
 		this.onLeave = this.onLeave.bind(this);
-		node.addEventListener('click', this.onOver);
-		MENUS.push(this);
+		node.addEventListener('click', this.onClick);
+		MenuService.menu$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(menu_ => {
+			if (this.menu === menu_) {
+				this.onEnter();
+			} else {
+				this.onExit();
+			}
+		});
 	}
 
-	onOver(event) {
+	onClick(event) {
 		event.preventDefault();
-		MENUS.forEach(x => x.onLeave(true));
-		const submenus = this.submenus;
-		submenus.classList.add('active');
+		console.log('MenuDirective.onClick', this.menu);
+		if (MenuService.currentMenu === this.menu) {
+			MenuService.onBack();
+		} else {
+			MenuService.setMenu(this.menu);
+		}
+	}
+
+	onLeave() {
+		console.log('MenuDirective.onLeave', this.menu);
+		MenuService.onBack();
+		this.onExit();
+	}
+
+	onEnter() {
+		console.log('MenuDirective.onEnter', this.menu);
 		const target = this.target;
 		const preview = target.querySelector('[data-target]');
 		preview.src = this.previewSrc;
-		target.classList.add('active');
 		const container = this.container;
 		container.addEventListener('mouseleave', this.onLeave);
 	}
 
-	onLeave(keepBackground) {
-		if (keepBackground !== true) {
-			const submenus = this.submenus;
-			submenus.classList.remove('active');
-		}
-		const target = this.target;
-		target.classList.remove('active');
+	onExit() {
+		console.log('MenuDirective.onExit', this.menu);
 		const container = this.container;
 		container.removeEventListener('mouseleave', this.onLeave);
 	}
 
 	onDestroy() {
-		this.onLeave();
+		this.onExit();
 		const { node } = getContext(this);
-		node.removeEventListener('mouseover', this.onOver);
+		node.removeEventListener('click', this.onClick);
 	}
 }
 

@@ -33,9 +33,7 @@ export class CartService {
 
 	static hasItem(item) {
 		const items = CartService.currentItems;
-		const index = items.reduce((p, c, i) => {
-			return p !== -1 ? p : (c.id === item.id ? i : p);
-		}, -1);
+		const index = CartService.indexOf(item, items);
 		return index !== -1;
 	}
 
@@ -62,7 +60,7 @@ export class CartService {
 		return of(item).pipe(
 			map(item => {
 				const items = CartService.currentItems.slice();
-				const item_ = items.find(item_ => item_.id === item.id);
+				const item_ = CartService.find(item, items);
 				if (item_) {
 					item_.qty++;
 					CartService.setItems(items);
@@ -78,7 +76,7 @@ export class CartService {
 		return of(item).pipe(
 			switchMap(item => {
 				const items = CartService.currentItems.slice();
-				const item_ = items.find(item_ => item_.id === item.id);
+				const item_ = CartService.find(item, items);
 				if (item_) {
 					item_.qty--;
 					if (item_.qty > 0) {
@@ -98,7 +96,7 @@ export class CartService {
 		return of(Object.assign({ qty: 1 }, item)).pipe(
 			map(item => {
 				const items = CartService.currentItems.slice();
-				const item_ = items.find(item_ => item_.id === item.id);
+				const item_ = CartService.find(item, items);
 				if (item_) {
 					item_.qty += item.qty;
 					CartService.setItems(items);
@@ -116,9 +114,7 @@ export class CartService {
 		return of(item).pipe(
 			map(item => {
 				const items = CartService.currentItems.slice();
-				const index = items.reduce((p, c, i) => {
-					return p !== -1 ? p : (c.id === item.id ? i : p);
-				}, -1);
+				const index = CartService.indexOf(item, items);
 				if (index !== -1) {
 					items.splice(index, 1);
 					if (items.length === 0) {
@@ -141,6 +137,20 @@ export class CartService {
 				return items;
 			}),
 		)
+	}
+
+	static match(item, item_) {
+		return item_.id === item.id && item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link;
+	}
+
+	static find(item, items) {
+		return items.find(item_ => CartService.match(item, item_));
+	}
+
+	static indexOf(item, items) {
+		return items.reduce((p, item_, i) => {
+			return p !== -1 ? p : (CartService.match(item, item_) ? i : p);
+		}, -1);
 	}
 
 }

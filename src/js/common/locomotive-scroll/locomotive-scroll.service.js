@@ -137,9 +137,11 @@ export class LocomotiveScrollService {
 	}
 
 	static scrollTo(target, options = { offset: -130 }) {
+		console.log('scrollTo', this.instance);
 		if (this.instance) {
 			this.instance.scrollTo(target, options);
 		} else {
+			console.log('scrollTo 2')
 			const body = document.querySelector('body');
 			const currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 			const targetTop = currentTop + target.getBoundingClientRect().top + options.offset;
@@ -149,12 +151,15 @@ export class LocomotiveScrollService {
 				'scroll-behavior': 'auto'
 			});
 			gsap.to(o, {
-				duration: Math.abs(distance) / 3000,
+				duration: Math.abs(distance) / 2000,
 				pow: 1,
 				ease: Quad.easeOut,
 				overwrite: 'all',
 				onUpdate: () => {
-					window.scrollTo(0, currentTop + distance * o.pow);
+					gsap.set(body, {
+						'scrollTop': currentTop + distance * o.pow
+					});
+					// window.scrollTo(0, currentTop + distance * o.pow);
 				},
 				onComplete: () => {
 					gsap.set(body, {

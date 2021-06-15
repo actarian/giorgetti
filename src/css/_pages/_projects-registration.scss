@@ -2,7 +2,6 @@
 	background: $background;
 	display: flex;
 	width: auto;
-	max-width: calc(100% - 200px);
 
 	.modal__picture {
 		position: relative;
@@ -61,6 +60,7 @@
 	@include media-up(md) {
 		justify-content: space-between;
 		align-items: stretch;
+		max-width: calc(100% - 200px);
 		max-height: calc(100vh - 200px);
 
 		.modal__inner {
@@ -99,6 +99,7 @@
 
 	@include media-down(sm) {
 		flex-direction: column;
+		max-width: 100%;
 		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;

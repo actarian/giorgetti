@@ -332,8 +332,12 @@
 	}
 
 	@include media-down(xs) {
+		$gutter: 30px;
+		margin-left: - $gutter / 2;
+		margin-right: - $gutter / 2;
+
 		&>.listing__item {
-			@include as-col(12, 12, 0px);
+			@include as-col(12, 12, $gutter);
 			margin-bottom: 70px;
 		}
 	}
@@ -576,6 +580,13 @@
 		text-align: center;
 		letter-spacing: -0.008em;
 		text-transform: uppercase;
+	}
+
+	@include media-down(xs) {
+		.title {
+			font-size: 32px;
+			margin-bottom: 80px;
+		}
 	}
 }
 

@@ -1,7 +1,6 @@
 import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
 import { LocationService } from '../../common/location/location.service';
-import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { environment } from '../../environment';
 import { CartService } from '../../shared/cart/cart.service';
 
@@ -85,13 +84,6 @@ export class ProductsConfigureComponent extends Component {
 					this.onGetFastProductExtData(event);
 					break;
 			}
-			if (this.isConfiguring && this.isReady && this.isComplete) {
-				console.log('set taratura impaginazione configuratore');
-				const { node } = getContext(this);
-				// window.scroll(0, findPos(document.getElementById('container_ifrshowefy')));
-				LocomotiveScrollService.update();
-				LocomotiveScrollService.scrollTo(node, { offset: -100 });
-			}
 		} else {
 			console.log('ProductsConfigureComponent.onEvent.error', event.status, event.statusTxt, eventName);
 		}
@@ -103,17 +95,6 @@ export class ProductsConfigureComponent extends Component {
 		// this.addTexts();
 		this.addButtons();
 		// this.addBreadcrumb();
-		return;
-		const iframeDocument = this.getIframeDocument(this.iframe);
-		console.log(iframeDocument.querySelector('head'));
-		const style = iframeDocument.createElement('style');
-		style.innerHTML = `
-			* {
-				background: none!important;
-			}
-		`;
-		const head = iframeDocument.querySelector('head');
-		head.appendChild(style);
 	}
 
 	onShowefyComplete(event) {
@@ -156,28 +137,6 @@ export class ProductsConfigureComponent extends Component {
 		console.log('ProductsConfigureComponent.onGetFastProductExtData', event.status, event.data);
 		if (event.status === 0) {
 			this.onAddToCart(event.data);
-		}
-	}
-
-	onAddToCart(data) {
-		const cartItem = this.product;
-		cartItem.showefy = data;
-		if (data.image) {
-			cartItem.image = data.image;
-		}
-		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-		CartService.addItem$(cartItem).pipe(
-			first(),
-		).subscribe();
-	}
-
-	findPos(obj) {
-		let curtop = 0;
-		if (obj.offsetParent) {
-			do {
-				curtop += obj.offsetTop;
-			} while (obj = obj.offsetParent);
-			return [curtop];
 		}
 	}
 
@@ -251,21 +210,17 @@ export class ProductsConfigureComponent extends Component {
 		sfy.printBreadcumb(breadcrumb);
 	}
 
-	/*
-	getCartData() {
-		const sfy = this.sfy;
-		if (sfy) {
-			sfy.getProductExtData();
+	onAddToCart(data) {
+		const cartItem = this.product;
+		cartItem.showefy = data;
+		if (data.image) {
+			cartItem.image = data.image;
 		}
+		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+		CartService.addItem$(cartItem).pipe(
+			first(),
+		).subscribe();
 	}
-
-	getFastData() {
-		const sfy = this.sfy;
-		if (sfy) {
-			sfy.getFastProductExtData();
-		}
-	}
-	*/
 }
 
 ProductsConfigureComponent.meta = {

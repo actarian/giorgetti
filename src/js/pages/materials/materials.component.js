@@ -68,7 +68,7 @@ export class MaterialsComponent extends Component {
 		});
 		this.filterService = filterService;
 		this.filters = filterService.filters;
-		this.categories = this.filters.category.options;
+		this.categories = this.filters.category.options.filter(x => x.value);
 		const category = this.filters.category.values.length ? this.filters.category.values[0] : null;
 		this.form.patch({ category, search });
 		filterService.items$(items).pipe(

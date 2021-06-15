@@ -170,14 +170,9 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   currentLanguage: 'it',
   api: '/api',
   assets: '/Client/docs/',
-  workers: {
-    image: '/Client/docs/js/workers/image.service.worker.js',
-    prefetch: '/Client/docs/js/workers/prefetch.service.worker.js'
-  },
-  githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
   slug: {
-    configureProduct: "/Client/docs/products-configure.html",
-    reservedArea: "/Client/docs/reserved-area.html"
+    configureProduct: "/it/it/products-configure",
+    reservedArea: "/it/it/reserved-area"
   },
   template: {
     modal: {
@@ -189,7 +184,15 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   googleMaps: {
     apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
-  }
+  },
+  thron: {
+    clientId: ''
+  },
+  workers: {
+    image: '/Client/docs/js/workers/image.service.worker.js',
+    prefetch: '/Client/docs/js/workers/prefetch.service.worker.js'
+  },
+  githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/'
 };var environmentStatic = {
   flags: {
     production: false
@@ -202,11 +205,6 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   currentLanguage: 'it',
   api: '/giorgetti/api',
   assets: '/giorgetti/',
-  workers: {
-    image: './js/workers/image.service.worker.js',
-    prefetch: './js/workers/prefetch.service.worker.js'
-  },
-  githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
   slug: {
     configureProduct: "/giorgetti/products-configure.html",
     reservedArea: "/giorgetti/reserved-area.html"
@@ -221,7 +219,15 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   },
   googleMaps: {
     apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w'
-  }
+  },
+  thron: {
+    clientId: ''
+  },
+  workers: {
+    image: './js/workers/image.service.worker.js',
+    prefetch: './js/workers/prefetch.service.worker.js'
+  },
+  githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/'
 };var NODE = typeof module !== 'undefined' && module.exports;
 var PARAMS = NODE ? {
   get: function get() {}
@@ -411,9 +417,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
 
   CartService.hasItem = function hasItem(item) {
     var items = CartService.currentItems;
-    var index = items.reduce(function (p, c, i) {
-      return p !== -1 ? p : c.id === item.id ? i : p;
-    }, -1);
+    var index = CartService.indexOf(item, items);
     return index !== -1;
   };
 
@@ -438,9 +442,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   CartService.incrementItem$ = function incrementItem$(item) {
     return rxjs.of(item).pipe(operators.map(function (item) {
       var items = CartService.currentItems.slice();
-      var item_ = items.find(function (item_) {
-        return item_.id === item.id;
-      });
+      var item_ = CartService.find(item, items);
 
       if (item_) {
         item_.qty++;
@@ -455,9 +457,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   CartService.decrementItem$ = function decrementItem$(item) {
     return rxjs.of(item).pipe(operators.switchMap(function (item) {
       var items = CartService.currentItems.slice();
-      var item_ = items.find(function (item_) {
-        return item_.id === item.id;
-      });
+      var item_ = CartService.find(item, items);
 
       if (item_) {
         item_.qty--;
@@ -479,9 +479,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
       qty: 1
     }, item)).pipe(operators.map(function (item) {
       var items = CartService.currentItems.slice();
-      var item_ = items.find(function (item_) {
-        return item_.id === item.id;
-      });
+      var item_ = CartService.find(item, items);
 
       if (item_) {
         item_.qty += item.qty;
@@ -498,9 +496,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   CartService.removeItem$ = function removeItem$(item) {
     return rxjs.of(item).pipe(operators.map(function (item) {
       var items = CartService.currentItems.slice();
-      var index = items.reduce(function (p, c, i) {
-        return p !== -1 ? p : c.id === item.id ? i : p;
-      }, -1);
+      var index = CartService.indexOf(item, items);
 
       if (index !== -1) {
         items.splice(index, 1);
@@ -523,6 +519,22 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
       CartService.setItems(items);
       return items;
     }));
+  };
+
+  CartService.match = function match(item, item_) {
+    return item_.id === item.id && item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link;
+  };
+
+  CartService.find = function find(item, items) {
+    return items.find(function (item_) {
+      return CartService.match(item, item_);
+    });
+  };
+
+  CartService.indexOf = function indexOf(item, items) {
+    return items.reduce(function (p, item_, i) {
+      return p !== -1 ? p : CartService.match(item, item_) ? i : p;
+    }, -1);
   };
 
   _createClass(CartService, null, [{
@@ -1695,9 +1707,12 @@ LabelForDirective.meta = {
       };
     }
 
+    console.log('scrollTo', this.instance);
+
     if (this.instance) {
       this.instance.scrollTo(target, options);
     } else {
+      console.log('scrollTo 2');
       var body = document.querySelector('body');
       var currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
@@ -1710,12 +1725,14 @@ LabelForDirective.meta = {
         'scroll-behavior': 'auto'
       });
       gsap.to(o, {
-        duration: Math.abs(distance) / 3000,
+        duration: Math.abs(distance) / 2000,
         pow: 1,
         ease: Quad.easeOut,
         overwrite: 'all',
         onUpdate: function onUpdate() {
-          window.scrollTo(0, currentTop + distance * o.pow);
+          gsap.set(body, {
+            'scrollTop': currentTop + distance * o.pow
+          }); // window.scrollTo(0, currentTop + distance * o.pow);
         },
         onComplete: function onComplete() {
           gsap.set(body, {
@@ -4574,7 +4591,9 @@ MaterialsModalComponent.meta = {
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    this.categories = this.filters.category.options;
+    this.categories = this.filters.category.options.filter(function (x) {
+      return x.value;
+    });
     var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
     this.form.patch({
       category: category,
@@ -5081,19 +5100,6 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
           this.onGetFastProductExtData(event);
           break;
       }
-
-      if (this.isConfiguring && this.isReady && this.isComplete) {
-        console.log('set taratura impaginazione configuratore');
-
-        var _getContext2 = rxcomp.getContext(this),
-            node = _getContext2.node; // window.scroll(0, findPos(document.getElementById('container_ifrshowefy')));
-
-
-        LocomotiveScrollService.update();
-        LocomotiveScrollService.scrollTo(node, {
-          offset: -100
-        });
-      }
     } else {
       console.log('ProductsConfigureComponent.onEvent.error', event.status, event.statusTxt, eventName);
     }
@@ -5104,8 +5110,6 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     this.isReady = true; // this.addTexts();
 
     this.addButtons(); // this.addBreadcrumb();
-
-    return;
   };
 
   _proto.onShowefyComplete = function onShowefyComplete(event) {
@@ -5152,30 +5156,6 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 
     if (event.status === 0) {
       this.onAddToCart(event.data);
-    }
-  };
-
-  _proto.onAddToCart = function onAddToCart(data) {
-    var cartItem = this.product;
-    cartItem.showefy = data;
-
-    if (data.image) {
-      cartItem.image = data.image;
-    }
-
-    console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-    CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
-  };
-
-  _proto.findPos = function findPos(obj) {
-    var curtop = 0;
-
-    if (obj.offsetParent) {
-      do {
-        curtop += obj.offsetTop;
-      } while (obj = obj.offsetParent);
-
-      return [curtop];
     }
   } // methods
   ;
@@ -5251,23 +5231,19 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     breadcrumb.element[index].style = breadcumbStyle;
     index++;
     sfy.printBreadcumb(breadcrumb);
-  }
-  /*
-  getCartData() {
-  	const sfy = this.sfy;
-  	if (sfy) {
-  		sfy.getProductExtData();
-  	}
-  }
-  
-  getFastData() {
-  	const sfy = this.sfy;
-  	if (sfy) {
-  		sfy.getFastProductExtData();
-  	}
-  }
-  */
-  ;
+  };
+
+  _proto.onAddToCart = function onAddToCart(data) {
+    var cartItem = this.product;
+    cartItem.showefy = data;
+
+    if (data.image) {
+      cartItem.image = data.image;
+    }
+
+    console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+    CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
+  };
 
   _createClass(ProductsConfigureComponent, [{
     key: "showefyUrl",
@@ -8449,7 +8425,32 @@ CartMiniComponent.meta = {
 }(rxcomp.Component);
 FilesComponent.meta = {
   selector: '[files]'
-};var HeaderMode = {
+};var MenuService = /*#__PURE__*/function () {
+  function MenuService() {}
+
+  MenuService.setMenu = function setMenu(id) {
+    this.menu$_.next(id);
+  };
+
+  MenuService.onBack = function onBack() {
+    this.menu$_.next(-1);
+  };
+
+  MenuService.menu$ = function menu$() {
+    return this.menu$_;
+  };
+
+  _createClass(MenuService, null, [{
+    key: "currentMenu",
+    get: function get() {
+      return this.menu$_.getValue();
+    }
+  }]);
+
+  return MenuService;
+}();
+
+_defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderMode = {
   IDLE: 'idle',
   MENU: 'menu',
   SEARCH: 'search',
@@ -8495,6 +8496,12 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
 
       _this2.pushChanges();
     });
+    this.menu = MenuService.currentMenu;
+    MenuService.menu$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (menu) {
+      _this2.menu = menu;
+
+      _this2.pushChanges();
+    });
     this.cart = CartService;
   };
 
@@ -8525,18 +8532,22 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
     UserService.signout$().pipe(operators.first()).subscribe();
   };
 
-  _proto.onToggleMenu = function onToggleMenu() {
+  _proto.onToggleMenu = function onToggleMenu(event) {
     this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
     this.pushChanges();
   };
 
-  _proto.onToggleSearch = function onToggleSearch() {
+  _proto.onToggleSearch = function onToggleSearch(event) {
     this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
     this.pushChanges();
   };
 
-  _proto.onToggleCart = function onToggleCart() {
+  _proto.onToggleCart = function onToggleCart(event) {
     CartService.setActive(!CartService.active);
+  };
+
+  _proto.onBack = function onBack(event) {
+    MenuService.onBack();
   };
 
   _createClass(HeaderComponent, [{
@@ -8575,8 +8586,7 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
 }(rxcomp.Component);
 HeaderComponent.meta = {
   selector: '[header]'
-};var MENUS = [];
-var MenuDirective = /*#__PURE__*/function (_Directive) {
+};var MenuDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(MenuDirective, _Directive);
 
   function MenuDirective() {
@@ -8586,54 +8596,66 @@ var MenuDirective = /*#__PURE__*/function (_Directive) {
   var _proto = MenuDirective.prototype;
 
   _proto.onInit = function onInit() {
+    var _this = this;
+
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
 
-    var submenus = this.submenus = document.querySelector(".group--submenus");
     var target = this.target = document.querySelector("#menu-" + this.menu);
     var preview = target.querySelector('[data-target]');
     var previewSrc = this.previewSrc = preview.src;
     var container = this.container = target.querySelector(".container");
-    this.onOver = this.onOver.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.onLeave = this.onLeave.bind(this);
-    node.addEventListener('click', this.onOver);
-    MENUS.push(this);
+    node.addEventListener('click', this.onClick);
+    MenuService.menu$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (menu_) {
+      if (_this.menu === menu_) {
+        _this.onEnter();
+      } else {
+        _this.onExit();
+      }
+    });
   };
 
-  _proto.onOver = function onOver(event) {
+  _proto.onClick = function onClick(event) {
     event.preventDefault();
-    MENUS.forEach(function (x) {
-      return x.onLeave(true);
-    });
-    var submenus = this.submenus;
-    submenus.classList.add('active');
+    console.log('MenuDirective.onClick', this.menu);
+
+    if (MenuService.currentMenu === this.menu) {
+      MenuService.onBack();
+    } else {
+      MenuService.setMenu(this.menu);
+    }
+  };
+
+  _proto.onLeave = function onLeave() {
+    console.log('MenuDirective.onLeave', this.menu);
+    MenuService.onBack();
+    this.onExit();
+  };
+
+  _proto.onEnter = function onEnter() {
+    console.log('MenuDirective.onEnter', this.menu);
     var target = this.target;
     var preview = target.querySelector('[data-target]');
     preview.src = this.previewSrc;
-    target.classList.add('active');
     var container = this.container;
     container.addEventListener('mouseleave', this.onLeave);
   };
 
-  _proto.onLeave = function onLeave(keepBackground) {
-    if (keepBackground !== true) {
-      var submenus = this.submenus;
-      submenus.classList.remove('active');
-    }
-
-    var target = this.target;
-    target.classList.remove('active');
+  _proto.onExit = function onExit() {
+    console.log('MenuDirective.onExit', this.menu);
     var container = this.container;
     container.removeEventListener('mouseleave', this.onLeave);
   };
 
   _proto.onDestroy = function onDestroy() {
-    this.onLeave();
+    this.onExit();
 
     var _getContext2 = rxcomp.getContext(this),
         node = _getContext2.node;
 
-    node.removeEventListener('mouseover', this.onOver);
+    node.removeEventListener('click', this.onClick);
   };
 
   return MenuDirective;

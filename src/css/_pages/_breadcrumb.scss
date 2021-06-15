@@ -25,4 +25,8 @@
 			padding: 0 0.4em;
 		}
 	}
+
+	@include media-down(xs) {
+		flex-wrap: wrap;
+	}
 }

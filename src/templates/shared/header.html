@@ -36,14 +36,14 @@
 		</div>
 		<div class="group--main" [class]="{ active: show == 'menu' }">
 			<ul class="nav--main">
-				<li class="nav__item"><a href="/giorgetti/products.html" menu="1">Collezione</a></li>
-				<li class="nav__item"><a href="/giorgetti/ambience.html" menu="2">Ambienti</a></li>
-				<li class="nav__item"><span menu="3">Giorgetti World</span></li>
-				<li class="nav__item"><a href="/giorgetti/news.html" menu="4">News</a></li>
-				<li class="nav__item"><a href="/giorgetti/projects.html" menu="5">Progetti</a></li>
+				<li class="nav__item" [class]="{ active: menu == 1 }"><a [menu]="1" href="/giorgetti/products.html">Collezione</a></li>
+				<li class="nav__item" [class]="{ active: menu == 2 }"><a [menu]="2" href="/giorgetti/ambience.html">Ambienti</a></li>
+				<li class="nav__item" [class]="{ active: menu == 3 }"><span [menu]="3">Giorgetti World</span></li>
+				<li class="nav__item" [class]="{ active: menu == 4 }"><a [menu]="4" href="/giorgetti/news.html">News</a></li>
+				<li class="nav__item" [class]="{ active: menu == 5 }"><a [menu]="5" href="/giorgetti/projects.html">Progetti</a></li>
 			</ul>
-			<div class="group--submenus">
-				<div class="group--submenu" submenu id="menu-1">
+			<div class="group--submenus" [class]="{ active: menu > 0 }">
+				<div class="group--submenu" [class]="{ active: menu == 1 }" submenu id="menu-1">
 					<div class="container">
 						<ul class="nav--submenu">
 							<li class="nav__item"><a href="/giorgetti/products.html" data-picture="/giorgetti/img/menu/collections/01-sedie.jpg">Sedie e sgabelli</a></li>
@@ -70,7 +70,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--submenu" submenu id="menu-2">
+				<div class="group--submenu" [class]="{ active: menu == 2 }" submenu id="menu-2">
 					<div class="container">
 						<ul class="nav--submenu">
 							<li class="nav__item"><a href="/giorgetti/ambience.html" data-picture="/giorgetti/img/menu/ambience/01-living.jpg">Living</a></li>
@@ -87,7 +87,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--submenu" submenu id="menu-3">
+				<div class="group--submenu" [class]="{ active: menu == 3 }" submenu id="menu-3">
 					<div class="container">
 						<ul class="nav--submenu">
 							<li class="nav__item"><a href="/giorgetti/identity.html" data-picture="/giorgetti/img/menu/collections/preview-01.jpg">Identità</a></li>
@@ -104,7 +104,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--submenu" submenu id="menu-4">
+				<div class="group--submenu" [class]="{ active: menu == 4 }" submenu id="menu-4">
 					<div class="container">
 						<ul class="nav--submenu">
 							<li class="nav__item"><a href="/giorgetti/news.html" data-picture="/giorgetti/img/menu/collections/preview-01.jpg">News</a></li>
@@ -116,7 +116,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--submenu" submenu id="menu-5">
+				<div class="group--submenu" [class]="{ active: menu == 5 }" submenu id="menu-5">
 					<div class="container">
 						<ul class="nav--submenu">
 							<li class="nav__item"><a href="/giorgetti/projects.html" data-picture="/giorgetti/img/menu/collections/preview-01.jpg">Corporate</a></li>
@@ -132,7 +132,9 @@
 						</div>
 					</div>
 				</div>
+				<button type="button" class="btn--back" (click)="onBack($event)"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
 			</div>
+			<button type="button" class="btn--close" (click)="onToggleMenu($event)"><svg class="close"><use xlink:href="#close"></use></svg></button>
 		</div>
 	</div>
 </header>

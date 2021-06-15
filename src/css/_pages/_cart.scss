@@ -139,14 +139,16 @@
 
 .section--cart-mini {
 	position: fixed;
+	padding: 15px 0;
 	width: 300px;
-	right: -300px;
-	top: 0;
-	z-index: 1000;
 	height: 100vh;
+	top: 0;
+	// right: -300px;
+	right: 0;
+	z-index: 1000;
 	background: $background;
 	border-left: 1px solid $background-tertiary;
-	padding: 15px 0;
+	overflow: hidden;
 
 	&>.container {
 		height: 100%;
@@ -241,6 +243,10 @@
 			font-size: 14px;
 		}
 	}
+
+	@include media-down(xs) {
+		height: calc(100vh - 80px);
+	}
 }
 
 .group--cart-mini {
@@ -274,9 +280,11 @@
 }
 
 .page {
-	transition: transform ease-in-out $slow;
+	position: relative;
+	transition: all ease-in-out $slow;
 
 	&.cart-mini-active {
-		transform: translateX(-300px);
+		left: -300px;
+		// transform: translateX(-300px);
 	}
 }
