@@ -179,7 +179,7 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
       userModal: '/template/modals/user-modal.cshtml',
       projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
       materialsModal: '/template/modals/materials-modal.cshtml',
-      marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.html'
+      marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml'
     }
   },
   googleMaps: {
@@ -401,19 +401,37 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   };
 
   return LocalStorageService;
-}();var CartService = /*#__PURE__*/function () {
+}();var HeaderService = /*#__PURE__*/function () {
+  function HeaderService() {}
+
+  HeaderService.setHeader = function setHeader(id) {
+    this.header$_.next(id);
+  };
+
+  HeaderService.toggleHeader = function toggleHeader(id) {
+    this.header$_.next(this.currentHeader === id ? -1 : id);
+  };
+
+  HeaderService.onBack = function onBack() {
+    this.header$_.next(-1);
+  };
+
+  HeaderService.header$ = function header$() {
+    return this.header$_;
+  };
+
+  _createClass(HeaderService, null, [{
+    key: "currentHeader",
+    get: function get() {
+      return this.header$_.getValue();
+    }
+  }]);
+
+  return HeaderService;
+}();
+
+_defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var CartService = /*#__PURE__*/function () {
   function CartService() {}
-
-  CartService.active$ = function active$() {
-    var page = document.querySelector('.page');
-    return CartService.active$_.pipe(operators.distinctUntilChanged(), operators.tap(function (active) {
-      active ? page.classList.add('cart-mini-active') : page.classList.remove('cart-mini-active');
-    }));
-  };
-
-  CartService.setActive = function setActive(active) {
-    this.active$_.next(active);
-  };
 
   CartService.hasItem = function hasItem(item) {
     var items = CartService.currentItems;
@@ -502,7 +520,7 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
         items.splice(index, 1);
 
         if (items.length === 0) {
-          CartService.setActive(false);
+          HeaderService.onBack();
         }
 
         CartService.setItems(items);
@@ -515,14 +533,14 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
 
   CartService.removeAll$ = function removeAll$() {
     return rxjs.of([]).pipe(operators.map(function (items) {
-      CartService.setActive(false);
+      HeaderService.onBack();
       CartService.setItems(items);
       return items;
     }));
   };
 
   CartService.match = function match(item, item_) {
-    return item_.id === item.id && item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link;
+    return item_.id === item.id && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
   };
 
   CartService.find = function find(item, items) {
@@ -538,11 +556,6 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   };
 
   _createClass(CartService, null, [{
-    key: "active",
-    get: function get() {
-      return CartService.active$_.getValue();
-    }
-  }, {
     key: "currentItems",
     get: function get() {
       return CartService.items$_.getValue();
@@ -556,8 +569,6 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
 
   return CartService;
 }();
-
-_defineProperty(CartService, "active$_", new rxjs.BehaviorSubject(false));
 
 _defineProperty(CartService, "items$_", new rxjs.BehaviorSubject([]));var HttpService = /*#__PURE__*/function () {
   function HttpService() {}
@@ -1188,9 +1199,9 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
 
     node.classList.remove('hidden');
     console.log('AppComponent.onInit');
-    this.showCart = false;
-    CartService.active$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (active) {
-      _this.showCart = active;
+    this.header = HeaderService.currentHeader;
+    HeaderService.header$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (header) {
+      _this.header = header;
 
       _this.pushChanges();
     });
@@ -1200,6 +1211,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   };
 
   _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
+    HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.marketsAndLanguagesModal
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
@@ -1208,6 +1220,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   };
 
   _proto.onLogin = function onLogin() {
+    HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.userModal,
       data: {
@@ -1248,7 +1261,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   };
 
   _proto.onOpenMiniCart = function onOpenMiniCart() {
-    CartService.setActive(true);
+    HeaderService.setHeader('cart');
   };
 
   return AppComponent;
@@ -1476,6 +1489,56 @@ EnvPipe.meta = {
 }(rxcomp.Pipe);
 FlagPipe.meta = {
   name: 'flag'
+};var HighlightPipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(HighlightPipe, _Pipe);
+
+  function HighlightPipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  HighlightPipe.transform = function transform(text, query) {
+    if (!query) {
+      return text;
+    }
+
+    if (!Array.isArray(query)) {
+      query = [query];
+    } // text = HighlightPipe.encodeHTML(text);
+
+
+    var escapedQuery = query.map(function (x) {
+      return HighlightPipe.escapeRegexChars(x);
+    });
+    var regExp = new RegExp("(?<!<)" + escapedQuery.join('(?![\w\s]*[\>])|(?<!\<)') + "(?![ws]*[>])", 'gmi'); // const regExp = new RegExp('&[^;]+;|' + escapedQuery.join('|'), 'gi');
+
+    text = text.replace(regExp, function (match, i, b) {
+      return '<b>' + match + '</b>'; // return match.toLowerCase() === x.toLowerCase() ? '<strong>' + match + '</strong>' : match;
+    }); // text = HighlightPipe.decodeHTML(text);
+
+    console.log(text);
+    return text;
+  };
+
+  HighlightPipe.escapeRegexChars = function escapeRegexChars(text) {
+    return text.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+  };
+
+  HighlightPipe.safeToString = function safeToString(text) {
+    return text === undefined || text === null ? '' : text.toString().trim();
+  };
+
+  HighlightPipe.encodeHTML = function encodeHTML(text) {
+    return this.safeToString(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  };
+
+  HighlightPipe.decodeHTML = function decodeHTML(text) {
+    return text.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  };
+
+  return HighlightPipe;
+}(rxcomp.Pipe);
+HighlightPipe.meta = {
+  name: 'highlight'
 };/*
 ['quot', 'amp', 'apos', 'lt', 'gt', 'nbsp', 'iexcl', 'cent', 'pound', 'curren', 'yen', 'brvbar', 'sect', 'uml', 'copy', 'ordf', 'laquo', 'not', 'shy', 'reg', 'macr', 'deg', 'plusmn', 'sup2', 'sup3', 'acute', 'micro', 'para', 'middot', 'cedil', 'sup1', 'ordm', 'raquo', 'frac14', 'frac12', 'frac34', 'iquest', 'Agrave', 'Aacute', 'Acirc', 'Atilde', 'Auml', 'Aring', 'AElig', 'Ccedil', 'Egrave', 'Eacute', 'Ecirc', 'Euml', 'Igrave', 'Iacute', 'Icirc', 'Iuml', 'ETH', 'Ntilde', 'Ograve', 'Oacute', 'Ocirc', 'Otilde', 'Ouml', 'times', 'Oslash', 'Ugrave', 'Uacute', 'Ucirc', 'Uuml', 'Yacute', 'THORN', 'szlig', 'agrave', 'aacute', 'atilde', 'auml', 'aring', 'aelig', 'ccedil', 'egrave', 'eacute', 'ecirc', 'euml', 'igrave', 'iacute', 'icirc', 'iuml', 'eth', 'ntilde', 'ograve', 'oacute', 'ocirc', 'otilde', 'ouml', 'divide', 'oslash', 'ugrave', 'uacute', 'ucirc', 'uuml', 'yacute', 'thorn', 'yuml', 'amp', 'bull', 'deg', 'infin', 'permil', 'sdot', 'plusmn', 'dagger', 'mdash', 'not', 'micro', 'perp', 'par', 'euro', 'pound', 'yen', 'cent', 'copy', 'reg', 'trade', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi', 'Chi', 'Psi', 'Omega'];
 ['"', '&', ''', '<', '>', ' ', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', '&', '•', '°', '∞', '‰', '⋅', '±', '†', '—', '¬', 'µ', '⊥', '∥', '€', '£', '¥', '¢', '©', '®', '™', 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
@@ -1669,7 +1732,7 @@ LabelForDirective.meta = {
         body.addEventListener('scroll', function () {
           var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
-          var direction = y > previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+          var direction = y >= previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
 
           previousY = y;
           event.direction = direction;
@@ -1707,12 +1770,9 @@ LabelForDirective.meta = {
       };
     }
 
-    console.log('scrollTo', this.instance);
-
     if (this.instance) {
       this.instance.scrollTo(target, options);
     } else {
-      console.log('scrollTo 2');
       var body = document.querySelector('body');
       var currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
@@ -1986,8 +2046,7 @@ NumberPipe.meta = {
   var _proto = ShareDirective.prototype;
 
   _proto.onInit = function onInit() {
-    console.log('ShareComponent.onInit', this.share, this.title);
-
+    // console.log('ShareComponent.onInit', this.share, this.title);
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
 
@@ -2112,7 +2171,60 @@ ShareDirective.meta = {
 }(rxcomp.Pipe);
 SlugPipe.meta = {
   name: 'slug'
-};var SwiperDirective = /*#__PURE__*/function (_Component) {
+};var SvgIconStructure = /*#__PURE__*/function (_Structure) {
+  _inheritsLoose(SvgIconStructure, _Structure);
+
+  function SvgIconStructure() {
+    return _Structure.apply(this, arguments) || this;
+  }
+
+  var _proto = SvgIconStructure.prototype;
+
+  _proto.onInit = function onInit() {
+    this.update();
+  };
+
+  _proto.onChanges = function onChanges() {
+    this.update();
+  };
+
+  _proto.update = function update() {
+    if (this.name_ !== this.name) {
+      this.name_ = this.name;
+
+      var _getContext = rxcomp.getContext(this),
+          node = _getContext.node;
+
+      if (node.parentNode) {
+        var _element$classList;
+
+        var xmlns = 'http://www.w3.org/2000/svg';
+        var element = document.createElementNS(xmlns, "svg");
+        var w = this.width || 24;
+        var h = this.height || 24;
+        element.setAttribute('class', "icon--" + this.name); // element.setAttributeNS(null, 'width', w);
+        // element.setAttributeNS(null, 'height', h);
+
+        element.setAttributeNS(null, 'viewBox', "0 0 " + w + " " + h);
+        element.innerHTML = "<use xlink:href=\"#" + this.name + "\"></use>";
+        element.rxcompId = node.rxcompId;
+
+        (_element$classList = element.classList).add.apply(_element$classList, node.classList);
+
+        node.parentNode.replaceChild(element, node);
+      }
+    }
+  };
+
+  return SvgIconStructure;
+}(rxcomp.Structure);
+SvgIconStructure.meta = {
+  selector: 'svg-icon',
+  inputs: ['name', 'width', 'height']
+};
+/*
+<svg class="copy" width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#copy"></use></svg>
+*/var SwiperDirective = /*#__PURE__*/function (_Component) {
   _inheritsLoose(SwiperDirective, _Component);
 
   function SwiperDirective() {
@@ -2622,11 +2734,10 @@ DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
 LocomotiveScrollDirective, LocomotiveScrollToDirective, // ModalComponent,
-ModalOutletComponent, ScrollDirective, ShareDirective, // SvgIconStructure,
-SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
+ModalOutletComponent, ScrollDirective, ShareDirective, SvgIconStructure, SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];
-var pipes = [EnvPipe, FlagPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
+var pipes = [EnvPipe, FlagPipe, HighlightPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
 var CommonModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(CommonModule, _Module);
 
@@ -4436,7 +4547,8 @@ MarketsAndLanguagesModalComponent.meta = {
 }(rxcomp.Component);
 MaterialsModalComponent.meta = {
   selector: '[materials-modal]'
-};var MaterialsService = /*#__PURE__*/function () {
+};// import { combineLatest } from 'rxjs';
+var MaterialsService = /*#__PURE__*/function () {
   function MaterialsService() {}
 
   MaterialsService.all$ = function all$() {
@@ -4445,85 +4557,99 @@ MaterialsModalComponent.meta = {
 
   MaterialsService.filters$ = function filters$() {
     return ApiService.get$('/materials/filters.json');
-  };
+  }
+  /*
+  static fake$() {
+  	return combineLatest([MaterialsService.all$(), ApiService.get$('/materials/icons.json')]).pipe(
+  		map(data => {
+  			let items = data[0];
+  			let icons = data[1];
+  			items.forEach(item => {
+  				if (item.items) {
+  					item.items.forEach(sub => {
+  						if (sub.icons) {
+  							const set = icons.sets[sub.icons];
+  							if (set) {
+  								sub.icons = set.map(x => icons.icons.find(icon => icon.id === x)).filter(x => x != null);
+  							}
+  							console.log(sub.icons);
+  						}
+  					});
+  				}
+  			});
+  			console.log(JSON.stringify(items));
+  			return items;
+  		})
+  	);
+  }
+  */
 
-  MaterialsService.fake$ = function fake$() {
-    return rxjs.combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(operators.map(function (data) {
-      var items = data[0];
-      var items_ = data[1];
-      items = items.filter(function (x) {
-        return x.category.name !== 'Tessuto' || !x.collection;
-      });
-      items.forEach(function (item) {
-        if (item.category.name === 'Tessuto') {
-          item.items = items_.filter(function (x) {
-            return x.collection && x.collection.id === item.id;
-          });
-          console.log(item.items);
-        }
-      });
-      console.log(JSON.stringify(items));
-      return items;
-      /*
-      let collectionId = 1000;
-      const fabrics = [];
-      const collections = [];
-      items_.forEach(item_ => {
-      	let collection = collections.find(x => x.name === item_.collection);
-      	if (!collection) {
-      		collection = {
-      			id: ++collectionId,
-      			name: item_.collection,
-      		};
-      		collections.push(collection);
-      		if (item_.category.name === 'Tessuto') {
-      			fabrics.push(Object.assign({
-      				image: `/giorgetti/img/materials/tessuto/${collection.name.toLowerCase().replace(/\s/g, '_')}_512.jpg`,
-      				category: item_.category,
-      			}, collection));
-      		}
-      	}
-      });
-      console.log(fabrics);
-      items.forEach((item, i) => {
-      	const item_ = items_.find(x => x.id === item.id);
-      	// if (item_) {
-      	//	item.image = item_.image.replace(/\s/g, '_').toLowerCase();
-      	//	item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
-      	// }
-      	const collection = collections.find(x => x.name === item.collection);
-      	console.log(collection);
-      	if (collection) {
-      		item.collection = collection;
-      	}
-      	// item.collection = MaterialsService.toTitleCase(item.collection);
-      	// item.title = MaterialsService.toTitleCase(item.title);
-      });
-      items = items.concat(fabrics);
-      console.log(JSON.stringify(items));
-      return items;
-      */
-    }));
-  };
-
-  MaterialsService.toTitleCase = function toTitleCase(sentence, seps) {
-    if (seps === void 0) {
-      seps = ' _-/';
-    }
-
-    var capitalize = function capitalize(str) {
-      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
-    };
-
-    var escape = function escape(str) {
-      return str.replace(/./g, function (c) {
-        return "\\" + c;
-      });
-    };
-
-    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
-    return sentence.replace(wordPattern, capitalize);
-  };
+  /*
+  static fake$() {
+  	return combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(
+  		map(data => {
+  			let items = data[0];
+  			let items_ = data[1];
+  			items = items.filter(x => x.category.name !== 'Tessuto' || !x.collection);
+  			items.forEach(item => {
+  				if (item.category.name === 'Tessuto') {
+  					item.items = items_.filter(x => x.collection && x.collection.id === item.id);
+  					console.log(item.items);
+  				}
+  			});
+  			console.log(JSON.stringify(items));
+  			return items;
+  			// !!!
+  			let collectionId = 1000;
+  			const fabrics = [];
+  			const collections = [];
+  			items_.forEach(item_ => {
+  				let collection = collections.find(x => x.name === item_.collection);
+  				if (!collection) {
+  					collection = {
+  						id: ++collectionId,
+  						name: item_.collection,
+  					};
+  					collections.push(collection);
+  					if (item_.category.name === 'Tessuto') {
+  						fabrics.push(Object.assign({
+  							image: `/giorgetti/img/materials/tessuto/${collection.name.toLowerCase().replace(/\s/g, '_')}_512.jpg`,
+  							category: item_.category,
+  						}, collection));
+  					}
+  				}
+  			});
+  			console.log(fabrics);
+  			items.forEach((item, i) => {
+  				const item_ = items_.find(x => x.id === item.id);
+  				// if (item_) {
+  				//	item.image = item_.image.replace(/\s/g, '_').toLowerCase();
+  				//	item.zoom = item_.zoom.replace(/\s/g, '_').toLowerCase();
+  				// }
+  				const collection = collections.find(x => x.name === item.collection);
+  				console.log(collection);
+  				if (collection) {
+  					item.collection = collection;
+  				}
+  				// item.collection = MaterialsService.toTitleCase(item.collection);
+  				// item.title = MaterialsService.toTitleCase(item.title);
+  			});
+  			items = items.concat(fabrics);
+  			console.log(JSON.stringify(items));
+  			return items;
+  			// !!!
+  		})
+  	);
+  }
+  
+  static toTitleCase(sentence, seps = ' _-/') {
+  	const capitalize = str => str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+  	const escape = str => str.replace(/./g, c => `\\${c}`);
+  	let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
+  	return sentence.replace(wordPattern, capitalize);
+  }
+  */
+  ;
 
   return MaterialsService;
 }();var MaterialsComponent = /*#__PURE__*/function (_Component) {
@@ -5297,7 +5423,7 @@ ProductsConfigureComponent.meta = {
     var _this2 = this;
 
     if (this.isAddedToCart(item)) {
-      CartService.setActive(true);
+      HeaderService.setHeader('cart');
     } else {
       CartService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
         _this2.pushChanges();
@@ -8334,7 +8460,7 @@ SwiperProjectsPropositionDirective.meta = {
   };
 
   _proto.onClose = function onClose(event) {
-    CartService.setActive(false);
+    HeaderService.onBack();
   };
 
   _createClass(CartMiniComponent, [{
@@ -8432,6 +8558,10 @@ FilesComponent.meta = {
     this.menu$_.next(id);
   };
 
+  MenuService.toggleMenu = function toggleMenu(id) {
+    this.menu$_.next(this.currentMenu === id ? -1 : id);
+  };
+
   MenuService.onBack = function onBack() {
     this.menu$_.next(-1);
   };
@@ -8450,13 +8580,7 @@ FilesComponent.meta = {
   return MenuService;
 }();
 
-_defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderMode = {
-  IDLE: 'idle',
-  MENU: 'menu',
-  SEARCH: 'search',
-  CART: 'cart'
-};
-var HeaderComponent = /*#__PURE__*/function (_Component) {
+_defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(HeaderComponent, _Component);
 
   function HeaderComponent() {
@@ -8480,7 +8604,28 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
   _proto.onInit = function onInit() {
     var _this2 = this;
 
-    this.show = HeaderMode.IDLE;
+    var body = document.querySelector('body');
+    this.header = HeaderService.currentHeader;
+    HeaderService.header$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (header) {
+      _this2.header = header;
+
+      _this2.pushChanges();
+
+      body.setAttribute('class', header !== -1 ? header + "-active" : '');
+    });
+    this.menu = MenuService.currentMenu;
+    MenuService.menu$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (menu) {
+      _this2.menu = menu;
+
+      _this2.pushChanges();
+    });
+    this.cart = CartService;
+    this.user = null;
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      _this2.user = user;
+
+      _this2.pushChanges();
+    });
     var pictogram = document.querySelector('.page > .pictogram');
     LocomotiveScrollService.scroll$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       _this2.direction = event.direction;
@@ -8490,22 +8635,10 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
         opacity: opacity
       }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
     });
-    this.user = null;
-    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
-      _this2.user = user;
-
-      _this2.pushChanges();
-    });
-    this.menu = MenuService.currentMenu;
-    MenuService.menu$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (menu) {
-      _this2.menu = menu;
-
-      _this2.pushChanges();
-    });
-    this.cart = CartService;
   };
 
   _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
+    HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.marketsAndLanguagesModal
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
@@ -8514,6 +8647,7 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onLogin = function onLogin() {
+    HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.userModal,
       data: {
@@ -8532,18 +8666,8 @@ var HeaderComponent = /*#__PURE__*/function (_Component) {
     UserService.signout$().pipe(operators.first()).subscribe();
   };
 
-  _proto.onToggleMenu = function onToggleMenu(event) {
-    this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
-    this.pushChanges();
-  };
-
-  _proto.onToggleSearch = function onToggleSearch(event) {
-    this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
-    this.pushChanges();
-  };
-
-  _proto.onToggleCart = function onToggleCart(event) {
-    CartService.setActive(!CartService.active);
+  _proto.onToggle = function onToggle(id) {
+    HeaderService.toggleHeader(id);
   };
 
   _proto.onBack = function onBack(event) {
@@ -8618,24 +8742,19 @@ HeaderComponent.meta = {
   };
 
   _proto.onClick = function onClick(event) {
-    event.preventDefault();
-    console.log('MenuDirective.onClick', this.menu);
+    event.preventDefault(); // console.log('MenuDirective.onClick', this.menu);
 
-    if (MenuService.currentMenu === this.menu) {
-      MenuService.onBack();
-    } else {
-      MenuService.setMenu(this.menu);
-    }
+    MenuService.toggleMenu(this.menu);
   };
 
   _proto.onLeave = function onLeave() {
-    console.log('MenuDirective.onLeave', this.menu);
+    // console.log('MenuDirective.onLeave', this.menu);
     MenuService.onBack();
     this.onExit();
   };
 
   _proto.onEnter = function onEnter() {
-    console.log('MenuDirective.onEnter', this.menu);
+    // console.log('MenuDirective.onEnter', this.menu);
     var target = this.target;
     var preview = target.querySelector('[data-target]');
     preview.src = this.previewSrc;
@@ -8644,7 +8763,7 @@ HeaderComponent.meta = {
   };
 
   _proto.onExit = function onExit() {
-    console.log('MenuDirective.onExit', this.menu);
+    // console.log('MenuDirective.onExit', this.menu);
     var container = this.container;
     container.removeEventListener('mouseleave', this.onLeave);
   };
@@ -8695,6 +8814,97 @@ MenuDirective.meta = {
 NewsletterPropositionComponent.meta = {
   selector: '[newsletter-proposition]',
   inputs: ['action']
+};var SearchService = /*#__PURE__*/function () {
+  function SearchService() {}
+
+  SearchService.search$_ = function search$_() {
+    if (SearchService.items_) {
+      return rxjs.of(SearchService.items_);
+    } else {
+      return ApiService.get$('/search/search.json').pipe(operators.tap(function (items) {
+        items.forEach(function (item) {
+          item.title = SearchService.toTitleCase(item.title);
+        });
+        SearchService.items_ = items;
+      }));
+    }
+  };
+
+  SearchService.search$ = function search$(query) {
+    query = query.toLowerCase();
+    return this.search$_().pipe(operators.map(function (items) {
+      items = items.filter(function (item) {
+        return item.title.toLowerCase().indexOf(query) !== -1;
+      });
+      items.sort(function (a, b) {
+        return a.title.toLowerCase().indexOf(query) - b.title.toLowerCase().indexOf(query);
+      });
+      return items;
+    }));
+  };
+
+  SearchService.toTitleCase = function toTitleCase(sentence, seps) {
+    if (seps === void 0) {
+      seps = ' _-/';
+    }
+
+    var capitalize = function capitalize(str) {
+      return str.length ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
+    };
+
+    var escape = function escape(str) {
+      return str.replace(/./g, function (c) {
+        return "\\" + c;
+      });
+    };
+
+    var wordPattern = new RegExp("[^" + escape(seps) + "]+", 'g');
+    return sentence.replace(wordPattern, capitalize);
+  };
+
+  return SearchService;
+}();var SearchComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(SearchComponent, _Component);
+
+  function SearchComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = SearchComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.items = [];
+    this.visibleItems = [];
+    var form = this.form = new rxcompForm.FormGroup({
+      search: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()])
+    });
+    var controls = this.controls = form.controls;
+    this.search$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
+      _this.items = items;
+      _this.visibleItems = items.slice(0, Math.min(10, items.length));
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.search$ = function search$() {
+    return this.form.changes$.pipe(operators.auditTime(500), operators.map(function (changes) {
+      return changes.search;
+    }), operators.switchMap(function (query) {
+      if (query != null && query.length > 1) {
+        return SearchService.search$(query);
+      } else {
+        return rxjs.of([]);
+      }
+    }));
+  };
+
+  return SearchComponent;
+}(rxcomp.Component);
+SearchComponent.meta = {
+  selector: '[search]'
 };var SubmenuDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(SubmenuDirective, _Directive);
 
@@ -9235,7 +9445,7 @@ UserSigninComponent.meta = {
 UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn']
-};var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
+};var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
 var pipes$2 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(SharedModule, _Module);

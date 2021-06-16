@@ -1,5 +1,5 @@
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+// import { combineLatest } from 'rxjs';
+// import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
 export class MaterialsService {
@@ -12,6 +12,33 @@ export class MaterialsService {
 		return ApiService.get$('/materials/filters.json');
 	}
 
+	/*
+	static fake$() {
+		return combineLatest([MaterialsService.all$(), ApiService.get$('/materials/icons.json')]).pipe(
+			map(data => {
+				let items = data[0];
+				let icons = data[1];
+				items.forEach(item => {
+					if (item.items) {
+						item.items.forEach(sub => {
+							if (sub.icons) {
+								const set = icons.sets[sub.icons];
+								if (set) {
+									sub.icons = set.map(x => icons.icons.find(icon => icon.id === x)).filter(x => x != null);
+								}
+								console.log(sub.icons);
+							}
+						});
+					}
+				});
+				console.log(JSON.stringify(items));
+				return items;
+			})
+		);
+	}
+	*/
+
+	/*
 	static fake$() {
 		return combineLatest([MaterialsService.all$(), ApiService.get$('/materials/all_.json')]).pipe(
 			map(data => {
@@ -26,7 +53,7 @@ export class MaterialsService {
 				});
 				console.log(JSON.stringify(items));
 				return items;
-				/*
+				// !!!
 				let collectionId = 1000;
 				const fabrics = [];
 				const collections = [];
@@ -64,7 +91,7 @@ export class MaterialsService {
 				items = items.concat(fabrics);
 				console.log(JSON.stringify(items));
 				return items;
-				*/
+				// !!!
 			})
 		);
 	}
@@ -75,5 +102,6 @@ export class MaterialsService {
 		let wordPattern = new RegExp(`[^${escape(seps)}]+`, 'g');
 		return sentence.replace(wordPattern, capitalize);
 	}
+	*/
 
 }

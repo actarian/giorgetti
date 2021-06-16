@@ -3,6 +3,7 @@ import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { environment } from '../../environment';
 import { CartService } from '../../shared/cart/cart.service';
+import { HeaderService } from '../../shared/header/header.service';
 import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {
@@ -25,7 +26,7 @@ export class ProductsDetailComponent extends Component {
 
 	onAddToCart(item) {
 		if (this.isAddedToCart(item)) {
-			CartService.setActive(true);
+			HeaderService.setHeader('cart');
 		} else {
 			CartService.addItem$(item).pipe(
 				first(),

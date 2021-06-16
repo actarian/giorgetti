@@ -10,6 +10,7 @@ import { FilesComponent } from './files/files.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuDirective } from './menu/menu.directive';
 import { NewsletterPropositionComponent } from './newsletter-proposition/newsletter-proposition.component';
+import { SearchComponent } from './search/search.component';
 import { SubmenuDirective } from './submenu/submenu.directive';
 import { TreeComponent } from './tree/tree.component';
 import { UserForgotComponent } from './user/user-forgot.component';
@@ -25,6 +26,7 @@ const factories = [
 	MapComponent,
 	MenuDirective,
 	NewsletterPropositionComponent,
+	SearchComponent,
 	SubmenuDirective,
 	SwiperGalleryDirective,
 	SwiperHomepageDirective,

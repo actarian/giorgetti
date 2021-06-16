@@ -6,13 +6,7 @@ import { environment } from '../../environment';
 import { CartService } from '../cart/cart.service';
 import { MenuService } from '../menu/menu.service';
 import { UserService } from '../user/user.service';
-
-export const HeaderMode = {
-	IDLE: 'idle',
-	MENU: 'menu',
-	SEARCH: 'search',
-	CART: 'cart',
-}
+import { HeaderService } from './header.service';
 
 export class HeaderComponent extends Component {
 
@@ -42,7 +36,30 @@ export class HeaderComponent extends Component {
 	}
 
 	onInit() {
-		this.show = HeaderMode.IDLE;
+		const body = document.querySelector('body');
+		this.header = HeaderService.currentHeader;
+		HeaderService.header$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(header => {
+			this.header = header;
+			this.pushChanges();
+			body.setAttribute('class', header !== -1 ? `${header}-active` : '');
+		});
+		this.menu = MenuService.currentMenu;
+		MenuService.menu$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(menu => {
+			this.menu = menu;
+			this.pushChanges();
+		});
+		this.cart = CartService;
+		this.user = null;
+		UserService.me$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(user => {
+			this.user = user;
+			this.pushChanges();
+		});
 		const pictogram = document.querySelector('.page > .pictogram');
 		LocomotiveScrollService.scroll$.pipe(
 			takeUntil(this.unsubscribe$),
@@ -53,24 +70,10 @@ export class HeaderComponent extends Component {
 			gsap.set(pictogram, { opacity });
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
 		});
-		this.user = null;
-		UserService.me$().pipe(
-			takeUntil(this.unsubscribe$),
-		).subscribe(user => {
-			this.user = user;
-			this.pushChanges();
-		});
-		this.menu = MenuService.currentMenu;
-		MenuService.menu$().pipe(
-			takeUntil(this.unsubscribe$),
-		).subscribe(menu => {
-			this.menu = menu;
-			this.pushChanges();
-		});
-		this.cart = CartService;
 	}
 
 	onOpenMarketAndLanguage() {
+		HeaderService.onBack();
 		ModalService.open$({ src: environment.template.modal.marketsAndLanguagesModal }).pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
@@ -79,6 +82,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onLogin() {
+		HeaderService.onBack();
 		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
@@ -95,18 +99,8 @@ export class HeaderComponent extends Component {
 		).subscribe();
 	}
 
-	onToggleMenu(event) {
-		this.show = this.show === HeaderMode.MENU ? HeaderMode.IDLE : HeaderMode.MENU;
-		this.pushChanges();
-	}
-
-	onToggleSearch(event) {
-		this.show = this.show === HeaderMode.SEARCH ? HeaderMode.IDLE : HeaderMode.SEARCH;
-		this.pushChanges();
-	}
-
-	onToggleCart(event) {
-		CartService.setActive(!CartService.active);
+	onToggle(id) {
+		HeaderService.toggleHeader(id);
 	}
 
 	onBack(event) {

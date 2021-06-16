@@ -20,7 +20,7 @@ export const environmentServed = {
 			userModal: '/template/modals/user-modal.cshtml',
 			projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
 			materialsModal: '/template/modals/materials-modal.cshtml',
-			marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.html',
+			marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
 		}
 	},
 	googleMaps: {

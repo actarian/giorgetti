@@ -2,7 +2,6 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 
 	.card__picture {
@@ -66,14 +65,20 @@
 
 	@include media-up(md) {
 		margin-bottom: 60px;
+		justify-content: flex-start;
 
 		.card__picture {
 			position: relative;
-			max-height: calc(100vh - 135px);
+			// max-height: calc(100vh - 135px);
 		}
 
 		.card__content {
 			position: absolute;
+			height: 100%;
+			max-height: calc(100vh - 135px);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 		}
 
 		.card__title {
@@ -100,6 +105,7 @@
 	}
 
 	@include media-down(sm) {
+		justify-content: center;
 
 		.card__picture {
 			position: relative;

@@ -104,7 +104,7 @@ export class LocomotiveScrollService {
 					let previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 					body.addEventListener('scroll', () => {
 						const y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
-						const direction = y > previousY ? 'down' : 'up';
+						const direction = y >= previousY ? 'down' : 'up';
 						// console.log('scroll', y, direction);
 						previousY = y;
 						event.direction = direction;
@@ -137,11 +137,9 @@ export class LocomotiveScrollService {
 	}
 
 	static scrollTo(target, options = { offset: -130 }) {
-		console.log('scrollTo', this.instance);
 		if (this.instance) {
 			this.instance.scrollTo(target, options);
 		} else {
-			console.log('scrollTo 2')
 			const body = document.querySelector('body');
 			const currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 			const targetTop = currentTop + target.getBoundingClientRect().top + options.offset;

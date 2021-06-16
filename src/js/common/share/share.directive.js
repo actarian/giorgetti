@@ -63,7 +63,7 @@ export default class ShareDirective extends Directive {
 	}
 
 	onInit() {
-		console.log('ShareComponent.onInit', this.share, this.title);
+		// console.log('ShareComponent.onInit', this.share, this.title);
 		const { node } = getContext(this);
 		const href = this.href;
 		node.setAttribute('href', href);

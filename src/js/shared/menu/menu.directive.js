@@ -26,22 +26,18 @@ export class MenuDirective extends Directive {
 
 	onClick(event) {
 		event.preventDefault();
-		console.log('MenuDirective.onClick', this.menu);
-		if (MenuService.currentMenu === this.menu) {
-			MenuService.onBack();
-		} else {
-			MenuService.setMenu(this.menu);
-		}
+		// console.log('MenuDirective.onClick', this.menu);
+		MenuService.toggleMenu(this.menu);
 	}
 
 	onLeave() {
-		console.log('MenuDirective.onLeave', this.menu);
+		// console.log('MenuDirective.onLeave', this.menu);
 		MenuService.onBack();
 		this.onExit();
 	}
 
 	onEnter() {
-		console.log('MenuDirective.onEnter', this.menu);
+		// console.log('MenuDirective.onEnter', this.menu);
 		const target = this.target;
 		const preview = target.querySelector('[data-target]');
 		preview.src = this.previewSrc;
@@ -50,7 +46,7 @@ export class MenuDirective extends Directive {
 	}
 
 	onExit() {
-		console.log('MenuDirective.onExit', this.menu);
+		// console.log('MenuDirective.onExit', this.menu);
 		const container = this.container;
 		container.removeEventListener('mouseleave', this.onLeave);
 	}

@@ -4,19 +4,24 @@
 		<div class="group--header">
 			<div class="group--left">
 				<ul class="nav--language">
-					<li class="nav__item"><button type="button" (click)="onOpenMarketAndLanguage($event)">Italia | IT</button></li>
+					<li class="nav__item">
+						<button type="button" (click)="onOpenMarketAndLanguage($event)">
+							<!--<svg class="markets"><use xlink:href="#markets"></use></svg>--> Italia | IT
+						</button>
+					</li>
 				</ul>
-				<button type="button" class="btn--menu" (click)="onToggleMenu($event)"><svg class="menu"><use xlink:href="#menu"></use></svg></button>
+				<button type="button" class="btn--menu" (click)="onToggle('menu')"><svg class="menu"><use xlink:href="#menu"></use></svg></button>
 			</div>
 			<div class="group--center">
 				<a href="/giorgetti/" class="btn--logo"><svg class="giorgetti"><use xlink:href="#giorgetti"></use></svg></a>
 			</div>
 			<div class="group--right">
 				<ul class="nav--service">
-					<li class="nav__item">
-						<button type="button" (click)="onLogin($event)" *if="!user"><svg class="user"><use xlink:href="#user"></use></svg></button>
-						<!-- <a href="/giorgetti/reserved-area.html" *if="!user"><svg class="user"><use xlink:href="#user"></use></svg></a> -->
-						<button type="button" (click)="onLogout($event)" *if="user"><span>logout</span> <svg class="user"><use xlink:href="#user"></use></svg></button>
+					<li class="nav__item" *if="!user">
+						<button type="button" (click)="onLogin($event)"><svg class="user"><use xlink:href="#user"></use></svg></button>
+					</li>
+					<li class="nav__item" *if="user">
+						<button type="button" (click)="onLogout($event)" *if="user"><span>esci</span> <svg class="user"><use xlink:href="#user"></use></svg></button>
 					</li>
 					<li class="nav__item">
 						<a href="/giorgetti/store-locator.html"><svg class="pin"><use xlink:href="#pin"></use></svg></a>
@@ -25,22 +30,27 @@
 						<a href="#"><svg class="events"><use xlink:href="#events"></use></svg></a>
 					</li>
 					<li class="nav__item">
-						<button type="button" (click)="onToggleSearch($event)"><svg class="search"><use xlink:href="#search"></use></svg></button>
+						<button type="button" (click)="onToggle('search')"><svg class="search"><use xlink:href="#search"></use></svg></button>
 					</li>
 					<li class="nav__item">
-						<button type="button" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
+						<button type="button" (click)="onToggle('cart')"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
 					</li>
 				</ul>
-				<button type="button" class="btn--cart" (click)="onToggleCart($event)"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
+				<button type="button" class="btn--cart" (click)="onToggle('cart')"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
 			</div>
 		</div>
-		<div class="group--main" [class]="{ active: show == 'menu' }">
+		<div class="group--main" [class]="{ active: header == 'menu' }">
 			<ul class="nav--main">
-				<li class="nav__item" [class]="{ active: menu == 1 }"><a [menu]="1" href="/giorgetti/products.html">Collezione</a></li>
-				<li class="nav__item" [class]="{ active: menu == 2 }"><a [menu]="2" href="/giorgetti/ambience.html">Ambienti</a></li>
+				<li class="nav__item" [class]="{ active: menu == 1 }"><span [menu]="1">Collezione</span></li>
+				<li class="nav__item" [class]="{ active: menu == 2 }"><span [menu]="2">Ambienti</span></li>
 				<li class="nav__item" [class]="{ active: menu == 3 }"><span [menu]="3">Giorgetti World</span></li>
-				<li class="nav__item" [class]="{ active: menu == 4 }"><a [menu]="4" href="/giorgetti/news.html">News</a></li>
-				<li class="nav__item" [class]="{ active: menu == 5 }"><a [menu]="5" href="/giorgetti/projects.html">Progetti</a></li>
+				<li class="nav__item" [class]="{ active: menu == 4 }"><span [menu]="4">News</span></li>
+				<li class="nav__item" [class]="{ active: menu == 5 }"><span [menu]="5">Progetti</span></li>
+				<li class="nav__item hidden-sm-up"><span (click)="onToggle('search')">Cerca <svg class="search"><use xlink:href="#search"></use></svg></span></li>
+				<li class="nav__item hidden-sm-up" *if="!user"><span (click)="onLogin($event)">Accedi <svg class="user"><use xlink:href="#user"></use></svg></span></li>
+				<li class="nav__item hidden-sm-up" *if="user"><span (click)="onLogout($event)">Esci <svg class="user"><use xlink:href="#user"></use></svg></span></li>
+				<li class="nav__item hidden-sm-up"><span (click)="onOpenMarketAndLanguage($event)"><span>Italia | IT</span>
+						<!--<svg class="markets"><use xlink:href="#markets"></use></svg>--></span></li>
 			</ul>
 			<div class="group--submenus" [class]="{ active: menu > 0 }">
 				<div class="group--submenu" [class]="{ active: menu == 1 }" submenu id="menu-1">
@@ -134,7 +144,20 @@
 				</div>
 				<button type="button" class="btn--back" (click)="onBack($event)"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
 			</div>
-			<button type="button" class="btn--close" (click)="onToggleMenu($event)"><svg class="close"><use xlink:href="#close"></use></svg></button>
+			<button type="button" class="btn--close" (click)="onToggle('menu')"><svg class="close"><use xlink:href="#close"></use></svg></button>
+		</div>
+		<div class="group--search" [class]="{ active: header == 'search' }">
+			<div class="container" search>
+				<div class="title">Cerca nel sito</div>
+				<form class="form" [formGroup]="form" name="form" role="form" novalidate autocomplete="off">
+					<div control-search [control]="controls.search" label="Cerca"></div>
+				</form>
+				<ul class="nav--results" *if="visibleItems.length">
+					<li class="nav__item" *for="let item of visibleItems">
+						<a [href]="item.url"><span class="nav__title" [innerHTML]="item.title | highlight : controls.search.value"></span> <span class="nav__url" [innerHTML]="item.url"></span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </header>

@@ -1,6 +1,7 @@
 import { Component } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
 import { environment } from '../../environment';
+import { HeaderService } from '../header/header.service';
 import { CartService } from './cart.service';
 
 export class CartMiniComponent extends Component {
@@ -50,7 +51,7 @@ export class CartMiniComponent extends Component {
 	}
 
 	onClose(event) {
-		CartService.setActive(false);
+		HeaderService.onBack();
 	}
 
 }

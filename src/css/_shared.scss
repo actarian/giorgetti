@@ -5,6 +5,7 @@
 @import '_components/base';
 @import '_components/locomotive';
 @import '_components/grid';
+@import '_components/responsive';
 @import '_components/navs';
 @import '_components/typography';
 @import '_components/dropdowns';
@@ -42,7 +43,7 @@
 @import '_pages/materials';
 @import '_pages/user';
 @import '_pages/reserved-area';
-@import '_pages/cart';
+@import '_pages/cart-mini';
 @import '_pages/markets-and-languages';
 //
 @import '_pages/index';

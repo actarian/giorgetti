@@ -4,6 +4,7 @@ import { DropdownItemDirective } from './dropdown/dropdown-item.directive';
 import { DropdownDirective } from './dropdown/dropdown.directive';
 import { EnvPipe } from './env/env.pipe';
 import { FlagPipe } from './flag/flag.pipe';
+import { HighlightPipe } from './highlight/highlight.pipe';
 import { HtmlPipe } from './html/html.pipe';
 import { IdDirective } from './id/id.directive';
 import { LabelForDirective } from './label-for/label-for.directive';
@@ -15,6 +16,7 @@ import { ModalOutletComponent } from './modal/modal-outlet.component';
 import { NumberPipe } from './number/number.pipe';
 import ShareDirective from './share/share.directive';
 import { SlugPipe } from './slug/slug.pipe';
+import { SvgIconStructure } from './svg/svg-icon.structure';
 import { SwiperDirective } from './swiper/swiper.directive';
 import { ThronComponent } from './thron/thron.component';
 import { TitleDirective } from './title/title.directive';
@@ -35,7 +37,7 @@ const factories = [
 	ModalOutletComponent,
 	ScrollDirective,
 	ShareDirective,
-	// SvgIconStructure,
+	SvgIconStructure,
 	SwiperDirective,
 	ThronComponent,
 	TitleDirective,
@@ -46,6 +48,7 @@ const factories = [
 const pipes = [
 	EnvPipe,
 	FlagPipe,
+	HighlightPipe,
 	HtmlPipe,
 	LabelPipe,
 	NumberPipe,

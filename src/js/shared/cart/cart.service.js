@@ -1,25 +1,9 @@
 import { BehaviorSubject, of } from 'rxjs';
-import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
+import { HeaderService } from '../header/header.service';
 
 export class CartService {
-
-	static active$_ = new BehaviorSubject(false);
-	static get active() {
-		return CartService.active$_.getValue();
-	}
-	static active$() {
-		const page = document.querySelector('.page');
-		return CartService.active$_.pipe(
-			distinctUntilChanged(),
-			tap(active => {
-				active ? page.classList.add('cart-mini-active') : page.classList.remove('cart-mini-active');
-			}),
-		);
-	}
-	static setActive(active) {
-		this.active$_.next(active);
-	}
 
 	static items$_ = new BehaviorSubject([]);
 
@@ -118,7 +102,7 @@ export class CartService {
 				if (index !== -1) {
 					items.splice(index, 1);
 					if (items.length === 0) {
-						CartService.setActive(false);
+						HeaderService.onBack();
 					}
 					CartService.setItems(items);
 					return item;
@@ -132,7 +116,7 @@ export class CartService {
 	static removeAll$() {
 		return of([]).pipe(
 			map(items => {
-				CartService.setActive(false);
+				HeaderService.onBack();
 				CartService.setItems(items);
 				return items;
 			}),
@@ -140,7 +124,7 @@ export class CartService {
 	}
 
 	static match(item, item_) {
-		return item_.id === item.id && item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link;
+		return item_.id === item.id && ((!item_.showefy && !item.showefy) || (item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link));
 	}
 
 	static find(item, items) {

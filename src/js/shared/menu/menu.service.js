@@ -12,6 +12,10 @@ export class MenuService {
 		this.menu$_.next(id);
 	}
 
+	static toggleMenu(id) {
+		this.menu$_.next(this.currentMenu === id ? -1 : id);
+	}
+
 	static onBack() {
 		this.menu$_.next(-1);
 	}

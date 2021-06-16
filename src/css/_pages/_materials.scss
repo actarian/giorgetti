@@ -448,7 +448,7 @@
 	.btn--close,
 	.btn--prev,
 	.btn--next {
-		@include btn(rgba(0, 0, 0, 0.2), $foreground-negative, rgba(0, 0, 0, 0.3), $foreground-negative, rgba(0, 0, 0, 0.5), $foreground-negative);
+		@include btn(rgba(0, 0, 0, 0), $foreground-negative, rgba(0, 0, 0, 0.3), $foreground-negative, rgba(0, 0, 0, 0.5), $foreground-negative);
 
 		svg {
 			fill: currentColor;
@@ -459,8 +459,8 @@
 		line-height: 1;
 		width: 40px;
 		height: 40px;
-		margin-top: -10px;
-		margin-right: -10px;
+		margin-top: 0;
+		margin-right: 0;
 		padding: 0;
 
 		svg {
