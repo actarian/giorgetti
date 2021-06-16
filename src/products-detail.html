@@ -46,6 +46,18 @@
 		<div class="container">
 			<div class="swiper-container" swiper-gallery>
 				<div class="swiper-wrapper">
+					<!-- video -->
+					<div class="swiper-slide swiper-slide--video">
+						<div class="card--gallery">
+							<div class="card__video" thron="https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=gruppoconcorde&amp;xcontentId=0e72b47c-73d3-431a-93b2-5d9409424bc0&amp;pkey=yz1hpd" m3u8="https://gruppoconcorde-cdn.thron.com/delivery/public/video/gruppoconcorde/0e72b47c-73d3-431a-93b2-5d9409424bc0/yz1hpd/STREAMHTTPIOSHD/AtlasConcorde_Norde_Trailer.m3u8" controls>
+								<div class="video">
+									<div class="thron"></div>
+								</div>
+								<button type="button" class="btn--play" (click)="toggle($event)"><svg class="play"><use xlink:href="#play"></use></svg></button>
+							</div>
+						</div>
+					</div>
+					<!-- image -->
 					<div class="swiper-slide">
 						<div class="card--gallery">
 							<div class="card__picture">
