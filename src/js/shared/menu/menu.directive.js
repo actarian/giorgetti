@@ -1,5 +1,6 @@
 import { Directive, getContext } from 'rxcomp';
 import { takeUntil } from 'rxjs/operators';
+import { HeaderService } from '../header/header.service';
 import { MenuService } from './menu.service';
 
 export class MenuDirective extends Directive {
@@ -27,6 +28,9 @@ export class MenuDirective extends Directive {
 	onClick(event) {
 		event.preventDefault();
 		// console.log('MenuDirective.onClick', this.menu);
+		if (HeaderService.currentHeader !== 'menu') {
+			HeaderService.onBack();
+		}
 		MenuService.toggleMenu(this.menu);
 	}
 

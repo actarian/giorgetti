@@ -73,6 +73,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onOpenMarketAndLanguage() {
+		MenuService.onBack();
 		HeaderService.onBack();
 		ModalService.open$({ src: environment.template.modal.marketsAndLanguagesModal }).pipe(
 			takeUntil(this.unsubscribe$)
@@ -82,6 +83,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onLogin() {
+		MenuService.onBack();
 		HeaderService.onBack();
 		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
 			takeUntil(this.unsubscribe$)
@@ -100,6 +102,7 @@ export class HeaderComponent extends Component {
 	}
 
 	onToggle(id) {
+		MenuService.onBack();
 		HeaderService.toggleHeader(id);
 	}
 

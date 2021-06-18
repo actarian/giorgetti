@@ -659,7 +659,6 @@
 	width: 100%;
 	left: 0;
 	background: $background;
-
 	clip-path: inset(0 0 100vh 0);
 	opacity: 0;
 	transition: all ease-in-out $slow;
@@ -765,7 +764,7 @@
 
 
 		@include media-up(sm) {
-			border-bottom: 4px solid $foreground-tertiary;
+			border-bottom: 4px dotted $foreground-tertiary;
 
 			svg {
 				width: 64px;
@@ -775,7 +774,7 @@
 		}
 
 		@include media-down(xs) {
-			border-bottom: 2px solid $foreground-tertiary;
+			border-bottom: 2px dotted $foreground-tertiary;
 			margin-top: 10px;
 
 			svg {

@@ -168,34 +168,42 @@
 }
 
 .section--form {
-	margin-bottom: -240px;
-	padding: 160px 0;
-	background: #D1CDCA;
-	border-bottom: 1px solid $border;
 
 	.modal-outlet & {
 		background: $background;
 	}
 
 	.title {
-		margin-bottom: 160px;
+		margin-bottom: 25px;
 		font-family: $font-secondary;
 		font-size: 48px;
-		line-height: 1.2;
-		text-align: center;
-		letter-spacing: -0.008em;
+		line-height: 1;
+		letter-spacing: -0.03em;
 		text-transform: uppercase;
+		text-align: left;
+		color: #000000;
 	}
 
-	.description {
-		font-size: 18px;
-		text-align: center;
+	.subtitle {
+		margin-bottom: 25px;
+		font-family: $font-secondary;
+		font-size: 32px;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		text-transform: uppercase;
+		text-align: left;
+		color: #000000;
+	}
+
+	.abstract {
+		margin-bottom: 25px;
+		font-size: 16px;
 	}
 
 	.group--form--select {
 		margin-bottom: 0;
 		padding: 10px 0;
-		border-bottom: 2px solid $border;
+		border-bottom: 2px solid $background-tertiary;
 	}
 
 	.btn--submit {
@@ -221,12 +229,69 @@
 		margin-top: 15px;
 	}
 
-	[control-text],
-	[control-password],
-	[control-textarea],
-	[control-select],
-	[control-custom-select],
-	[control-checkbox] {
-		margin-bottom: 30px;
+	@include media-up(md) {
+
+		[control-text],
+		[control-password],
+		[control-textarea],
+		[control-select],
+		[control-custom-select],
+		[control-checkbox] {
+			margin-bottom: 25px;
+		}
+	}
+
+	@include media-between(sm, md) {
+
+		[control-text],
+		[control-password],
+		[control-textarea],
+		[control-select],
+		[control-custom-select],
+		[control-checkbox] {
+			margin-bottom: 20px;
+		}
+	}
+
+	@include media-down(xs) {
+
+		[control-text],
+		[control-password],
+		[control-textarea],
+		[control-select],
+		[control-custom-select],
+		[control-checkbox] {
+			margin-bottom: 15px;
+		}
+	}
+}
+
+.section--form-negative {
+	margin-bottom: -240px;
+	padding: 160px 0;
+	background: #D1CDCA;
+	border-bottom: 1px solid $border;
+
+	.title {
+		margin-bottom: 160px;
+		font-family: $font-secondary;
+		font-size: 48px;
+		line-height: 1.2;
+		text-align: center;
+		letter-spacing: -0.008em;
+		text-transform: uppercase;
+	}
+
+	.description {
+		font-size: 18px;
+		text-align: center;
+	}
+
+	.group--form,
+	.group--form--textarea,
+	.group--form--checkbox,
+	.group--form--file,
+	.group--form--select {
+		border-bottom: 2px solid $border;
 	}
 }

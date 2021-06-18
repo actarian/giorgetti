@@ -3871,7 +3871,7 @@ h6 {
   display: flex;
   flex-wrap: wrap;
   padding: 10px 0;
-  border-bottom: 2px solid var(--border); }
+  border-bottom: 2px solid var(--background-tertiary); }
   @media (max-width: 767.98px) {
     .group--form, .group--form--textarea, .group--form--checkbox, .group--form--file, .group--form--select {
       margin-bottom: 10px; } }
@@ -4089,43 +4089,38 @@ fieldset,
     margin-bottom: 5px; }
 
 .group--form--checkbox {
+  position: relative;
   align-items: center;
   flex-wrap: nowrap;
-  padding-top: 5px; }
+  padding-top: 5px;
+  margin: 0 auto; }
   .group--form--checkbox input {
     width: 11px;
     height: 11px;
-    border-radius: 0;
-    cursor: pointer; }
-  .group--form--checkbox input {
-    -webkit-appearance: none;
-            appearance: none;
     padding: 0;
     margin: 0 8px 0 0;
     border: 2px solid var(--foreground);
-    outline: 0; }
+    border-radius: 0;
+    outline: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+            appearance: none; }
     .group--form--checkbox input:checked {
       background: var(--foreground); }
+    .group--form--checkbox input[type="checkbox"] {
+      position: absolute;
+      visibility: hidden; }
+      .group--form--checkbox input[type="checkbox"]:not(:checked) + label .icon--checkbox {
+        display: flex; }
+      .group--form--checkbox input[type="checkbox"]:checked + label .icon--checkbox-checked {
+        display: flex; }
   .group--form--checkbox label {
     flex: 1 1 auto;
     display: flex;
-    align-items: center;
-    cursor: pointer;
-    line-height: 1.5; }
-  .group--form--checkbox a {
-    font-weight: var(--font-semibold);
-    text-decoration: underline; }
-
-.group--form--checkbox {
-  align-items: center;
-  flex-wrap: nowrap;
-  margin: 0 auto;
-  position: relative; }
-  .group--form--checkbox label {
-    display: flex;
     align-items: flex-start;
     justify-content: center;
-    cursor: pointer; }
+    cursor: pointer;
+    line-height: 1.5; }
     .group--form--checkbox label > svg {
       display: none;
       flex: 0 0 20px;
@@ -4143,13 +4138,9 @@ fieldset,
       padding-top: 9px; }
       .group--form--checkbox label > span > a {
         font-weight: 500; }
-  .group--form--checkbox input[type="checkbox"] {
-    position: absolute;
-    visibility: hidden; }
-    .group--form--checkbox input[type="checkbox"]:not(:checked) + label .icon--checkbox {
-      display: flex; }
-    .group--form--checkbox input[type="checkbox"]:checked + label .icon--checkbox-checked {
-      display: flex; }
+  .group--form--checkbox a {
+    font-weight: var(--font-semibold);
+    text-decoration: underline; }
 
 .group--form--radio {
   min-height: 72px;
@@ -4962,14 +4953,14 @@ test-component code {
         font-size: 32px; } }
     @media (min-width: 768px) {
       .group--search .group--form {
-        border-bottom: 4px solid var(--foreground-tertiary); }
+        border-bottom: 4px dotted var(--foreground-tertiary); }
         .group--search .group--form svg {
           width: 64px;
           height: 64px;
           margin-right: 32px; } }
     @media (max-width: 767.98px) {
       .group--search .group--form {
-        border-bottom: 2px solid var(--foreground-tertiary);
+        border-bottom: 2px dotted var(--foreground-tertiary);
         margin-top: 10px; }
         .group--search .group--form svg {
           width: 32px;
@@ -7077,11 +7068,10 @@ test-component code {
       justify-content: space-between;
       align-items: stretch;
       max-width: calc(100% - 200px);
-      max-height: calc(100vh - 200px); }
+      max-height: calc(100vh - 160px); }
       .modal--projects-registration .modal__inner {
         padding: 50px 30px 80px 30px;
-        height: 600px;
-        max-height: 100%;
+        height: 100%;
         overflow-x: hidden;
         overflow-y: auto; }
         .modal--projects-registration .modal__inner::-webkit-scrollbar {
@@ -7103,9 +7093,6 @@ test-component code {
           border-radius: 2px; }
           .modal--projects-registration .modal__inner::-webkit-scrollbar-track:hover {
             background-color: transparent; }
-      .modal--projects-registration .modal__content {
-        height: 600px;
-        max-height: 100%; }
       .modal--projects-registration .listing--form {
         display: flex;
         margin-left: -15px;
@@ -7184,12 +7171,6 @@ test-component code {
           max-width: calc(100% - 30px);
           margin-left: 15px;
           margin-right: 15px; } }
-
-.modal--projects-registration .section--form {
-  margin-bottom: 0;
-  padding: 0;
-  border: none;
-  background: none; }
 
 .modal--projects-registration .form .group--info {
   text-align: left; }
@@ -9565,30 +9546,40 @@ test-component code {
 .section--contacts {
   padding: 0 0 160px 0; }
 
-.section--form {
-  margin-bottom: -240px;
-  padding: 160px 0;
-  background: #D1CDCA;
-  border-bottom: 1px solid var(--border); }
-  .modal-outlet .section--form {
-    background: var(--background); }
-  .section--form .title {
-    margin-bottom: 160px;
-    font-family: var(--font-secondary);
-    font-size: 48px;
-    line-height: 1.2;
-    text-align: center;
-    letter-spacing: -0.008em;
-    text-transform: uppercase; }
-  .section--form .description {
-    font-size: 18px;
-    text-align: center; }
-  .section--form .group--form--select {
-    margin-bottom: 0;
-    padding: 10px 0;
-    border-bottom: 2px solid var(--border); }
-  .section--form .btn--submit {
-    /*
+.modal-outlet .section--form {
+  background: var(--background); }
+
+.section--form .title {
+  margin-bottom: 25px;
+  font-family: var(--font-secondary);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: left;
+  color: #000000; }
+
+.section--form .subtitle {
+  margin-bottom: 25px;
+  font-family: var(--font-secondary);
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: left;
+  color: #000000; }
+
+.section--form .abstract {
+  margin-bottom: 25px;
+  font-size: 16px; }
+
+.section--form .group--form--select {
+  margin-bottom: 0;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--background-tertiary); }
+
+.section--form .btn--submit {
+  /*
 		@include btn(#232221, $foreground-negative, #000000, $foreground-negative, #232221, $foreground-tertiary);
 		display: flex;
 		align-items: center;
@@ -9603,15 +9594,59 @@ test-component code {
 		letter-spacing: 0.043em;
 		text-transform: uppercase;
 		*/ }
-  .section--form .btn--submit + .btn--submit {
-    margin-top: 15px; }
+
+.section--form .btn--submit + .btn--submit {
+  margin-top: 15px; }
+
+@media (min-width: 1024px) {
   .section--form [control-text],
   .section--form [control-password],
   .section--form [control-textarea],
   .section--form [control-select],
   .section--form [control-custom-select],
   .section--form [control-checkbox] {
-    margin-bottom: 30px; }
+    margin-bottom: 25px; } }
+
+@media (min-width: 768px) and (max-width: 1439.98px) {
+  .section--form [control-text],
+  .section--form [control-password],
+  .section--form [control-textarea],
+  .section--form [control-select],
+  .section--form [control-custom-select],
+  .section--form [control-checkbox] {
+    margin-bottom: 20px; } }
+
+@media (max-width: 767.98px) {
+  .section--form [control-text],
+  .section--form [control-password],
+  .section--form [control-textarea],
+  .section--form [control-select],
+  .section--form [control-custom-select],
+  .section--form [control-checkbox] {
+    margin-bottom: 15px; } }
+
+.section--form-negative {
+  margin-bottom: -240px;
+  padding: 160px 0;
+  background: #D1CDCA;
+  border-bottom: 1px solid var(--border); }
+  .section--form-negative .title {
+    margin-bottom: 160px;
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 1.2;
+    text-align: center;
+    letter-spacing: -0.008em;
+    text-transform: uppercase; }
+  .section--form-negative .description {
+    font-size: 18px;
+    text-align: center; }
+  .section--form-negative .group--form,
+  .section--form-negative .group--form--textarea,
+  .section--form-negative .group--form--checkbox,
+  .section--form-negative .group--form--file,
+  .section--form-negative .group--form--select {
+    border-bottom: 2px solid var(--border); }
 
 .nav--secondary {
   padding: 0 24px; }

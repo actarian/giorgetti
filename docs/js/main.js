@@ -8638,6 +8638,7 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
   };
 
   _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
+    MenuService.onBack();
     HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.marketsAndLanguagesModal
@@ -8647,6 +8648,7 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
   };
 
   _proto.onLogin = function onLogin() {
+    MenuService.onBack();
     HeaderService.onBack();
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -8667,6 +8669,7 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
   };
 
   _proto.onToggle = function onToggle(id) {
+    MenuService.onBack();
     HeaderService.toggleHeader(id);
   };
 
@@ -8743,6 +8746,10 @@ HeaderComponent.meta = {
 
   _proto.onClick = function onClick(event) {
     event.preventDefault(); // console.log('MenuDirective.onClick', this.menu);
+
+    if (HeaderService.currentHeader !== 'menu') {
+      HeaderService.onBack();
+    }
 
     MenuService.toggleMenu(this.menu);
   };
