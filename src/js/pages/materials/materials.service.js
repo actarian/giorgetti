@@ -1,15 +1,24 @@
 // import { combineLatest } from 'rxjs';
 // import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 
 export class MaterialsService {
 
 	static all$() {
-		return ApiService.get$('/materials/all.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/materials/all.json');
+		} else {
+			return ApiService.get$('/materials/all.json');
+		}
 	}
 
 	static filters$() {
-		return ApiService.get$('/materials/filters.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/materials/filters.json');
+		} else {
+			return ApiService.get$('/materials/filters.json');
+		}
 	}
 
 	/*

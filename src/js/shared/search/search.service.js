@@ -1,6 +1,7 @@
 import { of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 
 export class SearchService {
 
@@ -8,7 +9,11 @@ export class SearchService {
 		if (SearchService.items_) {
 			return of(SearchService.items_);
 		} else {
-			return ApiService.get$('/search/search.json').pipe(
+			return (
+				environment.flags.production ?
+					ApiService.get$(`/search/search.json`) :
+					ApiService.get$(`/search/search.json`)
+			).pipe(
 				tap(items => {
 					items.forEach(item => {
 						item.title = SearchService.toTitleCase(item.title);

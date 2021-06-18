@@ -1097,11 +1097,20 @@ var UserService = /*#__PURE__*/function () {
   };
 
   UserService.data$ = function data$() {
-    return ApiService.get$('/user/data.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/user/data.json');
+    } else {
+      return ApiService.get$('/user/data.json');
+    }
   };
 
   UserService.forgot$ = function forgot$(payload) {
-    return ApiService.get$("/user/forgot.json", payload);
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$("/user/forgot.json", payload);
+    } else {
+      return ApiService.get$("/user/forgot.json");
+    }
   };
 
   UserService.me$ = function me$() {
@@ -1116,7 +1125,7 @@ var UserService = /*#__PURE__*/function () {
         return _this.user$_;
       }));
     } else {
-      return ApiService.get$("/user/me.json").pipe(operators.map(function (response) {
+      return (environment.flags.production ? ApiService.get$("/user/me.json") : ApiService.get$("/user/me.json")).pipe(operators.map(function (response) {
         _this.mapUser(response);
       }), operators.catchError(function (_) {
         return rxjs.of(null);
@@ -1133,7 +1142,8 @@ var UserService = /*#__PURE__*/function () {
   UserService.signin$ = function signin$(payload) {
     var _this2 = this;
 
-    return ApiService.get$("/user/signin.json", payload).pipe(operators.map(function (response) {
+    return (environment.flags.production ? // !!! convert to .post$
+    ApiService.get$("/user/signin.json", payload) : ApiService.get$("/user/signin.json")).pipe(operators.map(function (response) {
       return _this2.mapUser(response);
     }), operators.tap(function (user) {
       return _this2.setUser(user);
@@ -1143,7 +1153,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signout$ = function signout$() {
     var _this3 = this;
 
-    return ApiService.get$("/user/signout.json").pipe(operators.tap(function (_) {
+    return (environment.flags.production ? ApiService.get$("/user/signout.json") : ApiService.get$("/user/signout.json")).pipe(operators.tap(function (_) {
       return _this3.setUser(null);
     }));
   };
@@ -1151,7 +1161,8 @@ var UserService = /*#__PURE__*/function () {
   UserService.signup$ = function signup$(payload) {
     var _this4 = this;
 
-    return ApiService.get$("/user/signup.json", payload).pipe(operators.map(function (response) {
+    return (environment.flags.production ? // !!! convert to .post$
+    ApiService.get$("/user/signup.json", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
       return _this4.mapUser(response);
     }), operators.tap(function (user) {
       return _this4.setUser(user);
@@ -1197,8 +1208,8 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
 
-    node.classList.remove('hidden');
-    console.log('AppComponent.onInit');
+    node.classList.remove('hidden'); // console.log('AppComponent.onInit');
+
     this.header = HeaderService.currentHeader;
     HeaderService.header$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (header) {
       _this.header = header;
@@ -3556,11 +3567,19 @@ var FilterItem = /*#__PURE__*/function () {
   function AmbienceService() {}
 
   AmbienceService.all$ = function all$() {
-    return ApiService.get$('/ambience/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ambience/all.json');
+    } else {
+      return ApiService.get$('/ambience/all.json');
+    }
   };
 
   AmbienceService.filters$ = function filters$() {
-    return ApiService.get$('/ambience/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ambience/filters.json');
+    } else {
+      return ApiService.get$('/ambience/filters.json');
+    }
   };
 
   return AmbienceService;
@@ -3722,19 +3741,35 @@ AmbienceComponent.meta = {
   function AteliersAndStoresService() {}
 
   AteliersAndStoresService.all$ = function all$() {
-    return ApiService.get$('/ateliers-and-stores/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ateliers-and-stores/all.json');
+    } else {
+      return ApiService.get$('/ateliers-and-stores/all.json');
+    }
   };
 
   AteliersAndStoresService.ateliers$ = function ateliers$() {
-    return ApiService.get$('/ateliers-and-stores/ateliers.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ateliers-and-stores/ateliers.json');
+    } else {
+      return ApiService.get$('/ateliers-and-stores/ateliers.json');
+    }
   };
 
   AteliersAndStoresService.stores$ = function stores$() {
-    return ApiService.get$('/ateliers-and-stores/stores.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ateliers-and-stores/stores.json');
+    } else {
+      return ApiService.get$('/ateliers-and-stores/stores.json');
+    }
   };
 
   AteliersAndStoresService.filters$ = function filters$() {
-    return ApiService.get$('/ateliers-and-stores/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/ateliers-and-stores/filters.json');
+    } else {
+      return ApiService.get$('/ateliers-and-stores/filters.json');
+    }
   };
 
   return AteliersAndStoresService;
@@ -3890,11 +3925,20 @@ var GtmService = /*#__PURE__*/function () {
   function CareersService() {}
 
   CareersService.data$ = function data$() {
-    return ApiService.get$('/careers/data.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/careers/data.json');
+    } else {
+      return ApiService.get$('/careers/data.json');
+    }
   };
 
-  CareersService.submit$ = function submit$() {
-    return ApiService.post$('/careers/submit.json');
+  CareersService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$('/careers/submit.json', payload);
+    } else {
+      return ApiService.get$('/careers/submit.json');
+    }
   };
 
   return CareersService;
@@ -4009,11 +4053,20 @@ CareersComponent.meta = {
   function ContactsService() {}
 
   ContactsService.data$ = function data$() {
-    return ApiService.get$('/contacts/data.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/contacts/data.json');
+    } else {
+      return ApiService.get$('/contacts/data.json');
+    }
   };
 
-  ContactsService.submit$ = function submit$() {
-    return ApiService.post$('/contacts/submit.json');
+  ContactsService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$('/contacts/submit.json', payload);
+    } else {
+      return ApiService.get$('/contacts/submit.json');
+    }
   };
 
   return ContactsService;
@@ -4131,15 +4184,27 @@ ContactsComponent.meta = {
   function DealersService() {}
 
   DealersService.all$ = function all$() {
-    return ApiService.get$('/dealers/all.json').pipe(operators.map(function (items) {
-      return items.sort(function (a, b) {
-        return b.regions.length - a.regions.length;
-      });
-    }));
+    if (environment.flags.production) {
+      return ApiService.get$('/dealers/all.json').pipe(operators.map(function (items) {
+        return items.sort(function (a, b) {
+          return b.regions.length - a.regions.length;
+        });
+      }));
+    } else {
+      return ApiService.get$('/dealers/all.json').pipe(operators.map(function (items) {
+        return items.sort(function (a, b) {
+          return b.regions.length - a.regions.length;
+        });
+      }));
+    }
   };
 
   DealersService.filters$ = function filters$() {
-    return ApiService.get$('/dealers/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/dealers/filters.json');
+    } else {
+      return ApiService.get$('/dealers/filters.json');
+    }
   };
 
   return DealersService;
@@ -4289,11 +4354,19 @@ DealersComponent.meta = {
   function DesignersService() {}
 
   DesignersService.all$ = function all$() {
-    return ApiService.get$('/designers/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/designers/all.json');
+    } else {
+      return ApiService.get$('/designers/all.json');
+    }
   };
 
   DesignersService.filters$ = function filters$() {
-    return ApiService.get$('/designers/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/designers/filters.json');
+    } else {
+      return ApiService.get$('/designers/filters.json');
+    }
   };
 
   return DesignersService;
@@ -4423,7 +4496,11 @@ DesignersComponent.meta = {
   function MarketsAndLanguagesService() {}
 
   MarketsAndLanguagesService.all$ = function all$() {
-    return ApiService.get$('/markets-and-languages/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/markets-and-languages/all.json');
+    } else {
+      return ApiService.get$('/markets-and-languages/all.json');
+    }
   };
 
   return MarketsAndLanguagesService;
@@ -4552,11 +4629,19 @@ var MaterialsService = /*#__PURE__*/function () {
   function MaterialsService() {}
 
   MaterialsService.all$ = function all$() {
-    return ApiService.get$('/materials/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/materials/all.json');
+    } else {
+      return ApiService.get$('/materials/all.json');
+    }
   };
 
   MaterialsService.filters$ = function filters$() {
-    return ApiService.get$('/materials/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/materials/filters.json');
+    } else {
+      return ApiService.get$('/materials/filters.json');
+    }
   }
   /*
   static fake$() {
@@ -4875,11 +4960,19 @@ MaterialsComponent.meta = {
   function NewsService() {}
 
   NewsService.all$ = function all$() {
-    return ApiService.get$('/news/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/news/all.json');
+    } else {
+      return ApiService.get$('/news/all.json');
+    }
   };
 
   NewsService.filters$ = function filters$() {
-    return ApiService.get$('/news/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/news/filters.json');
+    } else {
+      return ApiService.get$('/news/filters.json');
+    }
   };
 
   return NewsService;
@@ -5009,11 +5102,20 @@ NewsComponent.meta = {
   function NewsletterService() {}
 
   NewsletterService.data$ = function data$() {
-    return ApiService.get$('/newsletter/data.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/newsletter/data.json');
+    } else {
+      return ApiService.get$('/newsletter/data.json');
+    }
   };
 
-  NewsletterService.submit$ = function submit$() {
-    return ApiService.post$('/newsletter/submit.json');
+  NewsletterService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$('/newsletter/submit.json', payload);
+    } else {
+      return ApiService.get$('/newsletter/submit.json');
+    }
   };
 
   return NewsletterService;
@@ -5389,7 +5491,11 @@ ProductsConfigureComponent.meta = {
   function ProductsDetailService() {}
 
   ProductsDetailService.versions$ = function versions$() {
-    return ApiService.get$('/products-detail/versions.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/products-detail/versions.json');
+    } else {
+      return ApiService.get$('/products-detail/versions.json');
+    }
   };
 
   return ProductsDetailService;
@@ -5471,11 +5577,19 @@ var ProductsService = /*#__PURE__*/function () {
   function ProductsService() {}
 
   ProductsService.all$ = function all$() {
-    return ApiService.get$('/products/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/products/all.json');
+    } else {
+      return ApiService.get$('/products/all.json');
+    }
   };
 
   ProductsService.filters$ = function filters$() {
-    return ApiService.get$('/products/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/products/filters.json');
+    } else {
+      return ApiService.get$('/products/filters.json');
+    }
   }
   /*
   static fake$() {
@@ -5693,11 +5807,20 @@ ProjectsRegistrationModalComponent.meta = {
   function ProjectsRegistrationService() {}
 
   ProjectsRegistrationService.data$ = function data$() {
-    return ApiService.get$('/projects-registration/data.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/projects-registration/data.json');
+    } else {
+      return ApiService.get$('/projects-registration/data.json');
+    }
   };
 
-  ProjectsRegistrationService.submit$ = function submit$() {
-    return ApiService.get$('/projects-registration/submit.json');
+  ProjectsRegistrationService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$('/projects-registration/submit.json', payload);
+    } else {
+      return ApiService.get$('/projects-registration/submit.json');
+    }
   };
 
   return ProjectsRegistrationService;
@@ -5846,11 +5969,19 @@ ProjectsRegistrationComponent.meta = {
   function ProjectsService() {}
 
   ProjectsService.all$ = function all$() {
-    return ApiService.get$('/projects/all.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/projects/all.json');
+    } else {
+      return ApiService.get$('/projects/all.json');
+    }
   };
 
   ProjectsService.filters$ = function filters$() {
-    return ApiService.get$('/projects/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/projects/filters.json');
+    } else {
+      return ApiService.get$('/projects/filters.json');
+    }
   };
 
   return ProjectsService;
@@ -6076,7 +6207,7 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
   function ReservedAreaService() {}
 
   ReservedAreaService.all$ = function all$() {
-    return ApiService.get$('/reserved-area/all.json').pipe(operators.map(function (items) {
+    return (environment.flags.production ? ApiService.get$("/reserved-area/all.json") : ApiService.get$("/reserved-area/all.json")).pipe(operators.map(function (items) {
       items.forEach(function (x) {
         x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));
       });
@@ -6227,7 +6358,7 @@ ReservedAreaComponent.meta = {
   function StoreLocatorService() {}
 
   StoreLocatorService.all$ = function all$() {
-    return ApiService.get$('/store-locator/all.json').pipe(operators.map(function (items) {
+    return (environment.flags.production ? ApiService.get$("/store-locator/all.json") : ApiService.get$("/store-locator/all.json")).pipe(operators.map(function (items) {
       return items.sort(function (a, b) {
         return a.rank - b.rank;
       });
@@ -6235,7 +6366,11 @@ ReservedAreaComponent.meta = {
   };
 
   StoreLocatorService.filters$ = function filters$() {
-    return ApiService.get$('/store-locator/filters.json');
+    if (environment.flags.production) {
+      return ApiService.get$('/store-locator/filters.json');
+    } else {
+      return ApiService.get$('/store-locator/filters.json');
+    }
   };
 
   return StoreLocatorService;
@@ -8828,7 +8963,7 @@ NewsletterPropositionComponent.meta = {
     if (SearchService.items_) {
       return rxjs.of(SearchService.items_);
     } else {
-      return ApiService.get$('/search/search.json').pipe(operators.tap(function (items) {
+      return (environment.flags.production ? ApiService.get$("/search/search.json") : ApiService.get$("/search/search.json")).pipe(operators.tap(function (items) {
         items.forEach(function (item) {
           item.title = SearchService.toTitleCase(item.title);
         });

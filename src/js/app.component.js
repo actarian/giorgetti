@@ -11,7 +11,7 @@ export class AppComponent extends Component {
 	onInit() {
 		const { node } = getContext(this);
 		node.classList.remove('hidden');
-		console.log('AppComponent.onInit');
+		// console.log('AppComponent.onInit');
 		this.header = HeaderService.currentHeader;
 		HeaderService.header$().pipe(
 			takeUntil(this.unsubscribe$),

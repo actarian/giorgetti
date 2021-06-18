@@ -1,21 +1,38 @@
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 
 export class AteliersAndStoresService {
 
 	static all$() {
-		return ApiService.get$('/ateliers-and-stores/all.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/ateliers-and-stores/all.json');
+		} else {
+			return ApiService.get$('/ateliers-and-stores/all.json');
+		}
 	}
 
 	static ateliers$() {
-		return ApiService.get$('/ateliers-and-stores/ateliers.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/ateliers-and-stores/ateliers.json');
+		} else {
+			return ApiService.get$('/ateliers-and-stores/ateliers.json');
+		}
 	}
 
 	static stores$() {
-		return ApiService.get$('/ateliers-and-stores/stores.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/ateliers-and-stores/stores.json');
+		} else {
+			return ApiService.get$('/ateliers-and-stores/stores.json');
+		}
 	}
 
 	static filters$() {
-		return ApiService.get$('/ateliers-and-stores/filters.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/ateliers-and-stores/filters.json');
+		} else {
+			return ApiService.get$('/ateliers-and-stores/filters.json');
+		}
 	}
 
 }

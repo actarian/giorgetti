@@ -2,6 +2,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { SessionStorageService } from '../../common/storage/session-storage.service';
+import { environment } from '../../environment';
 
 export const UserViews = {
 	SIGN_IN: 1,
@@ -45,11 +46,20 @@ export class UserService {
 	}
 
 	static data$() {
-		return ApiService.get$('/user/data.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/user/data.json');
+		} else {
+			return ApiService.get$('/user/data.json');
+		}
 	}
 
 	static forgot$(payload) {
-		return ApiService.get$(`/user/forgot.json`, payload);
+		if (environment.flags.production) {
+			// !!! convert to .post$
+			return ApiService.get$(`/user/forgot.json`, payload);
+		} else {
+			return ApiService.get$(`/user/forgot.json`);
+		}
 	}
 
 	static me$() {
@@ -62,7 +72,11 @@ export class UserService {
 				})
 			);
 		} else {
-			return ApiService.get$(`/user/me.json`).pipe(
+			return (
+				environment.flags.production ?
+					ApiService.get$(`/user/me.json`) :
+					ApiService.get$(`/user/me.json`)
+			).pipe(
 				map((response) => {
 					this.mapUser(response);
 				}),
@@ -77,20 +91,34 @@ export class UserService {
 	}
 
 	static signin$(payload) {
-		return ApiService.get$(`/user/signin.json`, payload).pipe(
+		return (
+			environment.flags.production ?
+				// !!! convert to .post$
+				ApiService.get$(`/user/signin.json`, payload) :
+				ApiService.get$(`/user/signin.json`)
+		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
 		);
 	}
 
 	static signout$() {
-		return ApiService.get$(`/user/signout.json`).pipe(
+		return (
+			environment.flags.production ?
+				ApiService.get$(`/user/signout.json`) :
+				ApiService.get$(`/user/signout.json`)
+		).pipe(
 			tap((_) => this.setUser(null)),
 		);
 	}
 
 	static signup$(payload) {
-		return ApiService.get$(`/user/signup.json`, payload).pipe(
+		return (
+			environment.flags.production ?
+				// !!! convert to .post$
+				ApiService.get$(`/user/signup.json`, payload) :
+				ApiService.get$(`/user/signup.json`)
+		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
 		);

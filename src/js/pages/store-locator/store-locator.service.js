@@ -1,10 +1,15 @@
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 
 export class StoreLocatorService {
 
 	static all$() {
-		return ApiService.get$('/store-locator/all.json').pipe(
+		return (
+			environment.flags.production ?
+				ApiService.get$(`/store-locator/all.json`) :
+				ApiService.get$(`/store-locator/all.json`)
+		).pipe(
 			map(items => items.sort((a, b) => {
 				return a.rank - b.rank;
 			})),
@@ -12,7 +17,11 @@ export class StoreLocatorService {
 	}
 
 	static filters$() {
-		return ApiService.get$('/store-locator/filters.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/store-locator/filters.json');
+		} else {
+			return ApiService.get$('/store-locator/filters.json');
+		}
 	}
 
 }

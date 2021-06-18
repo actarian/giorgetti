@@ -1,12 +1,17 @@
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 import { FilesService } from '../../shared/files/files.service';
 
 export class ReservedAreaService {
 
 	static all$() {
-		return ApiService.get$('/reserved-area/all.json').pipe(
+		return (
+			environment.flags.production ?
+				ApiService.get$(`/reserved-area/all.json`) :
+				ApiService.get$(`/reserved-area/all.json`)
+		).pipe(
 			map(items => {
 				items.forEach(x => {
 					x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));

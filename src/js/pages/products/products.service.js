@@ -1,15 +1,24 @@
 // import { combineLatest } from 'rxjs';
 // import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
+import { environment } from '../../environment';
 
 export class ProductsService {
 
 	static all$() {
-		return ApiService.get$('/products/all.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/products/all.json');
+		} else {
+			return ApiService.get$('/products/all.json');
+		}
 	}
 
 	static filters$() {
-		return ApiService.get$('/products/filters.json');
+		if (environment.flags.production) {
+			return ApiService.get$('/products/filters.json');
+		} else {
+			return ApiService.get$('/products/filters.json');
+		}
 	}
 
 	/*
