@@ -69,7 +69,7 @@ export class ProjectsComponent extends Component {
 		});
 		this.filterService = filterService;
 		this.filters = filterService.filters;
-		const category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+		const category = window.categoryId != null ? window.categoryId : (this.filters.category.values.length ? this.filters.category.values[0] : null);
 		const search = this.filters.search.values.length ? this.filters.search.values[0] : null;
 		this.form.patch({ category, search });
 		filterService.items$(items).pipe(

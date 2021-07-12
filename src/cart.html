@@ -1,0 +1,495 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<main class="main">
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Carrello</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--cart" cart>
+		<div class="container" *if="form">
+			<!--
+			<div class="title">Carrello</div>
+			<div class="abstract"><span [innerHTML]="items.length"></span>
+				<span *if="items.length == 1">articolo presente nel carrello</span>
+				<span *if="items.length > 1">articoli presenti nel carrello</span>
+			</div>
+			<div class="abstract" *if="items.length == 0">
+				Il carrello è vuoto.
+			</div>
+			-->
+			<!-- EMPTY -->
+			<div *if="step !== steps.Complete && items.length == 0">
+				<div class="title">Carrello</div>
+				<div class="abstract">Il carrello è vuoto.</div>
+			</div>
+			<div locomotive-scroll-sticky target=".nav--steps" until=".footer" *if="step == steps.Complete || items.length > 0">
+				<!-- STEPS -->
+				<ul class="nav--steps">
+					<li class="nav__item" [class]="{ active: step == steps.Items }">Riepilogo carrello</li>
+					<li class="nav__item" [class]="{ active: step == steps.Data }">Dati utente</li>
+					<li class="nav__item" [class]="{ active: step == steps.Delivery }">Consegna</li>
+					<li class="nav__item" [class]="{ active: step == steps.Recap }">Riepilogo ordine</li>
+					<li class="nav__item" [class]="{ active: step == steps.Payment }">Pagamento</li>
+					<li class="nav__item" [class]="{ active: step == steps.Complete }">Conferma ordine</li>
+				</ul>
+				<!-- 1. Items -->
+				<div class="step step--items" *if="step == steps.Items">
+					<div class="flex-table">
+						<div class="tr tr--cart">
+							<div class="th td--info">Prodotto</div>
+							<div class="th td--unitary-price">Prezzo unitario</div>
+							<div class="th td--qty">Quantità</div>
+							<div class="th td--remove"></div>
+							<div class="th td--price">Prezzo</div>
+						</div>
+						<div class="tr tr--cart" *for="let item of items">
+							<div class="td td--info">
+								<div class="group--info">
+									<div class="left">
+										<div class="left__picture" (click)="onEdit(item)">
+											<img loading="lazy" [src]="item.image" />
+											<div class="over">
+												<div class="over__title">Configura</div>
+											</div>
+										</div>
+									</div>
+									<div class="right">
+										<a [href]="item.url" class="right__title" [innerHTML]="item.title" [title]="item.title"></a>
+									</div>
+								</div>
+							</div>
+							<div class="td td--unitary-price">
+								<div class="price" *if="item.price" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
+							</div>
+							<div class="td td--qty">
+								<div class="group--qty">
+									<button type="button" class="btn--action" (click)="onDecrement(item)">
+										<svg class="decrement"><use xlink:href="#decrement"></use></svg>
+									</button>
+									<div class="count" [innerHTML]="item.qty"></div>
+									<button type="button" class="btn--action" (click)="onIncrement(item)">
+										<svg class="increment"><use xlink:href="#increment"></use></svg>
+									</button>
+								</div>
+							</div>
+							<div class="td td--remove">
+								<button type="button" class="btn--remove" (click)="onRemove(item)">rimuovi x
+									<!-- <svg class="close"><use xlink:href="#close"></use></svg> -->
+								</button>
+							</div>
+							<div class="td td--price">
+								<span class="price" [innerHTML]="(item.price * item.qty) | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+							</div>
+						</div>
+					</div>
+					<div class="group--cart">
+						<span class="subtitle">Totale</span>
+						<div class="group--price">
+							<span class="price" [innerHTML]="totalPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+							<span>IVA inclusa</span>
+						</div>
+					</div>
+					<form class="form" [formGroup]="form" (submit)="onItems($event)" name="form" role="form" novalidate autocomplete="off">
+						<div class="group--cart">
+							<div class="subtitle">Spedizioni</div>
+							<div control-custom-select [control]="controls.shipmentCountry" label="Seleziona il paese di spedizione"></div>
+						</div>
+						<div class="group--cart">
+							<div class="subtitle">Codice sconto</div>
+							<div>
+								<p>Sei in possesso di un codice sconto?</p>
+								<p>Tienilo a portata di mano, potrai inserirlo negli step successivi, prima del checkout finale.</p>
+							</div>
+						</div>
+						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+							<div class="group--cart">
+								<div class="tempi-spedizione">Il tuo ordine sarà pronto il 27/07/2021 più tempi di consegna</div>
+								<button type="submit" class="btn--primary">Procedi</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 2. Data -->
+				<div class="step step--data" *if="step == steps.Data">
+					<div *if="!user && !guest">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="divline"></div>
+								<div class="title">Esegui il login</div>
+								<div class="abstract">
+									<p>Accedi per ottimizzare la tua esperienza di acquisto e poter visualizzare l'ordine nello storico ordini.</p>
+								</div>
+								<div class="group--cta">
+									<button type="button" class="btn--secondary" (click)="onModalSignIn($event)"><span>Accedi</span></button>
+								</div>
+								<div class="divline"></div>
+								<div class="title">Social login</div>
+								<div class="abstract">
+									<p>Migliora l'accesso con i social login.</p>
+								</div>
+								<div class="group--cta">
+									<ul class="nav--social">
+										<li class="nav__item">
+											<button type="button" [class]="{ busy: socialBusy == 'facebook '}" (click)="onSocialLogin('facebook')" aria-label="social-link-facebook" rel="me"><svg class="facebook"><use xlink:href="#facebook"></use></svg></button>
+											<!-- <button type="button" (click)="onFacebookLogout()">logout</button> -->
+										</li>
+										<li class="nav__item">
+											<button type="button" [class]="{ busy: socialBusy == 'google '}" (click)="onSocialLogin('google')" aria-label="social-link-google" rel="me"><svg class="google"><use xlink:href="#google"></use></svg></button>
+										</li>
+										<li class="nav__item">
+											<button type="button" [class]="{ busy: socialBusy == 'linkedin '}" (click)="onSocialLogin('linkedin')" aria-label="social-link-linkedin" rel="me"><svg class="linkedin"><use xlink:href="#linkedin"></use></svg></button>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="divline"></div>
+								<div class="title">Effettua la registrazione</div>
+								<div class="abstract">
+									<p>Registrati per ottimizzare la tua esperienza di acquisto e poter visualizzare l'ordine nello storico ordini.</p>
+								</div>
+								<div class="group--cta">
+									<button type="button" class="btn--secondary" (click)="onModalSignUp($event)"><span>Registrati</span></button>
+								</div>
+								<div class="divline"></div>
+								<div class="title">Procedi come ospite</div>
+								<div class="abstract">
+									<p>Proseguendo l'acquisto come ospite ti chiederemo i dati per la spedizione e per assegnarti il punto vendita di riferimento, ma non creerai il tuo account personale. Se desideri avere accesso alla tua area utente e allo storico dei tuoi ordini completa l'acquisto registrando il tuo account.</p>
+								</div>
+								<div class="group--cta">
+									<button type="button" class="btn--secondary" (click)="onGuest($event)"><span>Prosegui</span></button>
+								</div>
+							</div>
+						</div>
+						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+							<div class="group--cart">
+								<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
+							</div>
+						</div>
+					</div>
+					<div class="section--form" *if="user || guest">
+						<div class="title">Indirizzo di riferimento</div>
+						<div class="abstract">Indica il tuo indirizzo di consegna o di riferimento per mostrarti, in caso di ritiro in autonomia, il punto vendita più vicino a te.</div>
+						<form class="form" [formGroup]="form" (submit)="onData($event)" name="form" role="form" novalidate>
+							<div class="listing--form-compact">
+								<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
+								<div control-text [control]="controls.data.controls.firstName" label="Nome"></div>
+								<div control-text [control]="controls.data.controls.lastName" label="Cognome"></div>
+								<div control-text [control]="controls.data.controls.email" label="Email"></div>
+								<div control-text [control]="controls.data.controls.telephone" label="Telefono"></div>
+								<div control-text [control]="controls.data.controls.address" label="Indirizzo"></div>
+								<div control-text [control]="controls.data.controls.zipCode" label="Cap"></div>
+								<div control-text [control]="controls.data.controls.city" label="Città"></div>
+								<div control-text [control]="controls.data.controls.province" label="Provincia"></div>
+								<div control-custom-select [control]="controls.data.controls.country" label="Paese"></div>
+								<div control-textarea [control]="controls.data.controls.message" label="Messaggio"></div>
+							</div>
+							<div control-checkbox [control]="controls.data.controls.invoice" label="Hai bisogno della fattura?"></div>
+							<div class="listing--form-compact" *if="controls.data.controls.invoice.value">
+								<div control-text [control]="controls.data.controls.invoiceData.controls.taxNumber" label="Partita IVA / CF"></div>
+								<div control-text [control]="controls.data.controls.invoiceData.controls.sdi" label="SDI"></div>
+								<div control-text [control]="controls.data.controls.invoiceData.controls.pec" label="PEC"></div>
+							</div>
+							<div control-checkbox [control]="controls.data.controls.billing" label="I dati di fatturazione differiscono dalle informazioni personali?"></div>
+							<div class="listing--form-compact" *if="controls.data.controls.billing.value">
+								<div control-text [control]="controls.data.controls.billingData.controls.company" label="Azienda"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.firstName" label="Nome"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.lastName" label="Cognome"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.telephone" label="Telefono"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.address" label="Indirizzo"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.zipCode" label="Cap"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.city" label="Città"></div>
+								<div control-text [control]="controls.data.controls.billingData.controls.province" label="Provincia"></div>
+								<div control-custom-select [control]="controls.data.controls.billingData.controls.country" label="Paese"></div>
+							</div>
+							<div control-checkbox [control]="controls.data.controls.conditions" label="Acconsento alle &amp;lt;a href=&amp;quot;/condizioni-di-vendita/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;condizioni di vendita&amp;lt;/a&gt;"></div>
+							<div control-checkbox [control]="controls.data.controls.privacy" label="A seguito dell&amp;#39;&amp;lt;a href=&amp;quot;/privacy/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa sulla privacy&amp;lt;/a&gt;, fornisco il mio consenso al trattamento dei dati personali"></div>
+							<div control-checkbox [control]="controls.data.controls.terms" label="Acconsento ai &amp;lt;a href=&amp;quot;/termini-d-uso/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;termini d'uso&amp;lt;/a&gt;"></div>
+							<test-component [form]="form" (test)="testData($event)" (reset)="resetData($event)"></test-component>
+							<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+								<div class="group--cart">
+									<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
+									<button type="submit" class="btn--primary">Procedi</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- 3. Delivery -->
+				<div class="step step--delivery" *if="step == steps.Delivery">
+					<div class="title">Metodo di consegna</div>
+					<form class="form" [formGroup]="form" (submit)="onDelivery($event)" name="form" role="form" novalidate autocomplete="off">
+						<div class="group--form--radio" [class]="{ required: controls.deliveryType.validators.length }" *for="let option of controls.deliveryType.options">
+							<label [labelFor]="controls.deliveryType.name + '-' + option.id" [class]="{ active: controls.deliveryType.value == option.id }" (click)="controls.deliveryType.value = option.id">
+								<div class="group--headline">
+									<svg class="radio" *if="controls.deliveryType.value != option.id"><use xlink:href="#radio"></use></svg>
+									<svg class="radio-checked" *if="controls.deliveryType.value == option.id"><use xlink:href="#radio-checked"></use></svg>
+									<!-- <input type="radio" class="control--radio" [id]="controls.deliveryType.name + '-' + option.id" [formControl]="controls.deliveryType" name="deliveryType" value="1" [value]="option.id" /> -->
+									<span class="name" [innerHTML]="option.name"></span>
+									<span class="group--price" *if="option.price">
+										<span class="fullPrice" *if="option.fullPrice !== option.price" [innerHTML]="option.fullPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<span class="price" [innerHTML]="option.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+									</span>
+								</div>
+								<div class="abstract" [innerHTML]="option.abstract" *if="option.abstract"></div>
+								<div class="description" [innerHTML]="option.description" *if="option.description"></div>
+							</label>
+						</div>
+						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+							<div class="group--cart">
+								<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
+								<button type="submit" class="btn--primary">Procedi</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 4. Recap -->
+				<div class="step step--recap" *if="step == steps.Recap">
+					<div class="title">Riepilogo Ordine</div>
+					<div class="row">
+						<div class="col-md-7">
+							<div *if="selectedStore">
+								<div class="subtitle">Negozio di riferimento</div>
+								<div class="card--address">
+									<div class="card__content">
+										<div class="card__name" [innerHTML]="selectedStore.name"></div>
+										<div class="card__address" [innerHTML]="selectedStore.address"></div>
+										<div class="card__address">
+											<span class="card__city" [innerHTML]="selectedStore.city"></span>
+											<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+										</div>
+										<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
+											<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
+											<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+										</div>
+										<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
+									</div>
+								</div>
+								<button type="button" class="btn--subtitle btn--timetable" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
+									<span>Orari di apertura</span>
+									<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
+								</button>
+								<div class="flex-table flex-table__sm" *if="selectedStore.showTimetable">
+									<div class="tr" *for="let time of selectedStore.timetable">
+										<div class="td" [innerHTML]="time.name"></div>
+										<div class="td" [innerHTML]="time.value"></div>
+									</div>
+								</div>
+							</div>
+							<div *if="controls.deliveryType.value == 1">
+								<div class="group--form--radio" [class]="{ required: controls.store.validators.length }" *for="let option of controls.store.options">
+									<label [labelFor]="controls.store.name + '-' + option.id" [class]="{ active: controls.store.value == option.id }" (click)="controls.store.value = option.id">
+										<div class="group--headline">
+											<svg class="radio" *if="controls.store.value != option.id"><use xlink:href="#radio"></use></svg>
+											<svg class="radio-checked" *if="controls.store.value == option.id"><use xlink:href="#radio-checked"></use></svg>
+											<span class="name" [innerHTML]="option.name"></span>
+											<span class="distance" [innerHTML]="option.distance | number : 'it-IT' : { style: 'unit', unit: 'kilometer', maximumFractionDigits: 1 }"></span>
+										</div>
+										<div class="description" [innerHTML]="option.description" *if="option.description"></div>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="group--recap">
+								<div class="group--cart">
+									<div class="flex-table flex-table__sm">
+										<div class="tr">
+											<div class="th">Prodotto</div>
+											<div class="th">Qty</div>
+											<div class="th">Prezzo</div>
+										</div>
+										<div class="tr" *for="let item of items">
+											<div class="td" [innerHTML]="item.title"></div>
+											<div class="td" [innerHTML]="item.qty"></div>
+											<div class="td" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
+										</div>
+									</div>
+								</div>
+								<div class="group--cart" *if="delivery">
+									<div class="subtitle" [innerHTML]="delivery.name"></div>
+									<div class="group--price">
+										<!-- <span class="fullPrice" *if="delivery.fullPrice !== delivery.price" [innerHTML]="delivery.fullPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span> -->
+										<span class="price" [innerHTML]="delivery.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+									</div>
+								</div>
+								<div class="group--cart" *if="!discount">
+									<div class="subtitle">Codice promozionale</div>
+									<form class="form full" [formGroup]="form" (submit)="onDiscountCode($event)" name="form" role="form" novalidate autocomplete="off">
+										<div class="group--flex">
+											<div control-text [control]="controls.discountCode" label="aggiungi il codice"></div>
+											<button type="submit" class="btn--secondary">Applica</button>
+										</div>
+										<errors-component *if="errorDiscount">
+											<div class="inner">
+												<div class="error">
+													<span>
+														Codice promozionale non valido.<br />
+														Verifica che il codice sia scritto correttamente.
+													</span>
+												</div>
+											</div>
+										</errors-component>
+									</form>
+								</div>
+								<div class="group--cart" *if="discount">
+									<div class="subtitle" [title]="discount.code">Sconto promozione</div>
+									<div class="group--price">
+										<span class="price" [innerHTML]="discount.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+									</div>
+								</div>
+								<div class="group--cart">
+									<span class="subtitle">Totale</span>
+									<div class="group--price">
+										<span class="price" [innerHTML]="totalPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<span>IVA inclusa</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="divline"></div>
+							<div class="title">Dati di spedizione</div>
+							<div class="card--address" *if="deliveryData">
+								<div class="card__content">
+									<div class="card__name" [innerHTML]="deliveryData.firstName + ' ' + deliveryData.lastName"></div>
+									<div class="card__address" [innerHTML]="deliveryData.address"></div>
+									<div class="card__address">
+										<span class="card__zipcode" [innerHTML]="deliveryData.zipCode"></span>
+										<span class="card__city" [innerHTML]="deliveryData.city"></span>
+										<span class="card__country" [innerHTML]="deliveryData.country.name"></span>
+									</div>
+									<div class="card__phones" *if="deliveryData.telephone">
+										<a class="card__phone" [href]="'tel:' + deliveryData.telephone" [innerHTML]="deliveryData.telephone"></a>
+									</div>
+									<a class="card__email" [href]="'mailto:' + deliveryData.email" [innerHTML]="deliveryData.email"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="divline"></div>
+							<div class="title">Dati di fatturazione</div>
+							<div class="card--address" *if="billingData">
+								<div class="card__content">
+									<div class="card__company" [innerHTML]="billingData.company" *if="billingData.company"></div>
+									<div class="card__name" [innerHTML]="billingData.firstName + ' ' + billingData.lastName"></div>
+									<div class="card__address" [innerHTML]="billingData.address"></div>
+									<div class="card__address">
+										<span class="card__zipcode" [innerHTML]="billingData.zipCode"></span>
+										<span class="card__city" [innerHTML]="billingData.city"></span>
+										<span class="card__country" [innerHTML]="deliveryData.country.name"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+						<div class="group--cart">
+							<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
+							<button type="button" class="btn--primary" (click)="onNext($event)">Vai al pagamento</button>
+						</div>
+					</div>
+				</div>
+				<!-- 5. Payment -->
+				<div class="step step--payment" *if="step == steps.Payment">
+					<div class="title">Seleziona la modalità di pagamento</div>
+					<form class="form" [formGroup]="form" (submit)="onPayment($event)" name="form" role="form" novalidate autocomplete="off">
+						<div class="group--form--radio" [class]="{ required: controls.paymentMethod.validators.length }" *for="let option of controls.paymentMethod.options">
+							<label [labelFor]="controls.paymentMethod.name + '-' + option.id" [class]="{ active: controls.paymentMethod.value == option.id }" (click)="controls.paymentMethod.value = option.id">
+								<div class="group--headline">
+									<svg class="radio" *if="controls.paymentMethod.value != option.id"><use xlink:href="#radio"></use></svg>
+									<svg class="radio-checked" *if="controls.paymentMethod.value == option.id"><use xlink:href="#radio-checked"></use></svg>
+									<span class="name" [innerHTML]="option.name"></span>
+									<span class="group--icons" *if="option.icons.length">
+										<span class="icon" *for="let icon of option.icons">
+											<img [src]="icon" />
+										</span>
+									</span>
+								</div>
+								<div class="description" [innerHTML]="option.description" *if="option.description"></div>
+							</label>
+						</div>
+						<div class="group--error" *if="errorPayment">
+							<span class="status-code" [innerHTML]="errorPayment.statusCode"></span>
+							<span class="status-message" [innerHTML]="errorPayment.statusMessage"></span>
+							<span class="friendly-message" [innerHTML]="errorPayment.friendlyMessage"></span>
+						</div>
+						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
+							<div class="group--cart">
+								<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
+								<button type="submit" class="btn--primary">Paga ora</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 6. Complete -->
+				<div class="step step--complete" *if="step == steps.Complete">
+					<div class="divline"></div>
+					<div class="title">Ordine Completato</div>
+					<div class="abstract">
+						<p>Il tuo ordine è stato completato con successo, riceverai a breve una conferma d'ordine.</p>
+						<div *if="paymentMethod" [innerHTML]="paymentMethod.info"></div>
+						<p>Per assistenza o per ricevere ulteriori informazioni sul tuo ordine, contatta il nostro servizio clienti via telefono o e-mail:</p>
+					</div>
+					<div class="group--cta">
+						<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
+						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
+					</div>
+					<div class="row">
+						<div class="col-md-7">
+							<div *if="selectedStore">
+								<div class="subtitle">Negozio di riferimento</div>
+								<div class="card--address">
+									<div class="card__content">
+										<div class="card__name" [innerHTML]="selectedStore.name"></div>
+										<div class="card__address" [innerHTML]="selectedStore.address"></div>
+										<div class="card__address">
+											<span class="card__city" [innerHTML]="selectedStore.city"></span>
+											<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+										</div>
+										<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
+											<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
+											<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+										</div>
+										<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
+									</div>
+								</div>
+								<div class="subtitle">Orari di apertura</div>
+								<div class="flex-table flex-table__sm">
+									<div class="tr" *for="let time of selectedStore.timetable">
+										<div class="td" [innerHTML]="time.name"></div>
+										<div class="td" [innerHTML]="time.value"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Error -->
+				<div class="step step--error" *if="step == steps.Error">
+					<div class="divline"></div>
+					<div class="title">Impossibile completare l'ordine</div>
+					<div class="abstract">
+						<p>Si è verificato un problema durante la procedura d'acquisto, impossibile completare l'ordine.</p>
+						<p>Per assistenza o per ricevere ulteriori informazioni sul tuo ordine, contatta il nostro servizio clienti via telefono o e-mail:</p>
+					</div>
+					<div class="group--cta">
+						<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
+						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

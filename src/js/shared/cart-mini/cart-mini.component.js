@@ -2,11 +2,11 @@ import { Component } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
 import { environment } from '../../environment';
 import { HeaderService } from '../header/header.service';
-import { CartService } from './cart.service';
+import { CartMiniService } from './cart-mini.service';
 
 export class CartMiniComponent extends Component {
 
-	get total() {
+	get totalPrice() {
 		const items = this.items || [];
 		return items.reduce((p, c, i) => {
 			return p + c.price * c.qty;
@@ -15,7 +15,7 @@ export class CartMiniComponent extends Component {
 
 	onInit() {
 		this.items = [];
-		CartService.items$().pipe(
+		CartMiniService.items$().pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(items => {
 			this.items = items;
@@ -24,13 +24,13 @@ export class CartMiniComponent extends Component {
 	}
 
 	onIncrement(item) {
-		CartService.incrementItem$(item).pipe(
+		CartMiniService.incrementItem$(item).pipe(
 			first(),
 		).subscribe();
 	}
 
 	onDecrement(item) {
-		CartService.decrementItem$(item).pipe(
+		CartMiniService.decrementItem$(item).pipe(
 			first(),
 		).subscribe();
 	}
@@ -40,12 +40,8 @@ export class CartMiniComponent extends Component {
 		window.location.href = `${environment.slug.configureProduct}?codprod=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
 	}
 
-	onBuy(event) {
-		console.log('CartMiniComponent.onBuy');
-	}
-
 	onRemoveAll(event) {
-		CartService.removeAll$().pipe(
+		CartMiniService.removeAll$().pipe(
 			first(),
 		).subscribe();
 	}

@@ -13,11 +13,12 @@ ControlCheckboxComponent.meta = {
 	inputs: ['control', 'label'],
 	template: /* html */ `
 		<div class="group--form--checkbox" [class]="{ required: control.validators.length }">
-			<input type="checkbox" class="control--checkbox" [id]="control.name" [formControl]="control" [value]="true" />
+			<input [id]="control.name" type="checkbox" class="control--checkbox" [formControl]="control" [value]="true" />
 			<label [labelFor]="control.name">
 				<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 				<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
 				<span [innerHTML]="label | html"></span>
+				<span class="required__sign">*</span>
 			</label>
 			<span class="required__badge" [innerHTML]="'required' | label"></span>
 		</div>

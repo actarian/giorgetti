@@ -3,21 +3,21 @@ import { map, switchMap } from 'rxjs/operators';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
 import { HeaderService } from '../header/header.service';
 
-export class CartService {
+export class CartMiniService {
 
 	static items$_ = new BehaviorSubject([]);
 
 	static get currentItems() {
-		return CartService.items$_.getValue();
+		return CartMiniService.items$_.getValue();
 	}
 
 	static get count() {
-		return CartService.currentItems.length;
+		return CartMiniService.currentItems.length;
 	}
 
 	static hasItem(item) {
-		const items = CartService.currentItems;
-		const index = CartService.indexOf(item, items);
+		const items = CartMiniService.currentItems;
+		const index = CartMiniService.indexOf(item, items);
 		return index !== -1;
 	}
 
@@ -27,15 +27,15 @@ export class CartService {
 		} else {
 			LocalStorageService.delete('cartItems');
 		}
-		CartService.items$_.next(items);
+		CartMiniService.items$_.next(items);
 	}
 
 	static items$() {
 		const localItems = LocalStorageService.get('cartItems') || [];
 		return of(localItems).pipe(
 			switchMap(items => {
-				CartService.setItems(items);
-				return CartService.items$_;
+				CartMiniService.setItems(items);
+				return CartMiniService.items$_;
 			})
 		);
 	}
@@ -43,11 +43,11 @@ export class CartService {
 	static incrementItem$(item) {
 		return of(item).pipe(
 			map(item => {
-				const items = CartService.currentItems.slice();
-				const item_ = CartService.find(item, items);
+				const items = CartMiniService.currentItems.slice();
+				const item_ = CartMiniService.find(item, items);
 				if (item_) {
 					item_.qty++;
-					CartService.setItems(items);
+					CartMiniService.setItems(items);
 					return item_;
 				} else {
 					return null;
@@ -59,15 +59,15 @@ export class CartService {
 	static decrementItem$(item) {
 		return of(item).pipe(
 			switchMap(item => {
-				const items = CartService.currentItems.slice();
-				const item_ = CartService.find(item, items);
+				const items = CartMiniService.currentItems.slice();
+				const item_ = CartMiniService.find(item, items);
 				if (item_) {
 					item_.qty--;
 					if (item_.qty > 0) {
-						CartService.setItems(items);
+						CartMiniService.setItems(items);
 						return of(item_);
 					} else {
-						return CartService.removeItem$(item);
+						return CartMiniService.removeItem$(item);
 					}
 				} else {
 					return of(null);
@@ -79,15 +79,15 @@ export class CartService {
 	static addItem$(item) {
 		return of(Object.assign({ qty: 1 }, item)).pipe(
 			map(item => {
-				const items = CartService.currentItems.slice();
-				const item_ = CartService.find(item, items);
+				const items = CartMiniService.currentItems.slice();
+				const item_ = CartMiniService.find(item, items);
 				if (item_) {
 					item_.qty += item.qty;
-					CartService.setItems(items);
+					CartMiniService.setItems(items);
 					return item_;
 				} else {
 					items.push(item);
-					CartService.setItems(items);
+					CartMiniService.setItems(items);
 					return item;
 				}
 			}),
@@ -97,14 +97,14 @@ export class CartService {
 	static removeItem$(item) {
 		return of(item).pipe(
 			map(item => {
-				const items = CartService.currentItems.slice();
-				const index = CartService.indexOf(item, items);
+				const items = CartMiniService.currentItems.slice();
+				const index = CartMiniService.indexOf(item, items);
 				if (index !== -1) {
 					items.splice(index, 1);
 					if (items.length === 0) {
 						HeaderService.onBack();
 					}
-					CartService.setItems(items);
+					CartMiniService.setItems(items);
 					return item;
 				} else {
 					return null;
@@ -117,7 +117,7 @@ export class CartService {
 		return of([]).pipe(
 			map(items => {
 				HeaderService.onBack();
-				CartService.setItems(items);
+				CartMiniService.setItems(items);
 				return items;
 			}),
 		)
@@ -128,13 +128,12 @@ export class CartService {
 	}
 
 	static find(item, items) {
-		return items.find(item_ => CartService.match(item, item_));
+		return items.find(item_ => CartMiniService.match(item, item_));
 	}
 
 	static indexOf(item, items) {
 		return items.reduce((p, item_, i) => {
-			return p !== -1 ? p : (CartService.match(item, item_) ? i : p);
+			return p !== -1 ? p : (CartMiniService.match(item, item_) ? i : p);
 		}, -1);
 	}
-
 }

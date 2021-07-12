@@ -1,6 +1,6 @@
 .nav--secondary {
 	@extend %nav;
-	padding: 0 24px;
+	// padding: 0 24px;
 
 	&>.nav__item {
 		font-size: 18px;
@@ -10,8 +10,10 @@
 		background: transparent;
 
 		&>a,
+		&>button,
 		&>span {
 			padding: 20px 0;
+			text-transform: uppercase;
 
 			&:after {
 				content: '';
@@ -32,6 +34,7 @@
 		&.active {
 
 			&>a,
+			&>button,
 			&>span {
 				&:after {
 					transform: scale(1, 1);
@@ -58,24 +61,29 @@
 
 .section--materials {
 
+	.nav--secondary {
+		position: relative;
+		z-index: 1;
+	}
+
 	.picture {
 		@include aspect-clip(1920, 1080);
 		overflow: visible;
 	}
 
 	@include media-up(md) {
-		padding: 100px 0 160px 0;
+		padding: 0 0 160px 0;
 
 		.nav--secondary {
-			margin-top: 240px;
+			margin-bottom: 120px;
 		}
 	}
 
 	@include media-down(sm) {
-		padding: 100px 0 100px 0;
+		padding: 0 0 100px 0;
 
 		.nav--secondary {
-			margin-top: 80px;
+			margin-bottom: 60px;
 		}
 	}
 }

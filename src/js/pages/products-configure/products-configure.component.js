@@ -2,7 +2,7 @@ import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
 import { LocationService } from '../../common/location/location.service';
 import { environment } from '../../environment';
-import { CartService } from '../../shared/cart/cart.service';
+import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;`;
 const titleStyle = `letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;`;
@@ -217,7 +217,7 @@ export class ProductsConfigureComponent extends Component {
 			cartItem.image = data.image;
 		}
 		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-		CartService.addItem$(cartItem).pipe(
+		CartMiniService.addItem$(cartItem).pipe(
 			first(),
 		).subscribe();
 	}

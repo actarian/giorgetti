@@ -13,6 +13,7 @@ export class UserModalComponent extends UserComponent {
 		if (parentInstance instanceof ModalOutletComponent) {
 			const data = parentInstance.modal.data;
 			this.view = data.view;
+			this.me = data.me;
 			// console.log('UserModalComponent.onInit', data);
 		}
 		LocomotiveScrollService.stop();

@@ -1,10 +1,15 @@
 import { FormValidator } from 'rxcomp-form';
 
-export default function RequiredIfValidator(fieldName, formGroup) {
+export default function RequiredIfValidator(fieldName, formGroup, shouldBe) {
 
 	return new FormValidator((value) => {
-		const field = formGroup ? formGroup.get(fieldName) : null;
-		return field && field.value && !value ? { required: { value: value, requiredIf: fieldName } } : null;
+		let field = null;
+		if (typeof formGroup === 'function') {
+			field = formGroup().get(fieldName);
+		} else if (formGroup) {
+			field = formGroup.get(fieldName);
+		}
+		return (!value && field && (shouldBe != null ? field.value === shouldBe : field.value != null)) ? { required: { value: value, requiredIf: fieldName } } : null;
 	});
 
 }

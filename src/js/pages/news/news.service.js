@@ -5,7 +5,7 @@ export class NewsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/news/all.json');
+			return ApiService.get$('/news/all');
 		} else {
 			return ApiService.get$('/news/all.json');
 		}
@@ -13,7 +13,7 @@ export class NewsService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/news/filters.json');
+			return ApiService.get$('/news/filters');
 		} else {
 			return ApiService.get$('/news/filters.json');
 		}

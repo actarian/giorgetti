@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Product designer",
+    "domain": {
+      "id": 245,
+      "name": "Logistic/Production"
+    },
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam urna sapien, a consequat quam facilisis nec. Phasellus tempus placerat orci, nec convallis libero sollicitudin id. Duis ultrices faucibus viverra. Aliquam erat volutpat. Pellentesque semper molestie maximus. Aenean lacinia enim ipsum, vel sodales velit commodo in. Cras a facilisis massa. Morbi mollis pharetra tortor ac dapibus.</p><p>Suspendisse lorem ligula, sollicitudin quis efficitur a, mattis eu justo. Pellentesque facilisis vehicula mi. Mauris cursus magna sit amet tincidunt pulvinar. Sed lacinia sem interdum elit placerat, eget semper erat consequat. Donec ac rutrum mi. Vestibulum a iaculis ligula, a placerat purus. Mauris at facilisis dolor. Suspendisse lectus tortor, iaculis nec velit id, dapibus efficitur nibh. Vestibulum lobortis molestie consequat. Sed sollicitudin lacus erat, a rhoncus ipsum ultricies nec.</p>"
+  },
+  {
+    "id": 2,
+    "name": "Wholesale merchandising",
+    "domain": {
+      "id": 244,
+      "name": "Commercial"
+    },
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam urna sapien, a consequat quam facilisis nec. Phasellus tempus placerat orci, nec convallis libero sollicitudin id. Duis ultrices faucibus viverra. Aliquam erat volutpat. Pellentesque semper molestie maximus. Aenean lacinia enim ipsum, vel sodales velit commodo in. Cras a facilisis massa. Morbi mollis pharetra tortor ac dapibus.</p><p>Suspendisse lorem ligula, sollicitudin quis efficitur a, mattis eu justo. Pellentesque facilisis vehicula mi. Mauris cursus magna sit amet tincidunt pulvinar. Sed lacinia sem interdum elit placerat, eget semper erat consequat. Donec ac rutrum mi. Vestibulum a iaculis ligula, a placerat purus. Mauris at facilisis dolor. Suspendisse lectus tortor, iaculis nec velit id, dapibus efficitur nibh. Vestibulum lobortis molestie consequat. Sed sollicitudin lacus erat, a rhoncus ipsum ultricies nec.</p>"
+  },
+  {
+    "id": 3,
+    "name": "Cad designer",
+    "domain": {
+      "id": 246,
+      "name": "Image/Communication"
+    },
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam urna sapien, a consequat quam facilisis nec. Phasellus tempus placerat orci, nec convallis libero sollicitudin id. Duis ultrices faucibus viverra. Aliquam erat volutpat. Pellentesque semper molestie maximus. Aenean lacinia enim ipsum, vel sodales velit commodo in. Cras a facilisis massa. Morbi mollis pharetra tortor ac dapibus.</p><p>Suspendisse lorem ligula, sollicitudin quis efficitur a, mattis eu justo. Pellentesque facilisis vehicula mi. Mauris cursus magna sit amet tincidunt pulvinar. Sed lacinia sem interdum elit placerat, eget semper erat consequat. Donec ac rutrum mi. Vestibulum a iaculis ligula, a placerat purus. Mauris at facilisis dolor. Suspendisse lectus tortor, iaculis nec velit id, dapibus efficitur nibh. Vestibulum lobortis molestie consequat. Sed sollicitudin lacus erat, a rhoncus ipsum ultricies nec.</p>"
+  },
+  {
+    "id": 4,
+    "name": "Logistic specialist",
+    "domain": {
+      "id": 245,
+      "name": "Logistic/Production"
+    },
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam urna sapien, a consequat quam facilisis nec. Phasellus tempus placerat orci, nec convallis libero sollicitudin id. Duis ultrices faucibus viverra. Aliquam erat volutpat. Pellentesque semper molestie maximus. Aenean lacinia enim ipsum, vel sodales velit commodo in. Cras a facilisis massa. Morbi mollis pharetra tortor ac dapibus.</p><p>Suspendisse lorem ligula, sollicitudin quis efficitur a, mattis eu justo. Pellentesque facilisis vehicula mi. Mauris cursus magna sit amet tincidunt pulvinar. Sed lacinia sem interdum elit placerat, eget semper erat consequat. Donec ac rutrum mi. Vestibulum a iaculis ligula, a placerat purus. Mauris at facilisis dolor. Suspendisse lectus tortor, iaculis nec velit id, dapibus efficitur nibh. Vestibulum lobortis molestie consequat. Sed sollicitudin lacus erat, a rhoncus ipsum ultricies nec.</p>"
+  }
+]

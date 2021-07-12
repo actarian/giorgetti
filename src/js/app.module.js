@@ -5,7 +5,9 @@ import { CommonModule } from './common/common.module';
 import { ControlsModule } from './controls/controls.module';
 import { AmbienceComponent } from './pages/ambience/ambience.component';
 import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers-and-stores.component';
+import { CareersModalComponent } from './pages/careers/careers-modal.component';
 import { CareersComponent } from './pages/careers/careers.component';
+import { CartComponent } from './pages/cart/cart.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { DealersComponent } from './pages/dealers/dealers.component';
 import { DesignersComponent } from './pages/designers/designers.component';
@@ -38,6 +40,8 @@ AppModule.meta = {
 		AmbienceComponent,
 		AteliersAndStoresComponent,
 		CareersComponent,
+		CareersModalComponent,
+		CartComponent,
 		ContactsComponent,
 		DealersComponent,
 		DesignersComponent,

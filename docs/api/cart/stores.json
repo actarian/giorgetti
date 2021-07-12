@@ -1,0 +1,156 @@
+[
+  {
+    "category": {
+      "id": 11,
+      "name": "Distributori progetti 30"
+    },
+    "rank": 26,
+    "distance": 10.75229717277557,
+    "latitude": 44.8707899,
+    "longitude": 9.6413303,
+    "name": "ClassicDesign.it SRL",
+    "address": "via Acerbi, 44",
+    "city": "Ponte dell'Olio (PC)",
+    "phone": "+39.0523.874003",
+    "email": "info@classicdesign.it",
+    "id": 32377,
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "timetable": [
+      {
+        "name": "lunedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "martedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "mercoledì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "giovedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "venerdì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "sabato",
+        "value": "10:00 - 12:00 / 16:30 - 19:00"
+      },
+      {
+        "name": "domenica",
+        "value": "chiuso"
+      }
+    ]
+  },
+  {
+    "category": {
+      "id": 11,
+      "name": "Distributori progetti 30"
+    },
+    "rank": 27,
+    "distance": 15.92680792119023,
+    "latitude": 38.1257824,
+    "longitude": 13.3557946,
+    "name": "SCILLUFO ARREDAMENTI S.R.L.",
+    "address": "Via Nicolo'gallo 8",
+    "city": "Palermo",
+    "phone": "+39 091  6124383",
+    "fax": "+39 091  6124379",
+    "email": "info@scillufoarredamenti.it",
+    "id": 453,
+    "provinciaDescription": "171",
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "timetable": [
+      {
+        "name": "lunedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "martedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "mercoledì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "giovedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "venerdì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "sabato",
+        "value": "10:00 - 12:00 / 16:30 - 19:00"
+      },
+      {
+        "name": "domenica",
+        "value": "chiuso"
+      }
+    ]
+  },
+  {
+    "category": {
+      "id": 11,
+      "name": "Distributori progetti 30"
+    },
+    "rank": 28,
+    "distance": 21.33080099782705,
+    "latitude": 45.609343,
+    "longitude": 11.499513,
+    "name": "FONTANA S.R.L.",
+    "address": "Via Pasubio 17",
+    "city": "Costabissara",
+    "phone": "+39.0444.557013",
+    "fax": "+39.0444.557661",
+    "email": "perinemanuela@fontanasrl.net",
+    "id": 399,
+    "provinciaDescription": "213",
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "timetable": [
+      {
+        "name": "lunedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "martedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "mercoledì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "giovedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "venerdì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "sabato",
+        "value": "10:00 - 12:00 / 16:30 - 19:00"
+      },
+      {
+        "name": "domenica",
+        "value": "chiuso"
+      }
+    ]
+  }
+]

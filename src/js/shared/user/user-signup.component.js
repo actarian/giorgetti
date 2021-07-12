@@ -11,16 +11,17 @@ import { UserService } from './user.service';
 export class UserSignupComponent extends Component {
 
 	onInit() {
+		this.me = this.me || {};
 		this.error = null;
 		this.success = false;
 		const form = this.form = new FormGroup({
-			firstName: new FormControl(null, [Validators.RequiredValidator()]),
-			lastName: new FormControl(null, [Validators.RequiredValidator()]),
+			firstName: new FormControl(this.me.firstName || null, [Validators.RequiredValidator()]),
+			lastName: new FormControl(this.me.lastName || null, [Validators.RequiredValidator()]),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
 			city: new FormControl(null, [Validators.RequiredValidator()]),
 			company: new FormControl(null),
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
-			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
+			email: new FormControl(this.me.email || null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
 			password: new FormControl(null, [Validators.RequiredValidator()]),
 			passwordConfirm: new FormControl(null, [Validators.RequiredValidator(), MatchValidator('password', form)]),
 			privacy: new FormControl(null, [Validators.RequiredValidator()]),
@@ -114,4 +115,5 @@ export class UserSignupComponent extends Component {
 UserSignupComponent.meta = {
 	selector: '[user-signup]',
 	outputs: ['signUp', 'viewSignIn'],
+	inputs: ['me'],
 };

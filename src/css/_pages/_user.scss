@@ -7,6 +7,7 @@
 	.modal__picture {
 		position: relative;
 		background: $background-tertiary;
+		display: none;
 
 		&:after {
 			content: '';
@@ -45,6 +46,7 @@
 		padding-bottom: 80px;
 	}
 
+	/*
 	.listing--form-compact {
 		$gutter: 30px;
 		display: block;
@@ -55,6 +57,7 @@
 			@include as-col(12, 12, $gutter);
 		}
 	}
+	*/
 
 	@include media-up(md) {
 		justify-content: space-between;
@@ -65,20 +68,27 @@
 			flex: 1 1 50%;
 		}
 
-		.modal__inner {
-			height: 600px;
-			max-height: 100%;
-			overflow-x: hidden;
-			overflow-y: auto;
-			@include scrollbar();
-		}
-
 		.modal__content {
 			flex: 1 1 50%;
 			height: 600px;
 			max-height: 100%;
 		}
 
+		.modal__header {
+			.btn--close {
+				padding: 10px 20px 0;
+			}
+		}
+
+		.modal__inner {
+			height: 600px;
+			max-height: 100%;
+			overflow-x: hidden;
+			overflow-y: auto;
+			padding-left: 70px;
+			padding-right: 70px;
+			@include scrollbar();
+		}
 	}
 
 	@include media-down(sm) {
@@ -189,20 +199,47 @@
 .section--auth {
 	padding: 100px 0;
 
+	.row {
+		align-items: stretch;
+
+		&>div {
+			display: flex;
+			flex-direction: column;
+			margin: 60px 0;
+
+			.divline {
+				margin: 0 0 40px 0;
+				// justify-content: flex-start;
+			}
+
+			.title {
+				flex-grow: 1;
+			}
+		}
+	}
+
 	.picture {
 		height: 100%;
 	}
 }
 
 .divline {
-	margin: 60px 0;
 	display: flex;
-	justify-content: center;
+	// justify-content: center;
+	justify-content: flex-start;
 
 	&:after {
 		content: '';
 		background: $background-negative;
 		width: 80px;
 		height: 1.99px;
+	}
+
+	@include media-up(md) {
+		margin: 60px 0;
+	}
+
+	@include media-down(sm) {
+		margin: 40px 0;
 	}
 }

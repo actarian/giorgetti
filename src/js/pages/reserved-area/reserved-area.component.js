@@ -89,6 +89,12 @@ export class ReservedAreaComponent extends Component {
 		return FilesService.hasFile(file);
 	}
 
+	onLogout() {
+		UserService.signout$().pipe(
+			first(),
+		).subscribe();
+	}
+
 }
 
 ReservedAreaComponent.meta = {

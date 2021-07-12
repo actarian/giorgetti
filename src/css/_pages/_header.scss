@@ -3,7 +3,6 @@
 	top: 0;
 	padding: 18px 0 9px 0;
 	border-bottom: 1px solid $background-tertiary;
-	background: transparent;
 	transition: all ease-in-out $fast;
 	z-index: 1000;
 
@@ -54,7 +53,30 @@
 		}
 	}
 
+	.btn--cart {
+		position: relative;
+		padding: 10px;
+
+		.badge {
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 15px;
+			top: 5px;
+			right: -2px;
+			margin-right: 0;
+			padding: 0 5px;
+			border-radius: 7.5px;
+			font-size: 9px;
+			line-height: 1;
+			background: $background-negative;
+			color: $foreground-negative;
+		}
+	}
+
 	@include media-up(sm) {
+		background: transparent;
 
 		&.scrolling-down {
 
@@ -84,6 +106,7 @@
 
 	@include media-down(xs) {
 		padding: 9px 0;
+		background: $background;
 
 		.nav--language {
 			display: none;
@@ -158,6 +181,7 @@
 
 .nav--service {
 	@extend %nav;
+	margin-top: -10px;
 
 	&>.nav__item {
 
@@ -170,12 +194,17 @@
 			position: relative;
 			display: flex;
 			align-items: center;
-			padding: 0 10px;
+			padding: 10px;
+			border-radius: 22px;
 			background: transparent;
 			transition: all ease-in-out $fast;
 
 			&:hover {
 				transform: translateY(-3px);
+			}
+
+			&.active {
+				background: $background-tertiary;
 			}
 		}
 
@@ -188,23 +217,6 @@
 			fill: currentColor;
 			width: 24px;
 			height: 24px;
-		}
-
-		.badge {
-			position: absolute;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 15px;
-			top: 0px;
-			right: -3px;
-			margin-right: 5px;
-			padding: 0 5px;
-			border-radius: 7.5px;
-			font-size: 9px;
-			line-height: 1;
-			background: $background-negative;
-			color: $foreground-negative;
 		}
 	}
 

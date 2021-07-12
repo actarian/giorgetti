@@ -1,7 +1,14 @@
 .section--breadcrumb {
 	position: relative;
-	padding: 30px 0;
 	z-index: 2;
+
+	@include media-up(sm) {
+		padding: 30px 0;
+	}
+
+	@include media-down(xs) {
+		padding: 15px 0;
+	}
 }
 
 .nav--breadcrumb {

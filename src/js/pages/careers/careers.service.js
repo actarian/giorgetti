@@ -11,6 +11,14 @@ export class CareersService {
 		}
 	}
 
+	static positions$() {
+		if (environment.flags.production) {
+			return ApiService.get$('/careers/positions.json');
+		} else {
+			return ApiService.get$('/careers/positions.json');
+		}
+	}
+
 	static submit$(payload) {
 		if (environment.flags.production) {
 			// !!! convert to .post$

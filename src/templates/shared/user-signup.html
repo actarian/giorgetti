@@ -1,8 +1,9 @@
-<div class="section--form" user-signup (signUp)="onSignUp($event)" (viewSignIn)="onViewSignIn($event)">
+<div class="section--form" user-signup [me]="me" (signUp)="onSignUp($event)" (viewSignIn)="onViewSignIn($event)">
 	<div class="container" *if="!success">
 		<form class="form" [formGroup]="form" (submit)="onSubmit()" name="form" role="form" novalidate autocomplete="off">
 			<div class="title">Registrazione</div>
-			<div class="abstract">Compilate il form per richiedere l'accesso. Riceverete un e-mail di conferma ad attivazione avvenuta.</div>
+			<div class="subtitle" *if="me?.firstName">Ciao <span [innerHTML]="me.firstName"></span>, abbiamo precompilato alcuni campi per te.</div>
+			<div class="abstract">Completa il form per richiedere l'accesso. Riceverai un'e-mail di conferma ad attivazione avvenuta.</div>
 			<div class="listing--form-compact">
 				<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
 				<div control-text [control]="controls.firstName" label="Nome"></div>

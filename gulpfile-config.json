@@ -66,6 +66,9 @@
     "path": "/giorgetti/",
     "host": "0.0.0.0",
     "port": 48481,
-    "log": false
+    "log": false,
+    "https": {
+      "cert": "certs/server.crt"
+    }
   }
 }

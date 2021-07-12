@@ -182,8 +182,8 @@ export class MaterialsComponent extends Component {
 		this.controls.category.value = category.value;
 		setTimeout(() => {
 			LocomotiveScrollService.update();
-			LocomotiveScrollService.scrollToSelector('#category-' + category.value);
-		}, 100);
+			LocomotiveScrollService.scrollToSelector('#category-' + category.value, { offset: -240 });
+		}, 500);
 	}
 
 	clearFilter(event, filter) {

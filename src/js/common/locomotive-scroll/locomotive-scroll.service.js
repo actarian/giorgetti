@@ -148,23 +148,32 @@ export class LocomotiveScrollService {
 			gsap.set(body, {
 				'scroll-behavior': 'auto'
 			});
-			gsap.to(o, {
-				duration: Math.abs(distance) / 2000,
-				pow: 1,
-				ease: Quad.easeOut,
-				overwrite: 'all',
-				onUpdate: () => {
-					gsap.set(body, {
-						'scrollTop': currentTop + distance * o.pow
-					});
-					// window.scrollTo(0, currentTop + distance * o.pow);
-				},
-				onComplete: () => {
-					gsap.set(body, {
-						'scroll-behavior': 'smooth'
-					});
-				}
-			});
+			if (options.disableLerp) {
+				gsap.set(body, {
+					'scrollTop': currentTop + distance
+				});
+				gsap.set(body, {
+					'scroll-behavior': 'smooth'
+				});
+			} else {
+				gsap.to(o, {
+					duration: Math.abs(distance) / 2000,
+					pow: 1,
+					ease: Quad.easeOut,
+					overwrite: 'all',
+					onUpdate: () => {
+						gsap.set(body, {
+							'scrollTop': currentTop + distance * o.pow
+						});
+						// window.scrollTo(0, currentTop + distance * o.pow);
+					},
+					onComplete: () => {
+						gsap.set(body, {
+							'scroll-behavior': 'smooth'
+						});
+					}
+				});
+			}
 			// target.scrollIntoView();
 		}
 	}

@@ -124,6 +124,18 @@ export class UserService {
 		);
 	}
 
+	static tryFacebook$(me) {
+		return of(null);
+	}
+
+	static tryGoogle$(me) {
+		return of(null);
+	}
+
+	static tryLinkedin$(me) {
+		return of(null);
+	}
+
 	static sessionStorage$() {
 		return of(SessionStorageService.get('user') || null);
 	}

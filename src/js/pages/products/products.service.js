@@ -7,7 +7,7 @@ export class ProductsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/products/all.json');
+			return ApiService.get$('/products/all');
 		} else {
 			return ApiService.get$('/products/all.json');
 		}
@@ -15,7 +15,7 @@ export class ProductsService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/products/filters.json');
+			return ApiService.get$('/products/filters');
 		} else {
 			return ApiService.get$('/products/filters.json');
 		}

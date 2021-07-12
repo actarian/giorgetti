@@ -1,0 +1,168 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<main class="main" reserved-area>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Area Riservata</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--intro-sm">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Area Riservata</div>
+					<div class="description">
+						<p>In quest'area è possibile scaricare cataloghi, immagini e altri strumenti relativi ai prodotti Giorgetti. Compilate il form per richiedere l'accesso. Riceverete un e-mail di conferma ad attivazione avvenuta.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--auth" user *if="user === null">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="row">
+						<div *if="view == views.SIGN_UP">
+							<!-- @@include ./templates/shared/user-signup.html -->
+						</div>
+						<div *if="view == views.SIGN_IN">
+							<!-- @@include ./templates/shared/user-signin.html -->
+						</div>
+						<div *if="view == views.FORGOTTEN">
+							<!-- @@include ./templates/shared/user-forgot.html -->
+						</div>
+						<div class="container">
+							<div class="divline"></div>
+							<div *if="view != views.SIGN_UP">
+								<div class="title">Non fai ancora parte di Giorgetti?</div>
+								<div class="group--info">
+									<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
+								</div>
+							</div>
+							<div *if="view == views.SIGN_UP">
+								<div class="title">Sei già registrato?</div>
+								<div class="group--info">
+									<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 offset-md-1">
+					<div class="picture expand--right" scroll scrollSpeed="1.5">
+						<img src="/giorgetti/img/user/giorgetti.jpg" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *if="user">
+
+		<div class="section--secondary">
+			<div class="container">
+				<ul class="nav--secondary">
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#files" (locomotiveScrollTo)="'#files'">Area download</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#events-area" (locomotiveScrollTo)="'#events-area'">Area eventi</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#project-registration" (locomotiveScrollTo)="'#project-registration'">Registrazione progetti</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="section--files" id="files">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<ul class="nav--files" [tree]="tree" (open)="onOpen($event)"></ul>
+					</div>
+					<div class="col-md-9">
+						<div class="group--info" *if="!item">
+							<svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg> <span>Seleziona una categoria</span>
+						</div>
+						<div *if="item">
+							<div class="title" [innerHTML]="item.title"></div>
+							<!-- files -->
+							<div class="listing--files">
+								<div class="listing__item" *for="let file of visibleFiles">
+									<div class="card--file">
+										<div class="card__picture" *if="file.image">
+											<img loading="lazy" [src]="file.image" />
+										</div>
+										<div class="card__content">
+											<div class="card__name" [innerHTML]="file.title" [title]="file.title"></div>
+											<div class="card__cta">
+												<a class="btn--action" [href]="file.url" [download]="file.title" target="_blank" title="Scarica">
+													<svg class="download"><use xlink:href="#download"></use></svg>
+												</a>
+												<button type="button" class="btn--action" (click)="onToggleFile(file)" [title]="isAddedToFiles(file) ? 'Rimuovi da files' : 'Aggiungi a files'">
+													<svg class="add" *if="!isAddedToFiles(file)"><use xlink:href="#add"></use></svg>
+													<svg class="remove" *if="isAddedToFiles(file)"><use xlink:href="#remove"></use></svg>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- more -->
+							<div class="group--cta">
+								<button type="button" class="btn--more" (click)="showMore($event)" *if="files.length > visibleFiles.length">Mostra di più</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="section--intro-sm" id="events-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Area Eventi</div>
+					<div class="description">
+						<p>Eventi, video, dirette, momenti speciali e formazione per scoprire il mondo Giorgetti. Compilate il form per richiedere l'accesso. Riceverete un e-mail di conferma ad attivazione avvenuta.</p>
+					</div>
+					<div class="group--cta">
+						<a class="btn--more" href="https://www.giorgettimeda.com/it/eventi-indice" target="_blank">Scopri gli eventi</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--intro-sm" id="project-registration" *if="user">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Registrazione progetti</div>
+					<div class="description">
+						<p>Compilate la form per registrare il vostro progetto.<br> Riceverete un e-mail di conferma ad attivazione avvenuta.</p>
+					</div>
+					<div class="group--cta">
+						<button type="button" class="btn--more" (click)="onProjectRegistration($event)">Registra il tuo progetto</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

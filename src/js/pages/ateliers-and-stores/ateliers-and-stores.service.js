@@ -5,7 +5,7 @@ export class AteliersAndStoresService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/ateliers-and-stores/all.json');
+			return ApiService.get$('/ateliers-and-stores/all');
 		} else {
 			return ApiService.get$('/ateliers-and-stores/all.json');
 		}
@@ -29,7 +29,7 @@ export class AteliersAndStoresService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/ateliers-and-stores/filters.json');
+			return ApiService.get$('/ateliers-and-stores/filters');
 		} else {
 			return ApiService.get$('/ateliers-and-stores/filters.json');
 		}

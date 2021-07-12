@@ -3,10 +3,12 @@ import { first, takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
-import { CartService } from '../cart/cart.service';
+import { CartMiniService } from '../cart-mini/cart-mini.service';
 import { MenuService } from '../menu/menu.service';
 import { UserService } from '../user/user.service';
 import { HeaderService } from './header.service';
+
+const USE_MODAL = false;
 
 export class HeaderComponent extends Component {
 
@@ -52,7 +54,7 @@ export class HeaderComponent extends Component {
 			this.menu = menu;
 			this.pushChanges();
 		});
-		this.cart = CartService;
+		this.cart = CartMiniService;
 		this.user = null;
 		UserService.me$().pipe(
 			takeUntil(this.unsubscribe$),
@@ -85,14 +87,18 @@ export class HeaderComponent extends Component {
 	onLogin() {
 		MenuService.onBack();
 		HeaderService.onBack();
-		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
-			takeUntil(this.unsubscribe$)
-		).subscribe(event => {
-			console.log('HeaderComponent.onLogin', event);
-			if (event instanceof ModalResolveEvent) {
-				window.location.href = environment.slug.reservedArea;
-			}
-		});
+		if (USE_MODAL) {
+			ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
+				takeUntil(this.unsubscribe$)
+			).subscribe(event => {
+				console.log('HeaderComponent.onLogin', event);
+				if (event instanceof ModalResolveEvent) {
+					window.location.href = environment.slug.reservedArea;
+				}
+			});
+		} else {
+			window.location.href = environment.slug.reservedArea;
+		}
 	}
 
 	onLogout() {

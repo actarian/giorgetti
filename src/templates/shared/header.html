@@ -17,12 +17,17 @@
 			</div>
 			<div class="group--right">
 				<ul class="nav--service">
+					<li class="nav__item">
+						<a href="/giorgetti/reserved-area.html" [class]="{ active: user }"><svg class="user"><use xlink:href="#user"></use></svg></a>
+					</li>
+					<!--
 					<li class="nav__item" *if="!user">
 						<button type="button" (click)="onLogin($event)"><svg class="user"><use xlink:href="#user"></use></svg></button>
 					</li>
 					<li class="nav__item" *if="user">
 						<button type="button" (click)="onLogout($event)" *if="user"><span>esci</span> <svg class="user"><use xlink:href="#user"></use></svg></button>
 					</li>
+					-->
 					<li class="nav__item">
 						<a href="/giorgetti/store-locator.html"><svg class="pin"><use xlink:href="#pin"></use></svg></a>
 					</li>
@@ -33,7 +38,7 @@
 						<button type="button" (click)="onToggle('search')"><svg class="search"><use xlink:href="#search"></use></svg></button>
 					</li>
 					<li class="nav__item">
-						<button type="button" (click)="onToggle('cart')"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
+						<button type="button" class="btn--cart" (click)="onToggle('cart')"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
 					</li>
 				</ul>
 				<button type="button" class="btn--cart" (click)="onToggle('cart')"><svg class="cart"><use xlink:href="#cart"></use></svg> <span class="badge" *if="cart.count > 0" [innerHTML]="cart.count"></span></button>
@@ -47,10 +52,17 @@
 				<li class="nav__item" [class]="{ active: menu == 4 }"><span [menu]="4">News</span></li>
 				<li class="nav__item" [class]="{ active: menu == 5 }"><span [menu]="5">Progetti</span></li>
 				<li class="nav__item hidden-sm-up"><span (click)="onToggle('search')">Cerca <svg class="search"><use xlink:href="#search"></use></svg></span></li>
+				<li class="nav__item hidden-sm-up"><a href="/giorgetti/reserved-area.html" [class]="{ active: user }">Area Riservata <svg class="user"><use xlink:href="#user"></use></svg></a></li>
+				<!--
 				<li class="nav__item hidden-sm-up" *if="!user"><span (click)="onLogin($event)">Accedi <svg class="user"><use xlink:href="#user"></use></svg></span></li>
 				<li class="nav__item hidden-sm-up" *if="user"><span (click)="onLogout($event)">Esci <svg class="user"><use xlink:href="#user"></use></svg></span></li>
-				<li class="nav__item hidden-sm-up"><span (click)="onOpenMarketAndLanguage($event)"><span>Italia | IT</span>
-						<!--<svg class="markets"><use xlink:href="#markets"></use></svg>--></span></li>
+				-->
+				<li class="nav__item hidden-sm-up">
+					<span (click)="onOpenMarketAndLanguage($event)">
+						<span>Italia | IT</span>
+						<!--<svg class="markets"><use xlink:href="#markets"></use></svg>-->
+					</span>
+				</li>
 			</ul>
 			<div class="group--submenus" [class]="{ active: menu > 0 }">
 				<div class="group--submenu" [class]="{ active: menu == 1 }" submenu id="menu-1">

@@ -148,7 +148,9 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 
 	<div class="section--form section--form-negative" id="contacts">
 		<div class="container" *if="!success">
-			<div class="title">Richiesta Di Contatto</div>
+			<div class="group--center">
+				<div class="title">Richiesta Di Contatto</div>
+			</div>
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<form class="form" [formGroup]="form" (submit)="onSubmit($event)" name="form" role="form" novalidate autocomplete="off">

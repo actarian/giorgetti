@@ -41,7 +41,9 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 	<div class="section--form section--form-negative" id="newsletter">
 		<div class="container" *if="!success">
 			<!--
-			<div class="title">Iscriviti alla newsletter</div>
+				<div class="group--center">
+					<div class="title">Iscriviti alla newsletter</div>
+				</div>
 			-->
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
@@ -54,6 +56,7 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 							<div control-custom-select [control]="controls.occupation" label="Professione"></div>
 							<div control-text [control]="controls.telephone" label="Telefono"></div>
 							<div control-custom-select [control]="controls.country" label="Paese"></div>
+							<div control-custom-select [control]="controls.region" label="Regione" *if="controls.country.value == 114"></div>
 							<div control-text [control]="controls.city" label="Città"></div>
 							<div control-custom-select [control]="controls.engagement" label="Com'è venuto a conoscenza di Giorgetti?"></div>
 							<div control-custom-select [control]="controls.newsletterLanguage" label="Lingua della newsletter"></div>

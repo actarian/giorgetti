@@ -32,12 +32,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="group--reacap" *if="items.length">
+				<div class="group--recap" *if="items.length">
 					<span>Totale</span>
-					<span class="price" [innerHTML]="total | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+					<span class="price" [innerHTML]="totalPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
 				</div>
 				<div class="group--cta" *if="items.length">
-					<button type="button" class="btn--buy" (click)="onBuy($event)">Acquista</button>
+					<a href="/giorgetti/cart.html" class="btn--buy">Acquista</a>
+					<!-- <button type="button" class="btn--buy" (click)="onBuy($event)">Acquista</button> -->
 					<button type="button" class="btn--secondary" (click)="onRemoveAll($event)">Rimuovi tutti</button>
 				</div>
 			</div>

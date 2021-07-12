@@ -13,8 +13,8 @@ ControlSelectComponent.meta = {
 	inputs: ['control', 'label'],
 	template: /* html */ `
 		<div class="group--form--select" [class]="{ required: control.validators.length }">
-			<label [innerHTML]="label"></label>
-			<select class="control--select" [formControl]="control" required>
+			<label [labelFor]="control.name"><span [innerHTML]="label"></span> <span class="required__sign">*</span></label>
+			<select [id]="control.name" class="control--select" [formControl]="control" required>
 				<option [value]="null" [innerHTML]="'select' | label"></option>
 				<option [value]="item.id" *for="let item of control.options" [innerHTML]="item.name"></option>
 			</select>

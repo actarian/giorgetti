@@ -31,37 +31,18 @@
 	<div class="section--auth" user *if="user === null">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-7">
-					<div class="row">
-						<div *if="view == views.SIGN_UP">
-							<!-- @@include ./templates/shared/user-signup.html -->
-						</div>
-						<div *if="view == views.SIGN_IN">
-							<!-- @@include ./templates/shared/user-signin.html -->
-						</div>
-						<div *if="view == views.FORGOTTEN">
-							<!-- @@include ./templates/shared/user-forgot.html -->
-						</div>
-						<div class="container">
-							<div class="divline"></div>
-							<div *if="view != views.SIGN_UP">
-								<div class="title">Non fai ancora parte di Giorgetti?</div>
-								<div class="group--info">
-									<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
-								</div>
-							</div>
-							<div *if="view == views.SIGN_UP">
-								<div class="title">Sei già registrato?</div>
-								<div class="group--info">
-									<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
-								</div>
-							</div>
-						</div>
+				<div class="col-md-6">
+					<div class="divline"></div>
+					<div class="title">Sei già registrato?</div>
+					<div class="group--info">
+						<button type="button" class="btn--link" (click)="onModalSignIn($event)"><span>Accedi</span></button>
 					</div>
 				</div>
-				<div class="col-md-4 offset-md-1">
-					<div class="picture expand--right" scroll scrollSpeed="1.5">
-						<img src="/giorgetti/img/user/giorgetti.jpg" />
+				<div class="col-md-6">
+					<div class="divline"></div>
+					<div class="title">Non fai ancora parte di Giorgetti?</div>
+					<div class="group--info">
+						<button type="button" class="btn--link" (click)="onModalSignUp($event)"><span>Registrati</span></button>
 					</div>
 				</div>
 			</div>
@@ -76,6 +57,8 @@
 					<li class="nav__item"><a href="/giorgetti/reserved-area.html#files" (locomotiveScrollTo)="'#files'">Area download</a></li>
 					<li class="nav__item"><a href="/giorgetti/reserved-area.html#events-area" (locomotiveScrollTo)="'#events-area'">Area eventi</a></li>
 					<li class="nav__item"><a href="/giorgetti/reserved-area.html#project-registration" (locomotiveScrollTo)="'#project-registration'">Registrazione progetti</a></li>
+					<li class="nav__item"><a href="#">Storico ordini</a></li>
+					<li class="nav__item"><button type="button" (click)="onLogout($event)">Esci</button></li>
 				</ul>
 			</div>
 		</div>

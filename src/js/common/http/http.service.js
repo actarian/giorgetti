@@ -21,18 +21,19 @@ export class HttpResponse {
 
 export class HttpService {
 
-	static http$(method, url, data, format = 'json', userPass = null) {
+	static http$(method, url, data, format = 'json', userPass = null, options = {}) {
 		const methods = ['POST', 'PUT', 'PATCH'];
 		let response_ = null;
 		// url = this.getUrl(url, format);
-		const options = {
+		options = Object.assign({
 			method: method,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
+		}, options, {
 			body: methods.indexOf(method) !== -1 ? JSON.stringify(data) : undefined
-		}
+		});
 		if (userPass) {
 			// options.mode = 'no-cors';
 			options.credentials = 'include';

@@ -2,7 +2,7 @@ import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { environment } from '../../environment';
-import { CartService } from '../../shared/cart/cart.service';
+import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 import { HeaderService } from '../../shared/header/header.service';
 import { ProductsDetailService } from './products-detail.service';
 
@@ -21,14 +21,14 @@ export class ProductsDetailComponent extends Component {
 	}
 
 	isAddedToCart(item) {
-		return CartService.hasItem(item);
+		return CartMiniService.hasItem(item);
 	}
 
 	onAddToCart(item) {
 		if (this.isAddedToCart(item)) {
 			HeaderService.setHeader('cart');
 		} else {
-			CartService.addItem$(item).pipe(
+			CartMiniService.addItem$(item).pipe(
 				first(),
 			).subscribe(_ => {
 				this.pushChanges();

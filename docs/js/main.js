@@ -177,10 +177,27 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   template: {
     modal: {
       userModal: '/template/modals/user-modal.cshtml',
+      careersModal: '/template/modals/careers-modal.cshtml',
       projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
       materialsModal: '/template/modals/materials-modal.cshtml',
       marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml'
     }
+  },
+  facebook: {
+    appId: 610048027052371,
+    fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
+    scope: 'public_profile, email',
+    // publish_stream
+    tokenClient: '951b013fe59b05cf471d869aae9ba6ba',
+    version: 'v11.0'
+  },
+  google: {
+    clientId: '760742757246-61qknlmthbmr54bh7ch19kjr0sftm4q3.apps.googleusercontent.com'
+  },
+  linkedIn: {
+    clientId: '77cg5ls5lgu3k3',
+    clientSecret: 'gfBIl365EdckxCgK',
+    scope: 'r_emailaddress r_liteprofile'
   },
   googleMaps: {
     apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
@@ -212,10 +229,27 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   template: {
     modal: {
       userModal: '/giorgetti/user-modal.html',
+      careersModal: '/giorgetti/careers-modal.html',
       projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
       materialsModal: '/giorgetti/materials-modal.html',
       marketsAndLanguagesModal: '/giorgetti/markets-and-languages-modal.html'
     }
+  },
+  facebook: {
+    appId: 610048027052371,
+    fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
+    scope: 'public_profile, email',
+    // publish_stream
+    tokenClient: '951b013fe59b05cf471d869aae9ba6ba',
+    version: 'v11.0'
+  },
+  google: {
+    clientId: '760742757246-61qknlmthbmr54bh7ch19kjr0sftm4q3.apps.googleusercontent.com'
+  },
+  linkedIn: {
+    clientId: '77cg5ls5lgu3k3',
+    clientSecret: 'gfBIl365EdckxCgK',
+    scope: 'r_emailaddress r_liteprofile'
   },
   googleMaps: {
     apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w'
@@ -430,41 +464,41 @@ console.log('environment', environment);var LocalStorageService = /*#__PURE__*/f
   return HeaderService;
 }();
 
-_defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var CartService = /*#__PURE__*/function () {
-  function CartService() {}
+_defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var CartMiniService = /*#__PURE__*/function () {
+  function CartMiniService() {}
 
-  CartService.hasItem = function hasItem(item) {
-    var items = CartService.currentItems;
-    var index = CartService.indexOf(item, items);
+  CartMiniService.hasItem = function hasItem(item) {
+    var items = CartMiniService.currentItems;
+    var index = CartMiniService.indexOf(item, items);
     return index !== -1;
   };
 
-  CartService.setItems = function setItems(items) {
+  CartMiniService.setItems = function setItems(items) {
     if (items) {
       LocalStorageService.set('cartItems', items);
     } else {
       LocalStorageService.delete('cartItems');
     }
 
-    CartService.items$_.next(items);
+    CartMiniService.items$_.next(items);
   };
 
-  CartService.items$ = function items$() {
+  CartMiniService.items$ = function items$() {
     var localItems = LocalStorageService.get('cartItems') || [];
     return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
-      CartService.setItems(items);
-      return CartService.items$_;
+      CartMiniService.setItems(items);
+      return CartMiniService.items$_;
     }));
   };
 
-  CartService.incrementItem$ = function incrementItem$(item) {
+  CartMiniService.incrementItem$ = function incrementItem$(item) {
     return rxjs.of(item).pipe(operators.map(function (item) {
-      var items = CartService.currentItems.slice();
-      var item_ = CartService.find(item, items);
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
 
       if (item_) {
         item_.qty++;
-        CartService.setItems(items);
+        CartMiniService.setItems(items);
         return item_;
       } else {
         return null;
@@ -472,19 +506,19 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }));
   };
 
-  CartService.decrementItem$ = function decrementItem$(item) {
+  CartMiniService.decrementItem$ = function decrementItem$(item) {
     return rxjs.of(item).pipe(operators.switchMap(function (item) {
-      var items = CartService.currentItems.slice();
-      var item_ = CartService.find(item, items);
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
 
       if (item_) {
         item_.qty--;
 
         if (item_.qty > 0) {
-          CartService.setItems(items);
+          CartMiniService.setItems(items);
           return rxjs.of(item_);
         } else {
-          return CartService.removeItem$(item);
+          return CartMiniService.removeItem$(item);
         }
       } else {
         return rxjs.of(null);
@@ -492,29 +526,29 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }));
   };
 
-  CartService.addItem$ = function addItem$(item) {
+  CartMiniService.addItem$ = function addItem$(item) {
     return rxjs.of(Object.assign({
       qty: 1
     }, item)).pipe(operators.map(function (item) {
-      var items = CartService.currentItems.slice();
-      var item_ = CartService.find(item, items);
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
 
       if (item_) {
         item_.qty += item.qty;
-        CartService.setItems(items);
+        CartMiniService.setItems(items);
         return item_;
       } else {
         items.push(item);
-        CartService.setItems(items);
+        CartMiniService.setItems(items);
         return item;
       }
     }));
   };
 
-  CartService.removeItem$ = function removeItem$(item) {
+  CartMiniService.removeItem$ = function removeItem$(item) {
     return rxjs.of(item).pipe(operators.map(function (item) {
-      var items = CartService.currentItems.slice();
-      var index = CartService.indexOf(item, items);
+      var items = CartMiniService.currentItems.slice();
+      var index = CartMiniService.indexOf(item, items);
 
       if (index !== -1) {
         items.splice(index, 1);
@@ -523,7 +557,7 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
           HeaderService.onBack();
         }
 
-        CartService.setItems(items);
+        CartMiniService.setItems(items);
         return item;
       } else {
         return null;
@@ -531,66 +565,71 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }));
   };
 
-  CartService.removeAll$ = function removeAll$() {
+  CartMiniService.removeAll$ = function removeAll$() {
     return rxjs.of([]).pipe(operators.map(function (items) {
       HeaderService.onBack();
-      CartService.setItems(items);
+      CartMiniService.setItems(items);
       return items;
     }));
   };
 
-  CartService.match = function match(item, item_) {
+  CartMiniService.match = function match(item, item_) {
     return item_.id === item.id && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
   };
 
-  CartService.find = function find(item, items) {
+  CartMiniService.find = function find(item, items) {
     return items.find(function (item_) {
-      return CartService.match(item, item_);
+      return CartMiniService.match(item, item_);
     });
   };
 
-  CartService.indexOf = function indexOf(item, items) {
+  CartMiniService.indexOf = function indexOf(item, items) {
     return items.reduce(function (p, item_, i) {
-      return p !== -1 ? p : CartService.match(item, item_) ? i : p;
+      return p !== -1 ? p : CartMiniService.match(item, item_) ? i : p;
     }, -1);
   };
 
-  _createClass(CartService, null, [{
+  _createClass(CartMiniService, null, [{
     key: "currentItems",
     get: function get() {
-      return CartService.items$_.getValue();
+      return CartMiniService.items$_.getValue();
     }
   }, {
     key: "count",
     get: function get() {
-      return CartService.currentItems.length;
+      return CartMiniService.currentItems.length;
     }
   }]);
 
-  return CartService;
+  return CartMiniService;
 }();
 
-_defineProperty(CartService, "items$_", new rxjs.BehaviorSubject([]));var HttpService = /*#__PURE__*/function () {
+_defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var HttpService = /*#__PURE__*/function () {
   function HttpService() {}
 
-  HttpService.http$ = function http$(method, url, data, format, userPass) {
+  HttpService.http$ = function http$(method, url, data, format, userPass, options) {
     var _this = this;
 
     if (userPass === void 0) {
       userPass = null;
     }
 
+    if (options === void 0) {
+      options = {};
+    }
+
     var methods = ['POST', 'PUT', 'PATCH'];
     var response_ = null; // url = this.getUrl(url, format);
 
-    var options = {
+    options = Object.assign({
       method: method,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
+      }
+    }, options, {
       body: methods.indexOf(method) !== -1 ? JSON.stringify(data) : undefined
-    };
+    });
 
     if (userPass) {
       // options.mode = 'no-cors';
@@ -1169,6 +1208,18 @@ var UserService = /*#__PURE__*/function () {
     }));
   };
 
+  UserService.tryFacebook$ = function tryFacebook$(me) {
+    return rxjs.of(null);
+  };
+
+  UserService.tryGoogle$ = function tryGoogle$(me) {
+    return rxjs.of(null);
+  };
+
+  UserService.tryLinkedin$ = function tryLinkedin$(me) {
+    return rxjs.of(null);
+  };
+
   UserService.sessionStorage$ = function sessionStorage$() {
     return rxjs.of(SessionStorageService.get('user') || null);
   };
@@ -1216,7 +1267,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
 
       _this.pushChanges();
     });
-    CartService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+    CartMiniService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       return _this.pushChanges();
     });
   };
@@ -1266,7 +1317,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   _proto.onAddToCart = function onAddToCart(item) {
     var _this2 = this;
 
-    CartService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
+    CartMiniService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
       _this2.pushChanges();
     });
   };
@@ -1300,7 +1351,214 @@ AppComponent.meta = {
 DownloadDirective.meta = {
   selector: '[download]',
   inputs: ['download']
-};var DROPDOWN_ID = 1000000;
+};var LocomotiveScrollService = /*#__PURE__*/function () {
+  function LocomotiveScrollService() {}
+
+  LocomotiveScrollService.scroll = function scroll(_scroll) {
+    // console.log('LocomotiveScrollService.scroll', scroll);
+    this.scroll$.next(_scroll);
+  };
+
+  LocomotiveScrollService.init = function init(node, options) {
+    options = Object.assign({
+      useKeyboard: true,
+      smoothMobile: true,
+      inertia: 0.5,
+      // name:'scroll',
+      // offset: [0,0], // bottom top
+      // repeat: false,
+      smooth: true,
+      // initPosition: { x: 0, y: 0 }
+      // direction: 'vertical',
+      lerp: 0.01,
+      getDirection: true,
+      // add direction to scroll event
+      getSpeed: true,
+      // add speed to scroll event
+      // class: 'is-inview',
+      initClass: 'has-scroll-init',
+      scrollingClass: 'has-scroll-scrolling',
+      draggingClass: 'has-scroll-dragging',
+      smoothClass: 'has-scroll-smooth',
+      scrollbarContainer: false,
+      scrollbarClass: 'c-scrollbar',
+      multiplier: 1,
+      firefoxMultiplier: 50,
+      touchMultiplier: 2,
+      scrollFromAnywhere: true,
+      gestureDirection: 'vertical',
+      reloadOnContextChange: false,
+      resetNativeScroll: true
+    }, options, {
+      el: node
+    });
+
+    if (this.useLocomotiveScroll()) {
+      var instance = new LocomotiveScroll(options);
+      LocomotiveScrollService.instance = instance;
+      return instance;
+    } else {
+      document.querySelector('html').classList.add('has-scroll-init');
+    }
+  };
+
+  LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
+    return window.innerWidth >= 768 && !this.isMacLike();
+  };
+
+  LocomotiveScrollService.isMacLike = function isMacLike() {
+    var isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isMacLike;
+  };
+
+  LocomotiveScrollService.isIOS = function isIOS() {
+    var isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
+    return isIOS;
+  };
+
+  LocomotiveScrollService.isMacOs = function isMacOs() {
+    var isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
+    return isMacOs;
+  };
+
+  LocomotiveScrollService.isSafari = function isSafari() {
+    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
+    return isSafari;
+  };
+
+  LocomotiveScrollService.init$ = function init$(node) {
+    return rxjs.fromEvent(window, 'load').pipe(operators.delay(1), operators.switchMap(function (_) {
+      // setTimeout(() => {
+      var instance = LocomotiveScrollService.init(node);
+
+      if (instance) {
+        var showefy = document.querySelector('#showefy');
+        instance.on('scroll', function (instance) {
+          LocomotiveScrollService.scroll(instance);
+
+          if (showefy) {
+            var isShowefyDisabled = instance.speed > 0.1;
+
+            if (isShowefyDisabled) {
+              if (showefy.style.pointerEvents !== 'none') {
+                showefy.style.pointerEvents = 'none';
+              }
+            } else {
+              if (showefy.style.pointerEvents === 'none') {
+                showefy.style.pointerEvents = 'auto';
+              }
+            }
+          }
+        });
+      } else {
+        var event = {
+          direction: null,
+          scroll: {
+            x: 0,
+            y: 0
+          },
+          speed: 0
+        };
+        var body = document.querySelector('body');
+        var previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+        body.addEventListener('scroll', function () {
+          var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+          var direction = y >= previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+
+          previousY = y;
+          event.direction = direction;
+          event.scroll.y = y;
+          LocomotiveScrollService.scroll(event);
+        }, true);
+      }
+
+      return LocomotiveScrollService.scroll$; // }, 1);
+    }));
+  };
+
+  LocomotiveScrollService.update = function update() {
+    if (this.instance) {
+      this.instance.update();
+    }
+  };
+
+  LocomotiveScrollService.stop = function stop() {
+    if (this.instance) {
+      this.instance.stop();
+    }
+  };
+
+  LocomotiveScrollService.start = function start() {
+    if (this.instance) {
+      this.instance.start();
+    }
+  };
+
+  LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
+    if (options === void 0) {
+      options = {
+        offset: -130
+      };
+    }
+
+    if (this.instance) {
+      this.instance.scrollTo(target, options);
+    } else {
+      var body = document.querySelector('body');
+      var currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+
+      var targetTop = currentTop + target.getBoundingClientRect().top + options.offset;
+      var distance = targetTop - currentTop;
+      var o = {
+        pow: 0
+      };
+      gsap.set(body, {
+        'scroll-behavior': 'auto'
+      });
+
+      if (options.disableLerp) {
+        gsap.set(body, {
+          'scrollTop': currentTop + distance
+        });
+        gsap.set(body, {
+          'scroll-behavior': 'smooth'
+        });
+      } else {
+        gsap.to(o, {
+          duration: Math.abs(distance) / 2000,
+          pow: 1,
+          ease: Quad.easeOut,
+          overwrite: 'all',
+          onUpdate: function onUpdate() {
+            gsap.set(body, {
+              'scrollTop': currentTop + distance * o.pow
+            }); // window.scrollTo(0, currentTop + distance * o.pow);
+          },
+          onComplete: function onComplete() {
+            gsap.set(body, {
+              'scroll-behavior': 'smooth'
+            });
+          }
+        });
+      } // target.scrollIntoView();
+
+    }
+  };
+
+  LocomotiveScrollService.scrollToSelector = function scrollToSelector(selector, options) {
+    var target = document.querySelector(selector);
+
+    if (target) {
+      LocomotiveScrollService.scrollTo(target, options);
+    }
+  };
+
+  return LocomotiveScrollService;
+}();
+
+_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var DROPDOWN_ID = 1000000;
 var DropdownDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(DropdownDirective, _Directive);
 
@@ -1440,12 +1698,54 @@ DropdownDirective.dropdown$ = new rxjs.BehaviorSubject(null);var DropdownItemDir
     DropdownDirective.dropdown$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (id) {
       // console.log('DropdownItemDirective', id, this['dropdown-item']);
       if (_this.id === id) {
-        node.classList.add('dropped');
+        node.classList.add('dropped'); // LocomotiveScrollService.stop();
       } else {
-        node.classList.remove('dropped');
+        node.classList.remove('dropped'); // LocomotiveScrollService.start();
       }
     });
+    this.enter$(node).pipe(operators.takeUntil(this.unsubscribe$)).subscribe();
+    this.leave$(node).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(); // this.addListeners();
   };
+
+  _proto.enter$ = function enter$(node) {
+    // const { node } = getContext(this);
+    return rxjs.fromEvent(node, 'mouseenter').pipe(operators.tap(function (event) {
+      LocomotiveScrollService.stop();
+    }));
+  };
+
+  _proto.leave$ = function leave$(node) {
+    // const { node } = getContext(this);
+    return rxjs.fromEvent(node, 'mouseleave').pipe(operators.tap(function (event) {
+      LocomotiveScrollService.start();
+    }));
+  }
+  /*
+  onDestroy() {
+  	this.removeListeners();
+  }
+  
+  onEnter(event) {
+  	LocomotiveScrollService.stop();
+  }
+  
+  onLeave(event) {
+  	LocomotiveScrollService.start();
+  }
+  
+  addListeners() {
+  	const { node } = getContext(this);
+  	node.addEventListener('mouseenter', this.onEnter);
+  	node.addEventListener('mouseleave', this.onLeave);
+  }
+  
+  removeListeners() {
+  	const { node } = getContext(this);
+  	node.removeEventListener('mouseenter', this.onEnter);
+  	node.removeEventListener('mouseleave', this.onLeave);
+  }
+  */
+  ;
 
   _createClass(DropdownItemDirective, [{
     key: "id",
@@ -1629,203 +1929,103 @@ IdDirective.meta = {
 LabelForDirective.meta = {
   selector: '[labelFor]',
   inputs: ['labelFor']
-};var LocomotiveScrollService = /*#__PURE__*/function () {
-  function LocomotiveScrollService() {}
+};var LocomotiveScrollStickyDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(LocomotiveScrollStickyDirective, _Directive);
 
-  LocomotiveScrollService.scroll = function scroll(_scroll) {
-    // console.log('LocomotiveScrollService.scroll', scroll);
-    this.scroll$.next(_scroll);
-  };
+  function LocomotiveScrollStickyDirective() {
+    var _this;
 
-  LocomotiveScrollService.init = function init(node, options) {
-    options = Object.assign({
-      useKeyboard: true,
-      smoothMobile: true,
-      inertia: 0.5,
-      // name:'scroll',
-      // offset: [0,0], // bottom top
-      // repeat: false,
-      smooth: true,
-      // initPosition: { x: 0, y: 0 }
-      // direction: 'vertical',
-      lerp: 0.01,
-      getDirection: true,
-      // add direction to scroll event
-      getSpeed: true,
-      // add speed to scroll event
-      // class: 'is-inview',
-      initClass: 'has-scroll-init',
-      scrollingClass: 'has-scroll-scrolling',
-      draggingClass: 'has-scroll-dragging',
-      smoothClass: 'has-scroll-smooth',
-      scrollbarContainer: false,
-      scrollbarClass: 'c-scrollbar',
-      multiplier: 1,
-      firefoxMultiplier: 50,
-      touchMultiplier: 2,
-      scrollFromAnywhere: true,
-      gestureDirection: 'vertical',
-      reloadOnContextChange: false,
-      resetNativeScroll: true
-    }, options, {
-      el: node
-    });
-
-    if (this.useLocomotiveScroll()) {
-      var instance = new LocomotiveScroll(options);
-      LocomotiveScrollService.instance = instance;
-      return instance;
-    } else {
-      document.querySelector('html').classList.add('has-scroll-init');
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
+
+    _this = _Directive.call.apply(_Directive, [this].concat(args)) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "sticked_", false);
+
+    return _this;
+  }
+
+  var _proto = LocomotiveScrollStickyDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    this.targetNode = this.target ? node.querySelector(this.target) || node : node;
+    this.until = this.until ? document.querySelector(this.until) : null;
+    this.sticky$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('LocomotiveScrollStickyDirective', event);
+    });
   };
 
-  LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
-    return window.innerWidth >= 768 && !this.isMacLike();
-  };
+  _proto.sticky$ = function sticky$() {
+    var _this2 = this;
 
-  LocomotiveScrollService.isMacLike = function isMacLike() {
-    var isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
-    return isMacLike;
-  };
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
 
-  LocomotiveScrollService.isIOS = function isIOS() {
-    var isIOS = /(iPhone|iPod|iPad)/i.test(navigator.platform);
-    return isIOS;
-  };
+    var targetNode = this.targetNode;
+    var until = this.until;
+    return LocomotiveScrollService.scroll$.pipe(operators.tap(function (event) {
+      var rect = node.getBoundingClientRect();
+      var y = 0;
 
-  LocomotiveScrollService.isMacOs = function isMacOs() {
-    var isMacOs = navigator.platform.toLowerCase().indexOf('mac') >= 0;
-    return isMacOs;
-  };
+      if (_this2.bottom) {
+        var bottom = window.innerHeight - targetNode.offsetHeight;
 
-  LocomotiveScrollService.isSafari = function isSafari() {
-    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
-    return isSafari;
-  };
-
-  LocomotiveScrollService.init$ = function init$(node) {
-    return rxjs.fromEvent(window, 'load').pipe(operators.delay(1), operators.switchMap(function (_) {
-      // setTimeout(() => {
-      var instance = LocomotiveScrollService.init(node);
-
-      if (instance) {
-        var showefy = document.querySelector('#showefy');
-        instance.on('scroll', function (instance) {
-          LocomotiveScrollService.scroll(instance);
-
-          if (showefy) {
-            var isShowefyDisabled = instance.speed > 0.1;
-
-            if (isShowefyDisabled) {
-              if (showefy.style.pointerEvents !== 'none') {
-                showefy.style.pointerEvents = 'none';
-              }
-            } else {
-              if (showefy.style.pointerEvents === 'none') {
-                showefy.style.pointerEvents = 'auto';
-              }
-            }
-          }
-        });
+        if (window.innerWidth >= 1024 && rect.y > bottom) {
+          y = bottom - rect.y;
+          _this2.sticked = true;
+        } else {
+          _this2.sticked = false;
+        }
       } else {
-        var event = {
-          direction: null,
-          scroll: {
-            x: 0,
-            y: 0
-          },
-          speed: 0
-        };
-        var body = document.querySelector('body');
-        var previousY = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+        var top = event.direction === 'down' ? 80 : 135;
 
-        body.addEventListener('scroll', function () {
-          var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
+        if (window.innerWidth >= 1024 && rect.y < top) {
+          y = top - rect.y;
 
-          var direction = y >= previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+          if (until) {
+            var untilRect = until.getBoundingClientRect();
+            var height = untilRect.y - rect.y;
+            y = Math.min(height, y);
+          }
 
-          previousY = y;
-          event.direction = direction;
-          event.scroll.y = y;
-          LocomotiveScrollService.scroll(event);
-        }, true);
-      }
+          _this2.sticked = true;
+        } else {
+          _this2.sticked = false;
+        }
+      } // console.log(rect.height - targetNode.offsetHeight);
 
-      return LocomotiveScrollService.scroll$; // }, 1);
+
+      gsap.set(targetNode, {
+        y: y
+      });
     }));
   };
 
-  LocomotiveScrollService.update = function update() {
-    if (this.instance) {
-      this.instance.update();
-    }
-  };
+  _createClass(LocomotiveScrollStickyDirective, [{
+    key: "sticked",
+    get: function get() {
+      return this.sticked_;
+    },
+    set: function set(sticked) {
+      if (this.sticked_ !== sticked) {
+        this.sticked_ = sticked;
 
-  LocomotiveScrollService.stop = function stop() {
-    if (this.instance) {
-      this.instance.stop();
-    }
-  };
-
-  LocomotiveScrollService.start = function start() {
-    if (this.instance) {
-      this.instance.start();
-    }
-  };
-
-  LocomotiveScrollService.scrollTo = function scrollTo(target, options) {
-    if (options === void 0) {
-      options = {
-        offset: -130
-      };
-    }
-
-    if (this.instance) {
-      this.instance.scrollTo(target, options);
-    } else {
-      var body = document.querySelector('body');
-      var currentTop = body.scrollTop; // window.pageYOffset; // body.scrollTop;
-
-      var targetTop = currentTop + target.getBoundingClientRect().top + options.offset;
-      var distance = targetTop - currentTop;
-      var o = {
-        pow: 0
-      };
-      gsap.set(body, {
-        'scroll-behavior': 'auto'
-      });
-      gsap.to(o, {
-        duration: Math.abs(distance) / 2000,
-        pow: 1,
-        ease: Quad.easeOut,
-        overwrite: 'all',
-        onUpdate: function onUpdate() {
-          gsap.set(body, {
-            'scrollTop': currentTop + distance * o.pow
-          }); // window.scrollTo(0, currentTop + distance * o.pow);
-        },
-        onComplete: function onComplete() {
-          gsap.set(body, {
-            'scroll-behavior': 'smooth'
-          });
+        if (this.targetNode) {
+          sticked ? this.targetNode.classList.add('sticked') : this.targetNode.classList.remove('sticked');
         }
-      }); // target.scrollIntoView();
+      }
     }
-  };
+  }]);
 
-  LocomotiveScrollService.scrollToSelector = function scrollToSelector(selector, options) {
-    var target = document.querySelector(selector);
-
-    if (target) {
-      LocomotiveScrollService.scrollTo(target, options);
-    }
-  };
-
-  return LocomotiveScrollService;
-}();
-
-_defineProperty(LocomotiveScrollService, "scroll$", new rxjs.ReplaySubject(1));var LocomotiveScrollToDirective = /*#__PURE__*/function (_Directive) {
+  return LocomotiveScrollStickyDirective;
+}(rxcomp.Directive);
+LocomotiveScrollStickyDirective.meta = {
+  selector: '[locomotive-scroll-sticky],[[locomotive-scroll-sticky]]',
+  inputs: ['target', 'until', 'bottom']
+};var LocomotiveScrollToDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(LocomotiveScrollToDirective, _Directive);
 
   function LocomotiveScrollToDirective() {
@@ -2744,7 +2944,7 @@ TitleDirective.meta = {
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
-LocomotiveScrollDirective, LocomotiveScrollToDirective, // ModalComponent,
+LocomotiveScrollDirective, LocomotiveScrollStickyDirective, LocomotiveScrollToDirective, // ModalComponent,
 ModalOutletComponent, ScrollDirective, ShareDirective, SvgIconStructure, SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];
@@ -2808,7 +3008,7 @@ ControlCheckboxComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input type=\"checkbox\" class=\"control--checkbox\" [id]=\"control.name\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input [id]=\"control.name\" type=\"checkbox\" class=\"control--checkbox\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var KeyboardService = /*#__PURE__*/function () {
   function KeyboardService() {}
 
@@ -3032,7 +3232,7 @@ ControlCustomSelectComponent.meta = {
   inputs: ['control', 'label', 'multiple', 'select'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--select\" [class]=\"{ required: control.validators.length, multiple: isMultiple }\" [dropdown]=\"dropdownId\" (dropped)=\"onDropped($event)\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--custom-select\" [innerHTML]=\"getLabel() | label\"></span>\n\t\t\t<svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [dropdown-item]=\"dropdownId\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\" [class]=\"{ multiple: isMultiple }\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of control.options\">\n\t\t\t\t\t<span [class]=\"{ active: hasOption(item) }\" [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
+  "\n\t\t<div class=\"group--form--select\" [class]=\"{ required: control.validators.length, multiple: isMultiple }\" [dropdown]=\"dropdownId\" (dropped)=\"onDropped($event)\">\n\t\t\t<label><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<span class=\"control--custom-select\" [innerHTML]=\"getLabel() | label\"></span>\n\t\t\t<svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [dropdown-item]=\"dropdownId\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\" [class]=\"{ multiple: isMultiple }\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of control.options\">\n\t\t\t\t\t<span [class]=\"{ active: hasOption(item) }\" [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
 };var ControlEmailComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlEmailComponent, _ControlComponent);
 
@@ -3053,7 +3253,7 @@ ControlEmailComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"control.name\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlFileComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlFileComponent, _ControlComponent);
 
@@ -3102,7 +3302,7 @@ ControlFileComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--file\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label for=\"file\" [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"control--text\" [innerHTML]=\"file?.name || labels.select_file\"></span>\n\t\t\t<svg class=\"upload\"><use xlink:href=\"#upload\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input name=\"file\" type=\"file\" accept=\".pdf,.doc,.docx,*.txt\" class=\"control--file\" (change)=\"onInputDidChange($event)\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--file\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label for=\"file\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<span class=\"control--text\" [innerHTML]=\"file?.name || labels.select_file\"></span>\n\t\t\t<svg class=\"upload\"><use xlink:href=\"#upload\"></use></svg>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input name=\"file\" type=\"file\" accept=\".pdf,.doc,.docx,*.txt\" class=\"control--file\" (change)=\"onInputDidChange($event)\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlPasswordComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlPasswordComponent, _ControlComponent);
 
@@ -3123,7 +3323,7 @@ ControlPasswordComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<input type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"control.name\" type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlSearchComponent, _ControlComponent);
 
@@ -3167,7 +3367,7 @@ ControlTextComponent.meta = {
   inputs: ['control', 'label', 'disabled'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input [id]=\"control.name\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlTextareaComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlTextareaComponent, _ControlComponent);
 
@@ -3189,7 +3389,7 @@ ControlTextareaComponent.meta = {
   inputs: ['control', 'label', 'disabled'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [innerHTML]=\"label\"></label>\n\t\t\t<textarea class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<textarea [id]=\"control.name\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ErrorsComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ErrorsComponent, _ControlComponent);
 
@@ -3548,6 +3748,16 @@ var FilterItem = /*#__PURE__*/function () {
 }();var FormService = /*#__PURE__*/function () {
   function FormService() {}
 
+  FormService.toOptions = function toOptions(options) {
+    options = options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label
+      };
+    });
+    return options;
+  };
+
   FormService.toSelectOptions = function toSelectOptions(options) {
     options = options.slice().map(function (x) {
       return {
@@ -3742,7 +3952,7 @@ AmbienceComponent.meta = {
 
   AteliersAndStoresService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/ateliers-and-stores/all.json');
+      return ApiService.get$('/ateliers-and-stores/all');
     } else {
       return ApiService.get$('/ateliers-and-stores/all.json');
     }
@@ -3766,7 +3976,7 @@ AmbienceComponent.meta = {
 
   AteliersAndStoresService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/ateliers-and-stores/filters.json');
+      return ApiService.get$('/ateliers-and-stores/filters');
     } else {
       return ApiService.get$('/ateliers-and-stores/filters.json');
     }
@@ -3907,6 +4117,41 @@ AmbienceComponent.meta = {
 }(rxcomp.Component);
 AteliersAndStoresComponent.meta = {
   selector: '[ateliers-and-stores]'
+};var CareersModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(CareersModalComponent, _Component);
+
+  function CareersModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = CareersModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.position = data.position; // console.log('CareersModalComponent.onInit', data);
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return CareersModalComponent;
+}(rxcomp.Component);
+CareersModalComponent.meta = {
+  selector: '[careers-modal]'
 };function push_(event) {
   var dataLayer = window.dataLayer || [];
   dataLayer.push(event);
@@ -3921,7 +4166,24 @@ var GtmService = /*#__PURE__*/function () {
   };
 
   return GtmService;
-}();var CareersService = /*#__PURE__*/function () {
+}();function RequiredIfValidator(fieldName, formGroup, shouldBe) {
+  return new rxcompForm.FormValidator(function (value) {
+    var field = null;
+
+    if (typeof formGroup === 'function') {
+      field = formGroup().get(fieldName);
+    } else if (formGroup) {
+      field = formGroup.get(fieldName);
+    }
+
+    return !value && field && (shouldBe != null ? field.value === shouldBe : field.value != null) ? {
+      required: {
+        value: value,
+        requiredIf: fieldName
+      }
+    } : null;
+  });
+}var CareersService = /*#__PURE__*/function () {
   function CareersService() {}
 
   CareersService.data$ = function data$() {
@@ -3929,6 +4191,14 @@ var GtmService = /*#__PURE__*/function () {
       return ApiService.get$('/careers/data.json');
     } else {
       return ApiService.get$('/careers/data.json');
+    }
+  };
+
+  CareersService.positions$ = function positions$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/careers/positions.json');
+    } else {
+      return ApiService.get$('/careers/positions.json');
     }
   };
 
@@ -3956,15 +4226,19 @@ var GtmService = /*#__PURE__*/function () {
 
     this.error = null;
     this.success = false;
+    this.positions = [];
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
+      // required if country === 114, Italy
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       domain: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       cv: new rxcompForm.FormControl(null),
+      presentationLetter: new rxcompForm.FormControl(null),
       message: new rxcompForm.FormControl(null),
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       checkRequest: window.antiforgery,
@@ -3982,10 +4256,14 @@ var GtmService = /*#__PURE__*/function () {
   _proto.load$ = function load$() {
     var _this2 = this;
 
-    return CareersService.data$().pipe(operators.tap(function (data) {
+    return rxjs.combineLatest([CareersService.data$(), CareersService.positions$()]).pipe(operators.tap(function (results) {
+      var data = results[0];
       var controls = _this2.controls;
       controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.region.options = FormService.toSelectOptions(data.region.options);
       controls.domain.options = FormService.toSelectOptions(data.domain.options);
+      var positions = results[1];
+      _this2.positions = positions;
 
       _this2.pushChanges();
     }));
@@ -3995,6 +4273,7 @@ var GtmService = /*#__PURE__*/function () {
     var form = this.form;
     var controls = this.controls;
     var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var region = controls.region.options.length > 1 ? controls.region.options[1].id : null;
     var domain = controls.domain.options.length > 1 ? controls.domain.options[1].id : null;
     form.patch({
       firstName: 'Jhon',
@@ -4002,6 +4281,7 @@ var GtmService = /*#__PURE__*/function () {
       email: 'jhonappleseed@gmail.com',
       telephone: '0721 411112',
       country: country,
+      region: region,
       city: 'Pesaro',
       domain: domain,
       message: 'Hi!',
@@ -4045,10 +4325,1332 @@ var GtmService = /*#__PURE__*/function () {
     }
   };
 
+  _proto.onOpenPosition = function onOpenPosition(position) {
+    ModalService.open$({
+      src: environment.template.modal.careersModal,
+      data: {
+        position: position
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('CareersComponent.onOpenPosition', event);
+    });
+  };
+
+  _proto.onClose = function onClose() {
+    this.close.next(this.form.value);
+  };
+
   return CareersComponent;
 }(rxcomp.Component);
 CareersComponent.meta = {
-  selector: '[careers]'
+  selector: '[careers]',
+  outputs: ['close'],
+  inputs: ['isModal', 'position']
+};var OnceService = /*#__PURE__*/function () {
+  function OnceService() {}
+
+  OnceService.script = function script(url, callback) {
+    if (this.paths.indexOf(url) === -1) {
+      this.paths.push(url);
+      var callbackName;
+
+      if (callback === true) {
+        callbackName = 'OnceCallback' + ++this.uid;
+        url = url.split('{{callback}}').join(callbackName);
+      } else {
+        callbackName = callback;
+      }
+
+      var callback$;
+      var element = document.createElement('script');
+      element.type = 'text/javascript';
+
+      if (callback) {
+        callback$ = rxjs.from(new Promise(function (resolve, reject) {
+          window[callbackName] = function (data) {
+            resolve(data);
+          };
+        }));
+      } else {
+        element.async = true;
+        callback$ = rxjs.fromEvent(element, 'load').pipe(operators.map(function (x) {
+          return x;
+        }));
+      }
+
+      var scripts = document.getElementsByTagName('script');
+
+      if (scripts.length) {
+        var script = scripts[scripts.length - 1];
+        script.parentNode.insertBefore(element, script.nextSibling);
+      }
+
+      return rxjs.of(true).pipe(operators.switchMap(function (x) {
+        element.src = url;
+        return callback$;
+      }));
+    } else {
+      return rxjs.of(new Event('loaded!'));
+    }
+  };
+
+  return OnceService;
+}();
+
+_defineProperty(OnceService, "uid", 0);
+
+_defineProperty(OnceService, "paths", []);var FacebookService = /*#__PURE__*/function () {
+  function FacebookService() {}
+
+  FacebookService.facebook$ = function facebook$() {
+    var _this = this;
+
+    if (window.location.protocol.indexOf('https') !== -1) {
+      if (this.facebook_) {
+        return rxjs.of(this.facebook_);
+      } else {
+        return OnceService.script('//connect.facebook.net/' + environment.currentLanguage + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(function (x) {
+          var facebook = window['FB'];
+          facebook.init({
+            appId: environment.facebook.appId,
+            // status: true,
+            cookie: true,
+            xfbml: true,
+            version: environment.facebook.version
+          });
+          facebook.AppEvents.logPageView();
+          _this.facebook_ = facebook;
+          return rxjs.of(facebook);
+        }));
+      }
+    } else {
+      return rxjs.of(null);
+    }
+  };
+
+  FacebookService.status$ = function status$() {
+    var _this2 = this;
+
+    return this.facebook$().pipe(operators.filter(function (facebook) {
+      return facebook !== null;
+    }), operators.concatMap(function (facebook) {
+      return rxjs.from(new Promise(function (resolve, reject) {
+        facebook.getLoginStatus(function (response) {
+          _this2.authResponse_ = null;
+
+          if (response.status === 'connected') {
+            _this2.authResponse_ = response.authResponse;
+            LocalStorageService.set('facebook', response.authResponse);
+            resolve(response);
+          } else if (response.status === 'not_authorized') {
+            LocalStorageService.delete('facebook');
+            reject(response);
+          } else {
+            reject(response);
+          }
+        }, {
+          scope: environment.facebook.scope
+        });
+      }));
+    }));
+  };
+
+  FacebookService.login$ = function login$() {
+    var _this3 = this;
+
+    return this.facebook$().pipe(operators.filter(function (facebook) {
+      return facebook !== null;
+    }), operators.concatMap(function (facebook) {
+      return rxjs.from(new Promise(function (resolve, reject) {
+        facebook.login(function (response) {
+          _this3.authResponse_ = null;
+
+          if (response.status === 'connected') {
+            _this3.authResponse_ = response.authResponse;
+            LocalStorageService.set('facebook', response.authResponse);
+            resolve(response);
+          } else if (response.status === 'not_authorized') {
+            LocalStorageService.delete('facebook');
+            reject(response);
+          } else {
+            reject(response);
+          }
+        }, {
+          scope: environment.facebook.scope
+        });
+      }));
+    }));
+  };
+
+  FacebookService.logout$ = function logout$() {
+    var _this4 = this;
+
+    return this.status$().pipe(operators.catchError(function (error) {
+      LocalStorageService.delete('facebook');
+      return rxjs.of(null);
+    }), operators.switchMap(function (_) {
+      return rxjs.from(new Promise(function (resolve, reject) {
+        _this4.facebook_.logout(function (response) {
+          resolve(response);
+          LocalStorageService.delete('facebook');
+        });
+      }));
+    }));
+  };
+
+  FacebookService.me$ = function me$(fields) {
+    var _this5 = this;
+
+    return this.status$().pipe(operators.catchError(function (error) {
+      return _this5.login$();
+    }), operators.concatMap(function (l) {
+      return rxjs.from(new Promise(function (resolve, reject) {
+        fields = fields || environment.facebook.fields;
+
+        _this5.facebook_.api('/me', {
+          fields: fields,
+          accessToken: environment.facebook.tokenClient
+        }, function (response) {
+          if (!response || response.error) {
+            var error = response ? response.error : 'error';
+            console.log('FacebookService.getMe.error', error);
+            reject(response.error);
+          } else {
+            var user = response;
+            user.authResponse = _this5.authResponse_;
+            user.facebookToken = _this5.authResponse_.accessToken;
+            resolve(user);
+          }
+        });
+      }));
+    }));
+  };
+
+  return FacebookService;
+}();
+
+_defineProperty(FacebookService, "facebook_", null);
+
+_defineProperty(FacebookService, "authResponse_", null);/*
+export class GoogleConfig {
+	public clientId: string;
+	public cookiepolicy?: string = 'single_host_origin';
+	public scope?: string = 'profile email';
+	public fetch_basic_profile?: boolean = true;
+	public ux_mode?: string = 'popup';
+}
+
+export class GoogleAuthResponse {
+	token_type: string;
+	access_token: string;
+	scope: string;
+	login_hint: string;
+	expires_in: number;
+	expires_at: number;
+	first_issued_at: number;
+	id_token: string;
+	idpId: string;
+	signedRequest: string;
+	userID: string;
+}
+
+export class GoogleUser {
+	email: string;
+	firstName: string;
+	id: string;
+	lastName: string;
+	name: string;
+	picture: string;
+	authResponse?: GoogleAuthResponse;
+	googleToken?: string;
+}
+*/
+
+var GoogleService = /*#__PURE__*/function () {
+  function GoogleService() {}
+
+  GoogleService.init = function init() {
+    /*
+    if (!environment['plugins'] && !environment['plugins']['google']) {
+    	throw new Error('GoogleService.error missing config object in environment.plugins.google');
+    }
+    */
+    this.authResponse = LocalStorageService.get('google'); // console.log('GoogleService.authResponse', this.authResponse);
+  }
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *  call GoogleService.google on component OnInit to avoid popup blockers via asyncronous loading *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  ;
+
+  GoogleService.google$ = function google$() {
+    var _this = this;
+
+    return new rxjs.Observable().pipe(function (x) {
+      if (_this.gapi) {
+        return rxjs.of(_this.gapi);
+      } else {
+        return _this.once$();
+      }
+    });
+  };
+
+  GoogleService.once$ = function once$() {
+    var _this2 = this;
+
+    return OnceService.script('//apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(function (x) {
+      _this2.gapi = window['gapi'];
+      return rxjs.of(_this2.gapi);
+    }));
+  };
+
+  GoogleService.me$ = function me$() {
+    var _this3 = this;
+
+    return this.login$().pipe(operators.concatMap(function (x) {
+      var profile = _this3.instance.currentUser.get().getBasicProfile();
+
+      var user = {
+        id: profile.getId(),
+        name: profile.getName(),
+        firstName: profile.getGivenName(),
+        lastName: profile.getFamilyName(),
+        picture: profile.getImageUrl(),
+        email: profile.getEmail(),
+        authResponse: _this3.authResponse,
+        googleToken: _this3.authResponse.access_token
+      };
+      return rxjs.of(user);
+    }));
+  };
+
+  GoogleService.login$ = function login$() {
+    var _this4 = this;
+
+    return this.auth2Instance$().pipe(operators.concatMap(function (x) {
+      return _this4.signin$();
+    }));
+  };
+
+  GoogleService.logout$ = function logout$() {
+    var _this5 = this;
+
+    return this.auth2Instance$().pipe(operators.concatMap(function (x) {
+      return rxjs.from(new Promise(function (resolve, reject) {
+        if (_this5.instance.isSignedIn && _this5.instance.isSignedIn.get()) {
+          _this5.instance.signOut().then(function (signed) {
+            resolve();
+          }, reject);
+        } else {
+          resolve();
+        }
+      }));
+    }));
+  };
+
+  GoogleService.getAuth2$ = function getAuth2$() {
+    var _this6 = this;
+
+    return new rxjs.Observable().pipe(function (x) {
+      if (_this6.auth2) {
+        return rxjs.of(_this6.auth2);
+      } else {
+        return _this6.google$().pipe(operators.concatMap(function (x) {
+          if (_this6.gapi.auth2) {
+            return _this6.auth2init$();
+          } else {
+            return rxjs.from(new Promise(function (resolve, reject) {
+              _this6.gapi.load('auth2', function () {
+                setTimeout(function () {
+                  resolve();
+                }, 200);
+              }, reject);
+            })).pipe(operators.concatMap(function (x) {
+              return _this6.auth2init$();
+            }));
+          }
+        }));
+      }
+    });
+  };
+
+  GoogleService.signin$ = function signin$() {
+    var _this7 = this;
+
+    return rxjs.from(new Promise(function (resolve, reject) {
+      var readAccessToken = function readAccessToken() {
+        // console.log('GoogleLogin.readAccessToken');
+        try {
+          var user = _this7.instance.currentUser.get().getAuthResponse(true); // console.log('GoogleLogin.readAccessToken.success', user);
+
+
+          _this7.authResponse = user;
+          LocalStorageService.set('google', user);
+          resolve({
+            code: user.access_token
+          });
+        } catch (error) {
+          console.log('GoogleLogin.readAccessToken.error', error);
+          LocalStorageService.delete('google');
+          reject(error);
+        }
+      };
+
+      if (_this7.instance.isSignedIn && _this7.instance.isSignedIn.get()) {
+        readAccessToken();
+      } else {
+        _this7.instance.signIn({
+          scope: 'profile email'
+        }).then(function (signed) {
+          readAccessToken();
+        }, function (error) {
+          LocalStorageService.delete('google');
+          reject(error);
+        });
+      }
+    }));
+  };
+
+  GoogleService.auth2init$ = function auth2init$() {
+    var _this8 = this;
+
+    return rxjs.from(new Promise(function (resolve, reject) {
+      _this8.gapi.auth2.init({
+        client_id: environment.google.clientId,
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email',
+        fetch_basic_profile: true,
+        ux_mode: 'popup'
+      }).then(function () {
+        _this8.auth2 = _this8.gapi.auth2; // console.log('Auth2Init.success', this.auth2);
+
+        resolve(_this8.auth2);
+      }, reject);
+    }));
+  };
+
+  GoogleService.auth2Instance$ = function auth2Instance$() {
+    var _this9 = this;
+
+    if (this.instance) {
+      return rxjs.of(this.instance);
+    } else {
+      return this.getAuth2$().pipe(operators.concatMap(function (x) {
+        _this9.instance = _this9.auth2.getAuthInstance();
+        return rxjs.of(_this9.instance);
+      }));
+    }
+  };
+
+  return GoogleService;
+}();
+
+_defineProperty(GoogleService, "authResponse", void 0);
+
+_defineProperty(GoogleService, "storage", void 0);
+
+_defineProperty(GoogleService, "gapi", void 0);
+
+_defineProperty(GoogleService, "auth2", void 0);
+
+_defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PURE__*/function () {
+  function LinkedinService() {}
+
+  LinkedinService.getAccessToken$ = function getAccessToken$(code) {
+    var data = {
+      grant_type: 'authorization_code',
+      code: code,
+      client_id: environment.linkedIn.clientId,
+      client_secret: environment.linkedIn.clientSecret,
+      redirect_uri: window.location.origin + "/giorgetti/cart.html"
+    };
+
+    if (environment.flags.production) {
+      return ApiService.post$('/user/linkedin', data);
+    } else {
+      return ApiService.get$('/user/linkedin.json');
+    }
+  };
+
+  LinkedinService.linkedin$ = function linkedin$() {
+    var _this = this;
+
+    var event$ = new rxjs.Subject();
+    var key = 'linkedin';
+    var state = key + "-" + new Date().getTime();
+
+    window.onSocialCallback = function (social, params) {
+      if (social === 'linkedin' && params.state === state) {
+        console.log('onSocialCallback', params.code);
+        event$.next(params.code);
+      }
+    };
+
+    var width = 375 * 2;
+    var height = 667;
+    window.open("https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=" + environment.linkedIn.clientId + "&redirect_uri=" + window.location.origin + "/giorgetti/cart.html&state=" + state + "&scope=" + environment.linkedIn.scope, key, "top=" + Math.floor((window.innerHeight - height) / 2) + ", left=" + Math.floor((window.innerWidth - width) / 2) + ", width=" + width + ", height=" + height + ", status=no, menubar=no, toolbar=no scrollbars=no"); // https://localhost:48481/giorgetti/cart.html?code=AQRqT4xWst4rcKM_sarxRTHP7PJ_eUbiQP30KZuyjGgSuoNQjZzJtSIu6laX6o-R-hy9obrIhzRKA3EshZfkIgo-ErIEahuyyAkY7Lg5PRFCEDdJxiy-cKyz8O9Vl6wVs2hoO_m7QvhLB22YfL_qqtToWqEUvWLwWqVTzRgEbu_U2AWDltOP_mSVNLge3Qc_uRV6VZDPeQqPcY2ICgo&state=foobar
+
+    return event$.pipe(operators.switchMap(function (code) {
+      return _this.getAccessToken$(code);
+    }), operators.tap(function (accessToken) {
+      LocalStorageService.set('linkedin', accessToken);
+    }));
+  };
+
+  return LinkedinService;
+}();var CartSteps = {
+  Items: 1,
+  Data: 2,
+  Delivery: 3,
+  Recap: 4,
+  Payment: 5,
+  Complete: 6,
+  Error: -1
+};
+/*
+export class Cart {
+	constructor() {
+		this.step = CartSteps.Items; // number
+		this.items = []; // CartItem[]
+		this.shipmentCountry = null; // number
+		this.user = null; // User
+		this.guest = null; // boolean
+		this.data = {
+			firstName: null, // string
+			lastName: null, // string
+			email: null, // string
+			telephone: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // number
+			message: null, // string
+			invoice: null, // boolean
+			invoiceData: {
+				taxNumber: null, // string
+				sdi: null, // string
+				pec: null, // string
+			},
+			billing: null, // boolean
+			billingData: {
+				company: null, // string
+				firstName: null, // string
+				lastName: null, // string
+				telephone: null, // string
+				address: null, // string
+				zipCode: null, // string
+				city: null, // string
+				province: null, // string
+				country: null, // number
+			},
+			conditions: false, // boolean
+			privacy: false, // boolean
+			terms: false, // boolean
+		};
+		this.deliveryData = null; // {
+			firstName: null, // string
+			lastName: null, // string
+			email: null, // string
+			telephone: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // { id: number, name: string }
+		}
+		this.billingData = null; // {
+			firstName: null, // string
+			lastName: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // { id: number, name: string }
+		}
+		this.deliveryType = null; // number
+		this.delivery = null; // { id: number, name: string }
+		this.discountCode = null; // string
+		this.discount = null; // { code: string, price: number }
+		this.paymentMethod = null; // number
+		this.store = null; // Store
+	}
+}
+*/
+
+var CartService = /*#__PURE__*/function () {
+  function CartService() {}
+
+  CartService.setCart = function setCart(cart) {
+    if (cart) {
+      LocalStorageService.set('cart', cart);
+    } else {
+      LocalStorageService.delete('cart');
+    }
+
+    CartService.cart$_.next(cart);
+  };
+
+  CartService.cart$ = function cart$() {
+    var localCart = LocalStorageService.get('cart') || null;
+    return rxjs.of(localCart).pipe(operators.switchMap(function (cart) {
+      CartService.setCart(cart);
+      return CartService.cart$_;
+    }));
+  };
+
+  CartService.clear$ = function clear$() {
+    return rxjs.of(null).pipe(operators.map(function (cart) {
+      CartMiniService.setItems([]);
+      CartService.setCart(cart);
+      return cart;
+    }));
+  };
+
+  CartService.data$ = function data$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/data.json');
+    } else {
+      return ApiService.get$('/cart/data.json');
+    }
+  };
+
+  CartService.getStore$ = function getStore$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/store.json');
+    } else {
+      return ApiService.get$('/cart/store.json');
+    }
+  };
+
+  CartService.getStores$ = function getStores$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/stores.json');
+    } else {
+      return ApiService.get$('/cart/stores.json');
+    }
+  };
+
+  CartService.getDiscount$ = function getDiscount$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/discount.json');
+    } else {
+      return ApiService.get$('/cart/discount.json');
+    }
+  };
+
+  _createClass(CartService, null, [{
+    key: "currentCart",
+    get: function get() {
+      return CartService.cart$_.getValue();
+    }
+  }]);
+
+  return CartService;
+}();
+
+_defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(CartComponent, _Component);
+
+  function CartComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = CartComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.detectSocialLogin();
+    this.socialBusy = false;
+    this.form = null;
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this = this;
+
+    return rxjs.combineLatest([CartService.data$()]).pipe(operators.tap(function (results) {
+      var data = results[0];
+
+      _this.initWithData(data);
+    }));
+  };
+
+  _proto.initWithData = function initWithData(data) {
+    var _this2 = this;
+
+    this.steps = CartSteps;
+    this.step = CartSteps.Items;
+    this.errorPayment = null;
+    this.errorDiscount = null;
+    this.success = false;
+    this.items = [];
+    CartMiniService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
+      _this2.items = items;
+
+      _this2.pushChanges();
+    });
+    this.user = null;
+    this.guest = null;
+    this.deliveryData = null;
+    this.billingData = null;
+    this.delivery = null;
+    this.discount = null;
+    this.paymentMethod = null;
+    var form = this.form = new rxcompForm.FormGroup({
+      step: this.step,
+      items: null,
+      shipmentCountry: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      user: null,
+      guest: null,
+      data: new rxcompForm.FormGroup({
+        firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+        telephone: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        address: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        zipCode: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        province: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        message: null,
+        invoice: null,
+        invoiceData: new rxcompForm.FormGroup({
+          taxNumber: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
+          sdi: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
+          pec: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)])
+        }),
+        billing: null,
+        billingData: new rxcompForm.FormGroup({
+          company: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          firstName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          lastName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          telephone: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          address: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          zipCode: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          city: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          province: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+          country: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)])
+        }),
+        conditions: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+        privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+        terms: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()])
+      }),
+      deliveryData: null,
+      billingData: null,
+      deliveryType: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      delivery: null,
+      discountCode: null,
+      discount: null,
+      paymentMethod: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      stores: null,
+      store: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+
+    function getDataGroup() {
+      // console.log(form.controls.data);
+      return form.controls.data;
+    }
+
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('form', form.value);
+      _this2.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    /*
+    UserService.me$().pipe(
+    	takeUntil(this.unsubscribe$),
+    ).subscribe(user => this.onUser(user));
+    */
+
+    controls.shipmentCountry.options = FormService.toSelectOptions(data.shipmentCountry.options);
+    controls.data.controls.country.options = FormService.toSelectOptions(data.country.options);
+    controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(data.country.options);
+    controls.deliveryType.options = data.deliveryType.options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label,
+        abstract: x.abstract,
+        description: x.description,
+        price: x.price,
+        fullPrice: x.fullPrice
+      };
+    });
+    controls.paymentMethod.options = data.paymentMethod.options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label,
+        description: x.description,
+        info: x.info,
+        icons: x.icons
+      };
+    });
+    this.form.patch({
+      shipmentCountry: controls.shipmentCountry.options[1].id,
+      deliveryType: controls.deliveryType.options[0].id,
+      paymentMethod: controls.paymentMethod.options[0].id
+    }, true);
+    this.pushChanges();
+    CartService.cart$().pipe(operators.first()).subscribe(function (cart) {
+      if (cart) {
+        _this2.step = cart.step;
+        _this2.guest = cart.guest;
+        _this2.deliveryData = cart.deliveryData;
+        _this2.billingData = cart.billingData;
+        _this2.delivery = cart.delivery;
+        _this2.discount = cart.discount;
+        _this2.paymentMethod = cart.paymentMethod;
+
+        if (cart.stores) {
+          controls.store.options = cart.stores.slice().map(function (x) {
+            return {
+              id: x.id,
+              name: x.name,
+              address: x.address,
+              city: x.city,
+              country: x.country,
+              distance: x.distance
+            };
+          });
+        }
+      }
+
+      _this2.onPatch(cart, true);
+    });
+  };
+
+  _proto.touchForm = function touchForm() {
+    this.form.touched = true;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var firstInvalidInput = Array.prototype.slice.call(node.querySelectorAll('.invalid')).find(function (x) {
+      return x.hasAttribute('[control]');
+    });
+
+    if (firstInvalidInput) {
+      LocomotiveScrollService.scrollTo(firstInvalidInput, {
+        offset: -180,
+        duration: 0,
+        disableLerp: true
+      });
+    }
+  };
+
+  _proto.onBack = function onBack() {
+    this.step--;
+    var patch = null;
+
+    if (this.step === CartSteps.Items) {
+      this.user = null;
+      this.guest = false;
+      patch = {
+        user: null,
+        guest: false
+      };
+    }
+
+    this.onPatch(patch);
+  };
+
+  _proto.onNext = function onNext(patch) {
+    this.step++;
+    this.onPatch(patch);
+  };
+
+  _proto.onPatch = function onPatch(patch, skipUpdate) {
+    if (patch === void 0) {
+      patch = {};
+    }
+
+    this.form.patch(Object.assign({}, patch, {
+      step: this.step
+    }));
+    this.pushChanges();
+    LocomotiveScrollService.update();
+    var target = document.querySelector('.section--breadcrumb');
+    LocomotiveScrollService.scrollTo(target, {
+      offset: -130,
+      duration: 0,
+      disableLerp: true
+    });
+
+    if (!skipUpdate) {
+      CartService.setCart(this.form.value);
+    }
+  } // 1. CartSteps.Items
+  ;
+
+  _proto.onItems = function onItems(_) {
+    var _this3 = this;
+
+    UserService.me$().pipe(operators.first()).subscribe(function (user) {
+      _this3.onUser(user);
+
+      _this3.onNext({
+        items: _this3.items
+      });
+    });
+    /*
+    this.onNext({
+    	items: this.items,
+    });
+    */
+  };
+
+  _proto.onIncrement = function onIncrement(item) {
+    CartMiniService.incrementItem$(item).pipe(operators.first()).subscribe();
+  };
+
+  _proto.onDecrement = function onDecrement(item) {
+    CartMiniService.decrementItem$(item).pipe(operators.first()).subscribe();
+  };
+
+  _proto.onRemove = function onRemove(item) {
+    CartMiniService.removeItem$(item).pipe(operators.first()).subscribe();
+  };
+
+  _proto.onEdit = function onEdit(item) {
+    // console.log('CartComponent.onEdit', item);
+    window.location.href = environment.slug.configureProduct + "?codprod=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+  } // 2. CartSteps.Data
+  ;
+
+  _proto.onModalSignIn = function onModalSignIn() {
+    var _this4 = this;
+
+    ModalService.open$({
+      src: environment.template.modal.userModal,
+      data: {
+        view: 1
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      // console.log('CartComponent.onModalSignIn', event);
+      if (event instanceof ModalResolveEvent) {
+        _this4.onUser(event.data);
+      }
+    });
+  };
+
+  _proto.onModalSignUp = function onModalSignUp(me) {
+    var _this5 = this;
+
+    ModalService.open$({
+      src: environment.template.modal.userModal,
+      data: {
+        view: 2,
+        me: me
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      // console.log('CartComponent.onModalSignUp', event);
+      if (event instanceof ModalResolveEvent) {
+        _this5.onUser(event.data);
+      }
+    });
+  };
+
+  _proto.onUser = function onUser(user) {
+    // console.log('CartComponent.onUser', user);
+    if (user) {
+      this.user = user;
+      this.guest = false;
+      this.onPatch({
+        user: user,
+        data: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          // telephone: null,
+          // address: null,
+          // zipCode: null,
+          city: user.city,
+          // province: null,
+          country: user.country,
+          privacy: user.privacy
+        }
+      });
+    }
+  };
+
+  _proto.onGuest = function onGuest() {
+    this.user = null;
+    this.guest = true;
+    this.onPatch({
+      user: null,
+      guest: true
+    });
+  };
+
+  _proto.onFacebookLogout = function onFacebookLogout() {
+    FacebookService.logout$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.onSocialLogin = function onSocialLogin(social) {
+    switch (social) {
+      case 'facebook':
+        this.onFacebookLogin();
+        break;
+
+      case 'google':
+        this.onGoogleLogin();
+        break;
+
+      case 'linkedin':
+        this.onLinkedinLogin();
+        break;
+    }
+
+    return;
+  };
+
+  _proto.onFacebookLogin = function onFacebookLogin() {
+    var _this6 = this;
+
+    console.log('onFacebookLogin');
+    this.socialBusy = 'facebook';
+    var socialMe;
+
+    function mapMe(data) {
+      // console.log(data);
+
+      /*
+      authResponse:
+      	accessToken: string
+      	data_access_expiration_time: 1633594543
+      	expiresIn: 5164299
+      	graphDomain: "facebook"
+      	signedRequest: string
+      	userID: string
+      email: string
+      facebookToken: string
+      first_name: string
+      id: string
+      last_name: string
+      name: string
+      picture:
+      	data:
+      		height: 50
+      		is_silhouette: false
+      		url: string
+      		width: 50
+      */
+      var me = {};
+
+      if (data) {
+        me.firstName = data.first_name;
+        me.lastName = data.last_name;
+        me.email = data.email;
+        me.socialPicture = data.picture.data.url;
+        me.socialType = 'facebook';
+        me.socialId = data.id;
+        me.socialToken = data.facebookToken;
+        me.socialTokenExpiresAt = data.authResponse.data_access_expiration_time;
+      }
+
+      console.log('CartComponent.onFacebookLogin.mapMe', me);
+      return me;
+    }
+
+    FacebookService.me$().pipe(operators.first(), operators.tap(function (me) {
+      return socialMe = me;
+    }), operators.switchMap(function (me) {
+      return UserService.tryFacebook$(me);
+    }), operators.finalize(function () {
+      return _this6.socialBusy = false;
+    })).subscribe(function (user) {
+      if (user) {
+        _this6.onUser(user);
+      } else {
+        var me = mapMe(socialMe);
+
+        _this6.onModalSignUp(me);
+      }
+    }, function (error) {
+      console.log('CartComponent.onFacebookLogin.error', error);
+      var me = mapMe(socialMe);
+
+      _this6.onModalSignUp(me);
+    });
+  };
+
+  _proto.onGoogleLogin = function onGoogleLogin() {
+    var _this7 = this;
+
+    this.socialBusy = 'google';
+    var socialMe;
+
+    function mapMe(data) {
+      // console.log(data);
+
+      /*
+      authResponse:
+      	access_token: string
+      	expires_at: 1625838392809
+      	expires_in: 3599
+      	first_issued_at: 1625834793809
+      	id_token: string
+      	idpId: "google"
+      	login_hint: string
+      	scope: "email profile openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+      	session_state: {extraQueryParams: {…}}
+      	token_type: "Bearer"
+      email: string
+      firstName: string
+      googleToken: string
+      id: string
+      lastName: string
+      name: string
+      picture: string
+      */
+      var me = {};
+
+      if (data) {
+        me.firstName = data.firstName;
+        me.lastName = data.lastName;
+        me.email = data.email;
+        me.socialPicture = data.picture;
+        me.socialType = 'google';
+        me.socialId = data.id;
+        me.socialToken = data.googleToken;
+        me.socialTokenExpiresAt = data.authResponse.expires_at;
+      }
+
+      console.log('CartComponent.onGoogleLogin.mapMe', me);
+      return me;
+    }
+
+    GoogleService.me$().pipe(operators.first(), operators.tap(function (me) {
+      return socialMe = me;
+    }), operators.switchMap(function (me) {
+      return UserService.tryGoogle$(me);
+    }), operators.finalize(function () {
+      return _this7.socialBusy = false;
+    })).subscribe(function (user) {
+      if (user) {
+        _this7.onUser(user);
+      } else {
+        var me = mapMe(socialMe);
+
+        _this7.onModalSignUp(me);
+      }
+    }, function (error) {
+      console.log('CartComponent.onGoogleLogin.error', error);
+      var me = mapMe(socialMe);
+
+      _this7.onModalSignUp(me);
+    });
+  };
+
+  _proto.onLinkedinLogin = function onLinkedinLogin() {
+    var _this8 = this;
+
+    LinkedinService.linkedin$().pipe(operators.first()).subscribe(function (token) {
+      console.log('CartComponent.onLinkedinLogin', token);
+
+      _this8.onModalSignUp({
+        firstName: 'Luca'
+      });
+    }, function (error) {
+      console.log('CartComponent.onLinkedinLogin.error', error);
+      var me = mapMe(socialMe);
+
+      _this8.onModalSignUp(me);
+    });
+  };
+
+  _proto.detectSocialLogin = function detectSocialLogin() {
+    if (window.name === 'linkedin' && window.opener) {
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      var params = Object.fromEntries(urlSearchParams.entries());
+      console.log('window', window.name, params);
+
+      if (typeof window.opener.onSocialCallback === 'function') {
+        window.opener.onSocialCallback(window.name, params);
+      }
+
+      self.close();
+    }
+  };
+
+  _proto.onData = function onData(_) {
+    var form = this.form;
+    var controls = this.controls;
+    console.log('CartComponent.onData');
+
+    if (form.controls.data.valid) {
+      var deliveryData = form.value.data;
+      this.deliveryData = Object.assign({}, deliveryData, {
+        country: controls.data.controls.country.options.find(function (x) {
+          return x.id === deliveryData.country;
+        })
+      });
+      var billingData = form.value.data.billing ? form.value.data.billingData : form.value.data;
+      this.billingData = Object.assign({}, billingData, {
+        country: controls.data.controls.country.options.find(function (x) {
+          return x.id === billingData.country;
+        })
+      });
+      this.onNext({
+        deliveryData: deliveryData,
+        billingData: billingData
+      });
+    } else {
+      this.touchForm();
+    }
+  };
+
+  _proto.testData = function testData() {
+    var form = this.form;
+    var controls = this.controls;
+    var country = controls.data.controls.country.options.length > 1 ? controls.data.controls.country.options[1].id : null;
+    form.patch({
+      data: {
+        firstName: 'Jhon',
+        lastName: 'Appleseed',
+        email: 'jhonappleseed@gmail.com',
+        telephone: '0721 411112',
+        address: 'Strada della Campanara, 15',
+        zipCode: '61122',
+        city: 'Pesaro',
+        province: 'Pesaro',
+        country: country,
+        message: 'Hi!',
+        conditions: true,
+        privacy: true,
+        terms: true
+      },
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+  };
+
+  _proto.resetData = function resetData() {
+    var data = this.controls.data;
+    data.reset();
+  } // 3. CartSteps.Delivery
+  ;
+
+  _proto.onDelivery = function onDelivery(_) {
+    var _this9 = this;
+
+    var form = this.form;
+    var controls = this.controls;
+    var delivery = controls.deliveryType.options.find(function (x) {
+      return x.id === form.value.deliveryType;
+    });
+    this.delivery = delivery; // console.log('CartComponent.onDelivery', form.value);
+
+    CartService.getStores$(form.value).pipe(operators.first()).subscribe(function (stores) {
+      controls.stores.value = stores;
+      controls.store.options = stores.slice().map(function (x) {
+        return {
+          id: x.id,
+          name: x.name,
+          address: x.address,
+          city: x.city,
+          country: x.country,
+          distance: x.distance
+        };
+      });
+      var store = stores[0];
+
+      _this9.onNext({
+        stores: stores,
+        store: store.id,
+        delivery: delivery
+      });
+    });
+  } // 4. CartSteps.Recap
+  ;
+
+  _proto.onDiscountCode = function onDiscountCode(_) {
+    var _this10 = this;
+
+    var form = this.form; // console.log('CartComponent.onDelivery', form.value);
+
+    this.errorDiscount = null;
+    CartService.getDiscount$({
+      discountCode: form.value.discountCode
+    }).pipe(operators.first()).subscribe(function (discount) {
+      _this10.discount = discount;
+
+      _this10.onPatch({
+        discount: discount
+      });
+    }, function (_) {
+      _this10.errorDiscount = true;
+    });
+  };
+
+  _proto.onTimetableToggle = function onTimetableToggle(event) {
+    if (this.selectedStore) {
+      this.selectedStore.showTimetable = !this.selectedStore.showTimetable;
+      this.pushChanges();
+    }
+  } // 5. CartSteps.Payment
+  ;
+
+  _proto.onPayment = function onPayment(_) {
+    var form = this.form;
+    var controls = this.controls;
+    var paymentMethod = controls.paymentMethod.options.find(function (x) {
+      return x.id === form.value.paymentMethod;
+    });
+    this.paymentMethod = paymentMethod;
+
+    if (form.valid) {
+      console.log('CartComponent.onPayment', form.value);
+      this.onComplete(); // !!! fake
+    }
+  } // 6. CartSteps.Complete
+  ;
+
+  _proto.onComplete = function onComplete() {
+    this.step = CartSteps.Complete;
+    this.onPatch();
+    CartService.clear$().pipe(operators.first()).subscribe();
+  };
+
+  _createClass(CartComponent, [{
+    key: "totalPrice",
+    get: function get() {
+      var items = this.items || [];
+      var total = items.reduce(function (p, c, i) {
+        return p + c.price * c.qty;
+      }, 0);
+
+      if (this.delivery) {
+        total += this.delivery.price;
+      }
+
+      if (this.discount) {
+        total += this.discount.price;
+      }
+
+      return total;
+    }
+  }, {
+    key: "selectedStore",
+    get: function get() {
+      var _this11 = this;
+
+      if (!this.controls || !this.controls.stores || !this.controls.stores.value) {
+        return null;
+      } else {
+        return this.controls.stores.value.find(function (x) {
+          return x.id === _this11.controls.store.value;
+        });
+      }
+    }
+  }]);
+
+  return CartComponent;
+}(rxcomp.Component);
+CartComponent.meta = {
+  selector: '[cart]'
 };var ContactsService = /*#__PURE__*/function () {
   function ContactsService() {}
 
@@ -4941,8 +6543,10 @@ var MaterialsService = /*#__PURE__*/function () {
     this.controls.category.value = category.value;
     setTimeout(function () {
       LocomotiveScrollService.update();
-      LocomotiveScrollService.scrollToSelector('#category-' + category.value);
-    }, 100);
+      LocomotiveScrollService.scrollToSelector('#category-' + category.value, {
+        offset: -240
+      });
+    }, 500);
   };
 
   _proto.clearFilter = function clearFilter(event, filter) {
@@ -4961,7 +6565,7 @@ MaterialsComponent.meta = {
 
   NewsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/news/all.json');
+      return ApiService.get$('/news/all');
     } else {
       return ApiService.get$('/news/all.json');
     }
@@ -4969,7 +6573,7 @@ MaterialsComponent.meta = {
 
   NewsService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/news/filters.json');
+      return ApiService.get$('/news/filters');
     } else {
       return ApiService.get$('/news/filters.json');
     }
@@ -5140,8 +6744,10 @@ NewsComponent.meta = {
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       email: new rxcompForm.FormControl(email, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      telephone: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
+      // required if country === 114, Italy
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       engagement: new rxcompForm.FormControl(null),
       newsletter: true,
@@ -5166,6 +6772,7 @@ NewsComponent.meta = {
       var controls = _this2.controls;
       controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
       controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.region.options = FormService.toSelectOptions(data.region.options);
       controls.engagement.options = FormService.toSelectOptions(data.engagement.options);
       controls.newsletterLanguage.options = FormService.toSelectOptions(data.newsletterLanguage.options);
 
@@ -5178,6 +6785,7 @@ NewsComponent.meta = {
     var controls = this.controls;
     var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
     var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var region = controls.region.options.length > 1 ? controls.region.options[1].id : null;
     var engagement = controls.engagement.options.length > 1 ? controls.engagement.options[1].id : null;
     var newsletterLanguage = controls.newsletterLanguage.options.length > 1 ? controls.newsletterLanguage.options[1].id : null;
     form.patch({
@@ -5187,6 +6795,7 @@ NewsComponent.meta = {
       telephone: '0721 411112',
       occupation: occupation,
       country: country,
+      region: region,
       city: 'Pesaro',
       engagement: engagement,
       newsletterLanguage: newsletterLanguage,
@@ -5470,7 +7079,7 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     }
 
     console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-    CartService.addItem$(cartItem).pipe(operators.first()).subscribe();
+    CartMiniService.addItem$(cartItem).pipe(operators.first()).subscribe();
   };
 
   _createClass(ProductsConfigureComponent, [{
@@ -5522,7 +7131,7 @@ ProductsConfigureComponent.meta = {
   };
 
   _proto.isAddedToCart = function isAddedToCart(item) {
-    return CartService.hasItem(item);
+    return CartMiniService.hasItem(item);
   };
 
   _proto.onAddToCart = function onAddToCart(item) {
@@ -5531,7 +7140,7 @@ ProductsConfigureComponent.meta = {
     if (this.isAddedToCart(item)) {
       HeaderService.setHeader('cart');
     } else {
-      CartService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
+      CartMiniService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
         _this2.pushChanges();
       });
     }
@@ -5578,7 +7187,7 @@ var ProductsService = /*#__PURE__*/function () {
 
   ProductsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/products/all.json');
+      return ApiService.get$('/products/all');
     } else {
       return ApiService.get$('/products/all.json');
     }
@@ -5586,7 +7195,7 @@ var ProductsService = /*#__PURE__*/function () {
 
   ProductsService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/products/filters.json');
+      return ApiService.get$('/products/filters');
     } else {
       return ApiService.get$('/products/filters.json');
     }
@@ -5970,7 +7579,7 @@ ProjectsRegistrationComponent.meta = {
 
   ProjectsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/projects/all.json');
+      return ApiService.get$('/projects/all');
     } else {
       return ApiService.get$('/projects/all.json');
     }
@@ -5978,7 +7587,7 @@ ProjectsRegistrationComponent.meta = {
 
   ProjectsService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/projects/filters.json');
+      return ApiService.get$('/projects/filters');
     } else {
       return ApiService.get$('/projects/filters.json');
     }
@@ -6054,7 +7663,7 @@ ProjectsRegistrationComponent.meta = {
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
+    var category = window.categoryId != null ? window.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null;
     var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
       category: category,
@@ -6348,6 +7957,10 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
 
   _proto.isAddedToFiles = function isAddedToFiles(file) {
     return FilesService.hasFile(file);
+  };
+
+  _proto.onLogout = function onLogout() {
+    UserService.signout$().pipe(operators.first()).subscribe();
   };
 
   return ReservedAreaComponent;
@@ -8566,7 +10179,7 @@ SwiperProjectsPropositionDirective.meta = {
     var _this = this;
 
     this.items = [];
-    CartService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
+    CartMiniService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
       _this.items = items;
 
       _this.pushChanges();
@@ -8574,11 +10187,11 @@ SwiperProjectsPropositionDirective.meta = {
   };
 
   _proto.onIncrement = function onIncrement(item) {
-    CartService.incrementItem$(item).pipe(operators.first()).subscribe();
+    CartMiniService.incrementItem$(item).pipe(operators.first()).subscribe();
   };
 
   _proto.onDecrement = function onDecrement(item) {
-    CartService.decrementItem$(item).pipe(operators.first()).subscribe();
+    CartMiniService.decrementItem$(item).pipe(operators.first()).subscribe();
   };
 
   _proto.onEdit = function onEdit(item) {
@@ -8586,12 +10199,8 @@ SwiperProjectsPropositionDirective.meta = {
     window.location.href = environment.slug.configureProduct + "?codprod=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   };
 
-  _proto.onBuy = function onBuy(event) {
-    console.log('CartMiniComponent.onBuy');
-  };
-
   _proto.onRemoveAll = function onRemoveAll(event) {
-    CartService.removeAll$().pipe(operators.first()).subscribe();
+    CartMiniService.removeAll$().pipe(operators.first()).subscribe();
   };
 
   _proto.onClose = function onClose(event) {
@@ -8599,7 +10208,7 @@ SwiperProjectsPropositionDirective.meta = {
   };
 
   _createClass(CartMiniComponent, [{
-    key: "total",
+    key: "totalPrice",
     get: function get() {
       var items = this.items || [];
       return items.reduce(function (p, c, i) {
@@ -8754,7 +10363,7 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
 
       _this2.pushChanges();
     });
-    this.cart = CartService;
+    this.cart = CartMiniService;
     this.user = null;
     UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
       _this2.user = user;
@@ -8785,18 +10394,10 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
   _proto.onLogin = function onLogin() {
     MenuService.onBack();
     HeaderService.onBack();
-    ModalService.open$({
-      src: environment.template.modal.userModal,
-      data: {
-        view: 1
-      }
-    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
-      console.log('HeaderComponent.onLogin', event);
 
-      if (event instanceof ModalResolveEvent) {
-        window.location.href = environment.slug.reservedArea;
-      }
-    });
+    {
+      window.location.href = environment.slug.reservedArea;
+    }
   };
 
   _proto.onLogout = function onLogout() {
@@ -9229,6 +10830,30 @@ UserForgotComponent.meta = {
     this.view = this.view || UserViews.SIGN_UP;
   };
 
+  _proto.onModalSignIn = function onModalSignIn(event) {
+    // console.log('UserComponent.onModalSignIn');
+    ModalService.open$({
+      src: environment.template.modal.userModal,
+      data: {
+        view: 1
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('UserComponent.onModalSignIn', event);
+    });
+  };
+
+  _proto.onModalSignUp = function onModalSignUp(event) {
+    // console.log('UserComponent.onModalSignUp');
+    ModalService.open$({
+      src: environment.template.modal.userModal,
+      data: {
+        view: 2
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('UserComponent.onModalSignUp', event);
+    });
+  };
+
   _proto.setView = function setView(view) {
     this.view = view;
     this.pushChanges();
@@ -9241,19 +10866,19 @@ UserForgotComponent.meta = {
     });
   };
 
-  _proto.onViewForgot = function onViewForgot(event) {
-    // console.log('UserComponent.onForgot');
-    this.setView(UserViews.FORGOTTEN);
-  };
-
   _proto.onViewSignIn = function onViewSignIn(event) {
-    // console.log('UserComponent.onSignIn');
+    // console.log('UserComponent.onViewSignIn');
     this.setView(UserViews.SIGN_IN);
   };
 
   _proto.onViewSignUp = function onViewSignUp(event) {
-    // console.log('UserComponent.onSignUp');
+    // console.log('UserComponent.onViewSignIn');
     this.setView(UserViews.SIGN_UP);
+  };
+
+  _proto.onViewForgot = function onViewForgot(event) {
+    // console.log('UserComponent.onViewForgot');
+    this.setView(UserViews.FORGOTTEN);
   };
 
   _proto.onSignIn = function onSignIn(user) {
@@ -9305,7 +10930,8 @@ UserComponent.meta = {
 
     if (parentInstance instanceof ModalOutletComponent) {
       var data = parentInstance.modal.data;
-      this.view = data.view; // console.log('UserModalComponent.onInit', data);
+      this.view = data.view;
+      this.me = data.me; // console.log('UserModalComponent.onInit', data);
     }
 
     LocomotiveScrollService.stop();
@@ -9460,16 +11086,6 @@ UserSigninComponent.meta = {
       }
     } : null;
   });
-}function RequiredIfValidator(fieldName, formGroup) {
-  return new rxcompForm.FormValidator(function (value) {
-    var field = formGroup ? formGroup.get(fieldName) : null;
-    return field && field.value && !value ? {
-      required: {
-        value: value,
-        requiredIf: fieldName
-      }
-    } : null;
-  });
 }var UserSignupComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserSignupComponent, _Component);
 
@@ -9482,16 +11098,17 @@ UserSigninComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
+    this.me = this.me || {};
     this.error = null;
     this.success = false;
     var form = this.form = new rxcompForm.FormGroup({
-      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      firstName: new rxcompForm.FormControl(this.me.firstName || null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(this.me.lastName || null, [rxcompForm.Validators.RequiredValidator()]),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       company: new rxcompForm.FormControl(null),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      email: new rxcompForm.FormControl(this.me.email || null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       password: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       passwordConfirm: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), MatchValidator('password', form)]),
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -9586,7 +11203,8 @@ UserSigninComponent.meta = {
 }(rxcomp.Component);
 UserSignupComponent.meta = {
   selector: '[user-signup]',
-  outputs: ['signUp', 'viewSignIn']
+  outputs: ['signUp', 'viewSignIn'],
+  inputs: ['me']
 };var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
 var pipes$2 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
@@ -9613,6 +11231,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, ContactsComponent, DealersComponent, DesignersComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

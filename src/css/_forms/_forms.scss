@@ -57,6 +57,12 @@ $invalid-negative: $foreground-primary;
 		@extend %label;
 	}
 
+	&:not(.required) {
+		.required__sign {
+			display: none;
+		}
+	}
+
 	&.required {
 		.required__badge {
 			top: 13px;
@@ -72,6 +78,11 @@ $invalid-negative: $foreground-primary;
 	}
 
 	.invalid.touched & {
+
+		.required__sign {
+			color: $foreground-primary;
+		}
+
 		.required__badge {
 			background: $background-primary;
 			color: $foreground-secondary;
@@ -271,7 +282,7 @@ fieldset,
 .group--form--textarea {
 	@extend %group--form;
 	padding: 10px;
-	border: 2px solid $border;
+	border: 2px solid $background-tertiary;
 
 	.control--text {
 		resize: vertical;
@@ -350,6 +361,18 @@ fieldset,
 			&>a {
 				@extend %btn-link;
 				font-weight: 500;
+			}
+		}
+	}
+
+	&.required {
+		label {
+			&>span {
+				flex-grow: 0;
+			}
+
+			&>.required__sign {
+				flex-grow: 1;
 			}
 		}
 	}
@@ -524,13 +547,19 @@ errors-component {
 
 	.required__badge {
 		@extend %label;
-		display: block;
+		// display: block; // hidden
+		display: none;
 		position: absolute;
 		font-size: 0.6em;
 	}
 }
 
 .invalid.touched {
+
+	.required__sign {
+		color: $foreground-secondary;
+	}
+
 	.required__badge {
 		color: $foreground-secondary;
 	}

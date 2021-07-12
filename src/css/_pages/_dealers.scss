@@ -67,11 +67,13 @@
 	}
 
 	padding: 22px 0 30px;
-	border-top: 2px solid $foreground;
+	// border-top: 2px solid $foreground;
+	border-top: 1px solid $background-secondary;
 
 	&.primary {
 		padding: 20px 30px 30px 30px;
-		border: 2px solid $foreground;
+		// border: 2px solid $foreground;
+		border: 1px solid $background-secondary;
 		border-radius: 8px;
 
 		@include media-down(xs) {

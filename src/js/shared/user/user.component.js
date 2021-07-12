@@ -1,5 +1,8 @@
 import { Component, getContext } from 'rxcomp';
+import { takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { ModalService } from '../../common/modal/modal.service';
+import { environment } from '../../environment';
 import { UserService, UserViews } from './user.service';
 
 export class UserComponent extends Component {
@@ -9,6 +12,24 @@ export class UserComponent extends Component {
 		this.view = this.view || UserViews.SIGN_UP;
 	}
 
+	onModalSignIn(event) {
+		// console.log('UserComponent.onModalSignIn');
+		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('UserComponent.onModalSignIn', event);
+		});
+	}
+
+	onModalSignUp(event) {
+		// console.log('UserComponent.onModalSignUp');
+		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 2 } }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('UserComponent.onModalSignUp', event);
+		});
+	}
+
 	setView(view) {
 		this.view = view;
 		this.pushChanges();
@@ -16,19 +37,19 @@ export class UserComponent extends Component {
 		LocomotiveScrollService.scrollTo(node, { offset: -100 });
 	}
 
-	onViewForgot(event) {
-		// console.log('UserComponent.onForgot');
-		this.setView(UserViews.FORGOTTEN);
-	}
-
 	onViewSignIn(event) {
-		// console.log('UserComponent.onSignIn');
+		// console.log('UserComponent.onViewSignIn');
 		this.setView(UserViews.SIGN_IN);
 	}
 
 	onViewSignUp(event) {
-		// console.log('UserComponent.onSignUp');
+		// console.log('UserComponent.onViewSignIn');
 		this.setView(UserViews.SIGN_UP);
+	}
+
+	onViewForgot(event) {
+		// console.log('UserComponent.onViewForgot');
+		this.setView(UserViews.FORGOTTEN);
 	}
 
 	onSignIn(user) {

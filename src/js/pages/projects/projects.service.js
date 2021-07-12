@@ -5,7 +5,7 @@ export class ProjectsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/projects/all.json');
+			return ApiService.get$('/projects/all');
 		} else {
 			return ApiService.get$('/projects/all.json');
 		}
@@ -13,7 +13,7 @@ export class ProjectsService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/projects/filters.json');
+			return ApiService.get$('/projects/filters');
 		} else {
 			return ApiService.get$('/projects/filters.json');
 		}

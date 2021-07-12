@@ -81,11 +81,13 @@
 	}
 
 	padding: 22px 0 30px;
-	border-top: 2px solid $foreground;
+	// border-top: 2px solid $foreground;
+	border-top: 1px solid $background-secondary;
 
 	&.card--evidence {
 		padding: 20px 30px 30px 30px;
-		border: 2px solid $foreground;
+		// border: 2px solid $foreground;
+		border: 1px solid $background-secondary;
 		border-radius: 8px;
 
 		@include media-down(xs) {
@@ -236,7 +238,8 @@
 		[control-textarea],
 		[control-select],
 		[control-custom-select],
-		[control-checkbox] {
+		[control-checkbox],
+		[control-file] {
 			margin-bottom: 25px;
 		}
 	}
@@ -248,7 +251,8 @@
 		[control-textarea],
 		[control-select],
 		[control-custom-select],
-		[control-checkbox] {
+		[control-checkbox],
+		[control-file] {
 			margin-bottom: 20px;
 		}
 	}
@@ -260,38 +264,62 @@
 		[control-textarea],
 		[control-select],
 		[control-custom-select],
-		[control-checkbox] {
+		[control-checkbox],
+		[control-file] {
 			margin-bottom: 15px;
 		}
 	}
 }
 
 .section--form-negative {
+	position: relative;
 	margin-bottom: -240px;
 	padding: 160px 0;
 	background: #D1CDCA;
 	border-bottom: 1px solid $border;
 
 	.title {
-		margin-bottom: 160px;
 		font-family: $font-secondary;
 		font-size: 48px;
 		line-height: 1.2;
-		text-align: center;
 		letter-spacing: -0.008em;
 		text-transform: uppercase;
 	}
 
 	.description {
 		font-size: 18px;
-		text-align: center;
+	}
+
+	.group--center,
+	.group--left {
+		&>.title {
+			margin-bottom: 120px;
+		}
+
+		&>.description {
+			margin-top: -80px;
+			margin-bottom: 120px;
+		}
+	}
+
+	.group--center {
+		&>.title {
+			text-align: center;
+		}
+
+		&>.description {
+			text-align: center;
+		}
 	}
 
 	.group--form,
-	.group--form--textarea,
 	.group--form--checkbox,
 	.group--form--file,
 	.group--form--select {
 		border-bottom: 2px solid $border;
+	}
+
+	.group--form--textarea {
+		border: 2px solid $border;
 	}
 }

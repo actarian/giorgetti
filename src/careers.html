@@ -29,23 +29,26 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 						<p>Lavorare per Giorgetti significa creare idee, apportare le proprie capacità in un contesto giovane e dinamico in cui le prerogative fondamentali sono professionalità e spirito di squadra. Se vuoi conoscerci più da vicino e valutare nuove opportunità professionali, invia il tuo Curriculum Vitae. I cv privi del consenso per il trattamento dei dati personali ai sensi della legge 2016/679 “GDPR”. non saranno presi in considerazione.</p>
 					</div>
 					<div class="group--cta">
-						<a href="/giorgetti/careers.html#work-with-us" class="btn--more" (locomotiveScrollTo)="'#work-with-us'">Compila il form</button>
+						<a href="/giorgetti/careers.html#work-with-us" class="btn--more" (locomotiveScrollTo)="'#work-with-us'">Compila il form</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="section--text">
+	<div class="section--table" *if="positions.length">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="title">Siamo spiacenti ma al momento non ci sono posizioni aperte.</div>
-					<div class="description">
-						<p>
-							In ogni caso, puoi comunque inviarci la tua candidatura spontanea nel form sottostante.
-						</p>
-					</div>
+			<div class="title">Posizioni aperte</div>
+			<div class="flex-table">
+				<div class="tr">
+					<div class="th">Posizione</div>
+					<div class="th">Area</div>
+					<div class="th"></div>
+				</div>
+				<div class="tr" *for="let position of positions">
+					<div class="td" [innerHTML]="position.name"></div>
+					<div class="td" [innerHTML]="position.domain.name"></div>
+					<div class="td"><button type="button" class="btn--more" (click)="onOpenPosition(position)">Dettagli <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></button></div>
 				</div>
 			</div>
 		</div>
@@ -53,7 +56,15 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 
 	<div class="section--form section--form-negative" id="work-with-us">
 		<div class="container" *if="!success">
-			<div class="title">Lavora con noi</div>
+			<div class="group--left">
+				<div class="title" *if="positions.length > 0">Candidatura spontanea.</div>
+				<div class="title" *if="!positions.length">Siamo spiacenti ma al momento non ci sono posizioni aperte.</div>
+				<div class="description">
+					<p>
+						In ogni caso, puoi comunque inviarci la tua candidatura spontanea nel form sottostante.
+					</p>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<form class="form" [formGroup]="form" (submit)="onSubmit($event)" name="form" role="form" novalidate autocomplete="off">
@@ -64,6 +75,7 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 							<div control-text [control]="controls.email" label="Email"></div>
 							<div control-text [control]="controls.telephone" label="Telefono"></div>
 							<div control-custom-select [control]="controls.country" label="Paese"></div>
+							<div control-custom-select [control]="controls.region" label="Regione" *if="controls.country.value == 114"></div>
 							<div control-text [control]="controls.city" label="Città"></div>
 							<div control-custom-select [control]="controls.domain" label="Area di interesse"></div>
 							<div control-file [control]="controls.cv" label="Curriculum Vitae"></div>

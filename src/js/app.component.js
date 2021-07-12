@@ -2,7 +2,7 @@ import { Component, getContext } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
 import { ModalResolveEvent, ModalService } from './common/modal/modal.service';
 import { environment } from './environment';
-import { CartService } from './shared/cart/cart.service';
+import { CartMiniService } from './shared/cart-mini/cart-mini.service';
 import { HeaderService } from './shared/header/header.service';
 import { UserService } from './shared/user/user.service';
 
@@ -19,7 +19,7 @@ export class AppComponent extends Component {
 			this.header = header;
 			this.pushChanges();
 		});
-		CartService.items$().pipe(
+		CartMiniService.items$().pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(_ => this.pushChanges());
 	}
@@ -65,7 +65,7 @@ export class AppComponent extends Component {
 	}
 
 	onAddToCart(item) {
-		CartService.addItem$(item).pipe(
+		CartMiniService.addItem$(item).pipe(
 			first(),
 		).subscribe(_ => {
 			this.pushChanges();
