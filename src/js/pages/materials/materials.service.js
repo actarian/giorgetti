@@ -7,7 +7,7 @@ export class MaterialsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/materials/all.json');
+			return ApiService.get$('/materials/all');
 		} else {
 			return ApiService.get$('/materials/all.json');
 		}
@@ -15,7 +15,7 @@ export class MaterialsService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/materials/filters.json');
+			return ApiService.get$('/materials/filters');
 		} else {
 			return ApiService.get$('/materials/filters.json');
 		}

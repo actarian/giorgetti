@@ -11,7 +11,7 @@ export class ProductsDetailComponent extends Component {
 	onInit() {
 		this.items = [];
 		this.visibleItems = [];
-		ProductsDetailService.versions$().pipe(
+		ProductsDetailService.versions$(this.product.id).pipe(
 			first(),
 		).subscribe(items => {
 			this.items = items;
@@ -28,7 +28,7 @@ export class ProductsDetailComponent extends Component {
 		if (this.isAddedToCart(item)) {
 			HeaderService.setHeader('cart');
 		} else {
-			CartMiniService.addItem$(item).pipe(
+			CartMiniService.getPriceAndAddItem$(item).pipe(
 				first(),
 			).subscribe(_ => {
 				this.pushChanges();
@@ -55,8 +55,8 @@ export class ProductsDetailComponent extends Component {
 		LocomotiveScrollService.update();
 	}
 
-	configureProduct(item) {
-		window.location.href = `${environment.slug.configureProduct}?codprod=${this.product.code}`;
+	configureProduct(version) {
+		window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}`;
 	}
 }
 

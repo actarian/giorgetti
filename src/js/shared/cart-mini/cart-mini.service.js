@@ -1,6 +1,8 @@
 import { BehaviorSubject, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../common/api/api.service';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
+import { environment } from '../../environment';
 import { HeaderService } from '../header/header.service';
 
 export class CartMiniService {
@@ -121,6 +123,27 @@ export class CartMiniService {
 				return items;
 			}),
 		)
+	}
+
+	static getPrice$(item) {
+		if (environment.flags.production) {
+			/*
+			!!! implementare la post a /api/cart-mini/price per ottenere il prezzo da showefy
+			il payload è { showefy: { internalstr: "string..." } }
+			il payload completo e l'output si trovano qui /api/cart-mini/price.json
+			*/
+			// return ApiService.post$('/cart-mini/price', item);
+			return ApiService.get$('/cart-mini/price.json');
+		} else {
+			return ApiService.get$('/cart-mini/price.json');
+			// return of(Object.assign(item, { price: 899 }));
+		}
+	}
+
+	static getPriceAndAddItem$(item) {
+		return this.getPrice$(item).pipe(
+			switchMap(item => this.addItem$(item)),
+		);
 	}
 
 	static match(item, item_) {

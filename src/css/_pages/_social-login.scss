@@ -82,6 +82,9 @@
 		justify-content: space-between;
 		align-items: stretch;
 		max-height: calc(100vh - 200px);
+		border-radius: 3px;
+		overflow: hidden;
+		box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35);
 
 		.modal__content {
 			flex: 1 1 50%;

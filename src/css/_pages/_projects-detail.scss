@@ -59,6 +59,10 @@
 
 		img {
 			transition: transform ease-in-out $fast;
+			transform-origin: bottom;
+			object-fit: contain;
+			object-position: 50% 100%;
+			background: $background;
 		}
 
 		&:after {

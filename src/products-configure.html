@@ -1,9 +1,20 @@
 <!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
 <!-- @@block = main-->
 
+<script>
+window.product = {
+	id: 5254,
+	code: '63230',
+	url: '/giorgetti/products-detail.html',
+	image: '/giorgetti/img/products/572_n_LISTING_progetti.jpg',
+	title: 'Progetti'
+};
+
+</script>
+
 <script src="https://www.showefy.com/sfy/frame/v.5.0/sfyIframe-v.5.0.min.js"></script>
 
-<main class="main" products-configure token="a9$hhVGHxos" [product]="{ 'id': 1, 'code': 63230, 'url': '/giorgetti/products-detail.html', 'image': '/giorgetti/img/products/572_n_LISTING_progetti.jpg', 'title': 'Progetti', 'price': 899, 'qty': 1 }">
+<main class="main" products-configure token="a9$hhVGHxos" [product]="window.product">
 
 	<div class="section--breadcrumb">
 		<div class="container">

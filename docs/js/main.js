@@ -357,254 +357,8 @@ var defaultOptions = {
 var environmentOptions = window.STATIC ? environmentStatic : environmentServed;
 var options = Object.assign(defaultOptions, environmentOptions);
 options = Utils.merge(options, window.environment);
-var environment = new Environment(options);
-console.log('environment', environment);var LocalStorageService = /*#__PURE__*/function () {
-  function LocalStorageService() {}
-
-  LocalStorageService.delete = function _delete(name) {
-    if (this.isLocalStorageSupported()) {
-      window.localStorage.removeItem(name);
-    }
-  };
-
-  LocalStorageService.exist = function exist(name) {
-    if (this.isLocalStorageSupported()) {
-      return window.localStorage[name] !== undefined;
-    }
-  };
-
-  LocalStorageService.get = function get(name) {
-    var value = null;
-
-    if (this.isLocalStorageSupported() && window.localStorage[name] !== undefined) {
-      try {
-        value = JSON.parse(window.localStorage[name]);
-      } catch (e) {
-        console.log('LocalStorageService.get.error parsing', name, e);
-      }
-    }
-
-    return value;
-  };
-
-  LocalStorageService.set = function set(name, value) {
-    if (this.isLocalStorageSupported()) {
-      try {
-        var cache = [];
-        var json = JSON.stringify(value, function (key, value) {
-          if (typeof value === 'object' && value !== null) {
-            if (cache.indexOf(value) !== -1) {
-              // Circular reference found, discard key
-              return;
-            }
-
-            cache.push(value);
-          }
-
-          return value;
-        });
-        window.localStorage.setItem(name, json);
-      } catch (e) {
-        console.log('LocalStorageService.set.error serializing', name, value, e);
-      }
-    }
-  };
-
-  LocalStorageService.isLocalStorageSupported = function isLocalStorageSupported() {
-    if (this.supported) {
-      return true;
-    }
-
-    var supported = false;
-
-    try {
-      supported = 'localStorage' in window && window.localStorage !== null;
-
-      if (supported) {
-        window.localStorage.setItem('test', '1');
-        window.localStorage.removeItem('test');
-      } else {
-        supported = false;
-      }
-    } catch (e) {
-      supported = false;
-    }
-
-    this.supported = supported;
-    return supported;
-  };
-
-  return LocalStorageService;
-}();var HeaderService = /*#__PURE__*/function () {
-  function HeaderService() {}
-
-  HeaderService.setHeader = function setHeader(id) {
-    this.header$_.next(id);
-  };
-
-  HeaderService.toggleHeader = function toggleHeader(id) {
-    this.header$_.next(this.currentHeader === id ? -1 : id);
-  };
-
-  HeaderService.onBack = function onBack() {
-    this.header$_.next(-1);
-  };
-
-  HeaderService.header$ = function header$() {
-    return this.header$_;
-  };
-
-  _createClass(HeaderService, null, [{
-    key: "currentHeader",
-    get: function get() {
-      return this.header$_.getValue();
-    }
-  }]);
-
-  return HeaderService;
-}();
-
-_defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var CartMiniService = /*#__PURE__*/function () {
-  function CartMiniService() {}
-
-  CartMiniService.hasItem = function hasItem(item) {
-    var items = CartMiniService.currentItems;
-    var index = CartMiniService.indexOf(item, items);
-    return index !== -1;
-  };
-
-  CartMiniService.setItems = function setItems(items) {
-    if (items) {
-      LocalStorageService.set('cartItems', items);
-    } else {
-      LocalStorageService.delete('cartItems');
-    }
-
-    CartMiniService.items$_.next(items);
-  };
-
-  CartMiniService.items$ = function items$() {
-    var localItems = LocalStorageService.get('cartItems') || [];
-    return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
-      CartMiniService.setItems(items);
-      return CartMiniService.items$_;
-    }));
-  };
-
-  CartMiniService.incrementItem$ = function incrementItem$(item) {
-    return rxjs.of(item).pipe(operators.map(function (item) {
-      var items = CartMiniService.currentItems.slice();
-      var item_ = CartMiniService.find(item, items);
-
-      if (item_) {
-        item_.qty++;
-        CartMiniService.setItems(items);
-        return item_;
-      } else {
-        return null;
-      }
-    }));
-  };
-
-  CartMiniService.decrementItem$ = function decrementItem$(item) {
-    return rxjs.of(item).pipe(operators.switchMap(function (item) {
-      var items = CartMiniService.currentItems.slice();
-      var item_ = CartMiniService.find(item, items);
-
-      if (item_) {
-        item_.qty--;
-
-        if (item_.qty > 0) {
-          CartMiniService.setItems(items);
-          return rxjs.of(item_);
-        } else {
-          return CartMiniService.removeItem$(item);
-        }
-      } else {
-        return rxjs.of(null);
-      }
-    }));
-  };
-
-  CartMiniService.addItem$ = function addItem$(item) {
-    return rxjs.of(Object.assign({
-      qty: 1
-    }, item)).pipe(operators.map(function (item) {
-      var items = CartMiniService.currentItems.slice();
-      var item_ = CartMiniService.find(item, items);
-
-      if (item_) {
-        item_.qty += item.qty;
-        CartMiniService.setItems(items);
-        return item_;
-      } else {
-        items.push(item);
-        CartMiniService.setItems(items);
-        return item;
-      }
-    }));
-  };
-
-  CartMiniService.removeItem$ = function removeItem$(item) {
-    return rxjs.of(item).pipe(operators.map(function (item) {
-      var items = CartMiniService.currentItems.slice();
-      var index = CartMiniService.indexOf(item, items);
-
-      if (index !== -1) {
-        items.splice(index, 1);
-
-        if (items.length === 0) {
-          HeaderService.onBack();
-        }
-
-        CartMiniService.setItems(items);
-        return item;
-      } else {
-        return null;
-      }
-    }));
-  };
-
-  CartMiniService.removeAll$ = function removeAll$() {
-    return rxjs.of([]).pipe(operators.map(function (items) {
-      HeaderService.onBack();
-      CartMiniService.setItems(items);
-      return items;
-    }));
-  };
-
-  CartMiniService.match = function match(item, item_) {
-    return item_.id === item.id && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
-  };
-
-  CartMiniService.find = function find(item, items) {
-    return items.find(function (item_) {
-      return CartMiniService.match(item, item_);
-    });
-  };
-
-  CartMiniService.indexOf = function indexOf(item, items) {
-    return items.reduce(function (p, item_, i) {
-      return p !== -1 ? p : CartMiniService.match(item, item_) ? i : p;
-    }, -1);
-  };
-
-  _createClass(CartMiniService, null, [{
-    key: "currentItems",
-    get: function get() {
-      return CartMiniService.items$_.getValue();
-    }
-  }, {
-    key: "count",
-    get: function get() {
-      return CartMiniService.currentItems.length;
-    }
-  }]);
-
-  return CartMiniService;
-}();
-
-_defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var HttpService = /*#__PURE__*/function () {
+var environment = new Environment(options); // console.log('environment', environment);
+var HttpService = /*#__PURE__*/function () {
   function HttpService() {}
 
   HttpService.http$ = function http$(method, url, data, format, userPass, options) {
@@ -1019,7 +773,275 @@ _defineProperty(LanguageService, "selectedLanguage", LanguageService.defaultLang
   return ApiService;
 }(HttpService);
 
-_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var SessionStorageService = /*#__PURE__*/function () {
+_defineProperty(ApiService, "currentLanguage", LanguageService.activeLanguage);var LocalStorageService = /*#__PURE__*/function () {
+  function LocalStorageService() {}
+
+  LocalStorageService.delete = function _delete(name) {
+    if (this.isLocalStorageSupported()) {
+      window.localStorage.removeItem(name);
+    }
+  };
+
+  LocalStorageService.exist = function exist(name) {
+    if (this.isLocalStorageSupported()) {
+      return window.localStorage[name] !== undefined;
+    }
+  };
+
+  LocalStorageService.get = function get(name) {
+    var value = null;
+
+    if (this.isLocalStorageSupported() && window.localStorage[name] !== undefined) {
+      try {
+        value = JSON.parse(window.localStorage[name]);
+      } catch (e) {
+        console.log('LocalStorageService.get.error parsing', name, e);
+      }
+    }
+
+    return value;
+  };
+
+  LocalStorageService.set = function set(name, value) {
+    if (this.isLocalStorageSupported()) {
+      try {
+        var cache = [];
+        var json = JSON.stringify(value, function (key, value) {
+          if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Circular reference found, discard key
+              return;
+            }
+
+            cache.push(value);
+          }
+
+          return value;
+        });
+        window.localStorage.setItem(name, json);
+      } catch (e) {
+        console.log('LocalStorageService.set.error serializing', name, value, e);
+      }
+    }
+  };
+
+  LocalStorageService.isLocalStorageSupported = function isLocalStorageSupported() {
+    if (this.supported) {
+      return true;
+    }
+
+    var supported = false;
+
+    try {
+      supported = 'localStorage' in window && window.localStorage !== null;
+
+      if (supported) {
+        window.localStorage.setItem('test', '1');
+        window.localStorage.removeItem('test');
+      } else {
+        supported = false;
+      }
+    } catch (e) {
+      supported = false;
+    }
+
+    this.supported = supported;
+    return supported;
+  };
+
+  return LocalStorageService;
+}();var HeaderService = /*#__PURE__*/function () {
+  function HeaderService() {}
+
+  HeaderService.setHeader = function setHeader(id) {
+    this.header$_.next(id);
+  };
+
+  HeaderService.toggleHeader = function toggleHeader(id) {
+    this.header$_.next(this.currentHeader === id ? -1 : id);
+  };
+
+  HeaderService.onBack = function onBack() {
+    this.header$_.next(-1);
+  };
+
+  HeaderService.header$ = function header$() {
+    return this.header$_;
+  };
+
+  _createClass(HeaderService, null, [{
+    key: "currentHeader",
+    get: function get() {
+      return this.header$_.getValue();
+    }
+  }]);
+
+  return HeaderService;
+}();
+
+_defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var CartMiniService = /*#__PURE__*/function () {
+  function CartMiniService() {}
+
+  CartMiniService.hasItem = function hasItem(item) {
+    var items = CartMiniService.currentItems;
+    var index = CartMiniService.indexOf(item, items);
+    return index !== -1;
+  };
+
+  CartMiniService.setItems = function setItems(items) {
+    if (items) {
+      LocalStorageService.set('cartItems', items);
+    } else {
+      LocalStorageService.delete('cartItems');
+    }
+
+    CartMiniService.items$_.next(items);
+  };
+
+  CartMiniService.items$ = function items$() {
+    var localItems = LocalStorageService.get('cartItems') || [];
+    return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
+      CartMiniService.setItems(items);
+      return CartMiniService.items$_;
+    }));
+  };
+
+  CartMiniService.incrementItem$ = function incrementItem$(item) {
+    return rxjs.of(item).pipe(operators.map(function (item) {
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
+
+      if (item_) {
+        item_.qty++;
+        CartMiniService.setItems(items);
+        return item_;
+      } else {
+        return null;
+      }
+    }));
+  };
+
+  CartMiniService.decrementItem$ = function decrementItem$(item) {
+    return rxjs.of(item).pipe(operators.switchMap(function (item) {
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
+
+      if (item_) {
+        item_.qty--;
+
+        if (item_.qty > 0) {
+          CartMiniService.setItems(items);
+          return rxjs.of(item_);
+        } else {
+          return CartMiniService.removeItem$(item);
+        }
+      } else {
+        return rxjs.of(null);
+      }
+    }));
+  };
+
+  CartMiniService.addItem$ = function addItem$(item) {
+    return rxjs.of(Object.assign({
+      qty: 1
+    }, item)).pipe(operators.map(function (item) {
+      var items = CartMiniService.currentItems.slice();
+      var item_ = CartMiniService.find(item, items);
+
+      if (item_) {
+        item_.qty += item.qty;
+        CartMiniService.setItems(items);
+        return item_;
+      } else {
+        items.push(item);
+        CartMiniService.setItems(items);
+        return item;
+      }
+    }));
+  };
+
+  CartMiniService.removeItem$ = function removeItem$(item) {
+    return rxjs.of(item).pipe(operators.map(function (item) {
+      var items = CartMiniService.currentItems.slice();
+      var index = CartMiniService.indexOf(item, items);
+
+      if (index !== -1) {
+        items.splice(index, 1);
+
+        if (items.length === 0) {
+          HeaderService.onBack();
+        }
+
+        CartMiniService.setItems(items);
+        return item;
+      } else {
+        return null;
+      }
+    }));
+  };
+
+  CartMiniService.removeAll$ = function removeAll$() {
+    return rxjs.of([]).pipe(operators.map(function (items) {
+      HeaderService.onBack();
+      CartMiniService.setItems(items);
+      return items;
+    }));
+  };
+
+  CartMiniService.getPrice$ = function getPrice$(item) {
+    if (environment.flags.production) {
+      /*
+      !!! implementare la post a /api/cart-mini/price per ottenere il prezzo da showefy
+      il payload è { showefy: { internalstr: "string..." } }
+      il payload completo e l'output si trovano qui /api/cart-mini/price.json
+      */
+      // return ApiService.post$('/cart-mini/price', item);
+      return ApiService.get$('/cart-mini/price.json');
+    } else {
+      return ApiService.get$('/cart-mini/price.json'); // return of(Object.assign(item, { price: 899 }));
+    }
+  };
+
+  CartMiniService.getPriceAndAddItem$ = function getPriceAndAddItem$(item) {
+    var _this = this;
+
+    return this.getPrice$(item).pipe(operators.switchMap(function (item) {
+      return _this.addItem$(item);
+    }));
+  };
+
+  CartMiniService.match = function match(item, item_) {
+    return item_.id === item.id && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
+  };
+
+  CartMiniService.find = function find(item, items) {
+    return items.find(function (item_) {
+      return CartMiniService.match(item, item_);
+    });
+  };
+
+  CartMiniService.indexOf = function indexOf(item, items) {
+    return items.reduce(function (p, item_, i) {
+      return p !== -1 ? p : CartMiniService.match(item, item_) ? i : p;
+    }, -1);
+  };
+
+  _createClass(CartMiniService, null, [{
+    key: "currentItems",
+    get: function get() {
+      return CartMiniService.items$_.getValue();
+    }
+  }, {
+    key: "count",
+    get: function get() {
+      return CartMiniService.currentItems.length;
+    }
+  }]);
+
+  return CartMiniService;
+}();
+
+_defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var SessionStorageService = /*#__PURE__*/function () {
   function SessionStorageService() {}
 
   SessionStorageService.delete = function _delete(name) {
@@ -1317,7 +1339,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   _proto.onAddToCart = function onAddToCart(item) {
     var _this2 = this;
 
-    CartMiniService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
+    CartMiniService.getPriceAndAddItem$(item).pipe(operators.first()).subscribe(function (_) {
       _this2.pushChanges();
     });
   };
@@ -3778,7 +3800,7 @@ var FilterItem = /*#__PURE__*/function () {
 
   AmbienceService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/ambience/all.json');
+      return ApiService.get$('/ambience/all');
     } else {
       return ApiService.get$('/ambience/all.json');
     }
@@ -3786,7 +3808,7 @@ var FilterItem = /*#__PURE__*/function () {
 
   AmbienceService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/ambience/filters.json');
+      return ApiService.get$('/ambience/filters');
     } else {
       return ApiService.get$('/ambience/filters.json');
     }
@@ -5215,7 +5237,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
 
   _proto.onEdit = function onEdit(item) {
     // console.log('CartComponent.onEdit', item);
-    window.location.href = environment.slug.configureProduct + "?codprod=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   } // 2. CartSteps.Data
   ;
 
@@ -6232,7 +6254,7 @@ var MaterialsService = /*#__PURE__*/function () {
 
   MaterialsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/materials/all.json');
+      return ApiService.get$('/materials/all');
     } else {
       return ApiService.get$('/materials/all.json');
     }
@@ -6240,7 +6262,7 @@ var MaterialsService = /*#__PURE__*/function () {
 
   MaterialsService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/materials/filters.json');
+      return ApiService.get$('/materials/filters');
     } else {
       return ApiService.get$('/materials/filters.json');
     }
@@ -6857,12 +6879,10 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   var _proto = ProductsConfigureComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.codprod = LocationService.get('codprod');
-    this.sl = LocationService.get('sl');
-    console.log(this.codprod);
+    this.sl = LocationService.get('sl'); // console.log(this.code);
 
-    if (!this.codprod) {
-      throw 'ProductsConfigureComponent.error missing codprod';
+    if (!this.product) {
+      throw 'ProductsConfigureComponent.error missing product';
     }
 
     this.isReady = false;
@@ -6879,14 +6899,6 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     }
 
     this.onEvent = this.onEvent.bind(this);
-    /*
-    HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', { grant_type: 'client_credentials' }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(
-    	first(),
-    ).subscribe(response => {
-    	console.log(response);
-    });
-    */
-
     var sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
     sfy.init();
     console.log('ProductsConfigureComponent.onInit', sfy, iframe);
@@ -7079,14 +7091,14 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     }
 
     console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-    CartMiniService.addItem$(cartItem).pipe(operators.first()).subscribe();
+    CartMiniService.getPriceAndAddItem$(cartItem).pipe(operators.first()).subscribe();
   };
 
   _createClass(ProductsConfigureComponent, [{
     key: "showefyUrl",
     get: function get() {
-      if (this.codprod) {
-        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=P&codprod=" + this.codprod + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+      if (this.product) {
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=P&codprod=" + this.product.code + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
       }
     }
   }]);
@@ -7099,9 +7111,9 @@ ProductsConfigureComponent.meta = {
 };var ProductsDetailService = /*#__PURE__*/function () {
   function ProductsDetailService() {}
 
-  ProductsDetailService.versions$ = function versions$() {
+  ProductsDetailService.versions$ = function versions$(productId) {
     if (environment.flags.production) {
-      return ApiService.get$('/products-detail/versions.json');
+      return ApiService.get$('/products/versions?productId=' + productId);
     } else {
       return ApiService.get$('/products-detail/versions.json');
     }
@@ -7122,7 +7134,7 @@ ProductsConfigureComponent.meta = {
 
     this.items = [];
     this.visibleItems = [];
-    ProductsDetailService.versions$().pipe(operators.first()).subscribe(function (items) {
+    ProductsDetailService.versions$(this.product.id).pipe(operators.first()).subscribe(function (items) {
       _this.items = items;
       _this.visibleItems = _this.items.slice(0, Math.min(4, _this.items.length));
 
@@ -7140,7 +7152,7 @@ ProductsConfigureComponent.meta = {
     if (this.isAddedToCart(item)) {
       HeaderService.setHeader('cart');
     } else {
-      CartMiniService.addItem$(item).pipe(operators.first()).subscribe(function (_) {
+      CartMiniService.getPriceAndAddItem$(item).pipe(operators.first()).subscribe(function (_) {
         _this2.pushChanges();
       });
     }
@@ -7172,8 +7184,8 @@ ProductsConfigureComponent.meta = {
     LocomotiveScrollService.update();
   };
 
-  _proto.configureProduct = function configureProduct(item) {
-    window.location.href = environment.slug.configureProduct + "?codprod=" + this.product.code;
+  _proto.configureProduct = function configureProduct(version) {
+    window.location.href = environment.slug.configureProduct + "?productId=" + version.productId + "&code=" + version.code;
   };
 
   return ProductsDetailComponent;
@@ -7606,6 +7618,7 @@ ProjectsRegistrationComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
+    this.categoryId = this.categoryId || null;
     this.items = [];
     this.filteredItems = [];
     this.filters = {};
@@ -7663,7 +7676,8 @@ ProjectsRegistrationComponent.meta = {
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    var category = window.categoryId != null ? window.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null;
+    var category = this.categoryId ? this.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null; // const category = window.categoryId != null ? window.categoryId : (this.filters.category.values.length ? this.filters.category.values[0] : null);
+
     var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
       category: category,
@@ -7715,7 +7729,8 @@ ProjectsRegistrationComponent.meta = {
   return ProjectsComponent;
 }(rxcomp.Component);
 ProjectsComponent.meta = {
-  selector: '[projects]'
+  selector: '[projects]',
+  inputs: ['categoryId']
 };var FilesService = /*#__PURE__*/function () {
   function FilesService() {}
 
@@ -10195,8 +10210,8 @@ SwiperProjectsPropositionDirective.meta = {
   };
 
   _proto.onEdit = function onEdit(item) {
-    console.log('CartMiniComponent.onEdit', item);
-    window.location.href = environment.slug.configureProduct + "?codprod=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    // console.log('CartMiniComponent.onEdit', item);
+    window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   };
 
   _proto.onRemoveAll = function onRemoveAll(event) {

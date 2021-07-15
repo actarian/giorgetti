@@ -3539,10 +3539,12 @@ h6 {
   display: flex;
   justify-content: flex-end; }
 
+/*
 .modal__inner {
-  background: white;
-  border-radius: 2px; }
-
+	background: white;
+	border-radius: 2px;
+}
+*/
 @keyframes scale-up-center {
   0% {
     transform: scale(0.75); }
@@ -6292,7 +6294,7 @@ test-component code {
         flex-direction: column;
         justify-content: center; }
       .card--hero-products-detail .card__title {
-        font-size: 140px; }
+        font-size: 72px; }
         .card--hero-products-detail .card__title > em {
           font-size: 48px; }
       .card--hero-products-detail .card__cta {
@@ -6303,6 +6305,9 @@ test-component code {
           min-width: 0 !important; }
       .card--hero-products-detail .btn--more + .btn--more {
         margin-left: 20px; } }
+  @media (min-width: 1920px) {
+    .card--hero-products-detail .card__title {
+      font-size: 96px; } }
   @media (max-width: 1023.98px) {
     .card--hero-products-detail {
       justify-content: center; }
@@ -6312,7 +6317,7 @@ test-component code {
         position: relative;
         padding: 80px 0; }
       .card--hero-products-detail .card__title {
-        font-size: 72px; }
+        font-size: 64px; }
       .card--hero-products-detail .card__cta {
         display: flex;
         flex-direction: column;
@@ -6346,7 +6351,10 @@ test-component code {
     letter-spacing: -0.008em;
     text-transform: uppercase; }
   .section--details .picture {
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
   .section--details .description {
     font-size: 18px;
     text-align: center; }
@@ -6367,23 +6375,26 @@ test-component code {
     height: 200px;
     margin-bottom: 30px;
     padding: 0 0 25px 0;
-    background: var(--background);
-    overflow: hidden; }
+    overflow: hidden;
+    border: 1px solid rgba(209, 205, 202, 0.5);
+    /*
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #000000;
+			opacity: 0.1;
+		}
+		*/ }
     .card--version .card__picture > img {
       width: auto;
       max-height: 200px;
       max-width: 100%;
       -o-object-fit: cover;
          object-fit: cover; }
-    .card--version .card__picture:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      opacity: 0.1; }
     .card--version .card__picture .badge--configure {
       position: absolute;
       display: flex;
@@ -6433,7 +6444,7 @@ test-component code {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; }
+  justify-content: center; }
   .listing--versions > .listing__item {
     margin-bottom: 100px; }
   @media (min-width: 1920px) {
@@ -7018,7 +7029,13 @@ test-component code {
       -o-object-fit: cover;
          object-fit: cover; }
     .card--design > .card__picture img {
-      transition: transform ease-in-out 250ms; }
+      transition: transform ease-in-out 250ms;
+      transform-origin: bottom;
+      -o-object-fit: contain;
+         object-fit: contain;
+      -o-object-position: 50% 100%;
+         object-position: 50% 100%;
+      background: var(--background); }
     .card--design > .card__picture:after {
       content: '';
       position: absolute;
@@ -7187,7 +7204,10 @@ test-component code {
       justify-content: space-between;
       align-items: stretch;
       max-width: calc(100% - 200px);
-      max-height: calc(100vh - 160px); }
+      max-height: calc(100vh - 160px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--projects-registration .modal__inner {
         padding: 50px 30px 80px 30px;
         height: 100%;
@@ -9865,7 +9885,10 @@ test-component code {
       justify-content: space-between;
       align-items: stretch;
       max-width: calc(100% - 200px);
-      max-height: calc(100vh - 160px); }
+      max-height: calc(100vh - 160px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--careers .modal__inner {
         padding: 50px 30px 80px 30px;
         height: 100%;
@@ -10315,7 +10338,9 @@ test-component code {
       max-height: calc(100vh - 200px);
       overflow-x: hidden;
       overflow-y: auto;
-      padding-bottom: 10px; }
+      padding-bottom: 10px;
+      border-radius: 3px;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--materials::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -10545,13 +10570,20 @@ test-component code {
     height: 50px; }
   .modal--user .modal__inner {
     display: block;
-    padding-top: 50px;
-    padding-bottom: 80px; }
+    padding: 0; }
+  .modal--user .modal__wrapper {
+    padding: 60px 40px; }
+  .modal--user .modal__wrapper--negative {
+    padding: 60px 40px;
+    background: var(--background-tertiary); }
   @media (min-width: 1024px) {
     .modal--user {
       justify-content: space-between;
       align-items: stretch;
-      max-height: calc(100vh - 200px); }
+      max-height: calc(100vh - 200px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--user .modal__picture {
         flex: 1 1 50%; }
       .modal--user .modal__content {
@@ -10565,8 +10597,7 @@ test-component code {
         max-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        padding-left: 70px;
-        padding-right: 70px; }
+        padding: 0; }
         .modal--user .modal__inner::-webkit-scrollbar {
           width: 6px;
           height: 6px;
@@ -10585,7 +10616,11 @@ test-component code {
           background-color: transparent;
           border-radius: 2px; }
           .modal--user .modal__inner::-webkit-scrollbar-track:hover {
-            background-color: transparent; } }
+            background-color: transparent; }
+      .modal--user .modal__wrapper {
+        padding: 60px 40px; }
+      .modal--user .modal__wrapper--negative {
+        padding: 60px 40px; } }
   @media (max-width: 1023.98px) {
     .modal--user {
       flex-direction: column;
@@ -10630,7 +10665,15 @@ test-component code {
           -o-object-fit: cover;
              object-fit: cover; }
       .modal--user .modal__inner {
-        padding-bottom: 120px; } }
+        padding: 0; }
+      .modal--user .modal__wrapper {
+        padding: 60px 0; }
+        .modal--user .modal__wrapper:last-child {
+          padding-bottom: 120px; }
+      .modal--user .modal__wrapper--negative {
+        padding: 60px 0; }
+        .modal--user .modal__wrapper--negative:last-child {
+          padding-bottom: 120px; } }
 
 .modal--user .section--form,
 .section--auth .section--form {
@@ -10763,10 +10806,14 @@ test-component code {
     height: 1.99px; }
   @media (min-width: 1024px) {
     .divline {
-      margin: 60px 0; } }
+      margin: 60px 0; }
+      .divline:first-child {
+        margin-top: 0; } }
   @media (max-width: 1023.98px) {
     .divline {
-      margin: 40px 0; } }
+      margin: 40px 0; }
+      .divline:first-child {
+        margin-top: 0; } }
 
 .modal--social-login {
   background: var(--background);
@@ -10844,7 +10891,10 @@ test-component code {
     .modal--social-login {
       justify-content: space-between;
       align-items: stretch;
-      max-height: calc(100vh - 200px); }
+      max-height: calc(100vh - 200px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--social-login .modal__content {
         flex: 1 1 50%;
         height: 600px;
@@ -11314,7 +11364,10 @@ test-component code {
       justify-content: space-between;
       align-items: stretch;
       max-width: calc(100% - 200px);
-      max-height: calc(100vh - 200px); }
+      max-height: calc(100vh - 200px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
       .modal--markets-and-languages .modal__inner {
         padding: 50px 60px 80px;
         height: 600px;

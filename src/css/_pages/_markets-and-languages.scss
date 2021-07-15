@@ -94,6 +94,9 @@
 		align-items: stretch;
 		max-width: calc(100% - 200px);
 		max-height: calc(100vh - 200px);
+		border-radius: 3px;
+		overflow: hidden;
+		box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35);
 
 		.modal__inner {
 			padding: 50px 60px 80px;

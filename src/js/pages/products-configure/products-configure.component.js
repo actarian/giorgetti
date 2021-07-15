@@ -12,17 +12,16 @@ const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px
 export class ProductsConfigureComponent extends Component {
 
 	get showefyUrl() {
-		if (this.codprod) {
-			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=P&codprod=${this.codprod}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
+		if (this.product) {
+			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=P&codprod=${this.product.code}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
 		}
 	}
 
 	onInit() {
-		this.codprod = LocationService.get('codprod');
 		this.sl = LocationService.get('sl');
-		console.log(this.codprod);
-		if (!this.codprod) {
-			throw ('ProductsConfigureComponent.error missing codprod');
+		// console.log(this.code);
+		if (!this.product) {
+			throw ('ProductsConfigureComponent.error missing product');
 		}
 		this.isReady = false;
 		this.isComplete = false;
@@ -33,15 +32,6 @@ export class ProductsConfigureComponent extends Component {
 			throw ('missing iframe');
 		}
 		this.onEvent = this.onEvent.bind(this);
-
-		/*
-		HttpService.http$('POST', 'https://www.showefy.com/en/ApiExt/token/v1', { grant_type: 'client_credentials' }, 'json', 'giorgetti:AGdW%Q_8@Pe,2&#').pipe(
-			first(),
-		).subscribe(response => {
-			console.log(response);
-		});
-		*/
-
 		const sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
 		sfy.init();
 		console.log('ProductsConfigureComponent.onInit', sfy, iframe);
@@ -217,7 +207,7 @@ export class ProductsConfigureComponent extends Component {
 			cartItem.image = data.image;
 		}
 		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
-		CartMiniService.addItem$(cartItem).pipe(
+		CartMiniService.getPriceAndAddItem$(cartItem).pipe(
 			first(),
 		).subscribe();
 	}

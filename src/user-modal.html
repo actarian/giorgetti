@@ -7,27 +7,31 @@
 			<button type="button" class="btn--close"><svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#close"></use></svg></button>
 		</div>
 		<div class="modal__inner">
-			<div *if="view == views.SIGN_IN">
+			<div class="modal__wrapper" *if="view == views.SIGN_IN">
 				<!-- @@include ./templates/shared/user-signin.html -->
 			</div>
-			<div *if="view == views.SIGN_UP">
+			<div class="modal__wrapper" *if="view == views.SIGN_UP">
 				<!-- @@include ./templates/shared/user-signup.html -->
 			</div>
-			<div *if="view == views.FORGOTTEN">
+			<div class="modal__wrapper" *if="view == views.FORGOTTEN">
 				<!-- @@include ./templates/shared/user-forgot.html -->
 			</div>
-			<div class="container" *if="view != views.SIGN_UP">
-				<div class="divline"></div>
-				<div class="subtitle">Non fai ancora parte di Giorgetti?</div>
-				<div class="group--info">
-					<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
+			<div class="modal__wrapper--negative" *if="view != views.SIGN_UP">
+				<div class="container">
+					<div class="divline"></div>
+					<div class="subtitle">Non fai ancora parte di Giorgetti?</div>
+					<div class="group--info">
+						<button type="button" class="btn--link" (click)="onViewSignUp($event)"><span>Registrati</span></button>
+					</div>
 				</div>
 			</div>
-			<div class="container" *if="view == views.SIGN_UP">
-				<div class="divline"></div>
-				<div class="subtitle">Sei già registrato?</div>
-				<div class="group--info">
-					<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
+			<div class="modal__wrapper--negative" *if="view == views.SIGN_UP">
+				<div class="container">
+					<div class="divline"></div>
+					<div class="subtitle">Sei già registrato?</div>
+					<div class="group--info">
+						<button type="button" class="btn--link" (click)="onViewSignIn($event)"><span>Accedi</span></button>
+					</div>
 				</div>
 			</div>
 		</div>

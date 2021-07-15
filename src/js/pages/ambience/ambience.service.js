@@ -5,7 +5,7 @@ export class AmbienceService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/ambience/all.json');
+			return ApiService.get$('/ambience/all');
 		} else {
 			return ApiService.get$('/ambience/all.json');
 		}
@@ -13,7 +13,7 @@ export class AmbienceService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/ambience/filters.json');
+			return ApiService.get$('/ambience/filters');
 		} else {
 			return ApiService.get$('/ambience/filters.json');
 		}

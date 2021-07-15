@@ -65,7 +65,7 @@ export class AppComponent extends Component {
 	}
 
 	onAddToCart(item) {
-		CartMiniService.addItem$(item).pipe(
+		CartMiniService.getPriceAndAddItem$(item).pipe(
 			first(),
 		).subscribe(_ => {
 			this.pushChanges();
