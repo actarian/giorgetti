@@ -1449,7 +1449,7 @@ DownloadDirective.meta = {
   };
 
   LocomotiveScrollService.init$ = function init$(node) {
-    return rxjs.fromEvent(window, 'load').pipe(operators.delay(1), operators.switchMap(function (_) {
+    return rxjs.fromEvent(window, 'DOMContentLoaded').pipe(operators.delay(1), operators.switchMap(function (_) {
       // setTimeout(() => {
       var instance = LocomotiveScrollService.init(node);
 
@@ -2117,6 +2117,24 @@ LocomotiveScrollToDirective.meta = {
 
     LocomotiveScrollService.init$(node).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('LocomotiveScrollDirective', event);
     });
+
+    if ('ResizeObserver' in window) {
+      var resizeObserver = new ResizeObserver(function (entries) {
+        // console.log('LocomotiveScrollDirective.ResizeObserver', entries[0].target.clientHeight);
+        LocomotiveScrollService.update();
+      });
+      resizeObserver.observe(node);
+    }
+    /*
+    const images = Array.prototype.slice.call(document.querySelectorAll('img'));
+    images.forEach(image => {
+    	image.onload = () => {
+    		console.log(update);
+    		instance.update();
+    	};
+    });
+    */
+
     /*
     window.onload = () => {
     	setTimeout(() => {
@@ -2135,6 +2153,7 @@ LocomotiveScrollToDirective.meta = {
     	}, 1);
     };
     */
+
   };
 
   return LocomotiveScrollDirective;

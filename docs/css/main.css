@@ -5172,7 +5172,7 @@ test-component code {
 .footer {
   position: relative;
   margin-top: 240px;
-  padding-bottom: 500px;
+  padding-bottom: 130px;
   background: var(--background-secondary); }
 
 .group--prefooter {

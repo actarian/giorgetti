@@ -11,6 +11,22 @@ export class LocomotiveScrollDirective extends Directive {
 		).subscribe(event => {
 			// console.log('LocomotiveScrollDirective', event);
 		});
+		if ('ResizeObserver' in window) {
+			const resizeObserver = new ResizeObserver(entries => {
+				// console.log('LocomotiveScrollDirective.ResizeObserver', entries[0].target.clientHeight);
+				LocomotiveScrollService.update();
+			});
+			resizeObserver.observe(node);
+		}
+		/*
+		const images = Array.prototype.slice.call(document.querySelectorAll('img'));
+		images.forEach(image => {
+			image.onload = () => {
+				console.log(update);
+				instance.update();
+			};
+		});
+		*/
 		/*
 		window.onload = () => {
 			setTimeout(() => {

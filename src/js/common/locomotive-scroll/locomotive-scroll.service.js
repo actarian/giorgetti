@@ -76,7 +76,7 @@ export class LocomotiveScrollService {
 	}
 
 	static init$(node) {
-		return fromEvent(window, 'load').pipe(
+		return fromEvent(window, 'DOMContentLoaded').pipe(
 			delay(1),
 			switchMap(_ => {
 				// setTimeout(() => {
