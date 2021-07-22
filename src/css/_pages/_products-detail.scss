@@ -196,24 +196,24 @@
 	align-items: center;
 
 	.card__picture {
-		position: relative;
+		@include aspect-clip(1, 1);
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: center;
-		width: 100%;
-		height: 200px;
 		margin-bottom: 30px;
-		padding: 0 0 25px 0;
-		overflow: hidden;
-		// background: $background;
 		border: 1px solid rgba(209, 205, 202, 0.5);
 
 		&>img {
 			width: auto;
 			max-height: 200px;
 			max-width: 100%;
-			object-fit: cover;
+			object-fit: none;
+			height: auto;
+			top: auto;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
 		}
 
 		/*
@@ -294,6 +294,20 @@
 
 	.btn--download {
 		@extend %btn-secondary;
+	}
+
+	@include media-up(md) {
+		height: 100%;
+
+		.card__content {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.card__abstract {
+			flex-grow: 1;
+		}
 	}
 }
 
@@ -443,9 +457,16 @@
 	}
 
 	.card__title {
-		font-size: 24px;
+		font-size: 14px;
 		line-height: 1.2;
 		text-align: center;
+		text-transform: uppercase;
+
+		&>em {
+			font-style: normal;
+			color: #6a6a6a;
+			font-size: 0.8em;
+		}
 	}
 }
 

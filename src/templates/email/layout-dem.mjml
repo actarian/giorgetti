@@ -53,9 +53,9 @@
     <!-- Body -->
 
     <!-- Footer Battaglia -->
-    <mj-section padding="85px 10px 5px 10px">
+    <mj-section padding="45px 10px 5px 10px">
       <mj-column>
-        <mj-image width="300px" height="55px" href="https://giorgetti21.wslabs.it" src="https://giorgetti21.wslabs.it/Client/docs/img/email/giorgetti-battaglia.png"></mj-image>
+        <mj-image width="220px" height="40px" href="https://giorgetti21.wslabs.it" src="https://giorgetti21.wslabs.it/Client/docs/img/email/giorgetti-battaglia.png"></mj-image>
       </mj-column>
     </mj-section>
 
@@ -81,20 +81,27 @@
     </mj-section>
 
     <!-- Footer Actions -->
-    <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+    <mj-section padding="20px 10px 0 10px" border-top="1px solid #d1cdca">
       <mj-group>
         <mj-column>
-          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="#" style="color:#35302C">View in browser</a>
+          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">View in browser</a>
           </mj-text>
-          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="#" style="color:#35302C">Unsubscribe</a>
+          <!--
+          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">Unsubscribe</a>
           </mj-text>
+		  -->
         </mj-column>
         <mj-column>
-          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="https://giorgetti21.wslabs.it" style="color:#35302C">Giorgetti website</a>
+          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">Unsubscribe</a>
           </mj-text>
+          <!--
+          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="https://giorgetti21.wslabs.it" style="color:#A19C96">Giorgetti website</a>
+          </mj-text>
+		  -->
         </mj-column>
       </mj-group>
     </mj-section>

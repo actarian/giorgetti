@@ -1,8 +1,5 @@
-.section--secondary {
-	padding-top: 30px;
-}
-
 .nav--files {
+	margin-bottom: 60px;
 
 	&,
 	& ul {
@@ -69,7 +66,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 0 0 30px;
 	border-bottom: 2px solid $foreground;
 
 	.card__picture {
@@ -86,7 +82,6 @@
 	.card__name {
 		display: block;
 		width: 100%;
-		font-size: 18px;
 		line-height: 1.2;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -117,14 +112,13 @@
 		margin-left: 10px;
 	}
 
-	@include media-down(xs) {
-		&>.card__content {
-			padding: 0 20px;
-			width: 100%;
-		}
-	}
-
 	@include media-up(sm) {
+		padding: 0 0 30px;
+
+		.card__name {
+			font-size: 18px;
+		}
+
 		@media (-webkit-min-device-pixel-ratio:0) {
 			height: 100%;
 
@@ -132,6 +126,19 @@
 				flex: 1 1 100%;
 				width: 100%;
 			}
+		}
+	}
+
+	@include media-down(xs) {
+		padding: 0 0 10px;
+
+		&>.card__content {
+			padding: 0;
+			width: 100%;
+		}
+
+		.card__name {
+			font-size: 14px;
 		}
 	}
 
@@ -146,17 +153,38 @@
 	}
 }
 
+/*
+.section--secondary {
+	padding-top: 30px;
+}
+*/
+
 .section--files {
 	margin-bottom: 100px;
-	padding: 60px 0 80px 0;
+	// padding: 60px 0 80px 0;
 	min-height: 50vh;
 
 	.title {
+		margin-bottom: 30px;
 		font-family: $font-secondary;
-		font-size: 48px;
 		line-height: 1.1;
 		letter-spacing: -0.027em;
 		text-transform: uppercase;
+
+		em {
+			display: block;
+			font-style: normal;
+			color: #6A6A6A;
+		}
+	}
+
+	.subtitle {
+		font-family: $font-secondary;
+		line-height: 1.1;
+		letter-spacing: -0.027em;
+		text-transform: uppercase;
+		border-top: 2px solid $background-tertiary;
+		padding-top: 20px;
 	}
 
 	.btn--more {
@@ -181,6 +209,28 @@
 			height: 100%;
 			border-left: 2px solid $border;
 			padding-left: 20px;
+		}
+	}
+
+	@include media-up(md) {
+		.title {
+			margin-top: 120px;
+			font-size: 72px;
+		}
+
+		.subtitle {
+			font-size: 48px;
+		}
+	}
+
+	@include media-down(sm) {
+		.title {
+			margin-top: 60px;
+			font-size: 48px;
+		}
+
+		.subtitle {
+			font-size: 32px;
 		}
 	}
 }
@@ -248,7 +298,7 @@
 
 		&>.listing__item {
 			@include as-col(12, 12, $gutter);
-			margin-bottom: 70px;
+			margin-bottom: 10px;
 		}
 	}
 }

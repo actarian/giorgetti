@@ -8,15 +8,18 @@
 		</div>
 		<div class="modal__inner">
 			<div class="modal__wrapper" *if="view == views.SIGN_IN">
-				<!-- @@include ./templates/shared/user-signin.html -->
+				<!-- @@include ../shared/user-signin.html -->
 			</div>
 			<div class="modal__wrapper" *if="view == views.SIGN_UP">
-				<!-- @@include ./templates/shared/user-signup.html -->
+				<!-- @@include ../shared/user-signup.html -->
 			</div>
 			<div class="modal__wrapper" *if="view == views.FORGOTTEN">
-				<!-- @@include ./templates/shared/user-forgot.html -->
+				<!-- @@include ../shared/user-forgot.html -->
 			</div>
-			<div class="modal__wrapper--negative" *if="view != views.SIGN_UP">
+			<div class="modal__wrapper" *if="view == views.EDIT">
+				<!-- @@include ../shared/user-edit.html -->
+			</div>
+			<div class="modal__wrapper--negative" *if="view != views.SIGN_UP && view != views.EDIT">
 				<div class="container">
 					<div class="divline"></div>
 					<div class="subtitle">Non fai ancora parte di Giorgetti?</div>

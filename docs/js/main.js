@@ -63,7 +63,9 @@ function _readOnlyError(name) {
   throw new TypeError("\"" + name + "\" is read-only");
 }var ModalEvent = function ModalEvent(data) {
   this.data = data;
-};
+}; // export class ModalLoadEvent extends ModalEvent { }
+// export class ModalLoadedEvent extends ModalEvent { }
+
 var ModalResolveEvent = /*#__PURE__*/function (_ModalEvent) {
   _inheritsLoose(ModalResolveEvent, _ModalEvent);
 
@@ -88,7 +90,9 @@ var ModalService = /*#__PURE__*/function () {
   ModalService.open$ = function open$(modal) {
     var _this = this;
 
-    return this.getTemplate$(modal.src).pipe(operators.map(function (template) {
+    this.busy$.next(true);
+    return this.getTemplate$(modal.src).pipe( // startWith(new ModalLoadEvent(Object.assign({}, modal.data, { $src: modal.src }))),
+    operators.map(function (template) {
       return {
         node: _this.getNode(template),
         data: modal.data,
@@ -98,6 +102,9 @@ var ModalService = /*#__PURE__*/function () {
       _this.modal$.next(node);
 
       _this.hasModal = true;
+
+      _this.busy$.next(false); // this.events$.next(new ModalLoadedEvent(Object.assign({}, modal.data, { $src: modal.src })));
+
     }), operators.switchMap(function (node) {
       return _this.events$;
     }), operators.tap(function (_) {
@@ -136,7 +143,8 @@ var ModalService = /*#__PURE__*/function () {
 _defineProperty(ModalService, "hasModal", false);
 
 ModalService.modal$ = new rxjs.Subject();
-ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
+ModalService.events$ = new rxjs.Subject();
+ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   function Utils() {}
 
   Utils.merge = function merge(target, source) {
@@ -172,15 +180,18 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   assets: '/Client/docs/',
   slug: {
     configureProduct: "/it/it/products-configure",
+    cart: "/it/it/cart",
     reservedArea: "/it/it/reserved-area"
   },
   template: {
     modal: {
-      userModal: '/template/modals/user-modal.cshtml',
       careersModal: '/template/modals/careers-modal.cshtml',
-      projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
+      genericModal: '/template/modals/generic-modal.cshtml',
+      marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
       materialsModal: '/template/modals/materials-modal.cshtml',
-      marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml'
+      ordersModal: '/template/modals/orders-modal.cshtml',
+      projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
+      userModal: '/template/modals/user-modal.cshtml'
     }
   },
   facebook: {
@@ -224,15 +235,18 @@ ModalService.events$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   assets: '/giorgetti/',
   slug: {
     configureProduct: "/giorgetti/products-configure.html",
+    cart: "/giorgetti/cart.html",
     reservedArea: "/giorgetti/reserved-area.html"
   },
   template: {
     modal: {
-      userModal: '/giorgetti/user-modal.html',
-      careersModal: '/giorgetti/careers-modal.html',
-      projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
-      materialsModal: '/giorgetti/materials-modal.html',
-      marketsAndLanguagesModal: '/giorgetti/markets-and-languages-modal.html'
+      careersModal: '/giorgetti/partials/modals/careers-modal.html',
+      genericModal: '/giorgetti/partials/modals/generic-modal.html',
+      marketsAndLanguagesModal: '/giorgetti/partials/modals/markets-and-languages-modal.html',
+      materialsModal: '/giorgetti/partials/modals/materials-modal.html',
+      ordersModal: '/giorgetti/partials/modals/orders-modal.html',
+      projectsRegistrationModal: '/giorgetti/partials/modals/projects-registration-modal.html',
+      userModal: '/giorgetti/partials/modals/user-modal.html'
     }
   },
   facebook: {
@@ -890,16 +904,16 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
 
   CartMiniService.setItems = function setItems(items) {
     if (items) {
-      LocalStorageService.set('cartItems', items);
+      LocalStorageService.set(CartMiniService.STORAGE_KEY, items);
     } else {
-      LocalStorageService.delete('cartItems');
+      LocalStorageService.delete(CartMiniService.STORAGE_KEY);
     }
 
     CartMiniService.items$_.next(items);
   };
 
   CartMiniService.items$ = function items$() {
-    var localItems = LocalStorageService.get('cartItems') || [];
+    var localItems = LocalStorageService.get(CartMiniService.STORAGE_KEY) || [];
     return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
       CartMiniService.setItems(items);
       return CartMiniService.items$_;
@@ -942,6 +956,7 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
   };
 
   CartMiniService.addItem$ = function addItem$(item) {
+    var count = CartMiniService.count;
     return rxjs.of(Object.assign({
       qty: 1
     }, item)).pipe(operators.map(function (item) {
@@ -950,12 +965,17 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
 
       if (item_) {
         item_.qty += item.qty;
+        item_.price = item.price;
         CartMiniService.setItems(items);
         return item_;
       } else {
         items.push(item);
         CartMiniService.setItems(items);
         return item;
+      }
+    }), operators.tap(function (_) {
+      if (count === 0) {
+        HeaderService.setHeader('cart');
       }
     }));
   };
@@ -990,28 +1010,20 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
 
   CartMiniService.getPrice$ = function getPrice$(item) {
     if (environment.flags.production) {
-      /*
-      !!! implementare la post a /api/cart-mini/price per ottenere il prezzo da showefy
-      il payload è { showefy: { internalstr: "string..." } }
-      il payload completo e l'output si trovano qui /api/cart-mini/price.json
-      */
-      // return ApiService.post$('/cart-mini/price', item);
-      return ApiService.get$('/cart-mini/price.json');
+      return ApiService.post$('/cart-mini/price', item);
     } else {
-      return ApiService.get$('/cart-mini/price.json'); // return of(Object.assign(item, { price: 899 }));
+      return ApiService.get$('/cart-mini/price.json');
     }
   };
 
   CartMiniService.getPriceAndAddItem$ = function getPriceAndAddItem$(item) {
-    var _this = this;
-
-    return this.getPrice$(item).pipe(operators.switchMap(function (item) {
-      return _this.addItem$(item);
+    return CartMiniService.getPrice$(item).pipe(operators.switchMap(function (item) {
+      return CartMiniService.addItem$(item);
     }));
   };
 
   CartMiniService.match = function match(item, item_) {
-    return item_.id === item.id && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
+    return item_.id === item.id && item_.code === item.code && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
   };
 
   CartMiniService.find = function find(item, items) {
@@ -1027,6 +1039,11 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
   };
 
   _createClass(CartMiniService, null, [{
+    key: "STORAGE_KEY",
+    get: function get() {
+      return "cartItems_" + environment.currentMarket;
+    }
+  }, {
     key: "currentItems",
     get: function get() {
       return CartMiniService.items$_.getValue();
@@ -1041,7 +1058,182 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
   return CartMiniService;
 }();
 
-_defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var SessionStorageService = /*#__PURE__*/function () {
+_defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var CartSteps = {
+  None: 0,
+  Items: 1,
+  Data: 2,
+  Delivery: 3,
+  Recap: 4,
+  Payment: 5,
+  Complete: 6,
+  Error: -1
+};
+/*
+export class Cart {
+	constructor() {
+		this.step = CartSteps.Items; // number
+		this.items = []; // CartItem[]
+		this.shipmentCountry = null; // number
+		this.user = null; // User
+		this.guest = null; // boolean
+		this.data = {
+			firstName: null, // string
+			lastName: null, // string
+			email: null, // string
+			telephone: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // number
+			message: null, // string
+			invoice: null, // boolean
+			invoiceData: {
+				taxNumber: null, // string
+				sdi: null, // string
+				pec: null, // string
+			},
+			billing: null, // boolean
+			billingData: {
+				company: null, // string
+				firstName: null, // string
+				lastName: null, // string
+				telephone: null, // string
+				address: null, // string
+				zipCode: null, // string
+				city: null, // string
+				province: null, // string
+				country: null, // number
+			},
+			conditions: false, // boolean
+			privacy: false, // boolean
+			terms: false, // boolean
+		};
+		this.deliveryData = null; // {
+			firstName: null, // string
+			lastName: null, // string
+			email: null, // string
+			telephone: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // { id: number, name: string }
+		}
+		this.billingData = null; // {
+			firstName: null, // string
+			lastName: null, // string
+			address: null, // string
+			zipCode: null, // string
+			city: null, // string
+			province: null, // string
+			country: null, // { id: number, name: string }
+		}
+		this.deliveryType = null; // number
+		this.delivery = null; // { id: number, name: string }
+		this.discountCode = null; // string
+		this.discount = null; // { code: string, price: number }
+		this.paymentMethod = null; // number
+		this.store = null; // Store
+	}
+}
+*/
+
+var CartService = /*#__PURE__*/function () {
+  function CartService() {}
+
+  CartService.setStep = function setStep(step) {
+    var cart = CartService.currentCart;
+
+    if (cart) {
+      cart.step = step;
+      CartService.setCart(cart);
+    }
+  };
+
+  CartService.setCart = function setCart(cart) {
+    if (cart) {
+      LocalStorageService.set(CartService.STORAGE_KEY, cart);
+    } else {
+      LocalStorageService.delete(CartService.STORAGE_KEY);
+    }
+
+    CartService.cart$_.next(cart);
+  };
+
+  CartService.cart$ = function cart$() {
+    var localCart = LocalStorageService.get(CartService.STORAGE_KEY) || null;
+    return rxjs.of(localCart).pipe(operators.switchMap(function (cart) {
+      CartService.setCart(cart);
+      return CartService.cart$_;
+    }));
+  };
+
+  CartService.clear$ = function clear$() {
+    return rxjs.of(null).pipe(operators.map(function (cart) {
+      CartMiniService.setItems([]);
+      CartService.setCart(cart);
+      return cart;
+    }));
+  };
+
+  CartService.data$ = function data$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/data.json');
+    } else {
+      return ApiService.get$('/cart/data.json');
+    }
+  };
+
+  CartService.getDeliveryType$ = function getDeliveryType$(cart) {
+    if (environment.flags.production) {
+      // !!! convertire in post ApiService.post$('/cart/delivery-type', cart);
+      return ApiService.get$('/cart/delivery-type.json');
+    } else {
+      return ApiService.get$('/cart/delivery-type.json');
+    }
+  };
+
+  CartService.getStore$ = function getStore$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/store.json');
+    } else {
+      return ApiService.get$('/cart/store.json');
+    }
+  };
+
+  CartService.getStores$ = function getStores$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/stores.json');
+    } else {
+      return ApiService.get$('/cart/stores.json');
+    }
+  };
+
+  CartService.getDiscount$ = function getDiscount$(payload) {
+    if (environment.flags.production) {
+      return ApiService.get$('/cart/discount.json');
+    } else {
+      return ApiService.get$('/cart/discount.json');
+    }
+  };
+
+  _createClass(CartService, null, [{
+    key: "STORAGE_KEY",
+    get: function get() {
+      return "cart_" + environment.currentMarket;
+    }
+  }, {
+    key: "currentCart",
+    get: function get() {
+      return CartService.cart$_.getValue();
+    }
+  }]);
+
+  return CartService;
+}();
+
+_defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var SessionStorageService = /*#__PURE__*/function () {
   function SessionStorageService() {}
 
   SessionStorageService.delete = function _delete(name) {
@@ -1121,7 +1313,8 @@ _defineProperty(CartMiniService, "items$_", new rxjs.BehaviorSubject([]));var Se
 }();var UserViews = {
   SIGN_IN: 1,
   SIGN_UP: 2,
-  FORGOTTEN: 3
+  FORGOTTEN: 3,
+  EDIT: 4
 };
 var User = /*#__PURE__*/function () {
   function User(data) {
@@ -1131,7 +1324,7 @@ var User = /*#__PURE__*/function () {
   }
 
   _createClass(User, [{
-    key: "avatar",
+    key: "shortName",
     get: function get() {
       return (this.firstName || '?').substr(0, 1).toUpperCase() + (this.lastName || '?').substr(0, 1).toUpperCase();
     }
@@ -1222,12 +1415,45 @@ var UserService = /*#__PURE__*/function () {
   UserService.signup$ = function signup$(payload) {
     var _this4 = this;
 
+    // console.log('UserService.signup$', payload);
     return (environment.flags.production ? // !!! convert to .post$
     ApiService.get$("/user/signup.json", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
       return _this4.mapUser(response);
     }), operators.tap(function (user) {
       return _this4.setUser(user);
     }));
+  };
+
+  UserService.edit$ = function edit$(payload) {
+    var _this5 = this;
+
+    // console.log('UserService.edit$', payload);
+    return (environment.flags.production ? // !!! convert to .post$
+    ApiService.get$("/user/edit.json", payload) : ApiService.get$("/user/edit.json")).pipe(operators.map(function (response) {
+      return _this5.mapUser(response);
+    }), operators.tap(function (user) {
+      return _this5.setUser(user);
+    }));
+  };
+
+  UserService.accessData$ = function accessData$(payload) {
+    // console.log('UserService.accessData$', payload);
+    return environment.flags.production ? // !!! convert to .post$
+    ApiService.get$("/user/access-data.json", payload) : ApiService.get$("/user/access-data.json");
+  };
+
+  UserService.delete$ = function delete$(payload) {
+    // console.log('UserService.delete$', payload);
+    return environment.flags.production ? // !!! convert to .post$
+    ApiService.get$("/user/delete.json", payload) : ApiService.get$("/user/delete.json");
+  };
+
+  UserService.gdpr$ = function gdpr$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/user/gdpr.json');
+    } else {
+      return ApiService.get$('/user/gdpr.json');
+    }
   };
 
   UserService.tryFacebook$ = function tryFacebook$(me) {
@@ -1339,6 +1565,9 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   _proto.onAddToCart = function onAddToCart(item) {
     var _this2 = this;
 
+    // resetting purchase procedure
+    CartService.setCart(null); // getting showefy price and adding to mini cart
+
     CartMiniService.getPriceAndAddItem$(item).pipe(operators.first()).subscribe(function (_) {
       _this2.pushChanges();
     });
@@ -1352,6 +1581,96 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
 }(rxcomp.Component);
 AppComponent.meta = {
   selector: '[app-component]'
+};var ClickOutsideDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(ClickOutsideDirective, _Directive);
+
+  function ClickOutsideDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = ClickOutsideDirective.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.initialFocus = false;
+
+    var _getContext = rxcomp.getContext(this),
+        module = _getContext.module,
+        node = _getContext.node,
+        parentInstance = _getContext.parentInstance,
+        selector = _getContext.selector;
+
+    var event$ = this.event$ = rxjs.fromEvent(document, 'click').pipe(operators.filter(function (event) {
+      var target = event.target; // console.log('ClickOutsideDirective.onClick', this.element.nativeElement, target, this.element.nativeElement.contains(target));
+      // const documentContained: boolean = Boolean(document.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_CONTAINED_BY);
+      // console.log(target, documentContained);
+
+      var clickedInside = node.contains(target) || !document.contains(target);
+
+      if (!clickedInside) {
+        if (_this.initialFocus) {
+          _this.initialFocus = false;
+          return true;
+        }
+      } else {
+        _this.initialFocus = true;
+      }
+    }), operators.shareReplay(1));
+    var expression = node.getAttribute("(clickOutside)");
+
+    if (expression) {
+      var outputFunction = module.makeFunction(expression, ['$event']);
+      event$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+        module.resolve(outputFunction, parentInstance, event);
+      });
+    } else {
+      parentInstance.clickOutside$ = event$;
+    }
+  };
+
+  return ClickOutsideDirective;
+}(rxcomp.Directive);
+ClickOutsideDirective.meta = {
+  selector: "[(clickOutside)]"
+};var DatePipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(DatePipe, _Pipe);
+
+  function DatePipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  DatePipe.transform = function transform(value, options, language) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (language === void 0) {
+      language = null;
+    }
+
+    // = 'en-IN'
+    if (value != null) {
+      // !!! keep losing
+      language = language || environment.currentLanguage;
+      return new Intl.DateTimeFormat(language, options).format(value instanceof Date ? value : new Date(value));
+    }
+  }
+  /*
+  static transform(value, locale = 'it-IT-u-ca-gregory', options = {
+  	dateStyle: 'short',
+  	timeStyle: 'short',
+  }) {
+  	const localeDateString = new Date(value).toLocaleDateString(locale, options);
+  	return localeDateString;
+  }
+  */
+  ;
+
+  return DatePipe;
+}(rxcomp.Pipe);
+DatePipe.meta = {
+  name: 'date'
 };var DownloadDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(DownloadDirective, _Directive);
 
@@ -1806,6 +2125,61 @@ DropdownItemDirective.meta = {
 }(rxcomp.Pipe);
 EnvPipe.meta = {
   name: 'env'
+};var FilterComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(FilterComponent, _Component);
+
+  function FilterComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = FilterComponent.prototype;
+
+  _proto.onInit = function onInit() {};
+
+  _proto.closeFilter = function closeFilter() {
+    this.filter.active = false;
+    this.change.next(); // this.pushChanges();
+  };
+
+  _proto.toggleFilter = function toggleFilter(filter) {
+    var _this = this;
+
+    Object.keys(this.filters).forEach(function (key) {
+      var f = _this.filters[key];
+
+      if (f === filter) {
+        f.active = !f.active;
+      } else {
+        f.active = false;
+      }
+    });
+    this.change.next(); // this.pushChanges();
+  };
+
+  _proto.clearFilter = function clearFilter(event, filter) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    filter.clear();
+    this.change.next(); // this.pushChanges();
+  };
+
+  _proto.onEnter = function onEnter() {
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onLeave = function onLeave() {
+    LocomotiveScrollService.start();
+  };
+
+  return FilterComponent;
+}(rxcomp.Component);
+FilterComponent.meta = {
+  selector: '[filter], [[filter]]',
+  outputs: ['change'],
+  inputs: ['filter', 'filters', 'name'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--filter\" (click)=\"toggleFilter(filter)\" (clickOutside)=\"closeFilter(filter)\">\n\t\t\t<span class=\"label\" [innerHTML]=\"filter.getLabel() || name\"></span>\n\t\t\t<svg class=\"caret-down\" *if=\"!filter.hasAny()\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<svg class=\"close-sm\" *if=\"filter.hasAny()\" (click)=\"clearFilter($event, filter)\"><use xlink:href=\"#close-sm\"></use></svg>\n\t\t</div>\n\t\t<div class=\"options\" *if=\"filter.active\" (mouseenter)=\"onEnter()\" (mouseleave)=\"onLeave()\">\n\t\t\t<div class=\"category\" [innerHTML]=\"name\"></div>\n\t\t\t<ul class=\"nav--options\">\n\t\t\t\t<li class=\"nav--options__item\" [class]=\"{ active: filter.has(item), disabled: item.disabled, empty: !item.value }\" *for=\"let item of filter.options\">\n\t\t\t\t\t<span class=\"option\" (click)=\"filter.set(item)\">\n\t\t\t\t\t\t<span class=\"name\" [innerHTML]=\"item.label | label\"></span>\n\t\t\t\t\t\t<!-- <span class=\"count\" [innerHTML]=\"item.count || ''\"></span> -->\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t\t"
 };var FlagPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(FlagPipe, _Pipe);
 
@@ -2216,12 +2590,17 @@ ScrollDirective.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
+    this.busy_ = false;
+
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
 
     this.modalNode = node.querySelector('.modal-outlet__modal');
     ModalService.modal$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (modal) {
-      _this.modal = modal;
+      return _this.modal = modal;
+    });
+    ModalService.busy$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (busy) {
+      return _this.busy = busy;
     });
   };
 
@@ -2253,6 +2632,18 @@ ScrollDirective.meta = {
       this.modal_ = modal;
       this.pushChanges();
     }
+  }, {
+    key: "busy",
+    get: function get() {
+      return this.busy_;
+    },
+    set: function set(busy) {
+      // console.log('ModalOutletComponent set busy', busy, this);
+      if (this.busy_ !== busy) {
+        this.busy_ = busy;
+        this.pushChanges();
+      }
+    }
   }]);
 
   return ModalOutletComponent;
@@ -2261,7 +2652,7 @@ ModalOutletComponent.meta = {
   selector: '[modal-outlet]',
   template:
   /* html */
-  "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t</div>\n\t"
+  "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal, busy: busy }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t\t<!-- spinner -->\n\t\t<div class=\"spinner spinner--contrasted\" *if=\"busy\"></div>\n\t</div>\n\t"
 };var NumberPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(NumberPipe, _Pipe);
 
@@ -2269,17 +2660,19 @@ ModalOutletComponent.meta = {
     return _Pipe.apply(this, arguments) || this;
   }
 
-  NumberPipe.transform = function transform(value, language, options) {
-    if (language === void 0) {
-      language = 'en-IN';
-    }
-
+  NumberPipe.transform = function transform(value, options, language) {
     if (options === void 0) {
       options = {};
     }
 
+    if (language === void 0) {
+      language = null;
+    }
+
+    // = 'en-IN'
     if (value != null) {
       // !!! keep losing
+      language = language || environment.currentLanguage;
       return new Intl.NumberFormat(language, options).format(value);
     }
   };
@@ -2981,15 +3374,15 @@ ThronComponent.meta = {
 TitleDirective.meta = {
   selector: '[[title]]',
   inputs: ['title']
-};var factories = [DownloadDirective, // DropDirective,
+};var factories = [ClickOutsideDirective, DownloadDirective, // DropDirective,
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
-IdDirective, LabelForDirective, // LanguageComponent,
+FilterComponent, IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
 LocomotiveScrollDirective, LocomotiveScrollStickyDirective, LocomotiveScrollToDirective, // ModalComponent,
 ModalOutletComponent, ScrollDirective, ShareDirective, SvgIconStructure, SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];
-var pipes = [EnvPipe, FlagPipe, HighlightPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
+var pipes = [DatePipe, EnvPipe, FlagPipe, HighlightPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
 var CommonModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(CommonModule, _Module);
 
@@ -3508,7 +3901,7 @@ var FilterItem = /*#__PURE__*/function () {
     this.change$ = new rxjs.BehaviorSubject();
     this.mode = FilterMode.SELECT;
     this.filter = 'Filter';
-    this.placeholder = 'Select';
+    this.placeholder = null;
     this.values = [];
     this.options = [];
 
@@ -3518,7 +3911,7 @@ var FilterItem = /*#__PURE__*/function () {
 
     if (filter.mode === FilterMode.SELECT) {
       filter.options.unshift({
-        label: filter.placeholder,
+        label: 'select',
         value: undefined
       });
     }
@@ -3551,11 +3944,36 @@ var FilterItem = /*#__PURE__*/function () {
   };
 
   _proto.getLabel = function getLabel() {
-    if (this.mode === FilterMode.SELECT || this.mode === FilterMode.QUERY) {
-      return this.placeholder || this.label;
+    var _this2 = this;
+
+    if (this.hasAny()) {
+      return this.options.filter(function (x) {
+        return x.value && _this2.values.indexOf(x.value) !== -1;
+      }).map(function (x) {
+        return x.label;
+      }).join(', ');
     } else {
-      return this.label;
+      return null;
     }
+    /*
+    if (this.mode === FilterMode.QUERY) {
+    	return this.label;
+    	// return this.placeholder || this.label;
+    } else if (this.mode === FilterMode.SELECT) {
+    	if (this.hasAny()) {
+    		return this.options.filter(x => x.value && this.values.indexOf(x.value) !== -1).map(x => x.label).join(', ');
+    	} else {
+    		return this.label;
+    	}
+    } else {
+    	return this.label;
+    }
+    */
+
+  };
+
+  _proto.hasAny = function hasAny() {
+    return this.values.length > 0;
   };
 
   _proto.has = function has(item) {
@@ -3564,8 +3982,7 @@ var FilterItem = /*#__PURE__*/function () {
 
   _proto.set = function set(item) {
     if (this.mode === FilterMode.QUERY) {
-      this.values = item ? [item] : [];
-      this.placeholder = item;
+      this.values = item ? [item] : []; // this.placeholder = item;
     } else {
       if (this.mode === FilterMode.SELECT) {
         this.values = [];
@@ -3574,14 +3991,16 @@ var FilterItem = /*#__PURE__*/function () {
       var index = this.values.indexOf(item.value);
 
       if (index === -1) {
-        if (item.value !== undefined) {
+        if (item.value != null) {
           this.values.push(item.value);
         }
       }
-
+      /*
       if (this.mode === FilterMode.SELECT) {
-        this.placeholder = item.label;
+      	this.placeholder = item.label;
       }
+      */
+
     } // console.log('FilterItem.set', item);
 
 
@@ -3594,11 +4013,13 @@ var FilterItem = /*#__PURE__*/function () {
     if (index !== -1) {
       this.values.splice(index, 1);
     }
-
+    /*
     if (this.mode === FilterMode.SELECT) {
-      var first = this.options[0];
-      this.placeholder = first.label;
-    } // console.log('FilterItem.remove', item);
+    	const first = this.options[0];
+    	this.placeholder = first.label;
+    }
+    */
+    // console.log('FilterItem.remove', item);
 
 
     this.change$.next();
@@ -3614,11 +4035,12 @@ var FilterItem = /*#__PURE__*/function () {
 
   _proto.clear = function clear() {
     this.values = [];
-
+    /*
     if (this.mode === FilterMode.SELECT) {
-      var first = this.options[0];
-      this.placeholder = first.label;
+    	const first = this.options[0];
+    	this.placeholder = first.label;
     }
+    */
 
     this.change$.next();
   };
@@ -3786,108 +4208,68 @@ var FilterItem = /*#__PURE__*/function () {
   };
 
   return FilterService;
-}();var FormService = /*#__PURE__*/function () {
-  function FormService() {}
+}();var PAGE_SIZE = 24;
+var FiltersComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(FiltersComponent, _Component);
 
-  FormService.toOptions = function toOptions(options) {
-    options = options.slice().map(function (x) {
-      return {
-        id: x.value,
-        name: x.label
-      };
-    });
-    return options;
-  };
-
-  FormService.toSelectOptions = function toSelectOptions(options) {
-    options = options.slice().map(function (x) {
-      return {
-        id: x.value,
-        name: x.label
-      };
-    });
-    options.unshift({
-      id: null,
-      name: 'select'
-    });
-    return options;
-  };
-
-  return FormService;
-}();var AmbienceService = /*#__PURE__*/function () {
-  function AmbienceService() {}
-
-  AmbienceService.all$ = function all$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/ambience/all');
-    } else {
-      return ApiService.get$('/ambience/all.json');
-    }
-  };
-
-  AmbienceService.filters$ = function filters$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/ambience/filters');
-    } else {
-      return ApiService.get$('/ambience/filters.json');
-    }
-  };
-
-  return AmbienceService;
-}();var AmbienceComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(AmbienceComponent, _Component);
-
-  function AmbienceComponent() {
+  function FiltersComponent() {
     return _Component.apply(this, arguments) || this;
   }
 
-  var _proto = AmbienceComponent.prototype;
+  var _proto = FiltersComponent.prototype;
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([of([]), of({
+      search: {
+        mode: 'query'
+      }
+    })]);
+  };
+
+  _proto.setFiltersParams = function setFiltersParams() {// nope;
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'search':
+        return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+        item.city && item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
+          return x.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+        });
+
+      default:
+        return false;
+    }
+  };
 
   _proto.onInit = function onInit() {
     var _this = this;
 
-    this.ambienceId = this.ambienceId || null;
+    this.pageSize = PAGE_SIZE;
     this.items = [];
     this.filteredItems = [];
+    this.visibleItems = [];
     this.filters = {};
     var form = this.form = new rxcompForm.FormGroup({
-      ambience: new rxcompForm.FormControl(null),
-      category: new rxcompForm.FormControl(null),
-      material: new rxcompForm.FormControl(null),
-      designer: new rxcompForm.FormControl(null),
       search: new rxcompForm.FormControl(null)
     });
     var controls = this.controls = form.controls;
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('AmbienceComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('ambience', form.value.ambience);
-
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('material', form.value.material);
-
-      _this.setFilterByKeyAndValue('designer', form.value.designer);
-
       _this.setFilterByKeyAndValue('search', form.value.search);
 
       _this.pushChanges();
     });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-      controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
-      controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
-
-      _this.onLoad();
+    this.busy = true;
+    this.load$().pipe(operators.first(), operators.finalize(function (_) {
+      _this.busy = false;
 
       _this.pushChanges();
-    });
-  };
+    })).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
 
-  _proto.load$ = function load$() {
-    return rxjs.combineLatest([AmbienceService.all$(), AmbienceService.filters$()]);
+      _this.onLoad();
+    });
   };
 
   _proto.onLoad = function onLoad() {
@@ -3903,47 +4285,48 @@ var FilterItem = /*#__PURE__*/function () {
       switch (key) {
         default:
           filter.filter = function (item, value) {
-            switch (key) {
-              case 'ambience':
-                return item.ambience.id === value;
-
-              case 'category':
-                return item.category.id === value;
-
-              case 'material':
-                return item.materials.indexOf(value) !== -1;
-
-              case 'designer':
-                return item.designers.indexOf(value) !== -1;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
+            return _this2.doFilterItem(key, item, value);
           };
 
       }
     });
     this.filterService = filterService;
     this.filters = filterService.filters;
-    var ambience = this.ambienceId ? this.ambienceId : this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
-    var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
+    this.setFiltersParams();
     var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
-      ambience: ambience,
-      category: category,
-      material: material,
-      designer: designer,
       search: search
     });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
       _this2.filteredItems = filteredItems;
+      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
 
       _this2.pushChanges();
 
-      LocomotiveScrollService.update(); // console.log('AmbienceComponent.filteredItems', filteredItems.length);
+      LocomotiveScrollService.update();
+      LocomotiveScrollService.start(); // console.log('FiltersComponent.filteredItems', filteredItems.length);
     });
+  };
+
+  _proto.showMore = function showMore(event) {
+    if (this.visibleItems.length + this.pageSize >= this.filteredItems.length) {
+      this.visibleItems = this.filteredItems.slice();
+    } else {
+      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + this.pageSize, this.filteredItems.length));
+    }
+
+    this.pushChanges();
+    LocomotiveScrollService.update();
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('FiltersComponent.onSearch', this.form.value);
+
+    /*
+    this.setFilterByKeyAndValue('country', this.form.value.country);
+    */
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+    this.pushChanges();
   };
 
   _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
@@ -3966,25 +4349,85 @@ var FilterItem = /*#__PURE__*/function () {
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('AmbienceComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('material', this.form.value.material);
-    this.setFilterByKeyAndValue('designer', this.form.value.designer);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
+  _proto.onFilterDidChange = function onFilterDidChange() {
     this.pushChanges();
   };
 
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
+  return FiltersComponent;
+}(rxcomp.Component);
+FiltersComponent.meta = {
+  selector: '[filters]'
+};var AmbienceService = /*#__PURE__*/function () {
+  function AmbienceService() {}
+
+  AmbienceService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/ambience/all');
+    } else {
+      return ApiService.get$('/ambience/all.json');
+    }
+  };
+
+  AmbienceService.filters$ = function filters$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/ambience/filters');
+    } else {
+      return ApiService.get$('/ambience/filters.json');
+    }
+  };
+
+  return AmbienceService;
+}();var AmbienceComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(AmbienceComponent, _FiltersComponent);
+
+  function AmbienceComponent() {
+    return _FiltersComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = AmbienceComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+
+    this.ambienceId = this.ambienceId || null;
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([AmbienceService.all$(), AmbienceService.filters$()]);
+  };
+
+  _proto.setFiltersParams = function setFiltersParams() {
+    if (this.ambienceId) {
+      this.filters.ambience.set({
+        value: this.ambienceId
+      });
+    }
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'ambience':
+        return item.ambience.id === value;
+
+      case 'category':
+        return item.category.id === value;
+
+      case 'material':
+        return item.materials.indexOf(value) !== -1;
+
+      case 'designer':
+        return item.designers.indexOf(value) !== -1;
+
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+      default:
+        return false;
+    }
   };
 
   return AmbienceComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 AmbienceComponent.meta = {
   selector: '[ambience]',
   inputs: ['ambienceId']
@@ -4046,26 +4489,35 @@ AmbienceComponent.meta = {
     this.filteredStores = [];
     this.filters = {};
     var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
+      /*
+      country: new FormControl(null),
+      */
       search: new rxcompForm.FormControl(null)
     });
     var controls = this.controls = form.controls;
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       // console.log('AteliersAndStoresComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
 
+      /*
+      this.setFilterByKeyAndValue('country', form.value.country);
+      */
       _this.setFilterByKeyAndValue('search', form.value.search);
 
       _this.pushChanges();
     });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-
-      _this.onLoad();
+    this.busy = true;
+    this.load$().pipe(operators.first(), operators.finalize(function (_) {
+      _this.busy = false;
 
       _this.pushChanges();
+    })).subscribe(function (data) {
+      _this.items = data[0];
+      _this.filters = data[1];
+      /*
+      controls.country.options = FormService.toSelectOptions(this.filters.country.options);
+      */
+
+      _this.onLoad();
     });
   };
 
@@ -4100,9 +4552,9 @@ AmbienceComponent.meta = {
     this.filterService = filterService;
     this.filters = filterService.filters;
     var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    var search = this.filters.search.values.length ? this.filters.search.values[0] : null; // this.form.patch({ country, search });
+
     this.form.patch({
-      country: country,
       search: search
     });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
@@ -4118,6 +4570,16 @@ AmbienceComponent.meta = {
 
       LocomotiveScrollService.update(); // console.log('AteliersAndStoresComponent.filteredItems', filteredItems.length);
     });
+  };
+
+  _proto.onSearch = function onSearch(model) {
+    // console.log('AteliersAndStoresComponent.onSearch', this.form.value);
+
+    /*
+    this.setFilterByKeyAndValue('country', this.form.value.country);
+    */
+    this.setFilterByKeyAndValue('search', this.form.value.search);
+    this.pushChanges();
   };
 
   _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
@@ -4140,17 +4602,7 @@ AmbienceComponent.meta = {
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('AteliersAndStoresComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
+  _proto.onFilterDidChange = function onFilterDidChange() {
     this.pushChanges();
   };
 
@@ -4207,6 +4659,34 @@ var GtmService = /*#__PURE__*/function () {
   };
 
   return GtmService;
+}();var FormService = /*#__PURE__*/function () {
+  function FormService() {}
+
+  FormService.toOptions = function toOptions(options) {
+    options = options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label
+      };
+    });
+    return options;
+  };
+
+  FormService.toSelectOptions = function toSelectOptions(options) {
+    options = options.slice().map(function (x) {
+      return {
+        id: x.value,
+        name: x.label
+      };
+    });
+    options.unshift({
+      id: null,
+      name: 'select'
+    });
+    return options;
+  };
+
+  return FormService;
 }();function RequiredIfValidator(fieldName, formGroup, shouldBe) {
   return new rxcompForm.FormValidator(function (value) {
     var field = null;
@@ -4838,158 +5318,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   };
 
   return LinkedinService;
-}();var CartSteps = {
-  Items: 1,
-  Data: 2,
-  Delivery: 3,
-  Recap: 4,
-  Payment: 5,
-  Complete: 6,
-  Error: -1
-};
-/*
-export class Cart {
-	constructor() {
-		this.step = CartSteps.Items; // number
-		this.items = []; // CartItem[]
-		this.shipmentCountry = null; // number
-		this.user = null; // User
-		this.guest = null; // boolean
-		this.data = {
-			firstName: null, // string
-			lastName: null, // string
-			email: null, // string
-			telephone: null, // string
-			address: null, // string
-			zipCode: null, // string
-			city: null, // string
-			province: null, // string
-			country: null, // number
-			message: null, // string
-			invoice: null, // boolean
-			invoiceData: {
-				taxNumber: null, // string
-				sdi: null, // string
-				pec: null, // string
-			},
-			billing: null, // boolean
-			billingData: {
-				company: null, // string
-				firstName: null, // string
-				lastName: null, // string
-				telephone: null, // string
-				address: null, // string
-				zipCode: null, // string
-				city: null, // string
-				province: null, // string
-				country: null, // number
-			},
-			conditions: false, // boolean
-			privacy: false, // boolean
-			terms: false, // boolean
-		};
-		this.deliveryData = null; // {
-			firstName: null, // string
-			lastName: null, // string
-			email: null, // string
-			telephone: null, // string
-			address: null, // string
-			zipCode: null, // string
-			city: null, // string
-			province: null, // string
-			country: null, // { id: number, name: string }
-		}
-		this.billingData = null; // {
-			firstName: null, // string
-			lastName: null, // string
-			address: null, // string
-			zipCode: null, // string
-			city: null, // string
-			province: null, // string
-			country: null, // { id: number, name: string }
-		}
-		this.deliveryType = null; // number
-		this.delivery = null; // { id: number, name: string }
-		this.discountCode = null; // string
-		this.discount = null; // { code: string, price: number }
-		this.paymentMethod = null; // number
-		this.store = null; // Store
-	}
-}
-*/
-
-var CartService = /*#__PURE__*/function () {
-  function CartService() {}
-
-  CartService.setCart = function setCart(cart) {
-    if (cart) {
-      LocalStorageService.set('cart', cart);
-    } else {
-      LocalStorageService.delete('cart');
-    }
-
-    CartService.cart$_.next(cart);
-  };
-
-  CartService.cart$ = function cart$() {
-    var localCart = LocalStorageService.get('cart') || null;
-    return rxjs.of(localCart).pipe(operators.switchMap(function (cart) {
-      CartService.setCart(cart);
-      return CartService.cart$_;
-    }));
-  };
-
-  CartService.clear$ = function clear$() {
-    return rxjs.of(null).pipe(operators.map(function (cart) {
-      CartMiniService.setItems([]);
-      CartService.setCart(cart);
-      return cart;
-    }));
-  };
-
-  CartService.data$ = function data$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/cart/data.json');
-    } else {
-      return ApiService.get$('/cart/data.json');
-    }
-  };
-
-  CartService.getStore$ = function getStore$(payload) {
-    if (environment.flags.production) {
-      return ApiService.get$('/cart/store.json');
-    } else {
-      return ApiService.get$('/cart/store.json');
-    }
-  };
-
-  CartService.getStores$ = function getStores$(payload) {
-    if (environment.flags.production) {
-      return ApiService.get$('/cart/stores.json');
-    } else {
-      return ApiService.get$('/cart/stores.json');
-    }
-  };
-
-  CartService.getDiscount$ = function getDiscount$(payload) {
-    if (environment.flags.production) {
-      return ApiService.get$('/cart/discount.json');
-    } else {
-      return ApiService.get$('/cart/discount.json');
-    }
-  };
-
-  _createClass(CartService, null, [{
-    key: "currentCart",
-    get: function get() {
-      return CartService.cart$_.getValue();
-    }
-  }]);
-
-  return CartService;
-}();
-
-_defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartComponent = /*#__PURE__*/function (_Component) {
+}();var CartComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(CartComponent, _Component);
 
   function CartComponent() {
@@ -5019,7 +5348,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     var _this2 = this;
 
     this.steps = CartSteps;
-    this.step = CartSteps.Items;
+    this.step = CartSteps.None;
     this.errorPayment = null;
     this.errorDiscount = null;
     this.success = false;
@@ -5109,16 +5438,17 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     controls.shipmentCountry.options = FormService.toSelectOptions(data.shipmentCountry.options);
     controls.data.controls.country.options = FormService.toSelectOptions(data.country.options);
     controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(data.country.options);
-    controls.deliveryType.options = data.deliveryType.options.slice().map(function (x) {
-      return {
-        id: x.value,
-        name: x.label,
-        abstract: x.abstract,
-        description: x.description,
-        price: x.price,
-        fullPrice: x.fullPrice
-      };
-    });
+    /*
+    controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
+    	id: x.value,
+    	name: x.label,
+    	abstract: x.abstract,
+    	description: x.description,
+    	price: x.price,
+    	fullPrice: x.fullPrice,
+    }));
+    */
+
     controls.paymentMethod.options = data.paymentMethod.options.slice().map(function (x) {
       return {
         id: x.value,
@@ -5130,7 +5460,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     });
     this.form.patch({
       shipmentCountry: controls.shipmentCountry.options[1].id,
-      deliveryType: controls.deliveryType.options[0].id,
+      // deliveryType: controls.deliveryType.options[0].id,
       paymentMethod: controls.paymentMethod.options[0].id
     }, true);
     this.pushChanges();
@@ -5156,6 +5486,8 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
             };
           });
         }
+      } else {
+        _this2.step = CartSteps.Items;
       }
 
       _this2.onPatch(cart, true);
@@ -5203,13 +5535,37 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   };
 
   _proto.onPatch = function onPatch(patch, skipUpdate) {
+    var _this3 = this;
+
     if (patch === void 0) {
       patch = {};
+    }
+
+    if (skipUpdate === void 0) {
+      skipUpdate = false;
     }
 
     this.form.patch(Object.assign({}, patch, {
       step: this.step
     }));
+
+    switch (this.step) {
+      case CartSteps.Delivery:
+        this.getDeliveryType$().pipe(operators.first()).subscribe(function (_) {
+          _this3.onAfterPatch(skipUpdate);
+        });
+        break;
+
+      default:
+        this.onAfterPatch(skipUpdate);
+    }
+  };
+
+  _proto.onAfterPatch = function onAfterPatch(skipUpdate) {
+    if (skipUpdate === void 0) {
+      skipUpdate = false;
+    }
+
     this.pushChanges();
     LocomotiveScrollService.update();
     var target = document.querySelector('.section--breadcrumb');
@@ -5226,13 +5582,13 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   ;
 
   _proto.onItems = function onItems(_) {
-    var _this3 = this;
+    var _this4 = this;
 
     UserService.me$().pipe(operators.first()).subscribe(function (user) {
-      _this3.onUser(user);
+      _this4.onUser(user);
 
-      _this3.onNext({
-        items: _this3.items
+      _this4.onNext({
+        items: _this4.items
       });
     });
     /*
@@ -5261,7 +5617,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   ;
 
   _proto.onModalSignIn = function onModalSignIn() {
-    var _this4 = this;
+    var _this5 = this;
 
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -5271,13 +5627,13 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       // console.log('CartComponent.onModalSignIn', event);
       if (event instanceof ModalResolveEvent) {
-        _this4.onUser(event.data);
+        _this5.onUser(event.data);
       }
     });
   };
 
   _proto.onModalSignUp = function onModalSignUp(me) {
-    var _this5 = this;
+    var _this6 = this;
 
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -5288,7 +5644,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       // console.log('CartComponent.onModalSignUp', event);
       if (event instanceof ModalResolveEvent) {
-        _this5.onUser(event.data);
+        _this6.onUser(event.data);
       }
     });
   };
@@ -5348,7 +5704,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   };
 
   _proto.onFacebookLogin = function onFacebookLogin() {
-    var _this6 = this;
+    var _this7 = this;
 
     console.log('onFacebookLogin');
     this.socialBusy = 'facebook';
@@ -5400,25 +5756,25 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     }), operators.switchMap(function (me) {
       return UserService.tryFacebook$(me);
     }), operators.finalize(function () {
-      return _this6.socialBusy = false;
+      return _this7.socialBusy = false;
     })).subscribe(function (user) {
       if (user) {
-        _this6.onUser(user);
+        _this7.onUser(user);
       } else {
         var me = mapMe(socialMe);
 
-        _this6.onModalSignUp(me);
+        _this7.onModalSignUp(me);
       }
     }, function (error) {
       console.log('CartComponent.onFacebookLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this6.onModalSignUp(me);
+      _this7.onModalSignUp(me);
     });
   };
 
   _proto.onGoogleLogin = function onGoogleLogin() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.socialBusy = 'google';
     var socialMe;
@@ -5468,37 +5824,37 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     }), operators.switchMap(function (me) {
       return UserService.tryGoogle$(me);
     }), operators.finalize(function () {
-      return _this7.socialBusy = false;
+      return _this8.socialBusy = false;
     })).subscribe(function (user) {
       if (user) {
-        _this7.onUser(user);
+        _this8.onUser(user);
       } else {
         var me = mapMe(socialMe);
 
-        _this7.onModalSignUp(me);
+        _this8.onModalSignUp(me);
       }
     }, function (error) {
       console.log('CartComponent.onGoogleLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this7.onModalSignUp(me);
+      _this8.onModalSignUp(me);
     });
   };
 
   _proto.onLinkedinLogin = function onLinkedinLogin() {
-    var _this8 = this;
+    var _this9 = this;
 
     LinkedinService.linkedin$().pipe(operators.first()).subscribe(function (token) {
       console.log('CartComponent.onLinkedinLogin', token);
 
-      _this8.onModalSignUp({
+      _this9.onModalSignUp({
         firstName: 'Luca'
       });
     }, function (error) {
       console.log('CartComponent.onLinkedinLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this8.onModalSignUp(me);
+      _this9.onModalSignUp(me);
     });
   };
 
@@ -5575,7 +5931,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   ;
 
   _proto.onDelivery = function onDelivery(_) {
-    var _this9 = this;
+    var _this10 = this;
 
     var form = this.form;
     var controls = this.controls;
@@ -5598,17 +5954,42 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
       });
       var store = stores[0];
 
-      _this9.onNext({
+      _this10.onNext({
         stores: stores,
         store: store.id,
         delivery: delivery
       });
     });
+  };
+
+  _proto.getDeliveryType$ = function getDeliveryType$() {
+    var _this11 = this;
+
+    this.busy = true;
+    return CartService.getDeliveryType$(this.form.value).pipe(operators.tap(function (deliveryTypeOptions) {
+      var controls = _this11.controls;
+      controls.deliveryType.options = deliveryTypeOptions.slice().map(function (x) {
+        return {
+          id: x.value,
+          name: x.label,
+          abstract: x.abstract,
+          description: x.description,
+          price: x.price,
+          fullPrice: x.fullPrice
+        };
+      });
+
+      _this11.form.patch(Object.assign({}, {
+        deliveryType: controls.deliveryType.options[0].id
+      }), true);
+    }), operators.finalize(function (_) {
+      return _this11.busy = false;
+    }));
   } // 4. CartSteps.Recap
   ;
 
   _proto.onDiscountCode = function onDiscountCode(_) {
-    var _this10 = this;
+    var _this12 = this;
 
     var form = this.form; // console.log('CartComponent.onDelivery', form.value);
 
@@ -5616,13 +5997,13 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     CartService.getDiscount$({
       discountCode: form.value.discountCode
     }).pipe(operators.first()).subscribe(function (discount) {
-      _this10.discount = discount;
+      _this12.discount = discount;
 
-      _this10.onPatch({
+      _this12.onPatch({
         discount: discount
       });
     }, function (_) {
-      _this10.errorDiscount = true;
+      _this12.errorDiscount = true;
     });
   };
 
@@ -5660,7 +6041,7 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
     get: function get() {
       var items = this.items || [];
       var total = items.reduce(function (p, c, i) {
-        return p + c.price * c.qty;
+        return p + c.price.price * c.qty;
       }, 0);
 
       if (this.delivery) {
@@ -5676,13 +6057,13 @@ _defineProperty(CartService, "cart$_", new rxjs.BehaviorSubject(null));var CartC
   }, {
     key: "selectedStore",
     get: function get() {
-      var _this11 = this;
+      var _this13 = this;
 
       if (!this.controls || !this.controls.stores || !this.controls.stores.value) {
         return null;
       } else {
         return this.controls.stores.value.find(function (x) {
-          return x.id === _this11.controls.store.value;
+          return x.id === _this13.controls.store.value;
         });
       }
     }
@@ -5851,146 +6232,39 @@ ContactsComponent.meta = {
   };
 
   return DealersService;
-}();var DealersComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(DealersComponent, _Component);
+}();var DealersComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(DealersComponent, _FiltersComponent);
 
   function DealersComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = DealersComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.visibleItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('DealersComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([DealersService.all$(), DealersService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.countries && item.countries.find(function (x) {
-                  return x.value === value;
-                });
-
-              case 'search':
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-                item.city && item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
-                  return x.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-                });
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('DealersComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.showMore = function showMore(event) {
-    var pageSize = 32;
-
-    if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
-      this.visibleItems = this.filteredItems.slice();
-    } else {
-      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
-    }
-
-    this.pushChanges();
-    LocomotiveScrollService.update();
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'country':
+        return item.countries && item.countries.find(function (x) {
           return x.value === value;
-        }); // console.log(filter.options, option);
+        });
 
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
+      case 'search':
+        return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+        item.city && item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.countries && item.countries.find(function (x) {
+          return x.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+        });
+
+      default:
+        return false;
     }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('DealersComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
   };
 
   return DealersComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 DealersComponent.meta = {
   selector: '[dealers]'
 };var DesignersService = /*#__PURE__*/function () {
@@ -5998,7 +6272,7 @@ DealersComponent.meta = {
 
   DesignersService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/designers/all.json');
+      return ApiService.get$('/designers/all');
     } else {
       return ApiService.get$('/designers/all.json');
     }
@@ -6006,141 +6280,84 @@ DealersComponent.meta = {
 
   DesignersService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/designers/filters.json');
+      return ApiService.get$('/designers/filters');
     } else {
       return ApiService.get$('/designers/filters.json');
     }
   };
 
   return DesignersService;
-}();var DesignersComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(DesignersComponent, _Component);
+}();var DesignersComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(DesignersComponent, _FiltersComponent);
 
   function DesignersComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = DesignersComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('DesignersComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([DesignersService.all$(), DesignersService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'category':
+        return item.category.id === value;
 
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
+      case 'search':
+        return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
 
-              case 'search':
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('DesignersComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
+      default:
+        return false;
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('DesignersComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
   return DesignersComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 DesignersComponent.meta = {
   selector: '[designers]'
+};var GenericModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(GenericModalComponent, _Component);
+
+  function GenericModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = GenericModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.data = data;
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return GenericModalComponent;
+}(rxcomp.Component);
+GenericModalComponent.meta = {
+  selector: '[generic-modal]'
 };var MarketsAndLanguagesService = /*#__PURE__*/function () {
   function MarketsAndLanguagesService() {}
 
-  MarketsAndLanguagesService.all$ = function all$() {
+  MarketsAndLanguagesService.all$ = function all$(currentCoId) {
     if (environment.flags.production) {
-      return ApiService.get$('/markets-and-languages/all.json');
+      return ApiService.get$('/markets-and-languages/all?currentCoId=' + currentCoId);
     } else {
       return ApiService.get$('/markets-and-languages/all.json');
     }
@@ -6172,7 +6389,7 @@ DesignersComponent.meta = {
     this.currentMarket = environment.currentMarket;
     this.currentLanguage = environment.currentLanguage;
     this.markets = [];
-    MarketsAndLanguagesService.all$().pipe(operators.first()).subscribe(function (markets) {
+    MarketsAndLanguagesService.all$(environment.currentCoId).pipe(operators.first()).subscribe(function (markets) {
       _this.markets = markets;
 
       _this.pushChanges();
@@ -6621,126 +6838,34 @@ MaterialsComponent.meta = {
   };
 
   return NewsService;
-}();var NewsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(NewsComponent, _Component);
+}();var NewsComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(NewsComponent, _FiltersComponent);
 
   function NewsComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = NewsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('NewsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([NewsService.all$(), NewsService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'country':
+        return item.country.id === value;
 
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.country.id === value;
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1;
 
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.abstract.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('NewsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
+      default:
+        return false;
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('NewsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
-  };
-
   return NewsComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 NewsComponent.meta = {
   selector: '[news]'
 };var NewsletterService = /*#__PURE__*/function () {
@@ -6884,6 +7009,151 @@ NewsComponent.meta = {
 }(rxcomp.Component);
 NewsletterComponent.meta = {
   selector: '[newsletter]'
+};var OrdersModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(OrdersModalComponent, _Component);
+
+  function OrdersModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = OrdersModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.orderId = data.orderId; // console.log('OrdersModalComponent.onInit', data);
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return OrdersModalComponent;
+}(rxcomp.Component);
+OrdersModalComponent.meta = {
+  selector: '[orders-modal]'
+};var OrdersService = /*#__PURE__*/function () {
+  function OrdersService() {}
+
+  OrdersService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/orders/all.json');
+    } else {
+      return ApiService.get$('/orders/all.json');
+    }
+  };
+
+  OrdersService.detail$ = function detail$(item) {
+    if (environment.flags.production) {
+      // !!! convert to .post$
+      return ApiService.get$('/orders/detail.json', item);
+    } else {
+      return ApiService.get$('/orders/detail.json');
+    }
+  };
+
+  return OrdersService;
+}();var OrdersDetailComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(OrdersDetailComponent, _Component);
+
+  function OrdersDetailComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = OrdersDetailComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _Component.prototype.onInit.call(this);
+
+    this.busy = false;
+    this.order = null;
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof OrdersModalComponent) {
+      this.orderId = parentInstance.orderId;
+    } else {
+      this.orderId = LocationService.get('orderId');
+    }
+
+    if (this.orderId) {
+      this.load$().pipe(operators.first()).subscribe(); // console.log('OrdersDetailComponent.onInit', data);
+    } else {
+      console.error('OrdersDetailComponent missing orderId');
+    }
+
+    console.log(this);
+  };
+
+  _proto.load$ = function load$() {
+    var _this = this;
+
+    this.busy = true;
+    return OrdersService.detail$(this.orderId).pipe(operators.tap(function (order) {
+      _this.order = order;
+    }), operators.finalize(function (_) {
+      _this.busy = false;
+
+      _this.pushChanges();
+    }));
+  };
+
+  return OrdersDetailComponent;
+}(rxcomp.Component);
+OrdersDetailComponent.meta = {
+  selector: '[orders-detail]'
+};var OrdersComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(OrdersComponent, _Component);
+
+  function OrdersComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = OrdersComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.orders = [];
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this = this;
+
+    return OrdersService.all$().pipe(operators.tap(function (orders) {
+      _this.orders = orders;
+
+      _this.pushChanges();
+    }));
+  };
+
+  _proto.onOpenOrder = function onOpenOrder(order) {
+    ModalService.open$({
+      src: environment.template.modal.ordersModal,
+      data: {
+        orderId: order.id
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('OrdersComponent.onOpenOrder', event);
+    });
+  };
+
+  return OrdersComponent;
+}(rxcomp.Component);
+OrdersComponent.meta = {
+  selector: '[orders]'
 };var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;";
 var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
 var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase; display: none;";
@@ -7109,15 +7379,27 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
       cartItem.image = data.image;
     }
 
-    console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+    console.log('ProductsConfigureComponent.onAddToCart', cartItem); // resetting purchase procedure
+
+    CartService.setCart(null); // getting showefy price and adding to mini cart
+
     CartMiniService.getPriceAndAddItem$(cartItem).pipe(operators.first()).subscribe();
   };
 
   _createClass(ProductsConfigureComponent, [{
+    key: "priceListByMarket",
+    get: function get() {
+      // !!! I listini YY possibili sono: A listino EUR, B listino GB, C listino USA, D listino RMB, E listino Medio oriente
+      switch (environment.currentMarket.toLowerCase()) {
+        default:
+          return 'A';
+      }
+    }
+  }, {
     key: "showefyUrl",
     get: function get() {
       if (this.product) {
-        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=P&codprod=" + this.product.code + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
       }
     }
   }]);
@@ -7171,6 +7453,9 @@ ProductsConfigureComponent.meta = {
     if (this.isAddedToCart(item)) {
       HeaderService.setHeader('cart');
     } else {
+      // resetting purchase procedure
+      CartService.setCart(null); // getting showefy price and adding to mini cart
+
       CartMiniService.getPriceAndAddItem$(item).pipe(operators.first()).subscribe(function (_) {
         _this2.pushChanges();
       });
@@ -7205,6 +7490,29 @@ ProductsConfigureComponent.meta = {
 
   _proto.configureProduct = function configureProduct(version) {
     window.location.href = environment.slug.configureProduct + "?productId=" + version.productId + "&code=" + version.code;
+  };
+
+  _proto.onReservedArea = function onReservedArea() {
+    var _this3 = this;
+
+    UserService.me$().pipe(operators.first()).subscribe(function (user) {
+      if (user) {
+        window.location.href = environment.slug.reservedArea;
+      } else {
+        ModalService.open$({
+          src: environment.template.modal.userModal,
+          data: {
+            view: 1
+          }
+        }).pipe(operators.takeUntil(_this3.unsubscribe$)).subscribe(function (event) {
+          console.log('ProductsDetailComponent.onLogin', event);
+
+          if (event instanceof ModalResolveEvent) {
+            window.location.href = environment.slug.reservedArea;
+          }
+        });
+      }
+    });
   };
 
   return ProductsDetailComponent;
@@ -7255,157 +7563,57 @@ var ProductsService = /*#__PURE__*/function () {
   ;
 
   return ProductsService;
-}();var ProductsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProductsComponent, _Component);
+}();var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(ProductsComponent, _FiltersComponent);
 
   function ProductsComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = ProductsComponent.prototype;
 
   _proto.onInit = function onInit() {
-    var _this = this;
+    _FiltersComponent.prototype.onInit.call(this);
 
     this.categoryId = this.categoryId || null;
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      ambience: new rxcompForm.FormControl(null),
-      material: new rxcompForm.FormControl(null),
-      designer: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('ProductsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('ambience', form.value.ambience);
-
-      _this.setFilterByKeyAndValue('material', form.value.material);
-
-      _this.setFilterByKeyAndValue('designer', form.value.designer);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-      controls.ambience.options = FormService.toSelectOptions(_this.filters.ambience.options);
-      controls.material.options = FormService.toSelectOptions(_this.filters.material.options);
-      controls.designer.options = FormService.toSelectOptions(_this.filters.designer.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
   };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([ProductsService.all$(), ProductsService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-
-              case 'ambience':
-                return item.ambience.id === value;
-
-              case 'material':
-                return item.materials.indexOf(value) !== -1;
-
-              case 'designer':
-                return item.designers.indexOf(value) !== -1;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.categoryId ? this.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var ambience = this.filters.ambience.values.length ? this.filters.ambience.values[0] : null;
-    var material = this.filters.material.values.length ? this.filters.material.values[0] : null;
-    var designer = this.filters.designer.values.length ? this.filters.designer.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      ambience: ambience,
-      material: material,
-      designer: designer,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('ProductsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
+  _proto.setFiltersParams = function setFiltersParams() {
+    if (this.categoryId) {
+      this.filters.category.set({
+        value: this.categoryId
+      });
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('ProductsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('ambience', this.form.value.ambience);
-    this.setFilterByKeyAndValue('material', this.form.value.material);
-    this.setFilterByKeyAndValue('designer', this.form.value.designer);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'category':
+        return item.category.id === value;
 
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
+      case 'ambience':
+        return item.ambience.id === value;
+
+      case 'material':
+        return item.materials.indexOf(value) !== -1;
+
+      case 'designer':
+        return item.designers.indexOf(value) !== -1;
+
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+      default:
+        return false;
+    }
   };
 
   return ProductsComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 ProductsComponent.meta = {
   selector: '[products]',
   inputs: ['categoryId']
@@ -7625,128 +7833,48 @@ ProjectsRegistrationComponent.meta = {
   };
 
   return ProjectsService;
-}();var ProjectsComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(ProjectsComponent, _Component);
+}();var ProjectsComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(ProjectsComponent, _FiltersComponent);
 
   function ProjectsComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = ProjectsComponent.prototype;
 
   _proto.onInit = function onInit() {
-    var _this = this;
+    _FiltersComponent.prototype.onInit.call(this);
 
     this.categoryId = this.categoryId || null;
-    this.items = [];
-    this.filteredItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('ProjectsComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
   };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([ProjectsService.all$(), ProjectsService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
-
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'category':
-                return item.category.id === value;
-
-              case 'search':
-                return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var category = this.categoryId ? this.categoryId : this.filters.category.values.length ? this.filters.category.values[0] : null; // const category = window.categoryId != null ? window.categoryId : (this.filters.category.values.length ? this.filters.category.values[0] : null);
-
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('ProjectsComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
+  _proto.setFiltersParams = function setFiltersParams() {
+    if (this.categoryId) {
+      this.filters.category.set({
+        value: this.categoryId
+      });
     }
   };
 
-  _proto.onSearch = function onSearch(model) {
-    // console.log('ProjectsComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'category':
+        return item.category.id === value;
 
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+      default:
+        return false;
+    }
   };
 
   return ProjectsComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 ProjectsComponent.meta = {
   selector: '[projects]',
   inputs: ['categoryId']
@@ -7915,7 +8043,7 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
     this.item = null;
     this.load$().pipe(operators.first()).subscribe();
     UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
-      console.log('ReservedAreaComponent.user', user);
+      // console.log('ReservedAreaComponent.user', user);
       _this.user = user;
 
       _this.pushChanges();
@@ -8021,152 +8149,38 @@ ReservedAreaComponent.meta = {
   };
 
   return StoreLocatorService;
-}();var StoreLocatorComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(StoreLocatorComponent, _Component);
+}();var StoreLocatorComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(StoreLocatorComponent, _FiltersComponent);
 
   function StoreLocatorComponent() {
-    return _Component.apply(this, arguments) || this;
+    return _FiltersComponent.apply(this, arguments) || this;
   }
 
   var _proto = StoreLocatorComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    var _this = this;
-
-    this.items = [];
-    this.filteredItems = [];
-    this.visibleItems = [];
-    this.filters = {};
-    var form = this.form = new rxcompForm.FormGroup({
-      country: new rxcompForm.FormControl(null),
-      category: new rxcompForm.FormControl(null),
-      search: new rxcompForm.FormControl(null)
-    });
-    var controls = this.controls = form.controls;
-    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('StoreLocatorComponent.changes$', form.value);
-      _this.setFilterByKeyAndValue('country', form.value.country);
-
-      _this.setFilterByKeyAndValue('category', form.value.category);
-
-      _this.setFilterByKeyAndValue('search', form.value.search);
-
-      _this.pushChanges();
-    });
-    this.load$().pipe(operators.first()).subscribe(function (data) {
-      _this.items = data[0];
-      _this.filters = data[1];
-      controls.country.options = FormService.toSelectOptions(_this.filters.country.options);
-      controls.category.options = FormService.toSelectOptions(_this.filters.category.options);
-
-      _this.onLoad();
-
-      _this.pushChanges();
-    });
-  };
 
   _proto.load$ = function load$() {
     return rxjs.combineLatest([StoreLocatorService.all$(), StoreLocatorService.filters$()]);
   };
 
-  _proto.onLoad = function onLoad() {
-    var _this2 = this;
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'country':
+        return item.country && item.country.id === value;
 
-    var items = this.items;
-    var filters = this.filters;
-    Object.keys(filters).forEach(function (key) {
-      filters[key].mode = filters[key].mode || FilterMode.OR;
-    });
-    var initialParams = {};
-    var filterService = new FilterService(filters, initialParams, function (key, filter) {
-      switch (key) {
-        default:
-          filter.filter = function (item, value) {
-            switch (key) {
-              case 'country':
-                return item.country && item.country.id === value;
+      case 'category':
+        return item.category && item.category.id === value;
 
-              case 'category':
-                return item.category && item.category.id === value;
+      case 'search':
+        return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+        item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
 
-              case 'search':
-                return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-                item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-            }
-          };
-
-      }
-    });
-    this.filterService = filterService;
-    this.filters = filterService.filters;
-    var country = this.filters.country.values.length ? this.filters.country.values[0] : null;
-    var category = this.filters.category.values.length ? this.filters.category.values[0] : null;
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
-    this.form.patch({
-      country: country,
-      category: category,
-      search: search
-    });
-    filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
-
-      _this2.pushChanges();
-
-      LocomotiveScrollService.update(); // console.log('StoreLocatorComponent.filteredItems', filteredItems.length);
-    });
-  };
-
-  _proto.showMore = function showMore(event) {
-    var pageSize = 32;
-
-    if (this.visibleItems.length + pageSize >= this.filteredItems.length) {
-      this.visibleItems = this.filteredItems.slice();
-    } else {
-      this.visibleItems = this.filteredItems.slice(0, Math.min(this.visibleItems.length + pageSize, this.filteredItems.length));
+      default:
+        return false;
     }
-
-    this.pushChanges();
-    LocomotiveScrollService.update();
-  };
-
-  _proto.setFilterByKeyAndValue = function setFilterByKeyAndValue(key, value) {
-    var filter = this.filters[key];
-
-    if (filter) {
-      if (filter.mode === FilterMode.QUERY) {
-        filter.set(value);
-      } else {
-        var option = filter.options.find(function (x) {
-          return x.value === value;
-        }); // console.log(filter.options, option);
-
-        if (option) {
-          filter.set(option);
-        } else {
-          filter.clear();
-        }
-      }
-    }
-  };
-
-  _proto.onSearch = function onSearch(model) {
-    // console.log('StoreLocatorComponent.onSearch', this.form.value);
-    this.setFilterByKeyAndValue('country', this.form.value.country);
-    this.setFilterByKeyAndValue('category', this.form.value.category);
-    this.setFilterByKeyAndValue('search', this.form.value.search);
-    this.pushChanges();
-  };
-
-  _proto.clearFilter = function clearFilter(event, filter) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    filter.clear();
-    this.pushChanges();
   };
 
   return StoreLocatorComponent;
-}(rxcomp.Component);
+}(FiltersComponent);
 StoreLocatorComponent.meta = {
   selector: '[store-locator]'
 };/*! *****************************************************************************
@@ -10228,6 +10242,11 @@ SwiperProjectsPropositionDirective.meta = {
     CartMiniService.decrementItem$(item).pipe(operators.first()).subscribe();
   };
 
+  _proto.onBuy = function onBuy(event) {
+    CartService.setStep(1);
+    window.location.href = "" + environment.slug.cart;
+  };
+
   _proto.onEdit = function onEdit(item) {
     // console.log('CartMiniComponent.onEdit', item);
     window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
@@ -10246,7 +10265,7 @@ SwiperProjectsPropositionDirective.meta = {
     get: function get() {
       var items = this.items || [];
       return items.reduce(function (p, c, i) {
-        return p + c.price * c.qty;
+        return p + c.price.price * c.qty;
       }, 0);
     }
   }]);
@@ -10766,6 +10785,392 @@ TreeComponent.meta = {
   template:
   /* html */
   "\n\t\t<li class=\"folder\" [class]=\"{ active: item.active }\" *for=\"let item of tree\">\n\t\t\t<span [innerHTML]=\"item.title\" (click)=\"onClick(item)\"></span>\n\t\t\t<ul [tree]=\"item.items\" (open)=\"onOpen($event)\"></ul>\n\t\t</li>\n\t"
+};var UserAccessDataComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(UserAccessDataComponent, _Component);
+
+  function UserAccessDataComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = UserAccessDataComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      password: new rxcompForm.FormControl(null, rxcompForm.Validators.RequiredValidator()),
+      newPassword: new rxcompForm.FormControl(null, rxcompForm.Validators.RequiredValidator()),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      if (user) {
+        form.patch({
+          email: user.email
+        }, true);
+      }
+    });
+  };
+
+  _proto.onSubmit = function onSubmit() {
+    var _this2 = this;
+
+    var form = this.form;
+    console.log('UserAccessDataComponent.onSubmit', form.value);
+
+    if (form.valid) {
+      form.submitted = true;
+      UserService.accessData$(form.value).pipe(operators.first(), operators.switchMap(function (_) {
+        return UserService.signout$();
+      })).subscribe(function (response) {
+        console.log('UserAccessDataComponent.onSubmit', response);
+        _this2.success = true;
+        GtmService.push({
+          'event': "AccessData",
+          'form_name': "AccessData"
+        });
+        form.reset();
+      }, function (error) {
+        console.log('UserAccessDataComponent.error', error);
+        _this2.error = error;
+        form.submitted = false;
+
+        _this2.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return UserAccessDataComponent;
+}(rxcomp.Component);
+UserAccessDataComponent.meta = {
+  selector: '[user-access-data]'
+};var UserDeleteComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(UserDeleteComponent, _Component);
+
+  function UserDeleteComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = UserDeleteComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      password: new rxcompForm.FormControl(null, rxcompForm.Validators.RequiredValidator()),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      if (user) {
+        form.patch({
+          email: user.email
+        }, true);
+      }
+    });
+  };
+
+  _proto.onSubmit = function onSubmit() {
+    var _this2 = this;
+
+    var form = this.form;
+    console.log('UserDeleteComponent.onSubmit', form.value);
+
+    if (form.valid) {
+      form.submitted = true;
+      UserService.delete$(form.value).pipe(operators.first(), operators.switchMap(function (_) {
+        return UserService.signout$();
+      })).subscribe(function (response) {
+        console.log('UserDeleteComponent.onSubmit', response);
+        _this2.success = true;
+        GtmService.push({
+          'event': "AccessData",
+          'form_name': "AccessData"
+        });
+        form.reset();
+      }, function (error) {
+        console.log('UserDeleteComponent.error', error);
+        _this2.error = error;
+        form.submitted = false;
+
+        _this2.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return UserDeleteComponent;
+}(rxcomp.Component);
+UserDeleteComponent.meta = {
+  selector: '[user-delete]'
+};var UserDetailComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(UserDetailComponent, _Component);
+
+  function UserDetailComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = UserDetailComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.countries = [];
+    this.occupations = [];
+    this.newsletterLanguages = [];
+    this.gdpr = [];
+    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
+      _this.user = user;
+
+      _this.pushChanges();
+    });
+    this.load$().pipe(operators.first(), operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return rxjs.combineLatest([UserService.data$(), UserService.gdpr$()]).pipe(operators.tap(function (datas) {
+      var data = datas[0];
+      _this2.countries = data.country.options;
+      _this2.occupations = data.occupation.options;
+      _this2.newsletterLanguages = data.newsletterLanguage.options;
+      var gdpr = datas[1];
+      _this2.gdpr = gdpr;
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.onModalUserUpdate = function onModalUserUpdate(event) {
+    // console.log('UserDetailComponent.onModalUserUpdate');
+    ModalService.open$({
+      src: environment.template.modal.userModal,
+      data: {
+        view: 4
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('UserDetailComponent.onModalSignUp', event);
+    });
+  };
+
+  _proto.onModalGdpr = function onModalGdpr(legalNote) {
+    // console.log('UserDetailComponent.onModalUserUpdate');
+    ModalService.open$({
+      src: environment.template.modal.genericModal,
+      data: {
+        title: legalNote.title,
+        description: legalNote.description
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('UserDetailComponent.onModalGdpr', event);
+    });
+  };
+
+  _createClass(UserDetailComponent, [{
+    key: "countryName",
+    get: function get() {
+      var _this3 = this;
+
+      var countryName = null;
+
+      if (this.user && this.countries.length) {
+        var country = this.countries.find(function (x) {
+          return x.value === _this3.user.country;
+        });
+
+        if (country) {
+          countryName = country.label;
+        }
+      }
+
+      return countryName;
+    }
+  }, {
+    key: "occupationName",
+    get: function get() {
+      var _this4 = this;
+
+      var occupationName = null;
+
+      if (this.user && this.occupations.length) {
+        var occupation = this.occupations.find(function (x) {
+          return x.value === _this4.user.occupation;
+        });
+
+        if (occupation) {
+          occupationName = occupation.label;
+        }
+      }
+
+      return occupationName;
+    }
+  }, {
+    key: "newsletterLanguageName",
+    get: function get() {
+      var _this5 = this;
+
+      var newsletterLanguageName = null;
+
+      if (this.user && this.newsletterLanguages.length) {
+        var newsletterLanguage = this.newsletterLanguages.find(function (x) {
+          return x.value === _this5.user.newsletterLanguage;
+        });
+
+        if (newsletterLanguage) {
+          newsletterLanguageName = newsletterLanguage.label;
+        }
+      }
+
+      return newsletterLanguageName;
+    }
+  }]);
+
+  return UserDetailComponent;
+}(rxcomp.Component);
+UserDetailComponent.meta = {
+  selector: '[user-detail]'
+};var UserEditComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(UserEditComponent, _Component);
+
+  function UserEditComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = UserEditComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.user = null;
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      company: new rxcompForm.FormControl(null),
+      occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      newsletter: new rxcompForm.FormControl(null),
+      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first(), operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return rxjs.combineLatest([UserService.data$(), UserService.me$()]).pipe(operators.tap(function (results) {
+      var data = results[0];
+      var controls = _this2.controls;
+      controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
+      controls.newsletterLanguage.options = FormService.toSelectOptions(data.newsletterLanguage.options);
+      var user = results[1];
+      _this2.user = user;
+
+      if (user) {
+        var form = _this2.form;
+        form.patch(user, true);
+      }
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
+    form.patch({
+      firstName: 'Jhon',
+      lastName: 'Appleseed',
+      country: country,
+      city: 'Pesaro',
+      company: 'Websolute',
+      occupation: occupation,
+      email: 'jhonappleseed@gmail.com',
+      privacy: true
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit() {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('UserEditComponent.onSubmit', form.value);
+
+    if (form.valid) {
+      form.submitted = true;
+      UserService.edit$(form.value).pipe(operators.first()).subscribe(function (response) {
+        console.log('UserEditComponent.onSubmit', response);
+        _this3.success = true;
+        /*
+        GtmService.push({
+        	'event': "Registration",
+        	'form_name': "Registrazione"
+        });
+        */
+
+        form.reset();
+      }, function (error) {
+        console.log('UserEditComponent.error', error);
+        _this3.error = error;
+        form.submitted = false;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return UserEditComponent;
+}(rxcomp.Component);
+UserEditComponent.meta = {
+  selector: '[user-edit]'
 };var UserForgotComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserForgotComponent, _Component);
 
@@ -11133,6 +11538,7 @@ UserSigninComponent.meta = {
     var _this = this;
 
     this.me = this.me || {};
+    this.user = this.user || null;
     this.error = null;
     this.success = false;
     var form = this.form = new rxcompForm.FormGroup({
@@ -11238,8 +11644,8 @@ UserSigninComponent.meta = {
 UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn'],
-  inputs: ['me']
-};var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserComponent, UserForgotComponent, UserModalComponent, UserSigninComponent, UserSignupComponent];
+  inputs: ['me', 'user']
+};var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserAccessDataComponent, UserComponent, UserDeleteComponent, UserEditComponent, UserForgotComponent, UserModalComponent, UserDetailComponent, UserSigninComponent, UserSignupComponent];
 var pipes$2 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(SharedModule, _Module);
@@ -11265,6 +11671,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

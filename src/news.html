@@ -36,7 +36,7 @@ window.environment = {
 					<div class="card__date">9.3.2021</div>
 					<div class="card__title">Giorgetti presenta il primo bilancio di sostenibilità</div>
 					<div class="card__cta">
-						<a href="/giorgetti/news-detail.html" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+						<a href="/giorgetti/news-detail.html" class="btn--discover"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
 					</div>
 				</div>
 			</div>
@@ -44,14 +44,17 @@ window.environment = {
 	</div>
 
 	<!-- filters -->
-	<div class="section--filters">
+	<div class="section--filters" *if="!busy">
 		<div class="container">
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__title">Cerca news relative a</div>
+					<div class="filters__select" name="Paese" [filter]="filters.country" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<!--
 					<div class="filters__select">
 						<div control-custom-select [control]="controls.country" label="Paese" select="Paese"></div>
 					</div>
+					-->
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
 					</div>
@@ -66,10 +69,10 @@ window.environment = {
 	<div class="section--news">
 		<div class="container">
 			<!-- spinner -->
-			<div class="spinner" *if="items.length == 0"></div>
+			<div class="spinner" *if="busy"></div>
 			<!-- results -->
 			<div class="listing--news">
-				<div class="listing__item" *for="let item of filteredItems">
+				<div class="listing__item" *for="let item of visibleItems">
 					<div class="card--news">
 						<a [href]="item.url" class="card__picture">
 							<img loading="lazy" [src]="item.image" />
@@ -81,11 +84,15 @@ window.environment = {
 							<div class="card__date" [innerHTML]="item.date" *if="item.date"></div>
 							<div class="card__title" [innerHTML]="item.title"></div>
 							<div class="card__cta">
-								<a [href]="item.url" class="btn--more"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+								<a [href]="item.url" class="btn--discover"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			<!-- more -->
+			<div class="group--cta">
+				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
 			</div>
 		</div>
 	</div>

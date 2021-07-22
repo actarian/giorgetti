@@ -2,6 +2,7 @@ import { Component, getContext } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
 import { ModalResolveEvent, ModalService } from './common/modal/modal.service';
 import { environment } from './environment';
+import { CartService } from './pages/cart/cart.service';
 import { CartMiniService } from './shared/cart-mini/cart-mini.service';
 import { HeaderService } from './shared/header/header.service';
 import { UserService } from './shared/user/user.service';
@@ -65,6 +66,9 @@ export class AppComponent extends Component {
 	}
 
 	onAddToCart(item) {
+		// resetting purchase procedure
+		CartService.setCart(null);
+		// getting showefy price and adding to mini cart
 		CartMiniService.getPriceAndAddItem$(item).pipe(
 			first(),
 		).subscribe(_ => {

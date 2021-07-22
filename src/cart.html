@@ -66,7 +66,7 @@
 								</div>
 							</div>
 							<div class="td td--unitary-price">
-								<div class="price" *if="item.price" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
+								<div class="price" *if="item.price" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
 							</div>
 							<div class="td td--qty">
 								<div class="group--qty">
@@ -85,14 +85,14 @@
 								</button>
 							</div>
 							<div class="td td--price">
-								<span class="price" [innerHTML]="(item.price * item.qty) | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+								<span class="price" [innerHTML]="(item.price.price * item.qty) | number : { style: 'currency', currency: 'EUR' }"></span>
 							</div>
 						</div>
 					</div>
 					<div class="group--cart">
 						<span class="subtitle">Totale</span>
 						<div class="group--price">
-							<span class="price" [innerHTML]="totalPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+							<span class="price" [innerHTML]="totalPrice | number : { style: 'currency', currency: 'EUR' }"></span>
 							<span>IVA inclusa</span>
 						</div>
 					</div>
@@ -225,7 +225,10 @@
 				<!-- 3. Delivery -->
 				<div class="step step--delivery" *if="step == steps.Delivery">
 					<div class="title">Metodo di consegna</div>
-					<form class="form" [formGroup]="form" (submit)="onDelivery($event)" name="form" role="form" novalidate autocomplete="off">
+					<!-- spinner -->
+					<div class="spinner" *if="busy"></div>
+					<!-- form -->
+					<form class="form" [formGroup]="form" (submit)="onDelivery($event)" name="form" role="form" novalidate autocomplete="off" *if="!busy">
 						<div class="group--form--radio" [class]="{ required: controls.deliveryType.validators.length }" *for="let option of controls.deliveryType.options">
 							<label [labelFor]="controls.deliveryType.name + '-' + option.id" [class]="{ active: controls.deliveryType.value == option.id }" (click)="controls.deliveryType.value = option.id">
 								<div class="group--headline">
@@ -234,8 +237,8 @@
 									<!-- <input type="radio" class="control--radio" [id]="controls.deliveryType.name + '-' + option.id" [formControl]="controls.deliveryType" name="deliveryType" value="1" [value]="option.id" /> -->
 									<span class="name" [innerHTML]="option.name"></span>
 									<span class="group--price" *if="option.price">
-										<span class="fullPrice" *if="option.fullPrice !== option.price" [innerHTML]="option.fullPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
-										<span class="price" [innerHTML]="option.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<span class="fullPrice" *if="option.fullPrice !== option.price" [innerHTML]="option.fullPrice | number : { style: 'currency', currency: 'EUR' }"></span>
+										<span class="price" [innerHTML]="option.price | number : { style: 'currency', currency: 'EUR' }"></span>
 									</span>
 								</div>
 								<div class="abstract" [innerHTML]="option.abstract" *if="option.abstract"></div>
@@ -256,41 +259,45 @@
 					<div class="row">
 						<div class="col-md-7">
 							<div *if="selectedStore">
-								<div class="subtitle">Negozio di riferimento</div>
-								<div class="card--address">
-									<div class="card__content">
-										<div class="card__name" [innerHTML]="selectedStore.name"></div>
-										<div class="card__address" [innerHTML]="selectedStore.address"></div>
-										<div class="card__address">
-											<span class="card__city" [innerHTML]="selectedStore.city"></span>
-											<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+								<div class="group--address">
+									<div class="subtitle">Negozio di riferimento</div>
+									<div class="card--address">
+										<div class="card__content">
+											<div class="card__name" [innerHTML]="selectedStore.name"></div>
+											<div class="card__address" [innerHTML]="selectedStore.address"></div>
+											<div class="card__address">
+												<span class="card__city" [innerHTML]="selectedStore.city"></span>
+												<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+											</div>
+											<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
+												<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
+												<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+											</div>
+											<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 										</div>
-										<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
-											<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
-											<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
-										</div>
-										<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 									</div>
 								</div>
-								<button type="button" class="btn--subtitle btn--timetable" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
-									<span>Orari di apertura</span>
-									<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
-								</button>
-								<div class="flex-table flex-table__sm" *if="selectedStore.showTimetable">
-									<div class="tr" *for="let time of selectedStore.timetable">
-										<div class="td" [innerHTML]="time.name"></div>
-										<div class="td" [innerHTML]="time.value"></div>
+								<div class="group--timetable">
+									<button type="button" class="btn--accordion" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
+										<span>Orari di apertura</span>
+										<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
+									</button>
+									<div class="flex-table flex-table__sm" *if="selectedStore.showTimetable">
+										<div class="tr" *for="let time of selectedStore.timetable">
+											<div class="td" [innerHTML]="time.name"></div>
+											<div class="td" [innerHTML]="time.value"></div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div *if="controls.deliveryType.value == 1">
+							<div class="group--stores" *if="controls.deliveryType.value == 1">
 								<div class="group--form--radio" [class]="{ required: controls.store.validators.length }" *for="let option of controls.store.options">
 									<label [labelFor]="controls.store.name + '-' + option.id" [class]="{ active: controls.store.value == option.id }" (click)="controls.store.value = option.id">
 										<div class="group--headline">
 											<svg class="radio" *if="controls.store.value != option.id"><use xlink:href="#radio"></use></svg>
 											<svg class="radio-checked" *if="controls.store.value == option.id"><use xlink:href="#radio-checked"></use></svg>
 											<span class="name" [innerHTML]="option.name"></span>
-											<span class="distance" [innerHTML]="option.distance | number : 'it-IT' : { style: 'unit', unit: 'kilometer', maximumFractionDigits: 1 }"></span>
+											<span class="distance" [innerHTML]="option.distance | number : { style: 'unit', unit: 'kilometer', maximumFractionDigits: 1 }"></span>
 										</div>
 										<div class="description" [innerHTML]="option.description" *if="option.description"></div>
 									</label>
@@ -309,15 +316,15 @@
 										<div class="tr" *for="let item of items">
 											<div class="td" [innerHTML]="item.title"></div>
 											<div class="td" [innerHTML]="item.qty"></div>
-											<div class="td" [innerHTML]="item.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></div>
+											<div class="td" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
 										</div>
 									</div>
 								</div>
 								<div class="group--cart" *if="delivery">
 									<div class="subtitle" [innerHTML]="delivery.name"></div>
 									<div class="group--price">
-										<!-- <span class="fullPrice" *if="delivery.fullPrice !== delivery.price" [innerHTML]="delivery.fullPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span> -->
-										<span class="price" [innerHTML]="delivery.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<!-- <span class="fullPrice" *if="delivery.fullPrice !== delivery.price" [innerHTML]="delivery.fullPrice | number : { style: 'currency', currency: 'EUR' }"></span> -->
+										<span class="price" [innerHTML]="delivery.price | number : { style: 'currency', currency: 'EUR' }"></span>
 									</div>
 								</div>
 								<div class="group--cart" *if="!discount">
@@ -342,13 +349,13 @@
 								<div class="group--cart" *if="discount">
 									<div class="subtitle" [title]="discount.code">Sconto promozione</div>
 									<div class="group--price">
-										<span class="price" [innerHTML]="discount.price | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<span class="price" [innerHTML]="discount.price | number : { style: 'currency', currency: 'EUR' }"></span>
 									</div>
 								</div>
 								<div class="group--cart">
 									<span class="subtitle">Totale</span>
 									<div class="group--price">
-										<span class="price" [innerHTML]="totalPrice | number : 'it-IT' : { style: 'currency', currency: 'EUR' }"></span>
+										<span class="price" [innerHTML]="totalPrice | number : { style: 'currency', currency: 'EUR' }"></span>
 										<span>IVA inclusa</span>
 									</div>
 								</div>
@@ -444,30 +451,37 @@
 						<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
 						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
 					</div>
+					<div class="group--cta">
+						<a href="/giorgetti/orders-detail.html?orderId=444" class="btn--secondary"><span>Rivedi l'ordine</span></a>
+					</div>
 					<div class="row">
 						<div class="col-md-7">
 							<div *if="selectedStore">
-								<div class="subtitle">Negozio di riferimento</div>
-								<div class="card--address">
-									<div class="card__content">
-										<div class="card__name" [innerHTML]="selectedStore.name"></div>
-										<div class="card__address" [innerHTML]="selectedStore.address"></div>
-										<div class="card__address">
-											<span class="card__city" [innerHTML]="selectedStore.city"></span>
-											<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+								<div class="group--address">
+									<div class="subtitle">Negozio di riferimento</div>
+									<div class="card--address">
+										<div class="card__content">
+											<div class="card__name" [innerHTML]="selectedStore.name"></div>
+											<div class="card__address" [innerHTML]="selectedStore.address"></div>
+											<div class="card__address">
+												<span class="card__city" [innerHTML]="selectedStore.city"></span>
+												<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+											</div>
+											<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
+												<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
+												<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+											</div>
+											<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 										</div>
-										<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
-											<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
-											<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
-										</div>
-										<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 									</div>
 								</div>
-								<div class="subtitle">Orari di apertura</div>
-								<div class="flex-table flex-table__sm">
-									<div class="tr" *for="let time of selectedStore.timetable">
-										<div class="td" [innerHTML]="time.name"></div>
-										<div class="td" [innerHTML]="time.value"></div>
+								<div class="group--timetable">
+									<div class="subtitle">Orari di apertura</div>
+									<div class="flex-table flex-table__sm">
+										<div class="tr" *for="let time of selectedStore.timetable">
+											<div class="td" [innerHTML]="time.name"></div>
+											<div class="td" [innerHTML]="time.value"></div>
+										</div>
 									</div>
 								</div>
 							</div>

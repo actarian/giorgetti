@@ -88,23 +88,43 @@
       </mj-column>
     </mj-section>
 
-    <!-- Cta -->
+    <!-- Cta Primary -->
     <mj-section padding="20px 10px 30px 10px">
       <mj-column>
-        <mj-button href="#" align="center" padding="15px 0 15px 0" inner-padding="15px 25px" width="180px" font-size="15px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
-          Nuovi arrivi
+        <mj-button href="#" align="center" padding="15px 0 15px 0" inner-padding="15px 25px" width="180px" font-size="15px" font-weight="bold" background-color="#35302C" color="#ffffff" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+          CTA Primary
         </mj-button>
       </mj-column>
     </mj-section>
 
+    <!-- Cta Secondary -->
+    <mj-section padding="20px 10px 30px 10px">
+      <mj-column>
+        <mj-button href="#" align="center" padding="15px 0 15px 0" inner-padding="15px 25px" width="180px" font-size="15px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+          CTA Secondary
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Carousel -->
+    <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+      <mj-column>
+        <mj-carousel icon-width="72px" left-icon="https://giorgetti21.wslabs.it/Client/docs/img/email/arrow-left.png" right-icon="https://giorgetti21.wslabs.it/Client/docs/img/email/arrow-right.png" border-radius="0" tb-border="14px solid transparent" tb-border-radius="0" tb-hover-border-color="#d1cdca" tb-selected-border-color="transparent">
+          <mj-carousel-image src="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg" />
+          <mj-carousel-image src="https://www.giorgettimeda.com/media/immagini/5965_n_ARTICOLI_principali_secondari4.jpg" />
+          <mj-carousel-image src="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg" />
+        </mj-carousel>
+      </mj-column>
+    </mj-section>
+
     <!-- Index -->
+    <!--
     <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
       <mj-column width="100%">
         <mj-text padding="10px 0 30px 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           Index
         </mj-text>
       </mj-column>
-      <!-- Index Item -->
       <mj-column width="10%">
         <mj-text padding="10px 10px 0 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           01.
@@ -115,7 +135,6 @@
           <a href="#" style="color: #A19C96; text-decoration: none;">Godron Giorgetti Atmosphere Collection</a>
         </mj-text>
       </mj-column>
-      <!-- Index Item -->
       <mj-column width="10%">
         <mj-text padding="10px 10px 0 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           02.
@@ -126,7 +145,6 @@
           <a href="#" style="color: #A19C96; text-decoration: none;">Space Black Moodboard Giorgetti</a>
         </mj-text>
       </mj-column>
-      <!-- Index Item -->
       <mj-column width="10%">
         <mj-text padding="10px 10px 0 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           03.
@@ -137,7 +155,6 @@
           <a href="#" style="color: #A19C96; text-decoration: none;">Press Highlights</a>
         </mj-text>
       </mj-column>
-      <!-- Index Item -->
       <mj-column width="10%">
         <mj-text padding="10px 10px 0 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           04.
@@ -149,6 +166,7 @@
         </mj-text>
       </mj-column>
     </mj-section>
+	-->
 
     <!-- Picture Text -->
     <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
@@ -161,7 +179,7 @@
         </mj-text>
       </mj-column>
       <mj-column width="100%">
-        <mj-text padding="0 0 20px 0" align="left" color="#35302C" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
+        <mj-text padding="0 0 20px 0" align="left" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
           <p>Giorgetti Atmosphere Collection</p>
         </mj-text>
       </mj-column>
@@ -183,7 +201,7 @@
         </mj-text>
       </mj-column>
       <mj-column width="100%">
-        <mj-text padding="0 0 20px 0" align="left" color="#35302C" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
+        <mj-text padding="0 0 20px 0" align="left" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
           <p>Moodboard Giorgetti</p>
         </mj-text>
       </mj-column>
@@ -197,18 +215,20 @@
 
     <!-- Press Highlights -->
     <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+      <!--
       <mj-column width="100%">
         <mj-text padding="10px 0 30px 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           Press Highlights
         </mj-text>
       </mj-column>
+	  -->
       <mj-group width="100%">
         <mj-column width="47%">
           <mj-image padding="0 0 30px 0" width="282px" src="https://giorgetti21.wslabs.it/Client/docs/img/email/test/news-01.jpg" />
           <mj-text align="center" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
             INTERNI Italy
           </mj-text>
-          <mj-text align="center" padding="0 0 5px 0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+          <mj-text align="center" padding="0 0 5px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
             October 2019
           </mj-text>
           <mj-button href="#" align="center" padding="15px 0 15px 0" inner-padding="15px 25px" font-size="15px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
@@ -222,7 +242,7 @@
           <mj-text align="center" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
             ELLE Decoration Spain
           </mj-text>
-          <mj-text align="center" padding="0 0 5px 0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+          <mj-text align="center" padding="0 0 5px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
             September 2019
           </mj-text>
           <mj-button href="#" align="center" padding="15px 0 15px 0" inner-padding="15px 25px" font-size="15px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
@@ -234,18 +254,20 @@
 
     <!-- News -->
     <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+      <!--
       <mj-column width="100%">
         <mj-text padding="10px 0 30px 0" align="left" color="#A19C96" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
           News from Milan
         </mj-text>
       </mj-column>
+	  -->
       <mj-group width="100%">
         <mj-column width="47%">
           <mj-image padding="0 0 30px 0" width="282px" src="https://www.giorgettimeda.com/media/immagini/5967_n_NewsMilan-min.jpg" />
           <mj-text align="left" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
             DANIEL STEEGMANN MANGRANÉ
           </mj-text>
-          <mj-text align="left" padding="0 0 10px 0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+          <mj-text align="left" padding="0 0 10px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
             Until February 19th, 2020
           </mj-text>
           <mj-text align="left" padding="0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px">
@@ -256,6 +278,9 @@
             <p>The artist’s interest in biology has led him to analyse complex ecological systems and introduce the natural world into his works.</p>
             <p>In Steegmann Mangrané’s practice numerous are the references to the rain forest in Brazil—such as branches, leaves, and insects—which interwoven with geometric forms and abstract motifs engender a reflection on the complex dynamics between the elements that surround us.</p>
           </mj-text>
+          <mj-button href="#" align="left" padding="10px 0 10px 0" inner-padding="10px 15px" font-size="12px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+            More
+          </mj-button>
         </mj-column>
         <mj-column width="6%">
         </mj-column>
@@ -264,7 +289,7 @@
           <mj-text align="left" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
             FRAGILITY AND BEAUTY
           </mj-text>
-          <mj-text align="left" padding="0 0 10px 0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+          <mj-text align="left" padding="0 0 10px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
             Until October 31st, 2019
           </mj-text>
           <mj-text align="left" padding="0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px">
@@ -274,6 +299,66 @@
             <p>The exhibit promoted by the European Space Agency (ESA) in collaboration with the Italian Space Agency (ASI) returns to the Science Museum for a new installation with the most recent Earth images taken by satellites.</p>
             <p>The exhibition, curated by Viviana Panaccia, aims to raise public awareness on climate change and sustainable development, their impact on terrestrial ecosystems and the consequences on the planet's future.</p>
           </mj-text>
+          <mj-button href="#" align="left" padding="10px 0 10px 0" inner-padding="10px 15px" font-size="12px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+            More
+          </mj-button>
+        </mj-column>
+      </mj-group>
+    </mj-section>
+
+    <!-- Text + Image -->
+    <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+      <mj-group width="100%">
+        <mj-column width="47%">
+          <mj-text align="left" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
+            DANIEL STEEGMANN MANGRANÉ
+          </mj-text>
+          <mj-text align="left" padding="0 0 10px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+            Until February 19th, 2020
+          </mj-text>
+          <mj-text align="left" padding="0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px">
+            <a href="https://pirellihangarbicocca.org" style="color:#35302C">pirellihangarbicocca.org</a>
+          </mj-text>
+          <mj-text align="left" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="22px">
+            <p>Daniel Steegmann Mangrané’s first exhibition in Italy ponders on the relationship between culture and nature.</p>
+            <p>The artist’s interest in biology has led him to analyse complex ecological systems and introduce the natural world into his works.</p>
+          </mj-text>
+          <mj-button href="#" align="left" padding="10px 0 10px 0" inner-padding="10px 15px" font-size="12px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+            More
+          </mj-button>
+        </mj-column>
+        <mj-column width="6%">
+        </mj-column>
+        <mj-column width="47%">
+          <mj-image padding="0 0 30px 0" width="282px" src="https://www.giorgettimeda.com/media/immagini/5967_n_NewsMilan-min.jpg" />
+        </mj-column>
+      </mj-group>
+    </mj-section>
+
+    <!-- Image + Text -->
+    <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+      <mj-group width="100%">
+        <mj-column width="47%">
+          <mj-image padding="0 0 30px 0" width="282px" src="https://www.giorgettimeda.com/media/immagini/5968_n_NewsMilan2-min.jpg" />
+        </mj-column>
+        <mj-column width="6%">
+        </mj-column>
+        <mj-column width="47%">
+          <mj-text align="left" padding="0 0 5px 0" color="#35302C" font-family="BauerBodoni, serif" font-size="19px" line-height="21px" text-transform="uppercase">
+            FRAGILITY AND BEAUTY
+          </mj-text>
+          <mj-text align="left" padding="0 0 10px 0" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px" text-transform="uppercase">
+            Until October 31st, 2019
+          </mj-text>
+          <mj-text align="left" padding="0" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="19px">
+            <a href="https://museoscienza.org" style="color:#35302C">museoscienza.org</a>
+          </mj-text>
+          <mj-text align="left" color="#35302C" font-family="AvantGarde, sans-serif" font-size="14px" line-height="22px">
+            <p>The exhibit promoted by the European Space Agency (ESA) in collaboration with the Italian Space Agency (ASI) returns to the Science Museum for a new installation with the most recent Earth images taken by satellites.</p>
+          </mj-text>
+          <mj-button href="#" align="left" padding="10px 0 10px 0" inner-padding="10px 15px" font-size="12px" background-color="#ffffff" color="#35302C" border="1px solid #A19C96" border-radius="0" text-transform="uppercase">
+            More
+          </mj-button>
         </mj-column>
       </mj-group>
     </mj-section>
@@ -281,9 +366,9 @@
     <!-- Body -->
 
     <!-- Footer Battaglia -->
-    <mj-section padding="85px 10px 5px 10px">
+    <mj-section padding="45px 10px 5px 10px">
       <mj-column>
-        <mj-image width="300px" height="55px" href="https://giorgetti21.wslabs.it" src="https://giorgetti21.wslabs.it/Client/docs/img/email/giorgetti-battaglia.png"></mj-image>
+        <mj-image width="220px" height="40px" href="https://giorgetti21.wslabs.it" src="https://giorgetti21.wslabs.it/Client/docs/img/email/giorgetti-battaglia.png"></mj-image>
       </mj-column>
     </mj-section>
 
@@ -309,20 +394,27 @@
     </mj-section>
 
     <!-- Footer Actions -->
-    <mj-section padding="20px 10px 20px 10px" border-top="1px solid #d1cdca">
+    <mj-section padding="20px 10px 0 10px" border-top="1px solid #d1cdca">
       <mj-group>
         <mj-column>
-          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="#" style="color:#35302C">View in browser</a>
+          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">View in browser</a>
           </mj-text>
-          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="#" style="color:#35302C">Unsubscribe</a>
+          <!--
+          <mj-text padding="6px 0 0 0" align="left" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">Unsubscribe</a>
           </mj-text>
+		  -->
         </mj-column>
         <mj-column>
-          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#35302C" line-height="20px" font-family="AvantGarde, serif">
-            <a href="https://giorgetti21.wslabs.it" style="color:#35302C">Giorgetti website</a>
+          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="#" style="color:#A19C96">Unsubscribe</a>
           </mj-text>
+          <!--
+          <mj-text padding="6px 0 0 0" align="right" font-size="15px" color="#A19C96" line-height="20px" font-family="AvantGarde, serif">
+            <a href="https://giorgetti21.wslabs.it" style="color:#A19C96">Giorgetti website</a>
+          </mj-text>
+		  -->
         </mj-column>
       </mj-group>
     </mj-section>

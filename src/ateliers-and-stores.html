@@ -29,14 +29,17 @@ window.environment = {
 	</div>
 
 	<!-- filters -->
-	<div class="section--filters">
+	<div class="section--filters" *if="!busy">
 		<div class="container">
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__title">Cerca ateliers relativi a</div>
+					<div class="filters__select" name="Paese" [filter]="filters.country" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<!--
 					<div class="filters__select">
 						<div control-custom-select [control]="controls.country" label="Paese" select="Paese"></div>
 					</div>
+					-->
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
 					</div>
@@ -51,7 +54,7 @@ window.environment = {
 	<div class="section--ateliers">
 		<div class="container">
 			<!-- spinner -->
-			<div class="spinner" *if="items.length == 0"></div>
+			<div class="spinner" *if="busy"></div>
 			<!-- results -->
 			<div class="listing--ateliers">
 				<div class="listing__item" *for="let item of filteredAteliers">
@@ -75,8 +78,6 @@ window.environment = {
 	<div class="section--stores" *if="filteredStores.length">
 		<div class="container">
 			<div class="title">Stores</div>
-			<!-- spinner -->
-			<div class="spinner" *if="items.length == 0"></div>
 			<!-- results -->
 			<div class="listing--stores">
 				<div class="listing__item" *for="let item of filteredStores">

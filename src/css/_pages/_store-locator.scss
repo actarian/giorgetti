@@ -200,8 +200,18 @@
 		margin-top: 20px;
 	}
 
-	.btn--more {
-		min-width: 0 !important;
+	.btn--discover {
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-tertiary, #232221);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 25px;
+		font-size: 16px;
+		line-height: 1.1;
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		border: 1px solid $background-tertiary;
 	}
 
 	@include media-down(xs) {
@@ -227,13 +237,13 @@
 
 	padding: 22px 0 30px;
 	// border-top: 2px solid $foreground;
-	border-top: 1px solid $background-secondary;
+	border-top: 1px solid $background-tertiary;
 
 	&.store,
 	&.atelier {
 		padding: 20px 30px 30px 30px;
 		// border: 2px solid $foreground;
-		border: 1px solid $background-secondary;
+		border: 1px solid $background-tertiary;
 		border-radius: 8px;
 
 		@include media-down(xs) {
@@ -291,13 +301,41 @@
 	}
 
 	.btn--more {
-		@extend %btn-primary;
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-tertiary, #232221);
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 25px;
+		font-size: 16px;
+		line-height: 1;
+		font-size: 16px;
+		line-height: 1.1;
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		border: 1px solid $background-tertiary;
 	}
 
 	.group--cta {
 		display: flex;
 		align-items: center;
 		margin-top: 80px;
+
+		&>.btn--more {
+			@include media-up(md) {
+				min-width: 280px;
+			}
+
+			@include media-between(sm, md) {
+				min-width: 200px;
+			}
+
+			@include media-down(xs) {
+				display: block;
+				width: 100%;
+			}
+		}
 
 		@include media-up(sm) {
 			justify-content: center;

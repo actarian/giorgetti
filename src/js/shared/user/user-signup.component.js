@@ -12,6 +12,7 @@ export class UserSignupComponent extends Component {
 
 	onInit() {
 		this.me = this.me || {};
+		this.user = this.user || null;
 		this.error = null;
 		this.success = false;
 		const form = this.form = new FormGroup({
@@ -115,5 +116,5 @@ export class UserSignupComponent extends Component {
 UserSignupComponent.meta = {
 	selector: '[user-signup]',
 	outputs: ['signUp', 'viewSignIn'],
-	inputs: ['me'],
+	inputs: ['me', 'user'],
 };

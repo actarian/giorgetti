@@ -68,12 +68,12 @@
 
 	padding: 22px 0 30px;
 	// border-top: 2px solid $foreground;
-	border-top: 1px solid $background-secondary;
+	border-top: 1px solid $background-tertiary;
 
 	&.primary {
 		padding: 20px 30px 30px 30px;
 		// border: 2px solid $foreground;
-		border: 1px solid $background-secondary;
+		border: 1px solid $background-tertiary;
 		border-radius: 8px;
 
 		@include media-down(xs) {
@@ -97,7 +97,7 @@
 	}
 
 	.btn--more {
-		@include btn(#232221, $foreground-negative, $background-negative, $foreground-negative, #232221, $foreground-negative);
+		@include btn(transparent, $foreground, $background-tertiary, $foreground, $background-tertiary, #232221);
 		position: relative;
 		display: flex;
 		align-items: center;
@@ -110,6 +110,7 @@
 		text-align: center;
 		text-transform: uppercase;
 		letter-spacing: 0.043em;
+		border: 1px solid $background-tertiary;
 	}
 
 	.group--cta {

@@ -22,7 +22,7 @@ export class ReservedAreaComponent extends Component {
 		UserService.me$().pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(user => {
-			console.log('ReservedAreaComponent.user', user);
+			// console.log('ReservedAreaComponent.user', user);
 			this.user = user;
 			this.pushChanges();
 			LocomotiveScrollService.update();
@@ -94,7 +94,6 @@ export class ReservedAreaComponent extends Component {
 			first(),
 		).subscribe();
 	}
-
 }
 
 ReservedAreaComponent.meta = {

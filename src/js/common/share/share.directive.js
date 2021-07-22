@@ -2,7 +2,7 @@ import { Directive, getContext } from 'rxcomp';
 import { fromEvent } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
-export default class ShareDirective extends Directive {
+export class ShareDirective extends Directive {
 
 	get href() {
 		switch (this.share) {

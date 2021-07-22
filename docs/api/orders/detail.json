@@ -1,0 +1,119 @@
+{
+  "id": 444,
+  "date": "2021-07-16T12:33:35.071Z",
+  "totalPrice": 886.70,
+  "status": "In Attesa Pagamento",
+  "items": [
+    {
+      "qty": 1,
+      "id": 5254,
+      "code": "63230",
+      "url": "/it/it/prodotti/sedie-e-poltroncine/progetti-2",
+      "title": "Progetti",
+      "price": {
+        "price": 899,
+        "currency": "EUR",
+        "isValid": 1
+      }
+    }
+  ],
+  "deliveryData": {
+    "firstName": "Jhon",
+    "lastName": "Appleseed",
+    "email": "jhonappleseed@gmail.com",
+    "telephone": "0721411112",
+    "address": "Strada della Campanara, 15",
+    "zipCode": "61122",
+    "city": "Pesaro",
+    "province": "Pesaro",
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "message": null,
+    "invoice": null,
+    "invoiceData": {
+      "taxNumber": null,
+      "sdi": null,
+      "pec": null
+    }
+  },
+  "billingData": {
+    "firstName": "Jhon",
+    "lastName": "Appleseed",
+    "address": "Strada della Campanara, 15",
+    "zipCode": "61122",
+    "city": "Pesaro",
+    "province": "Pesaro",
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    }
+  },
+  "delivery": {
+    "id": 1,
+    "name": "Ritiro in negozio",
+    "abstract": "Ritiro in negozio, sconto 3%",
+    "description": "Ritira comodamente nel negozio più vicino.",
+    "price": -12.3,
+    "fullPrice": -12.3
+  },
+  "discount": null,
+  "paymentMethod": {
+    "value": 60,
+    "label": "Bonifico Bancario",
+    "description": "<p>Nella conferma dell'ordine riceverai il riepilogo dell'importo totale da pagare e le coordinate della banca su cui effettuare il versamento.</p><p>Accertato l'avvenuto pagamento, l'ordine verrà attivato e decorreranno i termini di consegna indicati per i diversi articoli ordinati. Il buon fine del pagamento verrà comunicato con una mail all'indirizzo di posta indicato in fase di registrazione.</p>",
+    "info": "<p>Hai scelto il pagamento con Bonifico Bancario, riceverai le coordinate per il pagamento nella mail di conferma ordine.</p>",
+    "icons": []
+  },
+  "store": {
+    "category": {
+      "id": 11,
+      "name": "Distributori progetti 30"
+    },
+    "rank": 26,
+    "distance": 10.75229717277557,
+    "latitude": 44.8707899,
+    "longitude": 9.6413303,
+    "name": "ClassicDesign.it SRL",
+    "address": "via Acerbi, 44",
+    "city": "Ponte dell'Olio (PC)",
+    "phone": "+39.0523.874003",
+    "email": "info@classicdesign.it",
+    "id": 32377,
+    "country": {
+      "id": 114,
+      "name": "Italia"
+    },
+    "timetable": [
+      {
+        "name": "lunedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "martedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "mercoledì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "giovedì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "venerdì",
+        "value": "09:00 - 11:00 / 15:00 - 18:00"
+      },
+      {
+        "name": "sabato",
+        "value": "10:00 - 12:00 / 16:30 - 19:00"
+      },
+      {
+        "name": "domenica",
+        "value": "chiuso"
+      }
+    ]
+  }
+}

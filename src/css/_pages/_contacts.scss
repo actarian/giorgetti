@@ -82,12 +82,12 @@
 
 	padding: 22px 0 30px;
 	// border-top: 2px solid $foreground;
-	border-top: 1px solid $background-secondary;
+	border-top: 1px solid $background-tertiary;
 
 	&.card--evidence {
 		padding: 20px 30px 30px 30px;
 		// border: 2px solid $foreground;
-		border: 1px solid $background-secondary;
+		border: 1px solid $background-tertiary;
 		border-radius: 8px;
 
 		@include media-down(xs) {
@@ -277,6 +277,12 @@
 	padding: 160px 0;
 	background: #D1CDCA;
 	border-bottom: 1px solid $border;
+
+	.control--text {
+		&::placeholder {
+			@extend %placeholder-negative;
+		}
+	}
 
 	.title {
 		font-family: $font-secondary;

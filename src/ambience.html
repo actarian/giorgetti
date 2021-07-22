@@ -130,10 +130,15 @@
 	</div>
 
 	<!-- filters -->
-	<div class="section--filters">
+	<div class="section--filters" *if="!busy">
 		<div class="container">
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
+					<div class="filters__select" name="Ambiente" [filter]="filters.ambience" [filters]="filters" (change)="onFilterDidChange()" *if="!ambienceId"></div>
+					<div class="filters__select" name="Categoria" [filter]="filters.category" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<!-- <div class="filters__select" name="Materiale" [filter]="filters.material" [filters]="filters" (change)="onFilterDidChange()"></div> -->
+					<div class="filters__select" name="Designer" [filter]="filters.designer" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<!--
 					<div class="filters__select" *if="!ambienceId">
 						<div control-custom-select [control]="controls.ambience" label="Ambiente" select="Ambiente"></div>
 					</div>
@@ -146,6 +151,7 @@
 					<div class="filters__select">
 						<div control-custom-select [control]="controls.designer" label="Designer" select="Designer"></div>
 					</div>
+					-->
 					<div class="filters__search">
 						<div control-search [control]="controls.search" label="Cerca"></div>
 					</div>
@@ -157,13 +163,13 @@
 		</div>
 	</div>
 
-	<div class="section--projects">
+	<div class="section--products">
 		<div class="container">
 			<!-- spinner -->
-			<div class="spinner" *if="items.length == 0"></div>
+			<div class="spinner" *if="busy"></div>
 			<!-- results -->
-			<div class="listing--projects">
-				<div class="listing__item" *for="let item of filteredItems">
+			<div class="listing--products">
+				<div class="listing__item" [class]="{ large: item.large }" *for="let item of visibleItems">
 					<a [href]="item.url" class="card--product-proposition">
 						<span class="card__picture">
 							<img loading="lazy" [src]="item.image" />
@@ -176,6 +182,10 @@
 						</span>
 					</a>
 				</div>
+			</div>
+			<!-- more -->
+			<div class="group--cta">
+				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
 			</div>
 		</div>
 	</div>

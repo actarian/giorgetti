@@ -13,15 +13,18 @@ export const environmentServed = {
 	assets: '/Client/docs/',
 	slug: {
 		configureProduct: `/it/it/products-configure`,
+		cart: `/it/it/cart`,
 		reservedArea: `/it/it/reserved-area`,
 	},
 	template: {
 		modal: {
-			userModal: '/template/modals/user-modal.cshtml',
 			careersModal: '/template/modals/careers-modal.cshtml',
-			projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
-			materialsModal: '/template/modals/materials-modal.cshtml',
+			genericModal: '/template/modals/generic-modal.cshtml',
 			marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
+			materialsModal: '/template/modals/materials-modal.cshtml',
+			ordersModal: '/template/modals/orders-modal.cshtml',
+			projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
+			userModal: '/template/modals/user-modal.cshtml',
 		}
 	},
 	facebook: {

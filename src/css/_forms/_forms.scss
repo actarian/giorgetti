@@ -19,12 +19,6 @@ $invalid-negative: $foreground-primary;
 	cursor: pointer;
 }
 
-%btn--disabled {
-	opacity: 0.5;
-	background: rgb(125, 125, 125);
-	color: white;
-}
-
 %label {
 	display: block;
 	flex: 0 0 100%;
@@ -38,8 +32,11 @@ $invalid-negative: $foreground-primary;
 }
 
 %placeholder {
-	text-transform: none;
-	color: $foreground;
+	color: $foreground-tertiary;
+}
+
+%placeholder-negative {
+	color: $foreground-secondary;
 }
 
 %group--form {
@@ -122,12 +119,17 @@ $invalid-negative: $foreground-primary;
 		font-weight: $weight;
 		letter-spacing: $spacing;
 		line-height: $line * 2;
-		@extend %placeholder;
+		text-transform: none;
 	}
 }
 
 %control--text {
 	@include autofill($size, $weight, $line, $spacing, $family, $foreground, transparent);
+
+	&::placeholder {
+		@extend %placeholder;
+	}
+
 	flex: 1 1 auto;
 	width: 1px;
 	max-width: 100%;
@@ -168,6 +170,11 @@ $invalid-negative: $foreground-primary;
 
 %control--text-negative {
 	@include autofill($size, $weight, $line, $spacing, $family, $foreground-negative, transparent);
+
+	&::placeholder {
+		@extend %placeholder-negative;
+	}
+
 	flex: 1 1 auto;
 	width: 1px;
 	max-width: 100%;
@@ -287,6 +294,12 @@ fieldset,
 	.control--text {
 		resize: vertical;
 		font-size: 16px;
+
+		&,
+		&::placeholder {
+			line-height: 1.3;
+		}
+
 		@include scrollbar();
 	}
 
@@ -385,7 +398,7 @@ fieldset,
 
 .group--form--radio {
 	min-height: 72px;
-	padding-top: 19px;
+	padding-top: 20px;
 
 	input {
 		width: 12px;

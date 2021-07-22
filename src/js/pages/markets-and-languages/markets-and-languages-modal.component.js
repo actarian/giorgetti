@@ -18,7 +18,7 @@ export class MarketsAndLanguagesModalComponent extends Component {
 		this.currentMarket = environment.currentMarket;
 		this.currentLanguage = environment.currentLanguage;
 		this.markets = [];
-		MarketsAndLanguagesService.all$().pipe(
+		MarketsAndLanguagesService.all$(environment.currentCoId).pipe(
 			first(),
 		).subscribe(markets => {
 			this.markets = markets;

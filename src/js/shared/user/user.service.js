@@ -8,11 +8,12 @@ export const UserViews = {
 	SIGN_IN: 1,
 	SIGN_UP: 2,
 	FORGOTTEN: 3,
+	EDIT: 4,
 };
 
 export class User {
 
-	get avatar() {
+	get shortName() {
 		return (this.firstName || '?').substr(0, 1).toUpperCase() + (this.lastName || '?').substr(0, 1).toUpperCase();
 	}
 
@@ -113,6 +114,7 @@ export class UserService {
 	}
 
 	static signup$(payload) {
+		// console.log('UserService.signup$', payload);
 		return (
 			environment.flags.production ?
 				// !!! convert to .post$
@@ -122,6 +124,47 @@ export class UserService {
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
 		);
+	}
+
+	static edit$(payload) {
+		// console.log('UserService.edit$', payload);
+		return (
+			environment.flags.production ?
+				// !!! convert to .post$
+				ApiService.get$(`/user/edit.json`, payload) :
+				ApiService.get$(`/user/edit.json`)
+		).pipe(
+			map((response) => this.mapUser(response)),
+			tap((user) => this.setUser(user)),
+		);
+	}
+
+	static accessData$(payload) {
+		// console.log('UserService.accessData$', payload);
+		return (
+			environment.flags.production ?
+				// !!! convert to .post$
+				ApiService.get$(`/user/access-data.json`, payload) :
+				ApiService.get$(`/user/access-data.json`)
+		);
+	}
+
+	static delete$(payload) {
+		// console.log('UserService.delete$', payload);
+		return (
+			environment.flags.production ?
+				// !!! convert to .post$
+				ApiService.get$(`/user/delete.json`, payload) :
+				ApiService.get$(`/user/delete.json`)
+		);
+	}
+
+	static gdpr$() {
+		if (environment.flags.production) {
+			return ApiService.get$('/user/gdpr.json');
+		} else {
+			return ApiService.get$('/user/gdpr.json');
+		}
 	}
 
 	static tryFacebook$(me) {

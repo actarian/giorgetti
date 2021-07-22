@@ -1,6 +1,7 @@
 import { Component } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
 import { environment } from '../../environment';
+import { CartService } from '../../pages/cart/cart.service';
 import { HeaderService } from '../header/header.service';
 import { CartMiniService } from './cart-mini.service';
 
@@ -9,7 +10,7 @@ export class CartMiniComponent extends Component {
 	get totalPrice() {
 		const items = this.items || [];
 		return items.reduce((p, c, i) => {
-			return p + c.price * c.qty;
+			return p + c.price.price * c.qty;
 		}, 0);
 	}
 
@@ -35,6 +36,11 @@ export class CartMiniComponent extends Component {
 		).subscribe();
 	}
 
+	onBuy(event) {
+		CartService.setStep(1);
+		window.location.href = `${environment.slug.cart}`;
+	}
+
 	onEdit(item) {
 		// console.log('CartMiniComponent.onEdit', item);
 		window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
@@ -49,7 +55,6 @@ export class CartMiniComponent extends Component {
 	onClose(event) {
 		HeaderService.onBack();
 	}
-
 }
 
 CartMiniComponent.meta = {

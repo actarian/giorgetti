@@ -151,6 +151,7 @@
 
 .nav--markets {
 	@extend %nav;
+	justify-content: center;
 	position: relative;
 	margin-bottom: 130px;
 
@@ -253,6 +254,7 @@
 
 	@include media-up(sm) {
 		margin-bottom: 130px;
+		min-width: 30vw;
 	}
 
 	@include media-down(xs) {

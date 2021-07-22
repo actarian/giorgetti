@@ -1,0 +1,26 @@
+[
+  {
+    "value": 1,
+    "label": "Ritiro in negozio",
+    "abstract": "Ritiro in negozio, sconto 3%",
+    "description": "Ritira comodamente nel negozio più vicino.",
+    "price": -12.30,
+    "fullPrice": -12.30
+  },
+  {
+    "value": 2,
+    "label": "Consegna con corriere",
+    "abstract": "Consegna con corriere a bordo strada",
+    "description": "La consegna avviene a bordo strada",
+    "price": 0,
+    "fullPrice": 40
+  },
+  {
+    "value": 3,
+    "label": "Consegna al piano",
+    "abstract": "La consegna avviene sulla soglia della porta di casa",
+    "description": "Se desidera può aggiungere montaggio e smaltimento imballaggi. Questa modalità prevede la consegna dentro casa vostra, direttamente nella stanza di destinazione, il montaggio e lo smaltimento degli imballaggi.",
+    "price": 0,
+    "fullPrice": 50
+  }
+]

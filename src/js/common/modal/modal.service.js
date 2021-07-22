@@ -9,6 +9,8 @@ export class ModalEvent {
 
 }
 
+// export class ModalLoadEvent extends ModalEvent { }
+// export class ModalLoadedEvent extends ModalEvent { }
 export class ModalResolveEvent extends ModalEvent { }
 export class ModalRejectEvent extends ModalEvent { }
 
@@ -17,13 +19,17 @@ export class ModalService {
 	static hasModal = false;
 
 	static open$(modal) {
+		this.busy$.next(true);
 		return this.getTemplate$(modal.src).pipe(
+			// startWith(new ModalLoadEvent(Object.assign({}, modal.data, { $src: modal.src }))),
 			map(template => {
 				return { node: this.getNode(template), data: modal.data, modal: modal };
 			}),
 			tap(node => {
 				this.modal$.next(node);
 				this.hasModal = true;
+				this.busy$.next(false);
+				// this.events$.next(new ModalLoadedEvent(Object.assign({}, modal.data, { $src: modal.src })));
 			}),
 			switchMap(node => this.events$),
 			tap(_ => this.hasModal = false)
@@ -61,3 +67,4 @@ export class ModalService {
 
 ModalService.modal$ = new Subject();
 ModalService.events$ = new Subject();
+ModalService.busy$ = new Subject();

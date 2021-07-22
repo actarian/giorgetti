@@ -6,6 +6,7 @@ import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 
 export const CartSteps = {
+	None: 0,
 	Items: 1,
 	Data: 2,
 	Delivery: 3,
@@ -88,23 +89,35 @@ export class Cart {
 
 export class CartService {
 
+	static get STORAGE_KEY() {
+		return `cart_${environment.currentMarket}`;
+	}
+
 	static cart$_ = new BehaviorSubject(null);
 
 	static get currentCart() {
 		return CartService.cart$_.getValue();
 	}
 
+	static setStep(step) {
+		const cart = CartService.currentCart;
+		if (cart) {
+			cart.step = step;
+			CartService.setCart(cart);
+		}
+	}
+
 	static setCart(cart) {
 		if (cart) {
-			LocalStorageService.set('cart', cart);
+			LocalStorageService.set(CartService.STORAGE_KEY, cart);
 		} else {
-			LocalStorageService.delete('cart');
+			LocalStorageService.delete(CartService.STORAGE_KEY);
 		}
 		CartService.cart$_.next(cart);
 	}
 
 	static cart$() {
-		const localCart = LocalStorageService.get('cart') || null;
+		const localCart = LocalStorageService.get(CartService.STORAGE_KEY) || null;
 		return of(localCart).pipe(
 			switchMap(cart => {
 				CartService.setCart(cart);
@@ -128,6 +141,15 @@ export class CartService {
 			return ApiService.get$('/cart/data.json');
 		} else {
 			return ApiService.get$('/cart/data.json');
+		}
+	}
+
+	static getDeliveryType$(cart) {
+		if (environment.flags.production) {
+			// !!! convertire in post ApiService.post$('/cart/delivery-type', cart);
+			return ApiService.get$('/cart/delivery-type.json');
+		} else {
+			return ApiService.get$('/cart/delivery-type.json');
 		}
 	}
 

@@ -13,7 +13,7 @@ export class FilterItem {
 		this.change$ = new BehaviorSubject();
 		this.mode = FilterMode.SELECT;
 		this.filter = 'Filter';
-		this.placeholder = 'Select';
+		this.placeholder = null;
 		this.values = [];
 		this.options = [];
 		if (filter) {
@@ -21,7 +21,7 @@ export class FilterItem {
 		}
 		if (filter.mode === FilterMode.SELECT) {
 			filter.options.unshift({
-				label: filter.placeholder,
+				label: 'select',
 				value: undefined,
 			});
 		}
@@ -48,11 +48,29 @@ export class FilterItem {
 	}
 
 	getLabel() {
-		if (this.mode === FilterMode.SELECT || this.mode === FilterMode.QUERY) {
-			return this.placeholder || this.label;
+		if (this.hasAny()) {
+			return this.options.filter(x => x.value && this.values.indexOf(x.value) !== -1).map(x => x.label).join(', ');
+		} else {
+			return null;
+		}
+		/*
+		if (this.mode === FilterMode.QUERY) {
+			return this.label;
+			// return this.placeholder || this.label;
+		} else if (this.mode === FilterMode.SELECT) {
+			if (this.hasAny()) {
+				return this.options.filter(x => x.value && this.values.indexOf(x.value) !== -1).map(x => x.label).join(', ');
+			} else {
+				return this.label;
+			}
 		} else {
 			return this.label;
 		}
+		*/
+	}
+
+	hasAny() {
+		return this.values.length > 0;
 	}
 
 	has(item) {
@@ -62,20 +80,22 @@ export class FilterItem {
 	set(item) {
 		if (this.mode === FilterMode.QUERY) {
 			this.values = item ? [item] : [];
-			this.placeholder = item;
+			// this.placeholder = item;
 		} else {
 			if (this.mode === FilterMode.SELECT) {
 				this.values = [];
 			}
 			const index = this.values.indexOf(item.value);
 			if (index === -1) {
-				if (item.value !== undefined) {
+				if (item.value != null) {
 					this.values.push(item.value);
 				}
 			}
+			/*
 			if (this.mode === FilterMode.SELECT) {
 				this.placeholder = item.label;
 			}
+			*/
 		}
 		// console.log('FilterItem.set', item);
 		this.change$.next();
@@ -86,10 +106,12 @@ export class FilterItem {
 		if (index !== -1) {
 			this.values.splice(index, 1);
 		}
+		/*
 		if (this.mode === FilterMode.SELECT) {
 			const first = this.options[0];
 			this.placeholder = first.label;
 		}
+		*/
 		// console.log('FilterItem.remove', item);
 		this.change$.next();
 	}
@@ -104,10 +126,12 @@ export class FilterItem {
 
 	clear() {
 		this.values = [];
+		/*
 		if (this.mode === FilterMode.SELECT) {
 			const first = this.options[0];
 			this.placeholder = first.label;
 		}
+		*/
 		this.change$.next();
 	}
 }

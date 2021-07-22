@@ -46,6 +46,28 @@
 	@include media-up(md) {
 		justify-content: space-around;
 		background: $background-tertiary;
+
+		&.sticked {
+			position: relative;
+			z-index: 1;
+			box-shadow: 0 10px 10px -5px rgba(53, 48, 44, 0.15%);
+
+			/*
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -50%;
+				width: 200%;
+				height: 100%;
+				background: $background-tertiary;
+			}
+
+			&>* {
+				position: relative;
+			}
+			*/
+		}
 	}
 
 	@include media-down(sm) {

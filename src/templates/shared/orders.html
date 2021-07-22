@@ -1,0 +1,24 @@
+<div class="section--table" orders>
+	<div class="container">
+		<div class="title">Storico ordini</div>
+		<div class="description" *if="!orders.length">
+			<p>Non ci sono ordini effettuati.</p>
+		</div>
+		<div class="flex-table" *if="orders.length">
+			<div class="tr">
+				<div class="th"># Ordine</div>
+				<div class="th">Data</div>
+				<div class="th">Totale</div>
+				<div class="th">Stato</div>
+				<div class="th"></div>
+			</div>
+			<div class="tr" *for="let order of orders">
+				<div class="td" [innerHTML]="order.id"></div>
+				<div class="td" [innerHTML]="order.date | date : { dateStyle: 'medium' }"></div>
+				<div class="td" [innerHTML]="order.totalPrice | number : { style: 'currency', currency: 'EUR' }"></div>
+				<div class="td" [innerHTML]="order.status"></div>
+				<div class="td"><button type="button" class="btn--more" (click)="onOpenOrder(order)">Visualizza ordine <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></button></div>
+			</div>
+		</div>
+	</div>
+</div>

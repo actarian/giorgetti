@@ -1,7 +1,7 @@
 .modal-outlet {
 	&__container {
+		display: none;
 		position: fixed;
-		display: flex;
 		justify-content: center;
 		align-items: center;
 		top: 0;
@@ -10,8 +10,13 @@
 		height: 100vh;
 		z-index: 20000;
 
-		&:not(.active) {
-			display: none;
+		&.active,
+		&.busy {
+			display: flex;
+		}
+
+		&>.spinner {
+			position: absolute;
 		}
 	}
 
@@ -50,7 +55,6 @@
 		}
 		*/
 	}
-
 }
 
 .modal__header {

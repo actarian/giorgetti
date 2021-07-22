@@ -12,6 +12,24 @@
 		</div>
 	</div>
 
+	<!--
+	<div *if="user">
+
+		<div class="section--secondary" locomotive-scroll-sticky target=".nav--secondary" until=".footer">
+			<div class="container">
+				<ul class="nav--secondary">
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#files" (locomotiveScrollTo)="'#files'">Area download</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#events-area" (locomotiveScrollTo)="'#events-area'">Area eventi</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#project-registration" (locomotiveScrollTo)="'#project-registration'">Registrazione progetti</a></li>
+					<li class="nav__item"><a href="#">Storico ordini</a></li>
+					<li class="nav__item"><button type="button" (click)="onLogout($event)">Esci</button></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	-->
+
 	<div class="section--intro-sm">
 		<div class="container">
 			<div class="row">
@@ -51,13 +69,14 @@
 
 	<div *if="user">
 
-		<div class="section--secondary">
+		<div class="section--secondary" locomotive-scroll-sticky target=".nav--secondary" until=".footer">
 			<div class="container">
 				<ul class="nav--secondary">
-					<li class="nav__item"><a href="/giorgetti/reserved-area.html#files" (locomotiveScrollTo)="'#files'">Area download</a></li>
-					<li class="nav__item"><a href="/giorgetti/reserved-area.html#events-area" (locomotiveScrollTo)="'#events-area'">Area eventi</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#files" (locomotiveScrollTo)="'#files'">Download</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#events-area" (locomotiveScrollTo)="'#events-area'">Eventi</a></li>
 					<li class="nav__item"><a href="/giorgetti/reserved-area.html#project-registration" (locomotiveScrollTo)="'#project-registration'">Registrazione progetti</a></li>
-					<li class="nav__item"><a href="#">Storico ordini</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#order-history" (locomotiveScrollTo)="'#order-history'">Storico ordini</a></li>
+					<li class="nav__item"><a href="/giorgetti/reserved-area.html#your-data" (locomotiveScrollTo)="'#your-data'">I tuoi dati</a></li>
 					<li class="nav__item"><button type="button" (click)="onLogout($event)">Esci</button></li>
 				</ul>
 			</div>
@@ -65,6 +84,11 @@
 
 		<div class="section--files" id="files">
 			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="title">Area download</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-3">
 						<ul class="nav--files" [tree]="tree" (open)="onOpen($event)"></ul>
@@ -74,7 +98,7 @@
 							<svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg> <span>Seleziona una categoria</span>
 						</div>
 						<div *if="item">
-							<div class="title" [innerHTML]="item.title"></div>
+							<div class="subtitle" [innerHTML]="item.title"></div>
 							<!-- files -->
 							<div class="listing--files">
 								<div class="listing__item" *for="let file of visibleFiles">
@@ -145,6 +169,14 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div id="order-history" *if="user">
+		<!-- @@include ./templates/shared/orders.html -->
+	</div>
+
+	<div id="your-data" *if="user">
+		<!-- @@include ./templates/shared/user-detail.html -->
 	</div>
 
 </main>

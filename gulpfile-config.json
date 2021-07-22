@@ -8,6 +8,11 @@
           "minify": true
         },
         {
+          "input": "src/templates/modals/*.html",
+          "output": "docs/partials/modals/",
+          "minify": true
+        },
+        {
           "input": "src/css/main-cssvars.scss",
           "output": "docs/css/main.css",
           "minify": true

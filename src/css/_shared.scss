@@ -9,9 +9,11 @@
 @import '_components/navs';
 @import '_components/typography';
 @import '_components/dropdowns';
+@import '_components/filters';
 @import '_components/buttons';
 @import '_components/modal';
 @import '_components/table';
+@import '_components/spinner';
 @import '_components/swiper';
 @import '_components/thron';
 @import '_components/stagger';
@@ -24,7 +26,9 @@
 @import '_pages/pictogram';
 @import '_pages/breadcrumb';
 @import '_pages/filters';
+@import '_pages/generic';
 @import '_pages/homepage';
+@import '_pages/products';
 @import '_pages/products-detail';
 @import '_pages/products-configure';
 @import '_pages/projects';
@@ -49,5 +53,6 @@
 @import '_pages/markets-and-languages';
 @import '_pages/cart-mini';
 @import '_pages/cart';
+@import '_pages/orders';
 //
 @import '_pages/index';

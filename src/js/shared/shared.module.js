@@ -13,6 +13,10 @@ import { NewsletterPropositionComponent } from './newsletter-proposition/newslet
 import { SearchComponent } from './search/search.component';
 import { SubmenuDirective } from './submenu/submenu.directive';
 import { TreeComponent } from './tree/tree.component';
+import { UserAccessDataComponent } from './user/user-access-data.component';
+import { UserDeleteComponent } from './user/user-delete.component';
+import { UserDetailComponent } from './user/user-detail.component';
+import { UserEditComponent } from './user/user-edit.component';
 import { UserForgotComponent } from './user/user-forgot.component';
 import { UserModalComponent } from './user/user-modal.component';
 import { UserSigninComponent } from './user/user-signin.component';
@@ -34,9 +38,13 @@ const factories = [
 	SwiperProductsPropositionDirective,
 	SwiperProjectsPropositionDirective,
 	TreeComponent,
+	UserAccessDataComponent,
 	UserComponent,
+	UserDeleteComponent,
+	UserEditComponent,
 	UserForgotComponent,
 	UserModalComponent,
+	UserDetailComponent,
 	UserSigninComponent,
 	UserSignupComponent,
 ];

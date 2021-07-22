@@ -5,7 +5,7 @@ export class DesignersService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/designers/all.json');
+			return ApiService.get$('/designers/all');
 		} else {
 			return ApiService.get$('/designers/all.json');
 		}
@@ -13,7 +13,7 @@ export class DesignersService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/designers/filters.json');
+			return ApiService.get$('/designers/filters');
 		} else {
 			return ApiService.get$('/designers/filters.json');
 		}

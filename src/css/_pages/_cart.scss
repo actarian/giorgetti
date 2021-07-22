@@ -364,24 +364,11 @@
 		}
 	}
 
-	.subtitle,
-	.btn--subtitle {
+	.subtitle {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		font-weight: 900;
-	}
-
-	.btn--subtitle {
-		@extend %btn;
-		width: 100%;
-		padding-bottom: 3px;
-		border-bottom: 1px solid $background-secondary;
-
-		svg {
-			width: 24px;
-			height: 24px;
-		}
 	}
 
 	p {
@@ -430,6 +417,10 @@
 		min-width: 0 !important;
 	}
 
+	.btn--accordion {
+		margin-bottom: 10px;
+	}
+
 	.step {
 		padding: 40px 0;
 	}
@@ -453,7 +444,7 @@
 
 	.group--recap {
 		padding: 20px 30px 30px 30px;
-		margin-bottom: 40px;
+		margin-bottom: 60px;
 		// border: 2px solid $foreground;
 		border: 1px solid $background-secondary;
 		border-radius: 8px;
@@ -535,6 +526,39 @@
 	}
 }
 
+.btn--accordion {
+	@extend %btn;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 900;
+	width: 100%;
+	padding: 10px 0;
+	font-size: 14px;
+	border-bottom: 1px solid $background-tertiary;
+
+	&,
+	&:link,
+	&:active,
+	&:focus,
+	&:visited,
+	&:hover {
+		color: $foreground;
+	}
+
+	svg {
+		width: 24px;
+		height: 24px;
+		transition: transform ease-in-out $fast;
+	}
+
+	&.active {
+		svg {
+			transform: rotate(180deg);
+		}
+	}
+}
+
 .discount-code {
 	font-family: $font-secondary;
 	font-size: 11px;
@@ -543,7 +567,7 @@
 
 .group--cart {
 	display: flex;
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid $background-tertiary;
 	line-height: 1;
 
 	.full {
@@ -593,17 +617,18 @@
 }
 
 .group--form--radio {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 
 	label {
 		display: block;
 		// border: 2px solid $foreground;
-		border: 1px solid $background-secondary;
+		border: 1px solid $background-tertiary;
 		border-radius: 8px;
 		cursor: pointer;
 		transition: ease-in-out all $fast;
 
 		svg {
+			flex: 0 0 24px;
 			width: 24px;
 			height: 24px;
 			margin-right: 6px;
@@ -768,9 +793,9 @@
 	flex-direction: column;
 	align-items: flex-start;
 	padding: 22px 0 30px;
-	margin-bottom: 30px;
+	margin-bottom: 70px;
 	// border-top: 2px solid $foreground;
-	border-bottom: 1px solid $background-secondary;
+	border-bottom: 1px solid $background-tertiary;
 
 	.card__name {
 		display: block;
@@ -824,6 +849,12 @@
 			align-items: flex-start;
 		}
 	}
+}
+
+.group--address,
+.group--timetable,
+.group--stores {
+	margin-bottom: 40px;
 }
 
 .group--flex {
@@ -901,22 +932,6 @@
 					margin-left: 15px;
 				}
 			}
-		}
-	}
-}
-
-.btn--timetable {
-	@extend %btn;
-
-	svg {
-		width: 24px;
-		height: 24px;
-		transition: transform ease-in-out $fast;
-	}
-
-	&.active {
-		svg {
-			transform: rotate(180deg);
 		}
 	}
 }

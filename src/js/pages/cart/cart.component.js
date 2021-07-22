@@ -19,7 +19,7 @@ export class CartComponent extends Component {
 	get totalPrice() {
 		const items = this.items || [];
 		let total = items.reduce((p, c, i) => {
-			return p + c.price * c.qty;
+			return p + c.price.price * c.qty;
 		}, 0);
 		if (this.delivery) {
 			total += this.delivery.price;
@@ -58,7 +58,7 @@ export class CartComponent extends Component {
 
 	initWithData(data) {
 		this.steps = CartSteps;
-		this.step = CartSteps.Items;
+		this.step = CartSteps.None;
 		this.errorPayment = null;
 		this.errorDiscount = null;
 		this.success = false;
@@ -147,6 +147,7 @@ export class CartComponent extends Component {
 		controls.shipmentCountry.options = FormService.toSelectOptions(data.shipmentCountry.options);
 		controls.data.controls.country.options = FormService.toSelectOptions(data.country.options);
 		controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(data.country.options);
+		/*
 		controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
 			id: x.value,
 			name: x.label,
@@ -155,6 +156,7 @@ export class CartComponent extends Component {
 			price: x.price,
 			fullPrice: x.fullPrice,
 		}));
+		*/
 		controls.paymentMethod.options = data.paymentMethod.options.slice().map(x => ({
 			id: x.value,
 			name: x.label,
@@ -164,7 +166,7 @@ export class CartComponent extends Component {
 		}));
 		this.form.patch({
 			shipmentCountry: controls.shipmentCountry.options[1].id,
-			deliveryType: controls.deliveryType.options[0].id,
+			// deliveryType: controls.deliveryType.options[0].id,
 			paymentMethod: controls.paymentMethod.options[0].id,
 		}, true);
 		this.pushChanges();
@@ -189,6 +191,8 @@ export class CartComponent extends Component {
 						distance: x.distance,
 					}));
 				}
+			} else {
+				this.step = CartSteps.Items;
 			}
 			this.onPatch(cart, true);
 		});
@@ -219,8 +223,22 @@ export class CartComponent extends Component {
 		this.onPatch(patch);
 	}
 
-	onPatch(patch = {}, skipUpdate) {
+	onPatch(patch = {}, skipUpdate = false) {
 		this.form.patch(Object.assign({}, patch, { step: this.step }));
+		switch (this.step) {
+			case CartSteps.Delivery:
+				this.getDeliveryType$().pipe(
+					first(),
+				).subscribe(_ => {
+					this.onAfterPatch(skipUpdate);
+				});
+				break;
+			default:
+				this.onAfterPatch(skipUpdate);
+		}
+	}
+
+	onAfterPatch(skipUpdate = false) {
 		this.pushChanges();
 		LocomotiveScrollService.update();
 		const target = document.querySelector('.section--breadcrumb');
@@ -557,6 +575,25 @@ export class CartComponent extends Component {
 			const store = stores[0];
 			this.onNext({ stores, store: store.id, delivery });
 		});
+	}
+
+	getDeliveryType$() {
+		this.busy = true;
+		return CartService.getDeliveryType$(this.form.value).pipe(
+			tap(deliveryTypeOptions => {
+				const controls = this.controls;
+				controls.deliveryType.options = deliveryTypeOptions.slice().map(x => ({
+					id: x.value,
+					name: x.label,
+					abstract: x.abstract,
+					description: x.description,
+					price: x.price,
+					fullPrice: x.fullPrice,
+				}));
+				this.form.patch(Object.assign({}, { deliveryType: controls.deliveryType.options[0].id }), true);
+			}),
+			finalize(_ => this.busy = false),
+		);
 	}
 
 	// 4. CartSteps.Recap

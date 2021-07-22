@@ -1,11 +1,15 @@
 import { BehaviorSubject, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
 import { environment } from '../../environment';
 import { HeaderService } from '../header/header.service';
 
 export class CartMiniService {
+
+	static get STORAGE_KEY() {
+		return `cartItems_${environment.currentMarket}`;
+	}
 
 	static items$_ = new BehaviorSubject([]);
 
@@ -25,15 +29,15 @@ export class CartMiniService {
 
 	static setItems(items) {
 		if (items) {
-			LocalStorageService.set('cartItems', items);
+			LocalStorageService.set(CartMiniService.STORAGE_KEY, items);
 		} else {
-			LocalStorageService.delete('cartItems');
+			LocalStorageService.delete(CartMiniService.STORAGE_KEY);
 		}
 		CartMiniService.items$_.next(items);
 	}
 
 	static items$() {
-		const localItems = LocalStorageService.get('cartItems') || [];
+		const localItems = LocalStorageService.get(CartMiniService.STORAGE_KEY) || [];
 		return of(localItems).pipe(
 			switchMap(items => {
 				CartMiniService.setItems(items);
@@ -79,18 +83,25 @@ export class CartMiniService {
 	}
 
 	static addItem$(item) {
+		const count = CartMiniService.count;
 		return of(Object.assign({ qty: 1 }, item)).pipe(
 			map(item => {
 				const items = CartMiniService.currentItems.slice();
 				const item_ = CartMiniService.find(item, items);
 				if (item_) {
 					item_.qty += item.qty;
+					item_.price = item.price;
 					CartMiniService.setItems(items);
 					return item_;
 				} else {
 					items.push(item);
 					CartMiniService.setItems(items);
 					return item;
+				}
+			}),
+			tap(_ => {
+				if (count === 0) {
+					HeaderService.setHeader('cart');
 				}
 			}),
 		)
@@ -127,27 +138,20 @@ export class CartMiniService {
 
 	static getPrice$(item) {
 		if (environment.flags.production) {
-			/*
-			!!! implementare la post a /api/cart-mini/price per ottenere il prezzo da showefy
-			il payload è { showefy: { internalstr: "string..." } }
-			il payload completo e l'output si trovano qui /api/cart-mini/price.json
-			*/
-			// return ApiService.post$('/cart-mini/price', item);
-			return ApiService.get$('/cart-mini/price.json');
+			return ApiService.post$('/cart-mini/price', item);
 		} else {
 			return ApiService.get$('/cart-mini/price.json');
-			// return of(Object.assign(item, { price: 899 }));
 		}
 	}
 
 	static getPriceAndAddItem$(item) {
-		return this.getPrice$(item).pipe(
-			switchMap(item => this.addItem$(item)),
+		return CartMiniService.getPrice$(item).pipe(
+			switchMap(item => CartMiniService.addItem$(item)),
 		);
 	}
 
 	static match(item, item_) {
-		return item_.id === item.id && ((!item_.showefy && !item.showefy) || (item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link));
+		return item_.id === item.id && item_.code === item.code && ((!item_.showefy && !item.showefy) || (item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link));
 	}
 
 	static find(item, items) {

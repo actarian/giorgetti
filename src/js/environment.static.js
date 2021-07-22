@@ -13,15 +13,18 @@ export const environmentStatic = {
 	assets: '/giorgetti/',
 	slug: {
 		configureProduct: `/giorgetti/products-configure.html`,
+		cart: `/giorgetti/cart.html`,
 		reservedArea: `/giorgetti/reserved-area.html`,
 	},
 	template: {
 		modal: {
-			userModal: '/giorgetti/user-modal.html',
-			careersModal: '/giorgetti/careers-modal.html',
-			projectsRegistrationModal: '/giorgetti/projects-registration-modal.html',
-			materialsModal: '/giorgetti/materials-modal.html',
-			marketsAndLanguagesModal: '/giorgetti/markets-and-languages-modal.html',
+			careersModal: '/giorgetti/partials/modals/careers-modal.html',
+			genericModal: '/giorgetti/partials/modals/generic-modal.html',
+			marketsAndLanguagesModal: '/giorgetti/partials/modals/markets-and-languages-modal.html',
+			materialsModal: '/giorgetti/partials/modals/materials-modal.html',
+			ordersModal: '/giorgetti/partials/modals/orders-modal.html',
+			projectsRegistrationModal: '/giorgetti/partials/modals/projects-registration-modal.html',
+			userModal: '/giorgetti/partials/modals/user-modal.html',
 		}
 	},
 	facebook: {

@@ -1686,6 +1686,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1714,6 +1715,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1742,6 +1744,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1770,6 +1773,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1798,6 +1802,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1826,6 +1831,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1854,6 +1860,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1882,6 +1889,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1910,6 +1918,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1938,6 +1947,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1966,6 +1976,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -1994,6 +2005,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2022,6 +2034,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2050,6 +2063,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2078,6 +2092,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2106,6 +2121,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2134,6 +2150,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2162,6 +2179,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2190,6 +2208,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2218,6 +2237,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2246,6 +2266,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2274,6 +2295,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2302,6 +2324,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2330,6 +2353,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2358,6 +2382,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2386,6 +2411,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2414,6 +2440,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2442,6 +2469,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2470,6 +2498,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -2498,6 +2527,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3114,6 +3144,7 @@
       "id": 5,
       "name": "Divani"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -3478,6 +3509,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"
@@ -4458,6 +4490,7 @@
       "id": 11,
       "name": "Letti"
     },
+    "large": true,
     "ambience": {
       "id": 1,
       "name": "Living"

@@ -1,9 +1,12 @@
 import { Component, getContext } from 'rxcomp';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
+import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 import { HeaderService } from '../../shared/header/header.service';
+import { UserService } from '../../shared/user/user.service';
+import { CartService } from '../cart/cart.service';
 import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {
@@ -28,6 +31,9 @@ export class ProductsDetailComponent extends Component {
 		if (this.isAddedToCart(item)) {
 			HeaderService.setHeader('cart');
 		} else {
+			// resetting purchase procedure
+			CartService.setCart(null);
+			// getting showefy price and adding to mini cart
 			CartMiniService.getPriceAndAddItem$(item).pipe(
 				first(),
 			).subscribe(_ => {
@@ -57,6 +63,25 @@ export class ProductsDetailComponent extends Component {
 
 	configureProduct(version) {
 		window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}`;
+	}
+
+	onReservedArea() {
+		UserService.me$().pipe(
+			first(),
+		).subscribe(user => {
+			if (user) {
+				window.location.href = environment.slug.reservedArea;
+			} else {
+				ModalService.open$({ src: environment.template.modal.userModal, data: { view: 1 } }).pipe(
+					takeUntil(this.unsubscribe$),
+				).subscribe(event => {
+					console.log('ProductsDetailComponent.onLogin', event);
+					if (event instanceof ModalResolveEvent) {
+						window.location.href = environment.slug.reservedArea;
+					}
+				});
+			}
+		});
 	}
 }
 

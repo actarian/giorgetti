@@ -3,6 +3,7 @@ import { first } from 'rxjs/operators';
 import { LocationService } from '../../common/location/location.service';
 import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
+import { CartService } from '../cart/cart.service';
 
 const breadcumbStyle = `font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;`;
 const titleStyle = `letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;`;
@@ -11,9 +12,17 @@ const descriptionStyle = `font-size: .8rem; text-align: left;margin-bottom: 15px
 
 export class ProductsConfigureComponent extends Component {
 
+	get priceListByMarket() {
+		// !!! I listini YY possibili sono: A listino EUR, B listino GB, C listino USA, D listino RMB, E listino Medio oriente
+		switch (environment.currentMarket.toLowerCase()) {
+			default:
+				return 'A';
+		}
+	}
+
 	get showefyUrl() {
 		if (this.product) {
-			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=P&codprod=${this.product.code}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
+			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=${this.priceListByMarket}&codprod=${this.product.code}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
 		}
 	}
 
@@ -207,6 +216,9 @@ export class ProductsConfigureComponent extends Component {
 			cartItem.image = data.image;
 		}
 		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
+		// resetting purchase procedure
+		CartService.setCart(null);
+		// getting showefy price and adding to mini cart
 		CartMiniService.getPriceAndAddItem$(cartItem).pipe(
 			first(),
 		).subscribe();
