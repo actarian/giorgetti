@@ -112,13 +112,16 @@
 		font-size: 16px;
 		line-height: 1;
 		padding: 4px 10px;
-		margin: 0 8px;
+		margin: 0 4px;
 		background: #f8f8f8;
 	}
 
 	.btn--action {
 		@extend %btn;
-		line-height: 1;
+		line-height: 0;
+		padding: 4px;
+		border-radius: 13px;
+		background: transparent;
 
 		svg {
 			width: 18px;
@@ -128,6 +131,10 @@
 		.add,
 		.remove {
 			margin-bottom: -1px;
+		}
+
+		&:hover {
+			background: $background-tertiary;
 		}
 	}
 

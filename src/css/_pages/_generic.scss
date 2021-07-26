@@ -37,8 +37,9 @@
 		color: #000000;
 	}
 
-	.subtitle {
-		margin-bottom: 25px;
+	.subtitle,
+	.group--informations .title {
+		margin: 40px 0 25px 0;
 		font-family: $font-secondary;
 		font-size: 32px;
 		line-height: 1;

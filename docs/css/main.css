@@ -3229,7 +3229,8 @@ h6 {
 .nav--files > li > button,
 .nav--files ul > li > button,
 .nav--index > li > button, .group--form--checkbox label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link, .group--address .address__text a, .card--store-locator .card__phone,
+.modal--generic .btn--link, .section--text .btn--link,
+.section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
 .card--store-locator .card__email, .card--dealer .card__phone,
 .card--dealer .card__fax,
@@ -3278,7 +3279,8 @@ h6 {
   .nav--files > li > button,
   .nav--files ul > li > button,
   .nav--index > li > button, .group--form--checkbox label > span > a, .modal--generic a,
-  .modal--generic .btn--link, .section--text .btn--link, .group--address .address__text a, .card--store-locator .card__phone,
+  .modal--generic .btn--link, .section--text .btn--link,
+  .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
   .card--store-locator .card__fax,
   .card--store-locator .card__email, .card--dealer .card__phone,
   .card--dealer .card__fax,
@@ -3316,7 +3318,8 @@ h6 {
   .nav--files > li > button:active,
   .nav--files ul > li > button:active,
   .nav--index > li > button:active, .group--form--checkbox label > span > a:active, .modal--generic a:active,
-  .modal--generic .btn--link:active, .section--text .btn--link:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
+  .modal--generic .btn--link:active, .section--text .btn--link:active,
+  .section--text a:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
   .card--store-locator .card__fax:active,
   .card--store-locator .card__email:active, .card--dealer .card__phone:active,
   .card--dealer .card__fax:active,
@@ -3354,7 +3357,8 @@ h6 {
   .nav--files > li > button:focus,
   .nav--files ul > li > button:focus,
   .nav--index > li > button:focus, .group--form--checkbox label > span > a:focus, .modal--generic a:focus,
-  .modal--generic .btn--link:focus, .section--text .btn--link:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
+  .modal--generic .btn--link:focus, .section--text .btn--link:focus,
+  .section--text a:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
   .card--store-locator .card__fax:focus,
   .card--store-locator .card__email:focus, .card--dealer .card__phone:focus,
   .card--dealer .card__fax:focus,
@@ -3392,7 +3396,8 @@ h6 {
   .nav--files > li > button:hover,
   .nav--files ul > li > button:hover,
   .nav--index > li > button:hover, .group--form--checkbox label > span > a:hover, .modal--generic a:hover,
-  .modal--generic .btn--link:hover, .section--text .btn--link:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
+  .modal--generic .btn--link:hover, .section--text .btn--link:hover,
+  .section--text a:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
   .card--store-locator .card__fax:hover,
   .card--store-locator .card__email:hover, .card--dealer .card__phone:hover,
   .card--dealer .card__fax:hover,
@@ -3430,7 +3435,8 @@ h6 {
   .nav--files > li > button:visited,
   .nav--files ul > li > button:visited,
   .nav--index > li > button:visited, .group--form--checkbox label > span > a:visited, .modal--generic a:visited,
-  .modal--generic .btn--link:visited, .section--text .btn--link:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
+  .modal--generic .btn--link:visited, .section--text .btn--link:visited,
+  .section--text a:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
   .card--store-locator .card__fax:visited,
   .card--store-locator .card__email:visited, .card--dealer .card__phone:visited,
   .card--dealer .card__fax:visited,
@@ -3473,7 +3479,8 @@ h6 {
 .nav--files > li > button,
 .nav--files ul > li > button,
 .nav--index > li > button, .group--form--checkbox label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link, .group--address .address__text a, .card--store-locator .card__phone,
+.modal--generic .btn--link, .section--text .btn--link,
+.section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
 .card--store-locator .card__email, .card--dealer .card__phone,
 .card--dealer .card__fax,
@@ -3493,7 +3500,7 @@ h6 {
 .section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
@@ -3517,7 +3524,8 @@ h6 {
   .nav--files > li > button[disabled],
   .nav--files ul > li > button[disabled],
   .nav--index > li > button[disabled], .group--form--checkbox label > span > a[disabled], .modal--generic a[disabled],
-  .modal--generic .btn--link[disabled], .section--text .btn--link[disabled], .group--address .address__text a[disabled], .card--store-locator .card__phone[disabled],
+  .modal--generic .btn--link[disabled], .section--text .btn--link[disabled],
+  .section--text a[disabled], .group--address .address__text a[disabled], .card--store-locator .card__phone[disabled],
   .card--store-locator .card__fax[disabled],
   .card--store-locator .card__email[disabled], .card--dealer .card__phone[disabled],
   .card--dealer .card__fax[disabled],
@@ -3540,7 +3548,8 @@ h6 {
     pointer-events: none; }
 
 .group--form--checkbox label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link, .group--address .address__text a, .card--store-locator .card__phone,
+.modal--generic .btn--link, .section--text .btn--link,
+.section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
 .card--store-locator .card__email, .card--dealer .card__phone,
 .card--dealer .card__fax,
@@ -3551,7 +3560,8 @@ h6 {
 .card--address .card__email {
   position: relative; }
   .group--form--checkbox label > span > a:after, .modal--generic a:after,
-  .modal--generic .btn--link:after, .section--text .btn--link:after, .group--address .address__text a:after, .card--store-locator .card__phone:after,
+  .modal--generic .btn--link:after, .section--text .btn--link:after,
+  .section--text a:after, .group--address .address__text a:after, .card--store-locator .card__phone:after,
   .card--store-locator .card__fax:after,
   .card--store-locator .card__email:after, .card--dealer .card__phone:after,
   .card--dealer .card__fax:after,
@@ -3569,15 +3579,16 @@ h6 {
     background: currentColor;
     transform-origin: left;
     transition: transform cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .group--form--checkbox label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg {
+  .group--form--checkbox label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg {
     width: 24px;
     height: 24px;
     margin-left: -10px;
     margin-right: 10px; }
-  .group--form--checkbox label > span > a span, .modal--generic a span, .modal--generic .btn--link span, .section--text .btn--link span, .group--address .address__text a span, .card--store-locator .card__phone span, .card--store-locator .card__fax span, .card--store-locator .card__email span, .card--dealer .card__phone span, .card--dealer .card__fax span, .card--dealer .card__email span, .card--contact .card__phone span, .card--contact .card__fax span, .card--contact .card__email span, .section--user-detail .btn--link span, .card--address .card__phone span, .card--address .card__fax span, .card--address .card__email span {
+  .group--form--checkbox label > span > a span, .modal--generic a span, .modal--generic .btn--link span, .section--text .btn--link span, .section--text a span, .group--address .address__text a span, .card--store-locator .card__phone span, .card--store-locator .card__fax span, .card--store-locator .card__email span, .card--dealer .card__phone span, .card--dealer .card__fax span, .card--dealer .card__email span, .card--contact .card__phone span, .card--contact .card__fax span, .card--contact .card__email span, .section--user-detail .btn--link span, .card--address .card__phone span, .card--address .card__fax span, .card--address .card__email span {
     display: block; }
   .group--form--checkbox label > span > a, .modal--generic a,
-  .modal--generic .btn--link, .section--text .btn--link, .group--address .address__text a, .card--store-locator .card__phone,
+  .modal--generic .btn--link, .section--text .btn--link,
+  .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
   .card--store-locator .card__fax,
   .card--store-locator .card__email, .card--dealer .card__phone,
   .card--dealer .card__fax,
@@ -3586,7 +3597,8 @@ h6 {
   .card--contact .card__email, .section--user-detail .btn--link, .card--address .card__phone,
   .card--address .card__fax,
   .card--address .card__email, .group--form--checkbox label > span > a:active, .modal--generic a:active,
-  .modal--generic .btn--link:active, .section--text .btn--link:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
+  .modal--generic .btn--link:active, .section--text .btn--link:active,
+  .section--text a:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
   .card--store-locator .card__fax:active,
   .card--store-locator .card__email:active, .card--dealer .card__phone:active,
   .card--dealer .card__fax:active,
@@ -3595,7 +3607,8 @@ h6 {
   .card--contact .card__email:active, .section--user-detail .btn--link:active, .card--address .card__phone:active,
   .card--address .card__fax:active,
   .card--address .card__email:active, .group--form--checkbox label > span > a:focus, .modal--generic a:focus,
-  .modal--generic .btn--link:focus, .section--text .btn--link:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
+  .modal--generic .btn--link:focus, .section--text .btn--link:focus,
+  .section--text a:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
   .card--store-locator .card__fax:focus,
   .card--store-locator .card__email:focus, .card--dealer .card__phone:focus,
   .card--dealer .card__fax:focus,
@@ -3604,7 +3617,8 @@ h6 {
   .card--contact .card__email:focus, .section--user-detail .btn--link:focus, .card--address .card__phone:focus,
   .card--address .card__fax:focus,
   .card--address .card__email:focus, .group--form--checkbox label > span > a:hover, .modal--generic a:hover,
-  .modal--generic .btn--link:hover, .section--text .btn--link:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
+  .modal--generic .btn--link:hover, .section--text .btn--link:hover,
+  .section--text a:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
   .card--store-locator .card__fax:hover,
   .card--store-locator .card__email:hover, .card--dealer .card__phone:hover,
   .card--dealer .card__fax:hover,
@@ -3613,7 +3627,8 @@ h6 {
   .card--contact .card__email:hover, .section--user-detail .btn--link:hover, .card--address .card__phone:hover,
   .card--address .card__fax:hover,
   .card--address .card__email:hover, .group--form--checkbox label > span > a:visited, .modal--generic a:visited,
-  .modal--generic .btn--link:visited, .section--text .btn--link:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
+  .modal--generic .btn--link:visited, .section--text .btn--link:visited,
+  .section--text a:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
   .card--store-locator .card__fax:visited,
   .card--store-locator .card__email:visited, .card--dealer .card__phone:visited,
   .card--dealer .card__fax:visited,
@@ -3624,7 +3639,8 @@ h6 {
   .card--address .card__email:visited {
     color: inherit; }
   .group--form--checkbox label > span > a:hover:after, .modal--generic a:hover:after,
-  .modal--generic .btn--link:hover:after, .section--text .btn--link:hover:after, .group--address .address__text a:hover:after, .card--store-locator .card__phone:hover:after,
+  .modal--generic .btn--link:hover:after, .section--text .btn--link:hover:after,
+  .section--text a:hover:after, .group--address .address__text a:hover:after, .card--store-locator .card__phone:hover:after,
   .card--store-locator .card__fax:hover:after,
   .card--store-locator .card__email:hover:after, .card--dealer .card__phone:hover:after,
   .card--dealer .card__fax:hover:after,
@@ -5922,8 +5938,9 @@ test-component code {
     text-transform: uppercase;
     text-align: left;
     color: #000000; }
-  .modal--generic .subtitle {
-    margin-bottom: 25px;
+  .modal--generic .subtitle,
+  .modal--generic .group--informations .title {
+    margin: 40px 0 25px 0;
     font-family: var(--font-secondary);
     font-size: 32px;
     line-height: 1;
@@ -8703,25 +8720,63 @@ test-component code {
   text-transform: uppercase;
   color: #000000; }
 
-.section--text .description {
-  font-size: 18px; }
-  .section--text .description p {
-    margin: 0 0 60px;
-    padding: 0; }
-    .section--text .description p:last-child {
-      margin: 0; }
+.section--text .description,
+.section--text div:not([class]) {
+  font-size: 16px;
+  letter-spacing: 0.02em; }
 
-.section--text .description + .title {
+.section--text .description + .title,
+.section--text div:not([class]) + .title,
+.section--text p + .title {
   margin-top: 60px; }
 
-.section--text .btn--link {
+.section--text p {
+  margin: 0 0 60px 0;
+  padding: 0; }
+  .section--text p:last-child {
+    margin: 0; }
+
+.section--text ul,
+.section--text ol {
+  margin: 0 0 60px 0;
+  padding: 0 0 0 20px; }
+  .section--text ul > li::marker,
+  .section--text ol > li::marker {
+    font-weight: bold;
+    text-transform: uppercase; }
+  .section--text ul > li:not(:last-child),
+  .section--text ol > li:not(:last-child) {
+    margin: 0 0 20px 0; }
+
+.section--text .btn--link,
+.section--text a {
   font-weight: 600;
   margin-bottom: 4px; }
-  .section--text .btn--link:after {
+  .section--text .btn--link:after,
+  .section--text a:after {
     transform: scale(1, 1);
     transform-origin: right; }
-  .section--text .btn--link:hover:after, .section--text .btn--link.active:after {
+  .section--text .btn--link:hover:after, .section--text .btn--link.active:after,
+  .section--text a:hover:after,
+  .section--text a.active:after {
     transform: scale(0, 1); }
+
+.section--text .group--informations {
+  margin-bottom: 80px; }
+  .section--text .group--informations .title {
+    margin-bottom: 30px; }
+  .section--text .group--informations p {
+    margin: 0 0 20px 0;
+    padding: 0; }
+    .section--text .group--informations p:last-child {
+      margin: 0; }
+  .section--text .group--informations ul,
+  .section--text .group--informations ol {
+    margin: 0 0 30px 0;
+    padding: 0 0 0 20px; }
+    .section--text .group--informations ul > li:not(:last-child),
+    .section--text .group--informations ol > li:not(:last-child) {
+      margin: 0 0 20px 0; }
 
 @media (min-width: 1024px) {
   .section--text {
@@ -12709,16 +12764,21 @@ test-component code {
     font-size: 16px;
     line-height: 1;
     padding: 4px 10px;
-    margin: 0 8px;
+    margin: 0 4px;
     background: #f8f8f8; }
   .card--cart-item .btn--action {
-    line-height: 1; }
+    line-height: 0;
+    padding: 4px;
+    border-radius: 13px;
+    background: transparent; }
     .card--cart-item .btn--action svg {
       width: 18px;
       height: 18px; }
     .card--cart-item .btn--action .add,
     .card--cart-item .btn--action .remove {
       margin-bottom: -1px; }
+    .card--cart-item .btn--action:hover {
+      background: var(--background-tertiary); }
   .card--cart-item .btn--action + .btn--action {
     margin-left: 10px; }
 
@@ -12933,13 +12993,16 @@ test-component code {
   .flex-table > .tr--cart > .td--info {
     flex-basis: 400px; }
   .flex-table > .tr--cart > .td--unitary-price {
-    flex-basis: 100px; }
+    flex-basis: 120px;
+    align-items: flex-end; }
   .flex-table > .tr--cart > .td--qty {
-    flex-basis: 100px; }
+    flex-basis: 90px;
+    align-items: center; }
   .flex-table > .tr--cart > .td--remove {
-    flex-basis: 50px; }
+    flex-basis: 40px; }
   .flex-table > .tr--cart > .td--price {
-    flex-basis: 100px; } }
+    flex-basis: 120px;
+    align-items: flex-end; } }
 
 @media (max-width: 1023.98px) {
   .flex-table > .tr--cart > .td--info {
@@ -12947,163 +13010,191 @@ test-component code {
   .flex-table > .tr--cart > .td--unitary-price {
     display: none; }
   .flex-table > .tr--cart > .td--qty {
-    flex-basis: 100px; }
+    flex-basis: 100px;
+    align-items: center; }
   .flex-table > .tr--cart > .td--remove {
     display: none; }
   .flex-table > .tr--cart > .td--price {
-    flex-basis: 100px; } }
+    flex-basis: 100px;
+    align-items: flex-end; } }
 
-.tr--cart .group--info {
-  display: flex;
-  flex-direction: row;
-  align-items: center; }
-  .tr--cart .group--info .left__picture {
-    display: block;
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
-    overflow: hidden;
-    cursor: pointer; }
-    .tr--cart .group--info .left__picture > img,
-    .tr--cart .group--info .left__picture > svg,
-    .tr--cart .group--info .left__picture > video,
-    .tr--cart .group--info .left__picture > canvas,
-    .tr--cart .group--info .left__picture > .video,
-    .tr--cart .group--info .left__picture > iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      -o-object-fit: cover;
-         object-fit: cover; }
-    .tr--cart .group--info .left__picture img {
-      transition: transform ease-in-out 250ms;
-      transform-origin: bottom;
-      -o-object-fit: contain;
-         object-fit: contain;
-      -o-object-position: 50% 100%;
-         object-position: 50% 100%;
-      background: var(--background); }
-    .tr--cart .group--info .left__picture:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      opacity: 0.03; }
-    .tr--cart .group--info .left__picture .over {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 15px;
-      opacity: 0;
-      background: rgba(53, 48, 44, 0.4);
-      pointer-events: none;
-      transition: opacity ease-in-out 250ms; }
-      .tr--cart .group--info .left__picture .over__title {
-        font-family: var(--font-secondary);
-        font-size: 19px;
-        line-height: 1.2;
-        text-align: center;
-        letter-spacing: -0.041em;
-        text-transform: uppercase;
-        color: var(--foreground-negative); }
-    .tr--cart .group--info .left__picture:hover img {
-      transform: scale(1.1, 1.1); }
-    .tr--cart .group--info .left__picture:hover .over {
-      opacity: 1; }
-  .tr--cart .group--info .right {
+.tr--cart {
+  /*
+	.btn--remove {
+		@extend %btn;
+		display: flex;
+		align-items: center;
+		font-size: 11px;
+		font-weight: 900;
+		line-height: 1;
+		letter-spacing: 1px;
+		border: 2px solid;
+		border-radius: 10px;
+		padding: 2px 9px;
+
+		svg {
+			width: 16px;
+			height: 16px;
+			margin: 0 0 0 12px;
+			transition: all ease-in-out $fast;
+		}
+
+		&:hover {
+			svg {
+				transform: translateX(5px);
+			}
+		}
+	}
+	*/ }
+  .tr--cart .group--info {
     display: flex;
-    flex-direction: column; }
-    .tr--cart .group--info .right__title {
+    flex-direction: row;
+    align-items: center; }
+    .tr--cart .group--info .left__picture {
       display: block;
-      font-size: 11px;
-      font-weight: 900;
-      line-height: 1.2;
-      text-transform: uppercase; }
-      .tr--cart .group--info .right__title > em {
-        font-style: normal;
-        color: #6a6a6a; }
-
-.tr--cart .group--qty {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
-
-.tr--cart .price {
-  padding: 3px 8px;
-  font-size: 14px;
-  line-height: 1;
-  border-radius: 10px;
-  background: var(--background-negative);
-  color: var(--foreground-negative); }
-
-.tr--cart .count {
-  font-size: 16px;
-  line-height: 1;
-  padding: 4px 10px;
-  margin: 0 8px;
-  background: #f8f8f8; }
-
-.tr--cart .btn--remove {
-  display: flex;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 900;
-  line-height: 1;
-  /* text-transform: uppercase; */
-  letter-spacing: 1px;
-  border: 2px solid;
-  border-radius: 10px;
-  padding: 2px 9px; }
-  .tr--cart .btn--remove svg {
-    width: 16px;
-    height: 16px;
-    margin: 0 0 0 12px;
-    transition: all ease-in-out 250ms; }
-  .tr--cart .btn--remove:hover svg {
-    transform: translateX(5px); }
-
-.tr--cart .btn--action {
-  line-height: 1; }
-  .tr--cart .btn--action svg {
-    width: 18px;
-    height: 18px; }
-  .tr--cart .btn--action .add,
-  .tr--cart .btn--action .remove {
-    margin-bottom: -1px; }
-
-.tr--cart .btn--action + .btn--action {
-  margin-left: 10px; }
-
-@media (min-width: 1024px) {
-  .tr--cart .group--info .left {
-    width: 150px;
-    margin-right: 15px; } }
-
-@media (max-width: 1023.98px) {
-  .tr--cart .group--info .left__picture .over__title {
-    font-size: 14px; }
-  .flex-table > .tr--cart > .td--unitary-price,
-  .flex-table > .tr--cart > .td--remove {
-    display: none; }
-  .tr--cart .group--info .left {
-    width: 80px;
-    margin-right: 10px; } }
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+      cursor: pointer; }
+      .tr--cart .group--info .left__picture > img,
+      .tr--cart .group--info .left__picture > svg,
+      .tr--cart .group--info .left__picture > video,
+      .tr--cart .group--info .left__picture > canvas,
+      .tr--cart .group--info .left__picture > .video,
+      .tr--cart .group--info .left__picture > iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover; }
+      .tr--cart .group--info .left__picture img {
+        transition: transform ease-in-out 250ms;
+        transform-origin: bottom;
+        -o-object-fit: contain;
+           object-fit: contain;
+        -o-object-position: 50% 100%;
+           object-position: 50% 100%;
+        background: var(--background); }
+      .tr--cart .group--info .left__picture:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        opacity: 0.03; }
+      .tr--cart .group--info .left__picture .over {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        opacity: 0;
+        background: rgba(53, 48, 44, 0.4);
+        pointer-events: none;
+        transition: opacity ease-in-out 250ms; }
+        .tr--cart .group--info .left__picture .over__title {
+          font-family: var(--font-secondary);
+          font-size: 19px;
+          line-height: 1.2;
+          text-align: center;
+          letter-spacing: -0.041em;
+          text-transform: uppercase;
+          color: var(--foreground-negative); }
+      .tr--cart .group--info .left__picture:hover img {
+        transform: scale(1.1, 1.1); }
+      .tr--cart .group--info .left__picture:hover .over {
+        opacity: 1; }
+    .tr--cart .group--info .right {
+      display: flex;
+      flex-direction: column; }
+      .tr--cart .group--info .right__title {
+        display: block;
+        font-size: 11px;
+        font-weight: 900;
+        line-height: 1.2;
+        text-transform: uppercase; }
+        .tr--cart .group--info .right__title > em {
+          font-style: normal;
+          color: #6a6a6a; }
+  .tr--cart .group--qty {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+  .tr--cart .price {
+    padding: 3px 8px;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 10px;
+    background: var(--background-negative);
+    color: var(--foreground-negative); }
+  .tr--cart .count {
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px 10px;
+    margin: 0 4px;
+    background: #f8f8f8; }
+  .tr--cart .btn--remove {
+    display: flex;
+    align-items: center;
+    font-size: 0;
+    line-height: 0;
+    letter-spacing: 0;
+    padding: 10px;
+    border-radius: 30px;
+    background: transparent; }
+    .tr--cart .btn--remove svg {
+      width: 20px;
+      height: 20px; }
+    .tr--cart .btn--remove:hover {
+      /*
+			svg {
+				transform: translateY(-3px);
+			}
+			*/
+      background: var(--background-tertiary); }
+  .tr--cart .btn--action {
+    line-height: 0;
+    padding: 4px;
+    border-radius: 13px;
+    background: transparent; }
+    .tr--cart .btn--action svg {
+      width: 18px;
+      height: 18px; }
+    .tr--cart .btn--action .add,
+    .tr--cart .btn--action .remove {
+      margin-bottom: -1px; }
+    .tr--cart .btn--action:hover {
+      background: var(--background-tertiary); }
+  .tr--cart .btn--action + .btn--action {
+    margin-left: 10px; }
+  @media (min-width: 1024px) {
+    .tr--cart .group--info .left {
+      width: 150px;
+      margin-right: 15px; } }
+  @media (max-width: 1023.98px) {
+    .tr--cart .group--info .left__picture .over__title {
+      font-size: 14px; }
+    .flex-table > .tr--cart > .td--unitary-price,
+    .flex-table > .tr--cart > .td--remove {
+      display: none; }
+    .tr--cart .group--info .left {
+      width: 80px;
+      margin-right: 10px; } }
 
 .section--cart {
   min-height: 100vh; }

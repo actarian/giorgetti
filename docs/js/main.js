@@ -1179,9 +1179,18 @@ var CartService = /*#__PURE__*/function () {
 
   CartService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/cart/data.json');
+      return ApiService.get$('/cart/data');
     } else {
       return ApiService.get$('/cart/data.json');
+    }
+  };
+
+  CartService.estimatedDelivery$ = function estimatedDelivery$(cart) {
+    if (environment.flags.production) {
+      // !!! convertire in post ApiService.post$('/cart/estimated-delivery', cart);
+      return ApiService.get$('/cart/estimated-delivery.json');
+    } else {
+      return ApiService.get$('/cart/estimated-delivery.json');
     }
   };
 
@@ -3432,14 +3441,66 @@ ControlComponent.meta = {
   var _proto = ControlCheckboxComponent.prototype;
 
   _proto.onInit = function onInit() {
+    var _this = this;
+
     this.label = this.label || 'label';
+
+    if (this.target === 'modal') {
+      setTimeout(function () {
+        _this.link$().pipe(operators.takeUntil(_this.unsubscribe$)).subscribe();
+      }, 1);
+    }
+  };
+
+  _proto.link$ = function link$() {
+    var _this2 = this;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var anchors = Array.prototype.slice.call(node.querySelectorAll('a')); // console.log(anchors, node.innerHTML);
+
+    return rxjs.merge.apply(void 0, anchors.map(function (anchor) {
+      return rxjs.fromEvent(anchor, 'click');
+    })).pipe(operators.switchMap(function (event) {
+      event.preventDefault();
+      event.stopPropagation(); // console.log('UserDetailComponent.onModalUserUpdate');
+
+      var anchor = event.target;
+      var href = anchor.getAttribute('href');
+      console.log('ControlCheckboxComponent.link$.href', href);
+      return rxjs.from(fetch(href).then(function (response) {
+        return response.text();
+      }));
+    }), operators.tap(function (html) {
+      console.log('ControlCheckboxComponent.link$.html', html);
+      var parser = new DOMParser();
+      var htmlDocument = parser.parseFromString(html, 'text/html');
+      console.log('ControlCheckboxComponent.link$.htmlDocument', htmlDocument);
+      var title = htmlDocument.querySelector('.section--intro-sm .title');
+      title = title ? title.innerHTML : null;
+      var abstract = htmlDocument.querySelector('.section--intro-sm .descritpion');
+      abstract = abstract ? abstract.innerHTML : null;
+      var description = htmlDocument.querySelector('.section--text .col-md-6');
+      description = description ? description.innerHTML : null;
+      ModalService.open$({
+        src: environment.template.modal.genericModal,
+        data: {
+          title: title,
+          abstract: abstract,
+          description: description
+        }
+      }).pipe(operators.takeUntil(_this2.unsubscribe$)).subscribe(function (event) {
+        console.log('ControlCheckboxComponent.link$.genericModal', event);
+      });
+    }));
   };
 
   return ControlCheckboxComponent;
 }(ControlComponent);
 ControlCheckboxComponent.meta = {
   selector: '[control-checkbox]',
-  inputs: ['control', 'label'],
+  inputs: ['control', 'label', 'target'],
   template:
   /* html */
   "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input [id]=\"control.name\" type=\"checkbox\" class=\"control--checkbox\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
@@ -5352,8 +5413,9 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     this.errorPayment = null;
     this.errorDiscount = null;
     this.success = false;
-    this.items = [];
-    CartMiniService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
+    this.estimatedDelivery = null;
+    this.items = null;
+    this.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
       _this2.items = items;
 
       _this2.pushChanges();
@@ -5435,9 +5497,23 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     ).subscribe(user => this.onUser(user));
     */
 
-    controls.shipmentCountry.options = FormService.toSelectOptions(data.shipmentCountry.options);
-    controls.data.controls.country.options = FormService.toSelectOptions(data.country.options);
-    controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(data.country.options);
+    var sortCountry = function sortCountry(a, b) {
+      if (a.label.toLowerCase() === 'italia') {
+        return -1;
+      } else if (b.label.toLowerCase() === 'italia') {
+        return 1;
+      } else {
+        return a.label - b.label;
+      }
+    };
+
+    var shipmentCountry = data.shipmentCountry.options.slice();
+    shipmentCountry.sort(sortCountry);
+    controls.shipmentCountry.options = FormService.toSelectOptions(shipmentCountry);
+    var countryOptions = data.country.options.slice();
+    countryOptions.sort(sortCountry);
+    controls.data.controls.country.options = FormService.toSelectOptions(countryOptions);
+    controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(countryOptions);
     /*
     controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
     	id: x.value,
@@ -5613,11 +5689,24 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   _proto.onEdit = function onEdit(item) {
     // console.log('CartComponent.onEdit', item);
     window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+  };
+
+  _proto.items$ = function items$() {
+    var _this5 = this;
+
+    return CartMiniService.items$().pipe(operators.switchMap(function (items) {
+      return CartService.estimatedDelivery$({
+        items: items
+      }).pipe(operators.map(function (data) {
+        _this5.estimatedDelivery = data.estimatedDelivery;
+        return items;
+      }));
+    }));
   } // 2. CartSteps.Data
   ;
 
   _proto.onModalSignIn = function onModalSignIn() {
-    var _this5 = this;
+    var _this6 = this;
 
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -5627,13 +5716,13 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       // console.log('CartComponent.onModalSignIn', event);
       if (event instanceof ModalResolveEvent) {
-        _this5.onUser(event.data);
+        _this6.onUser(event.data);
       }
     });
   };
 
   _proto.onModalSignUp = function onModalSignUp(me) {
-    var _this6 = this;
+    var _this7 = this;
 
     ModalService.open$({
       src: environment.template.modal.userModal,
@@ -5644,7 +5733,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       // console.log('CartComponent.onModalSignUp', event);
       if (event instanceof ModalResolveEvent) {
-        _this6.onUser(event.data);
+        _this7.onUser(event.data);
       }
     });
   };
@@ -5704,7 +5793,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onFacebookLogin = function onFacebookLogin() {
-    var _this7 = this;
+    var _this8 = this;
 
     console.log('onFacebookLogin');
     this.socialBusy = 'facebook';
@@ -5756,25 +5845,25 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     }), operators.switchMap(function (me) {
       return UserService.tryFacebook$(me);
     }), operators.finalize(function () {
-      return _this7.socialBusy = false;
+      return _this8.socialBusy = false;
     })).subscribe(function (user) {
       if (user) {
-        _this7.onUser(user);
+        _this8.onUser(user);
       } else {
         var me = mapMe(socialMe);
 
-        _this7.onModalSignUp(me);
+        _this8.onModalSignUp(me);
       }
     }, function (error) {
       console.log('CartComponent.onFacebookLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this7.onModalSignUp(me);
+      _this8.onModalSignUp(me);
     });
   };
 
   _proto.onGoogleLogin = function onGoogleLogin() {
-    var _this8 = this;
+    var _this9 = this;
 
     this.socialBusy = 'google';
     var socialMe;
@@ -5824,37 +5913,37 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     }), operators.switchMap(function (me) {
       return UserService.tryGoogle$(me);
     }), operators.finalize(function () {
-      return _this8.socialBusy = false;
+      return _this9.socialBusy = false;
     })).subscribe(function (user) {
       if (user) {
-        _this8.onUser(user);
+        _this9.onUser(user);
       } else {
         var me = mapMe(socialMe);
 
-        _this8.onModalSignUp(me);
+        _this9.onModalSignUp(me);
       }
     }, function (error) {
       console.log('CartComponent.onGoogleLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this8.onModalSignUp(me);
+      _this9.onModalSignUp(me);
     });
   };
 
   _proto.onLinkedinLogin = function onLinkedinLogin() {
-    var _this9 = this;
+    var _this10 = this;
 
     LinkedinService.linkedin$().pipe(operators.first()).subscribe(function (token) {
       console.log('CartComponent.onLinkedinLogin', token);
 
-      _this9.onModalSignUp({
+      _this10.onModalSignUp({
         firstName: 'Luca'
       });
     }, function (error) {
       console.log('CartComponent.onLinkedinLogin.error', error);
       var me = mapMe(socialMe);
 
-      _this9.onModalSignUp(me);
+      _this10.onModalSignUp(me);
     });
   };
 
@@ -5931,7 +6020,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   ;
 
   _proto.onDelivery = function onDelivery(_) {
-    var _this10 = this;
+    var _this11 = this;
 
     var form = this.form;
     var controls = this.controls;
@@ -5954,7 +6043,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
       });
       var store = stores[0];
 
-      _this10.onNext({
+      _this11.onNext({
         stores: stores,
         store: store.id,
         delivery: delivery
@@ -5963,11 +6052,11 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.getDeliveryType$ = function getDeliveryType$() {
-    var _this11 = this;
+    var _this12 = this;
 
     this.busy = true;
     return CartService.getDeliveryType$(this.form.value).pipe(operators.tap(function (deliveryTypeOptions) {
-      var controls = _this11.controls;
+      var controls = _this12.controls;
       controls.deliveryType.options = deliveryTypeOptions.slice().map(function (x) {
         return {
           id: x.value,
@@ -5979,17 +6068,17 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
         };
       });
 
-      _this11.form.patch(Object.assign({}, {
+      _this12.form.patch(Object.assign({}, {
         deliveryType: controls.deliveryType.options[0].id
       }), true);
     }), operators.finalize(function (_) {
-      return _this11.busy = false;
+      return _this12.busy = false;
     }));
   } // 4. CartSteps.Recap
   ;
 
   _proto.onDiscountCode = function onDiscountCode(_) {
-    var _this12 = this;
+    var _this13 = this;
 
     var form = this.form; // console.log('CartComponent.onDelivery', form.value);
 
@@ -5997,13 +6086,13 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     CartService.getDiscount$({
       discountCode: form.value.discountCode
     }).pipe(operators.first()).subscribe(function (discount) {
-      _this12.discount = discount;
+      _this13.discount = discount;
 
-      _this12.onPatch({
+      _this13.onPatch({
         discount: discount
       });
     }, function (_) {
-      _this12.errorDiscount = true;
+      _this13.errorDiscount = true;
     });
   };
 
@@ -6057,13 +6146,13 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   }, {
     key: "selectedStore",
     get: function get() {
-      var _this13 = this;
+      var _this14 = this;
 
       if (!this.controls || !this.controls.stores || !this.controls.stores.value) {
         return null;
       } else {
         return this.controls.stores.value.find(function (x) {
-          return x.id === _this13.controls.store.value;
+          return x.id === _this14.controls.store.value;
         });
       }
     }
@@ -7414,7 +7503,16 @@ ProductsConfigureComponent.meta = {
 
   ProductsDetailService.versions$ = function versions$(productId) {
     if (environment.flags.production) {
-      return ApiService.get$('/products/versions?productId=' + productId);
+      return ApiService.get$('/products/versions?productId=' + productId).pipe(operators.map(function (versions) {
+        versions.sort(function (a, b) {
+          if (a.configurable !== b.configurable) {
+            return a.configurable ? -1 : 1;
+          } else {
+            return 0;
+          }
+        });
+        return versions;
+      }));
     } else {
       return ApiService.get$('/products-detail/versions.json');
     }

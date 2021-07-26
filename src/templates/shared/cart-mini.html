@@ -15,7 +15,7 @@
 								<div class="over">
 									<div class="over__title">Configura</div>
 								</div>
-								<div class="price" *if="item.price" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
+								<div class="price" *if="item.price != null" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
 							</div>
 							<div class="card__content">
 								<a [href]="item.url" class="card__title" [innerHTML]="item.title" [title]="item.title"></a>

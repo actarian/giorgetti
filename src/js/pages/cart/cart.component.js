@@ -1,7 +1,7 @@
 import { Component, getContext } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { combineLatest } from 'rxjs';
-import { finalize, first, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { finalize, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { FacebookService } from '../../common/facebook/facebook.service';
 import { GoogleService } from '../../common/google/google.service';
 import { LinkedinService } from '../../common/linkedin/linkedin.service';
@@ -62,9 +62,10 @@ export class CartComponent extends Component {
 		this.errorPayment = null;
 		this.errorDiscount = null;
 		this.success = false;
-		this.items = [];
-		CartMiniService.items$().pipe(
-			takeUntil(this.unsubscribe$)
+		this.estimatedDelivery = null;
+		this.items = null;
+		this.items$().pipe(
+			takeUntil(this.unsubscribe$),
 		).subscribe(items => {
 			this.items = items;
 			this.pushChanges();
@@ -139,14 +140,32 @@ export class CartComponent extends Component {
 			this.pushChanges();
 			LocomotiveScrollService.update();
 		});
+
 		/*
 		UserService.me$().pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(user => this.onUser(user));
 		*/
-		controls.shipmentCountry.options = FormService.toSelectOptions(data.shipmentCountry.options);
-		controls.data.controls.country.options = FormService.toSelectOptions(data.country.options);
-		controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(data.country.options);
+
+		const sortCountry = (a, b) => {
+			if (a.label.toLowerCase() === 'italia') {
+				return -1;
+			} else if (b.label.toLowerCase() === 'italia') {
+				return 1;
+			} else {
+				return a.label - b.label;
+			}
+		};
+
+		let shipmentCountry = data.shipmentCountry.options.slice();
+		shipmentCountry.sort(sortCountry);
+		controls.shipmentCountry.options = FormService.toSelectOptions(shipmentCountry);
+
+		let countryOptions = data.country.options.slice();
+		countryOptions.sort(sortCountry);
+		controls.data.controls.country.options = FormService.toSelectOptions(countryOptions);
+		controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(countryOptions);
+
 		/*
 		controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
 			id: x.value,
@@ -286,6 +305,19 @@ export class CartComponent extends Component {
 	onEdit(item) {
 		// console.log('CartComponent.onEdit', item);
 		window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+	}
+
+	items$() {
+		return CartMiniService.items$().pipe(
+			switchMap(items => {
+				return CartService.estimatedDelivery$({ items }).pipe(
+					map(data => {
+						this.estimatedDelivery = data.estimatedDelivery;
+						return items;
+					}),
+				);
+			}),
+		);
 	}
 
 	// 2. CartSteps.Data

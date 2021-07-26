@@ -138,9 +138,18 @@ export class CartService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/cart/data.json');
+			return ApiService.get$('/cart/data');
 		} else {
 			return ApiService.get$('/cart/data.json');
+		}
+	}
+
+	static estimatedDelivery$(cart) {
+		if (environment.flags.production) {
+			// !!! convertire in post ApiService.post$('/cart/estimated-delivery', cart);
+			return ApiService.get$('/cart/estimated-delivery.json');
+		} else {
+			return ApiService.get$('/cart/estimated-delivery.json');
 		}
 	}
 

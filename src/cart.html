@@ -25,11 +25,11 @@
 			</div>
 			-->
 			<!-- EMPTY -->
-			<div *if="step !== steps.Complete && items.length == 0">
+			<div *if="step !== steps.Complete && items?.length == 0">
 				<div class="title">Carrello</div>
 				<div class="abstract">Il carrello è vuoto.</div>
 			</div>
-			<div locomotive-scroll-sticky target=".nav--steps" until=".footer" *if="step == steps.Complete || items.length > 0">
+			<div locomotive-scroll-sticky target=".nav--steps" until=".footer" *if="step == steps.Complete || items?.length > 0">
 				<!-- STEPS -->
 				<ul class="nav--steps">
 					<li class="nav__item" [class]="{ active: step == steps.Items }">Riepilogo carrello</li>
@@ -66,7 +66,7 @@
 								</div>
 							</div>
 							<div class="td td--unitary-price">
-								<div class="price" *if="item.price" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
+								<div class="price" *if="item.price != null" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
 							</div>
 							<div class="td td--qty">
 								<div class="group--qty">
@@ -80,8 +80,9 @@
 								</div>
 							</div>
 							<div class="td td--remove">
-								<button type="button" class="btn--remove" (click)="onRemove(item)">rimuovi x
-									<!-- <svg class="close"><use xlink:href="#close"></use></svg> -->
+								<button type="button" class="btn--remove" (click)="onRemove(item)">
+									<!-- rimuovi x -->
+									<svg class="bin"><use xlink:href="#bin"></use></svg>
 								</button>
 							</div>
 							<div class="td td--price">
@@ -110,7 +111,7 @@
 						</div>
 						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 							<div class="group--cart">
-								<div class="tempi-spedizione">Il tuo ordine sarà pronto il 27/07/2021 più tempi di consegna</div>
+								<div class="estimated-delivery" *if="estimatedDelivery">Il tuo ordine sarà pronto il <span [innerHTML]="estimatedDelivery | date : { dateStyle: 'medium' }"></span> più tempi di consegna</div>
 								<button type="submit" class="btn--primary">Procedi</button>
 							</div>
 						</div>
@@ -209,9 +210,9 @@
 								<div control-text [control]="controls.data.controls.billingData.controls.province" label="Provincia"></div>
 								<div control-custom-select [control]="controls.data.controls.billingData.controls.country" label="Paese"></div>
 							</div>
-							<div control-checkbox [control]="controls.data.controls.conditions" label="Acconsento alle &amp;lt;a href=&amp;quot;/condizioni-di-vendita/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;condizioni di vendita&amp;lt;/a&gt;"></div>
-							<div control-checkbox [control]="controls.data.controls.privacy" label="A seguito dell&amp;#39;&amp;lt;a href=&amp;quot;/privacy/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa sulla privacy&amp;lt;/a&gt;, fornisco il mio consenso al trattamento dei dati personali"></div>
-							<div control-checkbox [control]="controls.data.controls.terms" label="Acconsento ai &amp;lt;a href=&amp;quot;/termini-d-uso/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;termini d'uso&amp;lt;/a&gt;"></div>
+							<div control-checkbox [control]="controls.data.controls.conditions" label="Acconsento alle &amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;condizioni di vendita&amp;lt;/a&gt;" target="modal"></div>
+							<div control-checkbox [control]="controls.data.controls.privacy" label="A seguito dell&amp;#39;&amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa sulla privacy&amp;lt;/a&gt;, fornisco il mio consenso al trattamento dei dati personali" target="modal"></div>
+							<div control-checkbox [control]="controls.data.controls.terms" label="Acconsento ai &amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;termini d'uso&amp;lt;/a&gt;" target="modal"></div>
 							<test-component [form]="form" (test)="testData($event)" (reset)="resetData($event)"></test-component>
 							<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 								<div class="group--cart">
@@ -236,7 +237,7 @@
 									<svg class="radio-checked" *if="controls.deliveryType.value == option.id"><use xlink:href="#radio-checked"></use></svg>
 									<!-- <input type="radio" class="control--radio" [id]="controls.deliveryType.name + '-' + option.id" [formControl]="controls.deliveryType" name="deliveryType" value="1" [value]="option.id" /> -->
 									<span class="name" [innerHTML]="option.name"></span>
-									<span class="group--price" *if="option.price">
+									<span class="group--price" *if="option.price != null">
 										<span class="fullPrice" *if="option.fullPrice !== option.price" [innerHTML]="option.fullPrice | number : { style: 'currency', currency: 'EUR' }"></span>
 										<span class="price" [innerHTML]="option.price | number : { style: 'currency', currency: 'EUR' }"></span>
 									</span>
