@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { environment } from '../../environment';
 
@@ -5,9 +6,9 @@ export class AmbienceService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/ambience/all');
+			return AmbienceService.sort$(ApiService.get$('/ambience/all'));
 		} else {
-			return ApiService.get$('/ambience/all.json');
+			return AmbienceService.sort$(ApiService.get$('/ambience/all.json'));
 		}
 	}
 
@@ -17,6 +18,21 @@ export class AmbienceService {
 		} else {
 			return ApiService.get$('/ambience/filters.json');
 		}
+	}
+
+	static sort$(items$) {
+		return items$.pipe(
+			map(items => {
+				items.sort((a, b) => {
+					if (a.configurable !== b.configurable) {
+						return a.configurable ? -1 : 1;
+					} else {
+						return 0;
+					}
+				});
+				return items;
+			}),
+		);
 	}
 
 }

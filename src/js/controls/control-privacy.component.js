@@ -5,7 +5,7 @@ import { ModalService } from '../common/modal/modal.service';
 import { environment } from '../environment';
 import { ControlComponent } from './control.component';
 
-export class ControlCheckboxComponent extends ControlComponent {
+export class ControlPrivacyComponent extends ControlComponent {
 
 	onInit() {
 		this.label = this.label || 'label';
@@ -16,6 +16,18 @@ export class ControlCheckboxComponent extends ControlComponent {
 				).subscribe();
 			}, 1);
 		}
+	}
+
+	onChanges() {
+		const { node } = getContext(this);
+		const inputs = Array.prototype.slice.call(node.querySelectorAll('input'));
+		inputs.forEach((input, i) => {
+			(this.control.value === true && i === 0) || (this.control.value === false && i === 1) ? input.setAttribute('checked', '') : input.removeAttribute('checked');
+		});
+	}
+
+	onSelect(value) {
+		this.control.value = value;
 	}
 
 	link$() {
@@ -29,14 +41,14 @@ export class ControlCheckboxComponent extends ControlComponent {
 				// console.log('UserDetailComponent.onModalUserUpdate');
 				const anchor = event.target;
 				const href = anchor.getAttribute('href');
-				// console.log('ControlCheckboxComponent.link$.href', href);
+				// console.log('ControlPrivacyComponent.link$.href', href);
 				return from(fetch(href).then(response => response.text()));
 			}),
 			tap(html => {
-				// console.log('ControlCheckboxComponent.link$.html', html);
+				// console.log('ControlPrivacyComponent.link$.html', html);
 				const parser = new DOMParser();
 				const htmlDocument = parser.parseFromString(html, 'text/html');
-				// console.log('ControlCheckboxComponent.link$.htmlDocument', htmlDocument);
+				// console.log('ControlPrivacyComponent.link$.htmlDocument', htmlDocument);
 				let title = htmlDocument.querySelector('.section--intro-sm .title');
 				title = title ? title.innerHTML : null;
 				let abstract = htmlDocument.querySelector('.section--intro-sm .descritpion');
@@ -46,7 +58,7 @@ export class ControlCheckboxComponent extends ControlComponent {
 				ModalService.open$({ src: environment.template.modal.genericModal, data: { title: title, abstract: abstract, description: description } }).pipe(
 					takeUntil(this.unsubscribe$)
 				).subscribe(event => {
-					// console.log('ControlCheckboxComponent.link$.genericModal', event);
+					// console.log('ControlPrivacyComponent.link$.genericModal', event);
 				});
 			}),
 		);
@@ -54,18 +66,29 @@ export class ControlCheckboxComponent extends ControlComponent {
 
 }
 
-ControlCheckboxComponent.meta = {
-	selector: '[control-checkbox]',
+ControlPrivacyComponent.meta = {
+	selector: '[control-privacy]',
 	inputs: ['control', 'label', 'target'],
 	template: /* html */ `
-		<div class="group--form--checkbox" [class]="{ required: control.validators.length }">
-			<input [id]="control.name" type="checkbox" class="control--checkbox" [formControl]="control" [value]="true" />
-			<label [labelFor]="control.name">
-				<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
-				<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
+		<div class="group--form--privacy" [class]="{ required: control.validators.length }">
+			<div class="group--inputs">
+				<input type="radio" class="control--checkbox" [id]="control.name + '_true'" [name]="control.name" [value]="true" (change)="onSelect(true)" />
+				<label [labelFor]="control.name + '_true'">
+					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
+					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
+					<span>Acconsento</span>
+				</label>
+				<input type="radio" class="control--checkbox" [id]="control.name + '_false'" [name]="control.name" [value]="false" (change)="onSelect(false)" />
+				<label [labelFor]="control.name + '_false'">
+					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
+					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
+					<span>Non acconsento</span>
+				</label>
+			</div>
+			<div class="description">
 				<span [innerHTML]="label | html"></span>
 				<span class="required__sign">*</span>
-			</label>
+			</div>
 			<span class="required__badge" [innerHTML]="'required' | label"></span>
 		</div>
 		<errors-component [control]="control"></errors-component>

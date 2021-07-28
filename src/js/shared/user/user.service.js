@@ -70,33 +70,29 @@ export class UserService {
 				switchMap(user => {
 					this.setUser(new User(user));
 					return this.user$_;
-				})
+				}),
 			);
 		} else {
 			return (
 				environment.flags.production ?
-					ApiService.get$(`/user/me.json`) :
+					ApiService.get$(`/user/me`) :
 					ApiService.get$(`/user/me.json`)
 			).pipe(
 				map((response) => {
-					this.mapUser(response);
+					return this.mapUser(response);
 				}),
 				catchError(_ => of(null)),
 				switchMap(user => {
 					this.setUser(user);
 					return this.user$_;
 				}),
-				map(user => user || null),
 			);
 		}
 	}
 
 	static signin$(payload) {
 		return (
-			environment.flags.production ?
-				// !!! convert to .post$
-				ApiService.get$(`/user/signin.json`, payload) :
-				ApiService.get$(`/user/signin.json`)
+			environment.flags.production ? ApiService.post$(`/user/signin`, payload) : ApiService.get$(`/user/signin.json`)
 		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
@@ -105,9 +101,7 @@ export class UserService {
 
 	static signout$() {
 		return (
-			environment.flags.production ?
-				ApiService.get$(`/user/signout.json`) :
-				ApiService.get$(`/user/signout.json`)
+			environment.flags.production ? ApiService.post$(`/user/signout`) : ApiService.get$(`/user/signout.json`)
 		).pipe(
 			tap((_) => this.setUser(null)),
 		);
@@ -116,10 +110,7 @@ export class UserService {
 	static signup$(payload) {
 		// console.log('UserService.signup$', payload);
 		return (
-			environment.flags.production ?
-				// !!! convert to .post$
-				ApiService.get$(`/user/signup.json`, payload) :
-				ApiService.get$(`/user/signup.json`)
+			environment.flags.production ? ApiService.post$(`/user/signup`, payload) : ApiService.get$(`/user/signup.json`)
 		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
@@ -129,10 +120,7 @@ export class UserService {
 	static edit$(payload) {
 		// console.log('UserService.edit$', payload);
 		return (
-			environment.flags.production ?
-				// !!! convert to .post$
-				ApiService.get$(`/user/edit.json`, payload) :
-				ApiService.get$(`/user/edit.json`)
+			environment.flags.production ? ApiService.post$(`/user/edit`, payload) : ApiService.get$(`/user/edit.json`)
 		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),

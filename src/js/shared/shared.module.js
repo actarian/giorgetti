@@ -6,6 +6,7 @@ import { SwiperNewsPropositionDirective } from '../partials/swiper-news-proposit
 import { SwiperProductsPropositionDirective } from '../partials/swiper-products-proposition/swiper-products-proposition.directive';
 import { SwiperProjectsPropositionDirective } from '../partials/swiper-projects-proposition/swiper-projects-proposition.directive';
 import { CartMiniComponent } from './cart-mini/cart-mini.component';
+import { ErrorComponent } from './error/error.component';
 import { FilesComponent } from './files/files.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuDirective } from './menu/menu.directive';
@@ -25,6 +26,7 @@ import { UserComponent } from './user/user.component';
 
 const factories = [
 	CartMiniComponent,
+	ErrorComponent,
 	FilesComponent,
 	HeaderComponent,
 	MapComponent,

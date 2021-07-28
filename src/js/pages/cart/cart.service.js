@@ -155,24 +155,15 @@ export class CartService {
 
 	static getDeliveryType$(cart) {
 		if (environment.flags.production) {
-			// !!! convertire in post ApiService.post$('/cart/delivery-type', cart);
-			return ApiService.get$('/cart/delivery-type.json');
+			return ApiService.post$('/cart/delivery-type', cart);
 		} else {
 			return ApiService.get$('/cart/delivery-type.json');
-		}
-	}
-
-	static getStore$(payload) {
-		if (environment.flags.production) {
-			return ApiService.get$('/cart/store.json');
-		} else {
-			return ApiService.get$('/cart/store.json');
 		}
 	}
 
 	static getStores$(payload) {
 		if (environment.flags.production) {
-			return ApiService.get$('/cart/stores.json');
+			return ApiService.post$('/cart/stores', payload);
 		} else {
 			return ApiService.get$('/cart/stores.json');
 		}

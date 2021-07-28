@@ -211,7 +211,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     scope: 'r_emailaddress r_liteprofile'
   },
   googleMaps: {
-    apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
+    apiKey: 'AIzaSyByTXqwtyFUcD6d4PY7ab4GBwS5IYjEVcc'
   },
   thron: {
     clientId: ''
@@ -266,7 +266,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     scope: 'r_emailaddress r_liteprofile'
   },
   googleMaps: {
-    apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w'
+    apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60'
   },
   thron: {
     clientId: ''
@@ -533,7 +533,7 @@ var HttpService = /*#__PURE__*/function () {
 
     if (!error.statusMessage) {
       error.statusMessage = response ? response.statusText : object;
-    } // console.log('HttpService.getError', error, object);
+    } // console.log('HttpService.getError', error, response);
 
 
     return error;
@@ -955,11 +955,15 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }));
   };
 
-  CartMiniService.addItem$ = function addItem$(item) {
+  CartMiniService.addItem$ = function addItem$(item, qty) {
+    if (qty === void 0) {
+      qty = 1;
+    }
+
     var count = CartMiniService.count;
-    return rxjs.of(Object.assign({
-      qty: 1
-    }, item)).pipe(operators.map(function (item) {
+    return rxjs.of(Object.assign({}, item, {
+      qty: qty
+    })).pipe(operators.map(function (item) {
       var items = CartMiniService.currentItems.slice();
       var item_ = CartMiniService.find(item, items);
 
@@ -1016,9 +1020,13 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }
   };
 
-  CartMiniService.getPriceAndAddItem$ = function getPriceAndAddItem$(item) {
+  CartMiniService.getPriceAndAddItem$ = function getPriceAndAddItem$(item, qty) {
+    if (qty === void 0) {
+      qty = 1;
+    }
+
     return CartMiniService.getPrice$(item).pipe(operators.switchMap(function (item) {
-      return CartMiniService.addItem$(item);
+      return CartMiniService.addItem$(item, qty);
     }));
   };
 
@@ -1196,24 +1204,15 @@ var CartService = /*#__PURE__*/function () {
 
   CartService.getDeliveryType$ = function getDeliveryType$(cart) {
     if (environment.flags.production) {
-      // !!! convertire in post ApiService.post$('/cart/delivery-type', cart);
-      return ApiService.get$('/cart/delivery-type.json');
+      return ApiService.post$('/cart/delivery-type', cart);
     } else {
       return ApiService.get$('/cart/delivery-type.json');
-    }
-  };
-
-  CartService.getStore$ = function getStore$(payload) {
-    if (environment.flags.production) {
-      return ApiService.get$('/cart/store.json');
-    } else {
-      return ApiService.get$('/cart/store.json');
     }
   };
 
   CartService.getStores$ = function getStores$(payload) {
     if (environment.flags.production) {
-      return ApiService.get$('/cart/stores.json');
+      return ApiService.post$('/cart/stores', payload);
     } else {
       return ApiService.get$('/cart/stores.json');
     }
@@ -1388,16 +1387,14 @@ var UserService = /*#__PURE__*/function () {
         return _this.user$_;
       }));
     } else {
-      return (environment.flags.production ? ApiService.get$("/user/me.json") : ApiService.get$("/user/me.json")).pipe(operators.map(function (response) {
-        _this.mapUser(response);
+      return (environment.flags.production ? ApiService.get$("/user/me") : ApiService.get$("/user/me.json")).pipe(operators.map(function (response) {
+        return _this.mapUser(response);
       }), operators.catchError(function (_) {
         return rxjs.of(null);
       }), operators.switchMap(function (user) {
         _this.setUser(user);
 
         return _this.user$_;
-      }), operators.map(function (user) {
-        return user || null;
       }));
     }
   };
@@ -1405,8 +1402,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signin$ = function signin$(payload) {
     var _this2 = this;
 
-    return (environment.flags.production ? // !!! convert to .post$
-    ApiService.get$("/user/signin.json", payload) : ApiService.get$("/user/signin.json")).pipe(operators.map(function (response) {
+    return (environment.flags.production ? ApiService.post$("/user/signin", payload) : ApiService.get$("/user/signin.json")).pipe(operators.map(function (response) {
       return _this2.mapUser(response);
     }), operators.tap(function (user) {
       return _this2.setUser(user);
@@ -1416,7 +1412,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signout$ = function signout$() {
     var _this3 = this;
 
-    return (environment.flags.production ? ApiService.get$("/user/signout.json") : ApiService.get$("/user/signout.json")).pipe(operators.tap(function (_) {
+    return (environment.flags.production ? ApiService.post$("/user/signout") : ApiService.get$("/user/signout.json")).pipe(operators.tap(function (_) {
       return _this3.setUser(null);
     }));
   };
@@ -1425,8 +1421,7 @@ var UserService = /*#__PURE__*/function () {
     var _this4 = this;
 
     // console.log('UserService.signup$', payload);
-    return (environment.flags.production ? // !!! convert to .post$
-    ApiService.get$("/user/signup.json", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
+    return (environment.flags.production ? ApiService.post$("/user/signup", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
       return _this4.mapUser(response);
     }), operators.tap(function (user) {
       return _this4.setUser(user);
@@ -1437,8 +1432,7 @@ var UserService = /*#__PURE__*/function () {
     var _this5 = this;
 
     // console.log('UserService.edit$', payload);
-    return (environment.flags.production ? // !!! convert to .post$
-    ApiService.get$("/user/edit.json", payload) : ApiService.get$("/user/edit.json")).pipe(operators.map(function (response) {
+    return (environment.flags.production ? ApiService.post$("/user/edit", payload) : ApiService.get$("/user/edit.json")).pipe(operators.map(function (response) {
       return _this5.mapUser(response);
     }), operators.tap(function (user) {
       return _this5.setUser(user);
@@ -2134,14 +2128,14 @@ DropdownItemDirective.meta = {
 }(rxcomp.Pipe);
 EnvPipe.meta = {
   name: 'env'
-};var FilterComponent = /*#__PURE__*/function (_Component) {
-  _inheritsLoose(FilterComponent, _Component);
+};var FilterItemComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(FilterItemComponent, _Component);
 
-  function FilterComponent() {
+  function FilterItemComponent() {
     return _Component.apply(this, arguments) || this;
   }
 
-  var _proto = FilterComponent.prototype;
+  var _proto = FilterItemComponent.prototype;
 
   _proto.onInit = function onInit() {};
 
@@ -2180,9 +2174,9 @@ EnvPipe.meta = {
     LocomotiveScrollService.start();
   };
 
-  return FilterComponent;
+  return FilterItemComponent;
 }(rxcomp.Component);
-FilterComponent.meta = {
+FilterItemComponent.meta = {
   selector: '[filter], [[filter]]',
   outputs: ['change'],
   inputs: ['filter', 'filters', 'name'],
@@ -2662,6 +2656,27 @@ ModalOutletComponent.meta = {
   template:
   /* html */
   "\n\t<div class=\"modal-outlet__container\" [class]=\"{ active: modal, busy: busy }\">\n\t\t<div class=\"modal-outlet__background\" (click)=\"reject($event)\"></div>\n\t\t<div class=\"modal-outlet__modal\"></div>\n\t\t<!-- spinner -->\n\t\t<div class=\"spinner spinner--contrasted\" *if=\"busy\"></div>\n\t</div>\n\t"
+};var NameDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(NameDirective, _Directive);
+
+  function NameDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = NameDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('name', this.name);
+  };
+
+  return NameDirective;
+}(rxcomp.Directive);
+NameDirective.meta = {
+  selector: '[name]',
+  inputs: ['name']
 };var NumberPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(NumberPipe, _Pipe);
 
@@ -2690,6 +2705,70 @@ ModalOutletComponent.meta = {
 }(rxcomp.Pipe);
 NumberPipe.meta = {
   name: 'number'
+};var DIVISIONS = [{
+  amount: 60,
+  name: 'seconds'
+}, {
+  amount: 60,
+  name: 'minutes'
+}, {
+  amount: 24,
+  name: 'hours'
+}, {
+  amount: 7,
+  name: 'days'
+}, {
+  amount: 4.34524,
+  name: 'weeks'
+}, {
+  amount: 12,
+  name: 'months'
+}, {
+  amount: Number.POSITIVE_INFINITY,
+  name: 'years'
+}];
+var RelativeDatePipe = /*#__PURE__*/function (_Pipe) {
+  _inheritsLoose(RelativeDatePipe, _Pipe);
+
+  function RelativeDatePipe() {
+    return _Pipe.apply(this, arguments) || this;
+  }
+
+  RelativeDatePipe.transform = function transform(value, options, language) {
+    if (options === void 0) {
+      options = {
+        numeric: 'auto'
+      };
+    }
+
+    if (language === void 0) {
+      language = null;
+    }
+
+    // = 'en-IN'
+    if (value != null) {
+      // !!! keep losing
+      var date = value instanceof Date ? value : new Date(value);
+      language = language || environment.currentLanguage;
+      var formatter = new Intl.RelativeTimeFormat(language, options);
+      var duration = (date - new Date()) / 1000;
+
+      for (var i = 0; i <= DIVISIONS.length; i++) {
+        var division = DIVISIONS[i];
+
+        if (Math.abs(duration) < division.amount) {
+          return formatter.format(Math.round(duration), division.name);
+        }
+
+        duration /= division.amount;
+      }
+    }
+  };
+
+  return RelativeDatePipe;
+}(rxcomp.Pipe);
+RelativeDatePipe.meta = {
+  name: 'relativeDate'
 };var ShareDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(ShareDirective, _Directive);
 
@@ -3385,13 +3464,13 @@ TitleDirective.meta = {
   inputs: ['title']
 };var factories = [ClickOutsideDirective, DownloadDirective, // DropDirective,
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
-FilterComponent, IdDirective, LabelForDirective, // LanguageComponent,
+FilterItemComponent, IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
 LocomotiveScrollDirective, LocomotiveScrollStickyDirective, LocomotiveScrollToDirective, // ModalComponent,
-ModalOutletComponent, ScrollDirective, ShareDirective, SvgIconStructure, SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
+ModalOutletComponent, NameDirective, ScrollDirective, ShareDirective, SvgIconStructure, SwiperDirective, ThronComponent, TitleDirective // UploadItemComponent,
 // VirtualStructure
 ];
-var pipes = [DatePipe, EnvPipe, FlagPipe, HighlightPipe, HtmlPipe, LabelPipe, NumberPipe, SlugPipe];
+var pipes = [DatePipe, EnvPipe, FlagPipe, HighlightPipe, HtmlPipe, LabelPipe, NumberPipe, RelativeDatePipe, SlugPipe];
 var CommonModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(CommonModule, _Module);
 
@@ -3467,16 +3546,16 @@ ControlComponent.meta = {
       event.stopPropagation(); // console.log('UserDetailComponent.onModalUserUpdate');
 
       var anchor = event.target;
-      var href = anchor.getAttribute('href');
-      console.log('ControlCheckboxComponent.link$.href', href);
+      var href = anchor.getAttribute('href'); // console.log('ControlCheckboxComponent.link$.href', href);
+
       return rxjs.from(fetch(href).then(function (response) {
         return response.text();
       }));
     }), operators.tap(function (html) {
-      console.log('ControlCheckboxComponent.link$.html', html);
+      // console.log('ControlCheckboxComponent.link$.html', html);
       var parser = new DOMParser();
-      var htmlDocument = parser.parseFromString(html, 'text/html');
-      console.log('ControlCheckboxComponent.link$.htmlDocument', htmlDocument);
+      var htmlDocument = parser.parseFromString(html, 'text/html'); // console.log('ControlCheckboxComponent.link$.htmlDocument', htmlDocument);
+
       var title = htmlDocument.querySelector('.section--intro-sm .title');
       title = title ? title.innerHTML : null;
       var abstract = htmlDocument.querySelector('.section--intro-sm .descritpion');
@@ -3490,8 +3569,7 @@ ControlComponent.meta = {
           abstract: abstract,
           description: description
         }
-      }).pipe(operators.takeUntil(_this2.unsubscribe$)).subscribe(function (event) {
-        console.log('ControlCheckboxComponent.link$.genericModal', event);
+      }).pipe(operators.takeUntil(_this2.unsubscribe$)).subscribe(function (event) {// console.log('ControlCheckboxComponent.link$.genericModal', event);
       });
     }));
   };
@@ -3809,6 +3887,15 @@ ControlFileComponent.meta = {
 
   _proto.onInit = function onInit() {
     this.label = this.label || 'label';
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    if (node.hasAttribute('secure')) {
+      // const name = [..."abcdefghijklmnopqrsuvwxyz0123456789"].map((c, i, a) => a[Math.floor(Math.random() * a.length)]).join('');
+      var input = node.querySelector('input');
+      input.setAttribute('autocomplete', 'new-password');
+    }
   };
 
   return ControlPasswordComponent;
@@ -3819,6 +3906,94 @@ ControlPasswordComponent.meta = {
   template:
   /* html */
   "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"control.name\" type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+};var ControlPrivacyComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlPrivacyComponent, _ControlComponent);
+
+  function ControlPrivacyComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlPrivacyComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.label = this.label || 'label';
+
+    if (this.target === 'modal') {
+      setTimeout(function () {
+        _this.link$().pipe(operators.takeUntil(_this.unsubscribe$)).subscribe();
+      }, 1);
+    }
+  };
+
+  _proto.onChanges = function onChanges() {
+    var _this2 = this;
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var inputs = Array.prototype.slice.call(node.querySelectorAll('input'));
+    inputs.forEach(function (input, i) {
+      _this2.control.value === true && i === 0 || _this2.control.value === false && i === 1 ? input.setAttribute('checked', '') : input.removeAttribute('checked');
+    });
+  };
+
+  _proto.onSelect = function onSelect(value) {
+    this.control.value = value;
+  };
+
+  _proto.link$ = function link$() {
+    var _this3 = this;
+
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var anchors = Array.prototype.slice.call(node.querySelectorAll('a')); // console.log(anchors, node.innerHTML);
+
+    return rxjs.merge.apply(void 0, anchors.map(function (anchor) {
+      return rxjs.fromEvent(anchor, 'click');
+    })).pipe(operators.switchMap(function (event) {
+      event.preventDefault();
+      event.stopPropagation(); // console.log('UserDetailComponent.onModalUserUpdate');
+
+      var anchor = event.target;
+      var href = anchor.getAttribute('href'); // console.log('ControlPrivacyComponent.link$.href', href);
+
+      return rxjs.from(fetch(href).then(function (response) {
+        return response.text();
+      }));
+    }), operators.tap(function (html) {
+      // console.log('ControlPrivacyComponent.link$.html', html);
+      var parser = new DOMParser();
+      var htmlDocument = parser.parseFromString(html, 'text/html'); // console.log('ControlPrivacyComponent.link$.htmlDocument', htmlDocument);
+
+      var title = htmlDocument.querySelector('.section--intro-sm .title');
+      title = title ? title.innerHTML : null;
+      var abstract = htmlDocument.querySelector('.section--intro-sm .descritpion');
+      abstract = abstract ? abstract.innerHTML : null;
+      var description = htmlDocument.querySelector('.section--text .col-md-6');
+      description = description ? description.innerHTML : null;
+      ModalService.open$({
+        src: environment.template.modal.genericModal,
+        data: {
+          title: title,
+          abstract: abstract,
+          description: description
+        }
+      }).pipe(operators.takeUntil(_this3.unsubscribe$)).subscribe(function (event) {// console.log('ControlPrivacyComponent.link$.genericModal', event);
+      });
+    }));
+  };
+
+  return ControlPrivacyComponent;
+}(ControlComponent);
+ControlPrivacyComponent.meta = {
+  selector: '[control-privacy]',
+  inputs: ['control', 'label', 'target'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form--privacy\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<div class=\"group--inputs\">\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"control.name + '_true'\" [name]=\"control.name\" [value]=\"true\" (change)=\"onSelect(true)\" />\n\t\t\t\t<label [labelFor]=\"control.name + '_true'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Acconsento</span>\n\t\t\t\t</label>\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"control.name + '_false'\" [name]=\"control.name\" [value]=\"false\" (change)=\"onSelect(false)\" />\n\t\t\t\t<label [labelFor]=\"control.name + '_false'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Non acconsento</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<div class=\"description\">\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</div>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlSearchComponent, _ControlComponent);
 
@@ -3933,7 +4108,7 @@ TestComponent.meta = {
   template:
   /* html */
   "\n\t<div class=\"test-component\" *if=\"!('production' | flag)\">\n\t\t<div class=\"test-component__title\">development mode</div>\n\t\t<code [innerHTML]=\"form.value | json\"></code>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onTest($event)\"><span>test</span></button>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onReset($event)\"><span>reset</span></button>\n\t</div>\n\t"
-};var factories$1 = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlFileComponent, ControlPasswordComponent, // ControlSelectComponent,
+};var factories$1 = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlFileComponent, ControlPasswordComponent, ControlPrivacyComponent, // ControlSelectComponent,
 ControlSearchComponent, ControlTextareaComponent, ControlTextComponent, // DisabledDirective,
 ErrorsComponent, TestComponent // ValueDirective,
 ];
@@ -4423,9 +4598,9 @@ FiltersComponent.meta = {
 
   AmbienceService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/ambience/all');
+      return AmbienceService.sort$(ApiService.get$('/ambience/all'));
     } else {
-      return ApiService.get$('/ambience/all.json');
+      return AmbienceService.sort$(ApiService.get$('/ambience/all.json'));
     }
   };
 
@@ -4435,6 +4610,19 @@ FiltersComponent.meta = {
     } else {
       return ApiService.get$('/ambience/filters.json');
     }
+  };
+
+  AmbienceService.sort$ = function sort$(items$) {
+    return items$.pipe(operators.map(function (items) {
+      items.sort(function (a, b) {
+        if (a.configurable !== b.configurable) {
+          return a.configurable ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
+      return items;
+    }));
   };
 
   return AmbienceService;
@@ -4931,9 +5119,20 @@ CareersComponent.meta = {
 };var OnceService = /*#__PURE__*/function () {
   function OnceService() {}
 
-  OnceService.script = function script(url, callback) {
-    if (this.paths.indexOf(url) === -1) {
-      this.paths.push(url);
+  OnceService.script$ = function script$(url, callback) {
+    // console.log('OnceScript.script$', url, callback);
+    var item = this.paths.find(function (x) {
+      return x.url === url;
+    });
+
+    if (item != null) {
+      return item.callback$;
+    } else {
+      item = {
+        url: url,
+        callbacks$: null
+      };
+      this.paths.push(item);
       var callbackName;
 
       if (callback === true) {
@@ -4944,35 +5143,34 @@ CareersComponent.meta = {
       }
 
       var callback$;
-      var element = document.createElement('script');
-      element.type = 'text/javascript';
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
 
       if (callback) {
         callback$ = rxjs.from(new Promise(function (resolve, reject) {
           window[callbackName] = function (data) {
+            // console.log('OnceScript', callbackName, data);
             resolve(data);
           };
         }));
       } else {
-        element.async = true;
-        callback$ = rxjs.fromEvent(element, 'load').pipe(operators.map(function (x) {
+        script.async = true;
+        callback$ = rxjs.fromEvent(script, 'load').pipe(operators.map(function (x) {
           return x;
         }));
       }
 
-      var scripts = document.getElementsByTagName('script');
+      item.callback$ = callback$;
+      var scripts = Array.prototype.slice.call(document.getElementsByTagName('script'));
 
       if (scripts.length) {
-        var script = scripts[scripts.length - 1];
-        script.parentNode.insertBefore(element, script.nextSibling);
-      }
+        script.src = url;
+        var lastScript = scripts[scripts.length - 1];
+        lastScript.parentNode.insertBefore(script, lastScript.nextSibling);
+      } // console.log('OnceScript.script$', scripts.length, script.src, scripts.map(x => x.src).join(', '));
 
-      return rxjs.of(true).pipe(operators.switchMap(function (x) {
-        element.src = url;
-        return callback$;
-      }));
-    } else {
-      return rxjs.of(new Event('loaded!'));
+
+      return callback$;
     }
   };
 
@@ -4991,7 +5189,7 @@ _defineProperty(OnceService, "paths", []);var FacebookService = /*#__PURE__*/fun
       if (this.facebook_) {
         return rxjs.of(this.facebook_);
       } else {
-        return OnceService.script('//connect.facebook.net/' + environment.currentLanguage + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(function (x) {
+        return OnceService.script$('//connect.facebook.net/' + environment.currentLanguage + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(function (x) {
           var facebook = window['FB'];
           facebook.init({
             appId: environment.facebook.appId,
@@ -5179,7 +5377,7 @@ var GoogleService = /*#__PURE__*/function () {
   GoogleService.once$ = function once$() {
     var _this2 = this;
 
-    return OnceService.script('//apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(function (x) {
+    return OnceService.script$('//apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(function (x) {
       _this2.gapi = window['gapi'];
       return rxjs.of(_this2.gapi);
     }));
@@ -5334,7 +5532,62 @@ _defineProperty(GoogleService, "gapi", void 0);
 
 _defineProperty(GoogleService, "auth2", void 0);
 
-_defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PURE__*/function () {
+_defineProperty(GoogleService, "instance", void 0);var GoogleMapsService = /*#__PURE__*/function () {
+  function GoogleMapsService() {}
+
+  GoogleMapsService.init = function init() {
+    if (!environment.googleMaps || !environment.googleMaps.apiKey) {
+      throw new Error('GoogleMapsService.error missing apiKey in environment.googleMaps');
+    }
+  };
+
+  GoogleMapsService.maps$ = function maps$() {
+    var _this = this;
+
+    return new rxjs.Observable().pipe(function (_) {
+      if (_this.maps) {
+        return rxjs.of(_this.maps);
+      } else {
+        return _this.once$();
+      }
+    });
+  };
+
+  GoogleMapsService.once$ = function once$() {
+    var _this2 = this;
+
+    if (!environment.googleMaps || !environment.googleMaps.apiKey) {
+      throw new Error('GoogleMapsService.error missing apiKey in environment.googleMaps');
+    }
+
+    return OnceService.script$("//maps.googleapis.com/maps/api/js?callback={{callback}}&key=" + environment.googleMaps.apiKey + "&libraries=places", true).pipe(operators.concatMap(function (_) {
+      _this2.maps = window.google.maps;
+      return rxjs.of(_this2.maps);
+    }));
+  };
+
+  GoogleMapsService.geocode$ = function geocode$(data) {
+    // console.log('GoogleMapsService.geocode$', data);
+    return GoogleMapsService.maps$().pipe(operators.switchMap(function (maps) {
+      // console.log('GoogleMapsService.geocode$', maps);
+      return rxjs.from(new Promise(function (resolve, reject) {
+        var geocoder = new maps.Geocoder();
+        geocoder.geocode(data, function (results, status) {
+          // console.log('GoogleMapsService.geocode$', status, results);
+          if (status == 'OK') {
+            resolve(results);
+          } else {
+            reject(results);
+          }
+        });
+      }));
+    }));
+  };
+
+  return GoogleMapsService;
+}();
+
+_defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PURE__*/function () {
   function LinkedinService() {}
 
   LinkedinService.getAccessToken$ = function getAccessToken$(code) {
@@ -5410,8 +5663,9 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
 
     this.steps = CartSteps;
     this.step = CartSteps.None;
-    this.errorPayment = null;
+    this.errorDelivery = null;
     this.errorDiscount = null;
+    this.errorPayment = null;
     this.success = false;
     this.estimatedDelivery = null;
     this.items = null;
@@ -5422,6 +5676,8 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     });
     this.user = null;
     this.guest = null;
+    this.shipmentCountryOptions = [];
+    this.countryOptions = [];
     this.deliveryData = null;
     this.billingData = null;
     this.delivery = null;
@@ -5430,7 +5686,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     var form = this.form = new rxcompForm.FormGroup({
       step: this.step,
       items: null,
-      shipmentCountry: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      shipmentCountry: new rxcompForm.FormControl(114, [rxcompForm.Validators.RequiredValidator()]),
       user: null,
       guest: null,
       data: new rxcompForm.FormGroup({
@@ -5464,7 +5720,10 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
         }),
         conditions: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
         privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
-        terms: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()])
+        newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+        promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]) // terms: null,
+
       }),
       deliveryData: null,
       billingData: null,
@@ -5507,13 +5766,15 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
       }
     };
 
-    var shipmentCountry = data.shipmentCountry.options.slice();
-    shipmentCountry.sort(sortCountry);
-    controls.shipmentCountry.options = FormService.toSelectOptions(shipmentCountry);
+    var shipmentCountryOptions = data.shipmentCountry.options.slice();
+    shipmentCountryOptions.sort(sortCountry);
+    this.shipmentCountryOptions = shipmentCountryOptions;
+    controls.shipmentCountry.options = FormService.toSelectOptions(this.shipmentCountryOptions);
+    controls.data.controls.country.options = FormService.toSelectOptions(this.shipmentCountryOptions);
     var countryOptions = data.country.options.slice();
     countryOptions.sort(sortCountry);
-    controls.data.controls.country.options = FormService.toSelectOptions(countryOptions);
-    controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(countryOptions);
+    this.countryOptions = countryOptions;
+    controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(this.countryOptions);
     /*
     controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
     	id: x.value,
@@ -5582,7 +5843,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
 
     if (firstInvalidInput) {
       LocomotiveScrollService.scrollTo(firstInvalidInput, {
-        offset: -180,
+        offset: -260,
         duration: 0,
         disableLerp: true
       });
@@ -5627,8 +5888,19 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
 
     switch (this.step) {
       case CartSteps.Delivery:
-        this.getDeliveryType$().pipe(operators.first()).subscribe(function (_) {
+        this.busy = true;
+        this.errorDelivery = null;
+        this.getDeliveryType$().pipe(operators.first(), operators.finalize(function (_) {
+          _this3.busy = false;
+
+          _this3.pushChanges();
+        })).subscribe(function (_) {
           _this3.onAfterPatch(skipUpdate);
+        }, function (errorDelivery) {
+          // console.log('errorDelivery', errorDelivery);
+          _this3.errorDelivery = errorDelivery;
+
+          _this3.onAfterPatch(true);
         });
         break;
 
@@ -5962,30 +6234,68 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onData = function onData(_) {
-    var form = this.form;
-    var controls = this.controls;
-    console.log('CartComponent.onData');
+    var _this11 = this;
+
+    var form = this.form; // const controls = this.controls;
+    // console.log('CartComponent.onData', form.controls.data.valid);
 
     if (form.controls.data.valid) {
       var deliveryData = form.value.data;
-      this.deliveryData = Object.assign({}, deliveryData, {
-        country: controls.data.controls.country.options.find(function (x) {
-          return x.id === deliveryData.country;
-        })
-      });
-      var billingData = form.value.data.billing ? form.value.data.billingData : form.value.data;
-      this.billingData = Object.assign({}, billingData, {
-        country: controls.data.controls.country.options.find(function (x) {
-          return x.id === billingData.country;
-        })
-      });
-      this.onNext({
-        deliveryData: deliveryData,
-        billingData: billingData
+      var deliveryCountry = this.getCountryById(deliveryData.country);
+
+      var onGeocoder = function onGeocoder(latitude, longitude) {
+        if (latitude === void 0) {
+          latitude = null;
+        }
+
+        if (longitude === void 0) {
+          longitude = null;
+        }
+
+        deliveryData.latitude = latitude;
+        deliveryData.longitude = longitude;
+        _this11.deliveryData = Object.assign({}, deliveryData, {
+          country: deliveryCountry
+        });
+        var billingData = form.value.data.billing ? form.value.data.billingData : form.value.data;
+
+        var billingCountry = _this11.getCountryById(billingData.country);
+
+        _this11.billingData = Object.assign({}, billingData, {
+          country: billingCountry
+        }); // console.log('CartComponent.onData.onGeocoder', latitude, longitude);
+
+        _this11.onNext({
+          deliveryData: deliveryData,
+          billingData: billingData
+        });
+      };
+
+      var latitude = null,
+          longitude = null;
+      GoogleMapsService.geocode$({
+        address: deliveryData.address + ", " + deliveryData.zipCode + " " + deliveryData.city + " " + deliveryCountry.name
+      }).pipe(operators.first()).subscribe(function (results) {
+        if (results.length) {
+          // console.log('CartComponent.onData.geocode', results);
+          var location = results[0].geometry.location;
+          latitude = location.lat();
+          longitude = location.lng();
+        }
+
+        onGeocoder(latitude, longitude);
+      }, function (error) {
+        onGeocoder(latitude, longitude);
       });
     } else {
       this.touchForm();
     }
+  };
+
+  _proto.getCountryById = function getCountryById(countryId) {
+    return FormService.toSelectOptions(this.countryOptions).find(function (x) {
+      return x.id === countryId;
+    });
   };
 
   _proto.testData = function testData() {
@@ -6006,7 +6316,10 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
         message: 'Hi!',
         conditions: true,
         privacy: true,
-        terms: true
+        newsletter: false,
+        commercial: false,
+        promotion: false // terms: false,
+
       },
       checkRequest: window.antiforgery,
       checkField: ''
@@ -6020,7 +6333,7 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   ;
 
   _proto.onDelivery = function onDelivery(_) {
-    var _this11 = this;
+    var _this12 = this;
 
     var form = this.form;
     var controls = this.controls;
@@ -6042,21 +6355,21 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
         };
       });
       var store = stores[0];
+      var storeId = store ? store.id : null;
 
-      _this11.onNext({
+      _this12.onNext({
         stores: stores,
-        store: store.id,
+        store: storeId,
         delivery: delivery
       });
     });
   };
 
   _proto.getDeliveryType$ = function getDeliveryType$() {
-    var _this12 = this;
+    var _this13 = this;
 
-    this.busy = true;
     return CartService.getDeliveryType$(this.form.value).pipe(operators.tap(function (deliveryTypeOptions) {
-      var controls = _this12.controls;
+      var controls = _this13.controls;
       controls.deliveryType.options = deliveryTypeOptions.slice().map(function (x) {
         return {
           id: x.value,
@@ -6068,17 +6381,15 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
         };
       });
 
-      _this12.form.patch(Object.assign({}, {
+      _this13.form.patch(Object.assign({}, {
         deliveryType: controls.deliveryType.options[0].id
       }), true);
-    }), operators.finalize(function (_) {
-      return _this12.busy = false;
     }));
   } // 4. CartSteps.Recap
   ;
 
   _proto.onDiscountCode = function onDiscountCode(_) {
-    var _this13 = this;
+    var _this14 = this;
 
     var form = this.form; // console.log('CartComponent.onDelivery', form.value);
 
@@ -6086,13 +6397,13 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
     CartService.getDiscount$({
       discountCode: form.value.discountCode
     }).pipe(operators.first()).subscribe(function (discount) {
-      _this13.discount = discount;
+      _this14.discount = discount;
 
-      _this13.onPatch({
+      _this14.onPatch({
         discount: discount
       });
-    }, function (_) {
-      _this13.errorDiscount = true;
+    }, function (errorDiscount) {
+      _this14.errorDiscount = errorDiscount;
     });
   };
 
@@ -6146,15 +6457,24 @@ _defineProperty(GoogleService, "instance", void 0);var LinkedinService = /*#__PU
   }, {
     key: "selectedStore",
     get: function get() {
-      var _this14 = this;
+      var _this15 = this;
 
       if (!this.controls || !this.controls.stores || !this.controls.stores.value) {
         return null;
       } else {
         return this.controls.stores.value.find(function (x) {
-          return x.id === _this14.controls.store.value;
+          return x.id === _this15.controls.store.value;
         });
       }
+    }
+  }, {
+    key: "shipmentCountriesLabel",
+    get: function get() {
+      var shipmentCountriesLabel = '';
+      shipmentCountriesLabel = this.shipmentCountryOptions.map(function (x) {
+        return x.label;
+      }).join(', ');
+      return shipmentCountriesLabel;
     }
   }]);
 
@@ -7503,19 +7823,23 @@ ProductsConfigureComponent.meta = {
 
   ProductsDetailService.versions$ = function versions$(productId) {
     if (environment.flags.production) {
-      return ApiService.get$('/products/versions?productId=' + productId).pipe(operators.map(function (versions) {
-        versions.sort(function (a, b) {
-          if (a.configurable !== b.configurable) {
-            return a.configurable ? -1 : 1;
-          } else {
-            return 0;
-          }
-        });
-        return versions;
-      }));
+      return ProductsDetailService.sort$(ApiService.get$('/products/versions?productId=' + productId));
     } else {
-      return ApiService.get$('/products-detail/versions.json');
+      return ProductsDetailService.sort$(ApiService.get$('/products-detail/versions.json'));
     }
+  };
+
+  ProductsDetailService.sort$ = function sort$(items$) {
+    return items$.pipe(operators.map(function (items) {
+      items.sort(function (a, b) {
+        if (a.configurable !== b.configurable) {
+          return a.configurable ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
+      return items;
+    }));
   };
 
   return ProductsDetailService;
@@ -7624,9 +7948,9 @@ var ProductsService = /*#__PURE__*/function () {
 
   ProductsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/products/all');
+      return ProductsService.sort$(ApiService.get$('/products/all'));
     } else {
-      return ApiService.get$('/products/all.json');
+      return ProductsService.sort$(ApiService.get$('/products/all.json'));
     }
   };
 
@@ -7636,6 +7960,19 @@ var ProductsService = /*#__PURE__*/function () {
     } else {
       return ApiService.get$('/products/filters.json');
     }
+  };
+
+  ProductsService.sort$ = function sort$(items$) {
+    return items$.pipe(operators.map(function (items) {
+      items.sort(function (a, b) {
+        if (a.configurable !== b.configurable) {
+          return a.configurable ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
+      return items;
+    }));
   }
   /*
   static fake$() {
@@ -8141,7 +8478,7 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
     this.item = null;
     this.load$().pipe(operators.first()).subscribe();
     UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
-      // console.log('ReservedAreaComponent.user', user);
+      console.log('ReservedAreaComponent.user', user);
       _this.user = user;
 
       _this.pushChanges();
@@ -9738,8 +10075,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
   }, {
     "visibility": "on"
   }]
-}];var GOOGLE_MAPS;
-var MapComponent = /*#__PURE__*/function (_Component) {
+}];var MapComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(MapComponent, _Component);
 
   function MapComponent() {
@@ -9751,58 +10087,42 @@ var MapComponent = /*#__PURE__*/function (_Component) {
   _proto.onInit = function onInit() {
     var _this = this;
 
-    var apiKey = environment.googleMaps.apiKey;
+    GoogleMapsService.maps$().pipe(operators.first()).subscribe(function (maps) {
+      var google = window.google;
 
-    if (GOOGLE_MAPS != null) {
-      this.initMap();
-    } else {
-      window.onGoogleMapsLoaded = function () {
-        GOOGLE_MAPS = window.google.maps;
+      var _getContext = rxcomp.getContext(_this),
+          node = _getContext.node;
 
-        _this.initMap();
+      var center = _this.center;
+      var item = _this.items && _this.items.length ? _this.items[0] : null;
+      var position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
+      var mapOptions = {
+        zoom: 15,
+        // 9,
+        center: position,
+        scrollwheel: false,
+        // mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.DEFAULT
+        },
+        // overviewMapControl: true,
+        scaleControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        streetViewControl: false,
+        rotateControl: true,
+        fullscreenControl: true,
+        styles: MAP_STYLE
       };
+      var mapElement = node.querySelector('.map');
+      var map = _this.map = new google.maps.Map(mapElement, mapOptions);
 
-      var script = document.createElement('script');
-      script.setAttribute('type', 'text/javascript');
-      script.setAttribute('src', "https://maps.googleapis.com/maps/api/js?callback=onGoogleMapsLoaded" + (apiKey ? "&key=" + apiKey : '') + "&libraries=places");
-      (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(script);
-    }
-  };
+      _this.addMarkers(_this.items);
 
-  _proto.initMap = function initMap() {
-    var google = window.google;
-
-    var _getContext = rxcomp.getContext(this),
-        node = _getContext.node;
-
-    var center = this.center;
-    var item = this.items && this.items.length ? this.items[0] : null;
-    var position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
-    var mapOptions = {
-      zoom: 15,
-      // 9,
-      center: position,
-      scrollwheel: false,
-      // mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.DEFAULT
-      },
-      // overviewMapControl: true,
-      scaleControl: false,
-      zoomControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      rotateControl: true,
-      fullscreenControl: true,
-      styles: MAP_STYLE
-    };
-    var mapElement = node.querySelector('.map');
-    var map = this.map = new google.maps.Map(mapElement, mapOptions);
-    this.addMarkers(this.items);
-
-    if (!this.items) {
-      map.fitBounds(this.getItalyBounds());
-    }
+      if (!_this.items) {
+        map.fitBounds(_this.getItalyBounds());
+      }
+    });
   };
 
   _proto.onChanges = function onChanges() {
@@ -10341,7 +10661,7 @@ SwiperProjectsPropositionDirective.meta = {
   };
 
   _proto.onBuy = function onBuy(event) {
-    CartService.setStep(1);
+    CartService.setCart(null);
     window.location.href = "" + environment.slug.cart;
   };
 
@@ -10372,6 +10692,32 @@ SwiperProjectsPropositionDirective.meta = {
 }(rxcomp.Component);
 CartMiniComponent.meta = {
   selector: '[cart-mini]'
+};var ErrorComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ErrorComponent, _Component);
+
+  function ErrorComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ErrorComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.showDetail = false; // console.log('ErrorComponent.onInit', this.error);
+  };
+
+  _proto.onDetailToggle = function onDetailToggle() {
+    this.showDetail = !this.showDetail;
+    this.pushChanges();
+  };
+
+  return ErrorComponent;
+}(rxcomp.Component);
+ErrorComponent.meta = {
+  selector: 'error-component',
+  inputs: ['error'],
+  template:
+  /* html */
+  "\n\t<div class=\"error\" (click)=\"onDetailToggle($event)\">\n\t\t<div class=\"status\">Error <span [innerHTML]=\"error.status\"></span></div>\n\t\t<div class=\"exception-message\" [innerHTML]=\"error.exceptionMessage\"></div>\n\t\t<button type=\"button\" class=\"btn--detail\"><svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg></button>\n\t</div>\n\t<div class=\"error-details\" *if=\"showDetail\">\n\t\t<div class=\"message\" [innerHTML]=\"error.message\"></div>\n\t\t<div class=\"exception-type\" [innerHTML]=\"error.exceptionType\"></div>\n\t\t<div class=\"stack-trace\" [innerHTML]=\"error.stackTrace\"></div>\n\t</div>\n\t"
 };var FilesComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(FilesComponent, _Component);
 
@@ -11743,7 +12089,7 @@ UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn'],
   inputs: ['me', 'user']
-};var factories$2 = [CartMiniComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserAccessDataComponent, UserComponent, UserDeleteComponent, UserEditComponent, UserForgotComponent, UserModalComponent, UserDetailComponent, UserSigninComponent, UserSignupComponent];
+};var factories$2 = [CartMiniComponent, ErrorComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserAccessDataComponent, UserComponent, UserDeleteComponent, UserEditComponent, UserForgotComponent, UserModalComponent, UserDetailComponent, UserSigninComponent, UserSignupComponent];
 var pipes$2 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(SharedModule, _Module);

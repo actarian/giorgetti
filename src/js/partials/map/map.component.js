@@ -1,69 +1,51 @@
 import MarkerClusterer from '@googlemaps/markerclustererplus';
 import { Component, getContext } from 'rxcomp';
+import { first } from 'rxjs/operators';
+import { GoogleMapsService } from '../../common/googlemaps/googlemaps.service';
 import { environment } from '../../environment';
 import { MAP_STYLE } from './map.style';
 
 const USE_CLUSTERER = true;
 
-let GOOGLE_MAPS;
-
 export class MapComponent extends Component {
 
 	onInit() {
-		const apiKey = environment.googleMaps.apiKey;
-		if (GOOGLE_MAPS != null) {
-			this.initMap();
-		} else {
-			window.onGoogleMapsLoaded = () => {
-				GOOGLE_MAPS = window.google.maps;
-				this.initMap();
+		GoogleMapsService.maps$().pipe(
+			first(),
+		).subscribe(maps => {
+
+			const google = window.google;
+			const { node } = getContext(this);
+			const center = this.center;
+			const item = this.items && this.items.length ? this.items[0] : null;
+			const position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
+
+			const mapOptions = {
+				zoom: 15, // 9,
+				center: position,
+				scrollwheel: false,
+				// mapTypeId: google.maps.MapTypeId.ROADMAP,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.DEFAULT
+				},
+				// overviewMapControl: true,
+				scaleControl: false,
+				zoomControl: true,
+				mapTypeControl: false,
+				streetViewControl: false,
+				rotateControl: true,
+				fullscreenControl: true,
+				styles: MAP_STYLE
 			};
-			const script = document.createElement('script');
-			script.setAttribute('type', 'text/javascript');
-			script.setAttribute('src', `https://maps.googleapis.com/maps/api/js?callback=onGoogleMapsLoaded${apiKey ? `&key=${apiKey}` : ''}&libraries=places`);
-			(document.getElementsByTagName('head')[0] || document.documentElement).appendChild(script);
-		}
-	}
 
-	initMap() {
-		const google = window.google;
-		const { node } = getContext(this);
-		const center = this.center;
+			const mapElement = node.querySelector('.map');
+			const map = this.map = new google.maps.Map(mapElement, mapOptions);
+			this.addMarkers(this.items);
+			if (!this.items) {
+				map.fitBounds(this.getItalyBounds());
+			}
 
-		const item = this.items && this.items.length ? this.items[0] : null;
-
-		const position = item ? new google.maps.LatLng(item.latitude, item.longitude) : null;
-
-		const mapOptions = {
-			zoom: 15, // 9,
-			center: position,
-
-			scrollwheel: false,
-			// mapTypeId: google.maps.MapTypeId.ROADMAP,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.DEFAULT
-			},
-			// overviewMapControl: true,
-
-			scaleControl: false,
-			zoomControl: true,
-			mapTypeControl: false,
-			streetViewControl: false,
-			rotateControl: true,
-			fullscreenControl: true,
-
-			styles: MAP_STYLE
-		};
-
-		const mapElement = node.querySelector('.map');
-
-		const map = this.map = new google.maps.Map(mapElement, mapOptions);
-
-		this.addMarkers(this.items);
-
-		if (!this.items) {
-			map.fitBounds(this.getItalyBounds());
-		}
+		});
 	}
 
 	onChanges() {
@@ -202,12 +184,11 @@ export class MapComponent extends Component {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((location) => {
 				position = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-
 				const geocoder = this.geocoder || new google.maps.Geocoder();
 				this.geocoder = geocoder;
 				geocoder.geocode({ 'location': position }, (results, status) => {
 					if (status == 'OK') {
-						var filteredInfoCity = results.filter(function(address_component) {
+						const filteredInfoCity = results.filter(function(address_component) {
 							return address_component.types.includes("locality");
 						});
 						this.model.city = filteredInfoCity.length ? filteredInfoCity[0].formatted_address : undefined;

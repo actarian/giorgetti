@@ -75,7 +75,7 @@ export class GoogleService {
 	}
 
 	static once$() {
-		return OnceService.script('//apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(
+		return OnceService.script$('//apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(
 			concatMap(x => {
 				this.gapi = window['gapi'];
 				return of(this.gapi);

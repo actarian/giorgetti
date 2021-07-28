@@ -37,7 +37,7 @@ export class CartMiniComponent extends Component {
 	}
 
 	onBuy(event) {
-		CartService.setStep(1);
+		CartService.setCart(null);
 		window.location.href = `${environment.slug.cart}`;
 	}
 

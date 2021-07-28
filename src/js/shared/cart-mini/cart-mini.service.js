@@ -82,9 +82,9 @@ export class CartMiniService {
 		)
 	}
 
-	static addItem$(item) {
+	static addItem$(item, qty = 1) {
 		const count = CartMiniService.count;
-		return of(Object.assign({ qty: 1 }, item)).pipe(
+		return of(Object.assign({}, item, { qty })).pipe(
 			map(item => {
 				const items = CartMiniService.currentItems.slice();
 				const item_ = CartMiniService.find(item, items);
@@ -144,9 +144,9 @@ export class CartMiniService {
 		}
 	}
 
-	static getPriceAndAddItem$(item) {
+	static getPriceAndAddItem$(item, qty = 1) {
 		return CartMiniService.getPrice$(item).pipe(
-			switchMap(item => CartMiniService.addItem$(item)),
+			switchMap(item => CartMiniService.addItem$(item, qty)),
 		);
 	}
 

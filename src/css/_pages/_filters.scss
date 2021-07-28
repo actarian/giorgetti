@@ -89,6 +89,7 @@
 
 	.group--form,
 	.group--form--checkbox,
+	.group--form--privacy,
 	.group--form--file,
 	.group--form--select,
 	.group--form--textarea {
@@ -113,11 +114,18 @@
 		}
 	}
 
+	@include media-up(lg) {
+		min-height: 70px;
+	}
+
+	@include media-down(md) {
+		min-height: 60px;
+	}
+
 	@include media-up(md) {
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
-		min-height: 70px;
 		background: $background-negative;
 		color: $foreground-negative;
 
@@ -139,12 +147,13 @@
 		.group--filter,
 		.group--form,
 		.group--form--checkbox,
+		.group--form--privacy,
 		.group--form--file,
 		.group--form--select,
 		.group--form--textarea {
 			padding: 10px 15px 10px 15px;
 			margin-bottom: 2px;
-			min-height: 70px;
+			min-height: 60px;
 			background: $background-negative;
 			color: $foreground-negative;
 		}

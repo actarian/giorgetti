@@ -5,7 +5,7 @@ import { DownloadDirective } from './download/download.directive';
 import { DropdownItemDirective } from './dropdown/dropdown-item.directive';
 import { DropdownDirective } from './dropdown/dropdown.directive';
 import { EnvPipe } from './env/env.pipe';
-import { FilterComponent } from './filter/filter.component';
+import { FilterItemComponent } from './filter/filter-item.component';
 import { FlagPipe } from './flag/flag.pipe';
 import { HighlightPipe } from './highlight/highlight.pipe';
 import { HtmlPipe } from './html/html.pipe';
@@ -17,7 +17,9 @@ import { LocomotiveScrollToDirective } from './locomotive-scroll/locomotive-scro
 import { LocomotiveScrollDirective } from './locomotive-scroll/locomotive-scroll.directive';
 import { ScrollDirective } from './locomotive-scroll/scroll.directive';
 import { ModalOutletComponent } from './modal/modal-outlet.component';
+import { NameDirective } from './name/name.directive';
 import { NumberPipe } from './number/number.pipe';
+import { RelativeDatePipe } from './relative-date/relative-date.pipe';
 import { ShareDirective } from './share/share.directive';
 import { SlugPipe } from './slug/slug.pipe';
 import { SvgIconStructure } from './svg/svg-icon.structure';
@@ -32,7 +34,7 @@ const factories = [
 	DropdownDirective,
 	DropdownItemDirective,
 	// DropdownItemDirective,
-	FilterComponent,
+	FilterItemComponent,
 	IdDirective,
 	LabelForDirective,
 	// LanguageComponent,
@@ -42,6 +44,7 @@ const factories = [
 	LocomotiveScrollToDirective,
 	// ModalComponent,
 	ModalOutletComponent,
+	NameDirective,
 	ScrollDirective,
 	ShareDirective,
 	SvgIconStructure,
@@ -60,6 +63,7 @@ const pipes = [
 	HtmlPipe,
 	LabelPipe,
 	NumberPipe,
+	RelativeDatePipe,
 	SlugPipe,
 ];
 

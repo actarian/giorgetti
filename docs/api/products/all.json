@@ -1201,7 +1201,8 @@
     ],
     "url": "/giorgetti/products-detail.html",
     "image": "/giorgetti/img/products/572_n_LISTING_progetti.jpg",
-    "title": "Progetti"
+    "title": "Progetti",
+    "configurable": true
   },
   {
     "id": 1,

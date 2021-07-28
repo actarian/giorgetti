@@ -4,6 +4,7 @@ import { combineLatest } from 'rxjs';
 import { finalize, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { FacebookService } from '../../common/facebook/facebook.service';
 import { GoogleService } from '../../common/google/google.service';
+import { GoogleMapsService } from '../../common/googlemaps/googlemaps.service';
 import { LinkedinService } from '../../common/linkedin/linkedin.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
@@ -38,6 +39,12 @@ export class CartComponent extends Component {
 		}
 	}
 
+	get shipmentCountriesLabel() {
+		let shipmentCountriesLabel = '';
+		shipmentCountriesLabel = this.shipmentCountryOptions.map(x => x.label).join(', ');
+		return shipmentCountriesLabel;
+	}
+
 	onInit() {
 		this.detectSocialLogin();
 		this.socialBusy = false;
@@ -59,8 +66,9 @@ export class CartComponent extends Component {
 	initWithData(data) {
 		this.steps = CartSteps;
 		this.step = CartSteps.None;
-		this.errorPayment = null;
+		this.errorDelivery = null;
 		this.errorDiscount = null;
+		this.errorPayment = null;
 		this.success = false;
 		this.estimatedDelivery = null;
 		this.items = null;
@@ -72,6 +80,8 @@ export class CartComponent extends Component {
 		});
 		this.user = null;
 		this.guest = null;
+		this.shipmentCountryOptions = [];
+		this.countryOptions = [];
 		this.deliveryData = null;
 		this.billingData = null;
 		this.delivery = null;
@@ -80,7 +90,7 @@ export class CartComponent extends Component {
 		const form = this.form = new FormGroup({
 			step: this.step,
 			items: null,
-			shipmentCountry: new FormControl(null, [Validators.RequiredValidator()]),
+			shipmentCountry: new FormControl(114, [Validators.RequiredValidator()]),
 			user: null,
 			guest: null,
 			data: new FormGroup({
@@ -114,7 +124,10 @@ export class CartComponent extends Component {
 				}),
 				conditions: new FormControl(null, [Validators.RequiredTrueValidator()]),
 				privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
-				terms: new FormControl(null, [Validators.RequiredTrueValidator()]),
+				newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+				commercial: new FormControl(null, [Validators.RequiredValidator()]),
+				promotion: new FormControl(null, [Validators.RequiredValidator()]),
+				// terms: null,
 			}),
 			deliveryData: null,
 			billingData: null,
@@ -157,14 +170,16 @@ export class CartComponent extends Component {
 			}
 		};
 
-		let shipmentCountry = data.shipmentCountry.options.slice();
-		shipmentCountry.sort(sortCountry);
-		controls.shipmentCountry.options = FormService.toSelectOptions(shipmentCountry);
+		let shipmentCountryOptions = data.shipmentCountry.options.slice();
+		shipmentCountryOptions.sort(sortCountry);
+		this.shipmentCountryOptions = shipmentCountryOptions;
+		controls.shipmentCountry.options = FormService.toSelectOptions(this.shipmentCountryOptions);
+		controls.data.controls.country.options = FormService.toSelectOptions(this.shipmentCountryOptions);
 
 		let countryOptions = data.country.options.slice();
 		countryOptions.sort(sortCountry);
-		controls.data.controls.country.options = FormService.toSelectOptions(countryOptions);
-		controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(countryOptions);
+		this.countryOptions = countryOptions;
+		controls.data.controls.billingData.controls.country.options = FormService.toSelectOptions(this.countryOptions);
 
 		/*
 		controls.deliveryType.options = data.deliveryType.options.slice().map(x => ({
@@ -222,7 +237,7 @@ export class CartComponent extends Component {
 		const { node } = getContext(this);
 		const firstInvalidInput = Array.prototype.slice.call(node.querySelectorAll('.invalid')).find((x) => x.hasAttribute('[control]'));
 		if (firstInvalidInput) {
-			LocomotiveScrollService.scrollTo(firstInvalidInput, { offset: -180, duration: 0, disableLerp: true });
+			LocomotiveScrollService.scrollTo(firstInvalidInput, { offset: -260, duration: 0, disableLerp: true });
 		}
 	}
 
@@ -246,10 +261,20 @@ export class CartComponent extends Component {
 		this.form.patch(Object.assign({}, patch, { step: this.step }));
 		switch (this.step) {
 			case CartSteps.Delivery:
+				this.busy = true;
+				this.errorDelivery = null;
 				this.getDeliveryType$().pipe(
 					first(),
+					finalize(_ => {
+						this.busy = false;
+						this.pushChanges();
+					}),
 				).subscribe(_ => {
 					this.onAfterPatch(skipUpdate);
+				}, errorDelivery => {
+					// console.log('errorDelivery', errorDelivery);
+					this.errorDelivery = errorDelivery;
+					this.onAfterPatch(true);
 				});
 				break;
 			default:
@@ -538,21 +563,46 @@ export class CartComponent extends Component {
 
 	onData(_) {
 		const form = this.form;
-		const controls = this.controls;
-		console.log('CartComponent.onData');
+		// const controls = this.controls;
+		// console.log('CartComponent.onData', form.controls.data.valid);
 		if (form.controls.data.valid) {
 			const deliveryData = form.value.data;
-			this.deliveryData = Object.assign({}, deliveryData, {
-				country: controls.data.controls.country.options.find(x => x.id === deliveryData.country),
+			const deliveryCountry = this.getCountryById(deliveryData.country);
+			const onGeocoder = (latitude = null, longitude = null) => {
+				deliveryData.latitude = latitude;
+				deliveryData.longitude = longitude;
+				this.deliveryData = Object.assign({}, deliveryData, {
+					country: deliveryCountry,
+				});
+				const billingData = (form.value.data.billing ? form.value.data.billingData : form.value.data);
+				const billingCountry = this.getCountryById(billingData.country);
+				this.billingData = Object.assign({}, billingData, {
+					country: billingCountry,
+				});
+				// console.log('CartComponent.onData.onGeocoder', latitude, longitude);
+				this.onNext({ deliveryData, billingData });
+			}
+			let latitude = null, longitude = null;
+			GoogleMapsService.geocode$({ address: `${deliveryData.address}, ${deliveryData.zipCode} ${deliveryData.city} ${deliveryCountry.name}` }).pipe(
+				first(),
+			).subscribe(results => {
+				if (results.length) {
+					// console.log('CartComponent.onData.geocode', results);
+					const location = results[0].geometry.location;
+					latitude = location.lat();
+					longitude = location.lng();
+				}
+				onGeocoder(latitude, longitude);
+			}, error => {
+				onGeocoder(latitude, longitude);
 			});
-			const billingData = (form.value.data.billing ? form.value.data.billingData : form.value.data);
-			this.billingData = Object.assign({}, billingData, {
-				country: controls.data.controls.country.options.find(x => x.id === billingData.country),
-			});
-			this.onNext({ deliveryData, billingData });
 		} else {
 			this.touchForm();
 		}
+	}
+
+	getCountryById(countryId) {
+		return FormService.toSelectOptions(this.countryOptions).find(x => x.id === countryId);
 	}
 
 	testData() {
@@ -573,7 +623,10 @@ export class CartComponent extends Component {
 				message: 'Hi!',
 				conditions: true,
 				privacy: true,
-				terms: true,
+				newsletter: false,
+				commercial: false,
+				promotion: false,
+				// terms: false,
 			},
 			checkRequest: window.antiforgery,
 			checkField: ''
@@ -605,12 +658,12 @@ export class CartComponent extends Component {
 				distance: x.distance,
 			}));
 			const store = stores[0];
-			this.onNext({ stores, store: store.id, delivery });
+			const storeId = store ? store.id : null;
+			this.onNext({ stores, store: storeId, delivery });
 		});
 	}
 
 	getDeliveryType$() {
-		this.busy = true;
 		return CartService.getDeliveryType$(this.form.value).pipe(
 			tap(deliveryTypeOptions => {
 				const controls = this.controls;
@@ -624,7 +677,6 @@ export class CartComponent extends Component {
 				}));
 				this.form.patch(Object.assign({}, { deliveryType: controls.deliveryType.options[0].id }), true);
 			}),
-			finalize(_ => this.busy = false),
 		);
 	}
 
@@ -638,8 +690,8 @@ export class CartComponent extends Component {
 		).subscribe(discount => {
 			this.discount = discount;
 			this.onPatch({ discount });
-		}, _ => {
-			this.errorDiscount = true;
+		}, errorDiscount => {
+			this.errorDiscount = errorDiscount;
 		});
 	}
 

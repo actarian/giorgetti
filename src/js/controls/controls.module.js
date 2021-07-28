@@ -4,6 +4,7 @@ import { ControlCustomSelectComponent } from './control-custom-select.component'
 import { ControlEmailComponent } from './control-email.component';
 import { ControlFileComponent } from './control-file.component';
 import { ControlPasswordComponent } from './control-password.component';
+import { ControlPrivacyComponent } from './control-privacy.component';
 import { ControlSearchComponent } from './control-search.component';
 import { ControlTextComponent } from './control-text.component';
 import { ControlTextareaComponent } from './control-textarea.component';
@@ -16,6 +17,7 @@ const factories = [
 	ControlEmailComponent,
 	ControlFileComponent,
 	ControlPasswordComponent,
+	ControlPrivacyComponent,
 	// ControlSelectComponent,
 	ControlSearchComponent,
 	ControlTextareaComponent,

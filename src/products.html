@@ -85,6 +85,7 @@
 							<span class="over">
 								<span class="over__title" [innerHTML]="item.title"></span>
 							</span>
+							<div class="badge--configure" *if="item.configurable"><svg class="edit"><use xlink:href="#edit"></use></svg> Personalizzabile</div>
 						</span>
 						<span class="card__content">
 							<span class="card__title" [innerHTML]="item.title"></span>

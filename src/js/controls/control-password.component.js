@@ -1,9 +1,16 @@
+import { getContext } from 'rxcomp';
 import { ControlComponent } from './control.component';
 
 export class ControlPasswordComponent extends ControlComponent {
 
 	onInit() {
 		this.label = this.label || 'label';
+		const { node } = getContext(this);
+		if (node.hasAttribute('secure')) {
+			// const name = [..."abcdefghijklmnopqrsuvwxyz0123456789"].map((c, i, a) => a[Math.floor(Math.random() * a.length)]).join('');
+			const input = node.querySelector('input');
+			input.setAttribute('autocomplete', 'new-password');
+		}
 	}
 
 }

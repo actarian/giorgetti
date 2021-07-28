@@ -1,15 +1,20 @@
 
-import { from, fromEvent, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { from, fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export class OnceService {
 
 	static uid = 0;
 	static paths = [];
 
-	static script(url, callback) {
-		if (this.paths.indexOf(url) === -1) {
-			this.paths.push(url);
+	static script$(url, callback) {
+		// console.log('OnceScript.script$', url, callback);
+		let item = this.paths.find(x => x.url === url);
+		if (item != null) {
+			return item.callback$;
+		} else {
+			item = { url, callbacks$: null };
+			this.paths.push(item);
 			let callbackName;
 			if (callback === true) {
 				callbackName = 'OnceCallback' + (++this.uid);
@@ -18,35 +23,32 @@ export class OnceService {
 				callbackName = callback;
 			}
 			let callback$;
-			const element = document.createElement('script');
-			element.type = 'text/javascript';
+			const script = document.createElement('script');
+			script.type = 'text/javascript';
 			if (callback) {
 				callback$ = from(
 					new Promise((resolve, reject) => {
 						window[callbackName] = function(data) {
+							// console.log('OnceScript', callbackName, data);
 							resolve(data);
 						};
 					})
 				);
 			} else {
-				element.async = true;
-				callback$ = fromEvent(element, 'load').pipe(
+				script.async = true;
+				callback$ = fromEvent(script, 'load').pipe(
 					map(x => x)
 				);
 			}
-			const scripts = document.getElementsByTagName('script');
+			item.callback$ = callback$;
+			const scripts = Array.prototype.slice.call(document.getElementsByTagName('script'));
 			if (scripts.length) {
-				const script = scripts[scripts.length - 1];
-				script.parentNode.insertBefore(element, script.nextSibling);
+				script.src = url;
+				const lastScript = scripts[scripts.length - 1];
+				lastScript.parentNode.insertBefore(script, lastScript.nextSibling);
 			}
-			return of(true).pipe(
-				switchMap(x => {
-					element.src = url;
-					return callback$;
-				})
-			);
-		} else {
-			return of(new Event('loaded!'));
+			// console.log('OnceScript.script$', scripts.length, script.src, scripts.map(x => x.src).join(', '));
+			return callback$;
 		}
 	}
 

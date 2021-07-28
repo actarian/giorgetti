@@ -1,0 +1,49 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<main class="main">
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Conferma registrazione</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--intro-sm">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Conferma registrazione</div>
+
+					<!-- Valid Token -->
+					<div>
+						<div class="abstract primary">
+							<p>L'utenza è stata attivata.</p>
+						</div>
+						<div class="description">
+							<p>Effettua il login per accedere all'area riservata.</p>
+						</div>
+						<div class="group--cta">
+							<button type="button" class="btn--secondary" (click)="onModalSignIn($event)"><span>Accedi</span></button>
+						</div>
+					</div>
+
+					<!-- Invalid Token -->
+					<div>
+						<div class="abstract primary">
+							<p>Token non valido o scaduto.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

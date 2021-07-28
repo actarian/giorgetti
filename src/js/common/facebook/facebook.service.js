@@ -104,7 +104,7 @@ export class FacebookService {
 			if (this.facebook_) {
 				return of(this.facebook_);
 			} else {
-				return OnceService.script('//connect.facebook.net/' + environment.currentLanguage + '/sdk.js', 'fbAsyncInit').pipe(
+				return OnceService.script$('//connect.facebook.net/' + environment.currentLanguage + '/sdk.js', 'fbAsyncInit').pipe(
 					concatMap(x => {
 						const facebook = window['FB'];
 						facebook.init({

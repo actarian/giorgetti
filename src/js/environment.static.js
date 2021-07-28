@@ -43,7 +43,7 @@ export const environmentStatic = {
 		scope: 'r_emailaddress r_liteprofile',
 	},
 	googleMaps: {
-		apiKey: 'AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w',
+		apiKey: 'AIzaSyDvGw6iAoKdRv8mmaC9GeT-LWLPQtA8p60',
 	},
 	thron: {
 		clientId: '',

@@ -9,9 +9,14 @@
 				<div control-password [control]="controls.password" label="Password"></div>
 			</div>
 			<div class="group--error" *if="error">
-				<span class="status-code" [innerHTML]="error.statusCode"></span>
-				<span class="status-message" [innerHTML]="error.statusMessage"></span>
-				<span class="friendly-message" [innerHTML]="error.friendlyMessage"></span>
+				<div *if="error.statusCode == 404">
+					Nome utente o password errati.
+				</div>
+				<div *if="error.statusCode != 404">
+					<span class="status-code" [innerHTML]="error.statusCode"></span>
+					<span class="status-message" [innerHTML]="error.statusMessage"></span>
+					<span class="friendly-message" [innerHTML]="error.friendlyMessage"></span>
+				</div>
 			</div>
 			<div class="group--cta">
 				<button type="submit" class="btn--submit" data-title="Accedi" *if="!form.submitted">

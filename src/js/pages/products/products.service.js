@@ -1,5 +1,6 @@
 // import { combineLatest } from 'rxjs';
 // import { map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { environment } from '../../environment';
 
@@ -7,9 +8,9 @@ export class ProductsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/products/all');
+			return ProductsService.sort$(ApiService.get$('/products/all'));
 		} else {
-			return ApiService.get$('/products/all.json');
+			return ProductsService.sort$(ApiService.get$('/products/all.json'));
 		}
 	}
 
@@ -19,6 +20,21 @@ export class ProductsService {
 		} else {
 			return ApiService.get$('/products/filters.json');
 		}
+	}
+
+	static sort$(items$) {
+		return items$.pipe(
+			map(items => {
+				items.sort((a, b) => {
+					if (a.configurable !== b.configurable) {
+						return a.configurable ? -1 : 1;
+					} else {
+						return 0;
+					}
+				});
+				return items;
+			}),
+		);
 	}
 
 	/*

@@ -1,7 +1,7 @@
 import { Component } from 'rxcomp';
 import { LocomotiveScrollService } from '../locomotive-scroll/locomotive-scroll.service';
 
-export class FilterComponent extends Component {
+export class FilterItemComponent extends Component {
 
 	onInit() {
 
@@ -43,7 +43,7 @@ export class FilterComponent extends Component {
 	}
 }
 
-FilterComponent.meta = {
+FilterItemComponent.meta = {
 	selector: '[filter], [[filter]]',
 	outputs: ['change'],
 	inputs: ['filter', 'filters', 'name'],

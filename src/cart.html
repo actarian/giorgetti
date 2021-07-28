@@ -98,20 +98,32 @@
 						</div>
 					</div>
 					<form class="form" [formGroup]="form" (submit)="onItems($event)" name="form" role="form" novalidate autocomplete="off">
-						<div class="group--cart">
-							<div class="subtitle">Spedizioni</div>
-							<div control-custom-select [control]="controls.shipmentCountry" label="Seleziona il paese di spedizione"></div>
-						</div>
-						<div class="group--cart">
-							<div class="subtitle">Codice sconto</div>
+						<div class="group--cartinfo">
+							<div class="group--title">
+								<div class="icon"><svg class="delivery"><use xlink:href="#delivery"></use></svg></div>
+								<div class="subtitle">Spedizioni</div>
+							</div>
 							<div>
-								<p>Sei in possesso di un codice sconto?</p>
+								<p><b>Le spedizioni sono disponibili nelle seguenti nazioni</b></p>
+								<p [innerHTML]="shipmentCountriesLabel"></p>
+							</div>
+							<!--
+							<div control-custom-select [control]="controls.shipmentCountry" label="Seleziona il paese di spedizione"></div>
+							-->
+						</div>
+						<div class="group--cartinfo">
+							<div class="group--title">
+								<div class="icon"><svg class="discount"><use xlink:href="#discount"></use></svg></div>
+								<div class="subtitle">Codice sconto</div>
+							</div>
+							<div>
+								<p><b>Sei in possesso di un codice sconto?</b></p>
 								<p>Tienilo a portata di mano, potrai inserirlo negli step successivi, prima del checkout finale.</p>
 							</div>
 						</div>
 						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 							<div class="group--cart">
-								<div class="estimated-delivery" *if="estimatedDelivery">Il tuo ordine sarà pronto il <span [innerHTML]="estimatedDelivery | date : { dateStyle: 'medium' }"></span> più tempi di consegna</div>
+								<div class="estimated-delivery" *if="estimatedDelivery">Il tuo ordine sarà pronto <span [innerHTML]="estimatedDelivery | relativeDate"></span> più tempi di consegna</div>
 								<button type="submit" class="btn--primary">Procedi</button>
 							</div>
 						</div>
@@ -210,9 +222,12 @@
 								<div control-text [control]="controls.data.controls.billingData.controls.province" label="Provincia"></div>
 								<div control-custom-select [control]="controls.data.controls.billingData.controls.country" label="Paese"></div>
 							</div>
-							<div control-checkbox [control]="controls.data.controls.conditions" label="Acconsento alle &amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;condizioni di vendita&amp;lt;/a&gt;" target="modal"></div>
-							<div control-checkbox [control]="controls.data.controls.privacy" label="A seguito dell&amp;#39;&amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa sulla privacy&amp;lt;/a&gt;, fornisco il mio consenso al trattamento dei dati personali" target="modal"></div>
-							<div control-checkbox [control]="controls.data.controls.terms" label="Acconsento ai &amp;lt;a href=&amp;quot;/giorgetti/generic.html&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;termini d'uso&amp;lt;/a&gt;" target="modal"></div>
+							<div control-checkbox [control]="controls.data.controls.conditions" label="Sì, accetto le <a href='/giorgetti/generic.html' target='_blank'>Condizioni Generali di Vendita</a>" target="modal"></div>
+							<div control-checkbox [control]="controls.data.controls.privacy" label="Si, a seguito dell’<a href='/giorgetti/generic.html' target='_blank'>Informativa sulla Privacy</a>, fornisco il mio consenso al trattamento dei dati personali con finalità di poter eseguire la prestazione richiesta." target="modal"></div>
+							<div control-privacy [control]="controls.data.controls.newsletter" label="Al trattamento dei miei dati personali per attività di marketing diretto tramite iscrizione a newsletter." target="modal"></div>
+							<div control-privacy [control]="controls.data.controls.commercial" label="Al trattamento dei miei dati personali per attività di profilazione, al fine di proporle comunicazioni commerciali più vicine ai miei interessi." target="modal"></div>
+							<div control-privacy [control]="controls.data.controls.promotion" label="Alla cessione dei miei dati personali per attività promozionali di terzi. I soggetti terzi a cui i dati saranno ceduti sono unicamente Società del gruppo." target="modal"></div>
+							<!-- <div control-checkbox [control]="controls.data.controls.terms" label="Si, fornisco il mio consenso al trattamento dei dati personali al fine di poter ricevere mail contenenti informazioni sui prodotti, servizi, novità, offerte ed iniziative promo pubblicitarie." target="modal"></div> -->
 							<test-component [form]="form" (test)="testData($event)" (reset)="resetData($event)"></test-component>
 							<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 								<div class="group--cart">
@@ -228,6 +243,8 @@
 					<div class="title">Metodo di consegna</div>
 					<!-- spinner -->
 					<div class="spinner" *if="busy"></div>
+					<!-- error -->
+					<error-component [error]="errorDelivery" *if="errorDelivery"></error-component>
 					<!-- form -->
 					<form class="form" [formGroup]="form" (submit)="onDelivery($event)" name="form" role="form" novalidate autocomplete="off" *if="!busy">
 						<div class="group--form--radio" [class]="{ required: controls.deliveryType.validators.length }" *for="let option of controls.deliveryType.options">
@@ -259,6 +276,9 @@
 					<div class="title">Riepilogo Ordine</div>
 					<div class="row">
 						<div class="col-md-7">
+							<div class="group--address" *if="!selectedStore">
+								<div class="subtitle">Non è stato possibile trovare un negozio.</div>
+							</div>
 							<div *if="selectedStore">
 								<div class="group--address">
 									<div class="subtitle">Negozio di riferimento</div>
@@ -278,7 +298,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="group--timetable">
+								<div class="group--timetable" *if="selectedStore.timetable.length">
 									<button type="button" class="btn--accordion" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
 										<span>Orari di apertura</span>
 										<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
@@ -309,15 +329,15 @@
 							<div class="group--recap">
 								<div class="group--cart">
 									<div class="flex-table flex-table__sm">
-										<div class="tr">
-											<div class="th">Prodotto</div>
-											<div class="th">Qty</div>
-											<div class="th">Prezzo</div>
+										<div class="tr tr--recap">
+											<div class="th td--info">Prodotto</div>
+											<div class="th td--qty">Qty</div>
+											<div class="th td--price">Prezzo</div>
 										</div>
-										<div class="tr" *for="let item of items">
-											<div class="td" [innerHTML]="item.title"></div>
-											<div class="td" [innerHTML]="item.qty"></div>
-											<div class="td" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
+										<div class="tr tr--recap" *for="let item of items">
+											<div class="td td--info" [innerHTML]="item.title"></div>
+											<div class="td td--qty" [innerHTML]="item.qty"></div>
+											<div class="td td--price" [innerHTML]="item.price.price | number : { style: 'currency', currency: 'EUR' }"></div>
 										</div>
 									</div>
 								</div>
@@ -457,6 +477,9 @@
 					</div>
 					<div class="row">
 						<div class="col-md-7">
+							<div class="group--address" *if="!selectedStore">
+								<div class="subtitle">Non è stato possibile trovare un negozio.</div>
+							</div>
 							<div *if="selectedStore">
 								<div class="group--address">
 									<div class="subtitle">Negozio di riferimento</div>
