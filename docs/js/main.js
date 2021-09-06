@@ -168,7 +168,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   return Utils;
 }();var environmentServed = {
   flags: {
-    production: true
+    production: true,
+    cart: true
   },
   markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
   defaultMarket: 'IT',
@@ -223,7 +224,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/'
 };var environmentStatic = {
   flags: {
-    production: false
+    production: false,
+    cart: true
   },
   markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
   defaultMarket: 'IT',
@@ -902,14 +904,16 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     return index !== -1;
   };
 
-  CartMiniService.setItems = function setItems(items) {
+  CartMiniService.setItems = function setItems(items, skip) {
     if (items) {
       LocalStorageService.set(CartMiniService.STORAGE_KEY, items);
     } else {
       LocalStorageService.delete(CartMiniService.STORAGE_KEY);
     }
 
-    CartMiniService.items$_.next(items);
+    if (!skip) {
+      CartMiniService.items$_.next(items);
+    }
   };
 
   CartMiniService.items$ = function items$() {
@@ -960,7 +964,7 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
       qty = 1;
     }
 
-    var count = CartMiniService.count;
+    // const count = CartMiniService.count;
     return rxjs.of(Object.assign({}, item, {
       qty: qty
     })).pipe(operators.map(function (item) {
@@ -978,9 +982,8 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
         return item;
       }
     }), operators.tap(function (_) {
-      if (count === 0) {
-        HeaderService.setHeader('cart');
-      }
+      // if (count === 0) {
+      HeaderService.setHeader('cart'); // }
     }));
   };
 
@@ -1031,7 +1034,7 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
   };
 
   CartMiniService.match = function match(item, item_) {
-    return item_.id === item.id && item_.code === item.code && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link);
+    return item_.id === item.id && item_.code === item.code && (!item_.showefy && !item.showefy || item_.showefy && item.showefy && item_.showefy.internalstr === item.showefy.internalstr);
   };
 
   CartMiniService.find = function find(item, items) {
@@ -1159,14 +1162,16 @@ var CartService = /*#__PURE__*/function () {
     }
   };
 
-  CartService.setCart = function setCart(cart) {
+  CartService.setCart = function setCart(cart, skip) {
     if (cart) {
       LocalStorageService.set(CartService.STORAGE_KEY, cart);
     } else {
       LocalStorageService.delete(CartService.STORAGE_KEY);
     }
 
-    CartService.cart$_.next(cart);
+    if (!skip) {
+      CartService.cart$_.next(cart);
+    }
   };
 
   CartService.cart$ = function cart$() {
@@ -1195,8 +1200,7 @@ var CartService = /*#__PURE__*/function () {
 
   CartService.estimatedDelivery$ = function estimatedDelivery$(cart) {
     if (environment.flags.production) {
-      // !!! convertire in post ApiService.post$('/cart/estimated-delivery', cart);
-      return ApiService.get$('/cart/estimated-delivery.json');
+      return ApiService.post$('/cart/estimated-delivery', cart);
     } else {
       return ApiService.get$('/cart/estimated-delivery.json');
     }
@@ -1210,9 +1214,9 @@ var CartService = /*#__PURE__*/function () {
     }
   };
 
-  CartService.getStores$ = function getStores$(payload) {
+  CartService.getStores$ = function getStores$(cart) {
     if (environment.flags.production) {
-      return ApiService.post$('/cart/stores', payload);
+      return ApiService.post$('/cart/stores', cart);
     } else {
       return ApiService.get$('/cart/stores.json');
     }
@@ -1220,10 +1224,18 @@ var CartService = /*#__PURE__*/function () {
 
   CartService.getDiscount$ = function getDiscount$(payload) {
     if (environment.flags.production) {
-      return ApiService.get$('/cart/discount.json');
+      return ApiService.post$('/cart/discount', payload);
     } else {
       return ApiService.get$('/cart/discount.json');
     }
+  };
+
+  CartService.doPayment$ = function doPayment$(cart) {
+    return (environment.flags.production ? ApiService.post$('/cart/payment', cart) : ApiService.get$('/cart/payment.json')).pipe(operators.tap(function (_) {
+      // !!! clearing cart with skip option!
+      CartMiniService.setItems([], true);
+      CartService.setCart(cart, true);
+    }));
   };
 
   _createClass(CartService, null, [{
@@ -1360,7 +1372,7 @@ var UserService = /*#__PURE__*/function () {
 
   UserService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/user/data.json');
+      return ApiService.get$('/giorgetti/user/data');
     } else {
       return ApiService.get$('/user/data.json');
     }
@@ -1368,8 +1380,7 @@ var UserService = /*#__PURE__*/function () {
 
   UserService.forgot$ = function forgot$(payload) {
     if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$("/user/forgot.json", payload);
+      return ApiService.post$('/giorgetti/user/forgot', payload);
     } else {
       return ApiService.get$("/user/forgot.json");
     }
@@ -1378,17 +1389,25 @@ var UserService = /*#__PURE__*/function () {
   UserService.me$ = function me$() {
     var _this = this;
 
-    var sessionUser = SessionStorageService.get('user');
-
-    if (sessionUser) {
-      return rxjs.of(sessionUser).pipe(operators.switchMap(function (user) {
-        _this.setUser(new User(user));
-
-        return _this.user$_;
-      }));
+    if (UserService.busyMe) {
+      return this.user$_;
     } else {
-      return (environment.flags.production ? ApiService.get$("/user/me") : ApiService.get$("/user/me.json")).pipe(operators.map(function (response) {
-        return _this.mapUser(response);
+      UserService.busyMe = true;
+      return rxjs.of(1).pipe(operators.switchMap(function (_) {
+        if (environment.flags.production) {
+          return ApiService.get$("/giorgetti/user/me");
+        } else {
+          var sessionUser = SessionStorageService.get('user');
+
+          if (sessionUser) {
+            return rxjs.of(sessionUser);
+          } else {
+            return ApiService.get$("/user/me.json");
+          }
+        }
+      }), operators.map(function (user) {
+        console.log('UserService.user$', user);
+        return _this.mapUser(user);
       }), operators.catchError(function (_) {
         return rxjs.of(null);
       }), operators.switchMap(function (user) {
@@ -1402,7 +1421,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signin$ = function signin$(payload) {
     var _this2 = this;
 
-    return (environment.flags.production ? ApiService.post$("/user/signin", payload) : ApiService.get$("/user/signin.json")).pipe(operators.map(function (response) {
+    return (environment.flags.production ? ApiService.post$("/giorgetti/user/signin", payload) : ApiService.get$("/user/signin.json")).pipe(operators.map(function (response) {
       return _this2.mapUser(response);
     }), operators.tap(function (user) {
       return _this2.setUser(user);
@@ -1412,7 +1431,7 @@ var UserService = /*#__PURE__*/function () {
   UserService.signout$ = function signout$() {
     var _this3 = this;
 
-    return (environment.flags.production ? ApiService.post$("/user/signout") : ApiService.get$("/user/signout.json")).pipe(operators.tap(function (_) {
+    return (environment.flags.production ? ApiService.post$("/giorgetti/user/signout") : ApiService.get$("/user/signout.json")).pipe(operators.tap(function (_) {
       return _this3.setUser(null);
     }));
   };
@@ -1421,39 +1440,46 @@ var UserService = /*#__PURE__*/function () {
     var _this4 = this;
 
     // console.log('UserService.signup$', payload);
-    return (environment.flags.production ? ApiService.post$("/user/signup", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
-      return _this4.mapUser(response);
-    }), operators.tap(function (user) {
-      return _this4.setUser(user);
-    }));
+    return (environment.flags.production ? ApiService.post$("/giorgetti/user/signup", payload) : ApiService.get$("/user/signup.json")).pipe(operators.map(function (response) {
+      response.user = _this4.mapUser(response.user);
+      return response;
+    }), operators.tap(function (response) {
+      return _this4.setUser(response.user);
+    }) //document.location.reload(),
+    );
   };
 
   UserService.edit$ = function edit$(payload) {
     var _this5 = this;
 
     // console.log('UserService.edit$', payload);
-    return (environment.flags.production ? ApiService.post$("/user/edit", payload) : ApiService.get$("/user/edit.json")).pipe(operators.map(function (response) {
-      return _this5.mapUser(response);
-    }), operators.tap(function (user) {
-      return _this5.setUser(user);
-    }));
+    return (environment.flags.production ? ApiService.post$("/giorgetti/user/edit", payload) : ApiService.get$("/user/edit.json")).pipe(operators.map(function (response) {
+      response.user = _this5.mapUser(response.user);
+      return response;
+    }), operators.tap(function (response) {
+      return _this5.setUser(response.user);
+    }) //document.location.reload(),
+    );
+  };
+
+  UserService.editPassword$ = function editPassword$(payload) {
+    // console.log('UserService.editPassword$', payload);
+    return environment.flags.production ? ApiService.post$("/giorgetti/user/edit-password", payload) : ApiService.get$("/user/edit-password.json");
   };
 
   UserService.accessData$ = function accessData$(payload) {
     // console.log('UserService.accessData$', payload);
-    return environment.flags.production ? // !!! convert to .post$
-    ApiService.get$("/user/access-data.json", payload) : ApiService.get$("/user/access-data.json");
+    return environment.flags.production ? ApiService.post$("/giorgetti/user/access-data", payload) : ApiService.get$("/user/access-data.json");
   };
 
   UserService.delete$ = function delete$(payload) {
     // console.log('UserService.delete$', payload);
-    return environment.flags.production ? // !!! convert to .post$
-    ApiService.get$("/user/delete.json", payload) : ApiService.get$("/user/delete.json");
+    return environment.flags.production ? ApiService.post$("/giorgetti/user/delete", payload) : ApiService.get$("/user/delete.json");
   };
 
   UserService.gdpr$ = function gdpr$() {
     if (environment.flags.production) {
-      return ApiService.get$('/user/gdpr.json');
+      return ApiService.get$('/giorgetti/user/gdpr');
     } else {
       return ApiService.get$('/user/gdpr.json');
     }
@@ -1584,6 +1610,27 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
 }(rxcomp.Component);
 AppComponent.meta = {
   selector: '[app-component]'
+};var AltDirective = /*#__PURE__*/function (_Directive) {
+  _inheritsLoose(AltDirective, _Directive);
+
+  function AltDirective() {
+    return _Directive.apply(this, arguments) || this;
+  }
+
+  var _proto = AltDirective.prototype;
+
+  _proto.onChanges = function onChanges() {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    node.setAttribute('alt', this.alt);
+  };
+
+  return AltDirective;
+}(rxcomp.Directive);
+AltDirective.meta = {
+  selector: '[[alt]]',
+  inputs: ['alt']
 };var ClickOutsideDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(ClickOutsideDirective, _Directive);
 
@@ -1693,7 +1740,7 @@ DatePipe.meta = {
   return DownloadDirective;
 }(rxcomp.Directive);
 DownloadDirective.meta = {
-  selector: '[download]',
+  selector: '[[download]]',
   inputs: ['download']
 };var LocomotiveScrollService = /*#__PURE__*/function () {
   function LocomotiveScrollService() {}
@@ -1747,7 +1794,14 @@ DownloadDirective.meta = {
   };
 
   LocomotiveScrollService.useLocomotiveScroll = function useLocomotiveScroll() {
-    return window.innerWidth >= 768 && !this.isMacLike();
+    return window.innerWidth >= 768 && !this.isTouchDevice();
+  };
+
+  LocomotiveScrollService.isTouchDevice = function isTouchDevice() {
+    var userAgent = navigator.userAgent.toLowerCase();
+    var isTablet = /(mac|ipad|tablet|(android(?!.*mobile))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+    var isSmartphone = /(ipod|iphone|(android(?!.*mobile))|(windows(?!.*phone)(.*touch)))/.test(userAgent);
+    return isTablet || isSmartphone;
   };
 
   LocomotiveScrollService.isMacLike = function isMacLike() {
@@ -1809,12 +1863,15 @@ DownloadDirective.meta = {
         body.addEventListener('scroll', function () {
           var y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 
-          var direction = y >= previousY ? 'down' : 'up'; // console.log('scroll', y, direction);
+          var direction = y >= previousY ? 'down' : 'up';
 
-          previousY = y;
-          event.direction = direction;
-          event.scroll.y = y;
-          LocomotiveScrollService.scroll(event);
+          if (Math.abs(y - previousY) > 90) {
+            // console.log('scroll', y, direction);
+            previousY = y;
+            event.direction = direction;
+            event.scroll.y = y;
+            LocomotiveScrollService.scroll(event);
+          }
         }, true);
       }
 
@@ -2219,13 +2276,19 @@ FlagPipe.meta = {
     var escapedQuery = query.map(function (x) {
       return HighlightPipe.escapeRegexChars(x);
     });
-    var regExp = new RegExp("(?<!<)" + escapedQuery.join('(?![\w\s]*[\>])|(?<!\<)') + "(?![ws]*[>])", 'gmi'); // const regExp = new RegExp('&[^;]+;|' + escapedQuery.join('|'), 'gi');
+    var regExp = new RegExp("(<[^>]+>)|(" + escapedQuery.join('|') + ")", 'gmi'); // const regExp = new RegExp(`(?<!\<)${escapedQuery.join('(?![\w\s]*[\>])|(?<!\<)')}(?![\w\s]*[\>])`, 'gmi');
+    // const regExp = new RegExp('&[^;]+;|' + escapedQuery.join('|'), 'gi');
 
-    text = text.replace(regExp, function (match, i, b) {
-      return '<b>' + match + '</b>'; // return match.toLowerCase() === x.toLowerCase() ? '<strong>' + match + '</strong>' : match;
+    text = text.replace(regExp, function (match, g1, g2) {
+      if (g1) {
+        return g1;
+      } else {
+        return '<b>' + g2 + '</b>';
+      } // return match.toLowerCase() === x.toLowerCase() ? '<strong>' + match + '</strong>' : match;
+
     }); // text = HighlightPipe.decodeHTML(text);
 
-    console.log(text);
+    console.log(text, query);
     return text;
   };
 
@@ -2305,7 +2368,7 @@ HtmlPipe.meta = {
   return IdDirective;
 }(rxcomp.Directive);
 IdDirective.meta = {
-  selector: '[id]',
+  selector: '[[id]]',
   inputs: ['id']
 };var LabelForDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(LabelForDirective, _Directive);
@@ -2326,7 +2389,7 @@ IdDirective.meta = {
   return LabelForDirective;
 }(rxcomp.Directive);
 LabelForDirective.meta = {
-  selector: '[labelFor]',
+  selector: '[[labelFor]]',
   inputs: ['labelFor']
 };var LocomotiveScrollStickyDirective = /*#__PURE__*/function (_Directive) {
   _inheritsLoose(LocomotiveScrollStickyDirective, _Directive);
@@ -2560,19 +2623,31 @@ LocomotiveScrollDirective.meta = {
     var speed = this.scrollSpeed ? parseFloat(this.scrollSpeed) : 1.5;
     return LocomotiveScrollService.scroll$.pipe(operators.tap(function (scroll) {
       var wh = window.innerHeight;
-      var wh2 = wh / 2;
       var rect = node.getBoundingClientRect();
       var currentY = gsap.getProperty(node, 'y');
       var top = rect.top - currentY;
-      var bottom = rect.bottom - currentY;
+      var height = rect.height;
+      var space = wh + height;
+      var pow;
 
-      if (top < wh && bottom > 0) {
-        var pow = (top - wh2) / wh2;
-        var y = pow * speed * 40;
+      if (top > -height && top < wh) {
+        pow = (top + height) / space;
+        pow = 1 - pow * 2;
+        var y = pow * speed * -100;
         gsap.set(node, {
           y: y
         });
       }
+      /*
+      const wh2 = wh / 2;
+      const bottom = rect.bottom - currentY;
+      if (top < wh && bottom > 0) {
+      	pow = (top - wh2) / wh2;
+      	const y = pow * speed * 40;
+      	gsap.set(node, { y });
+      }
+      */
+
     }));
   };
 
@@ -2675,7 +2750,7 @@ ModalOutletComponent.meta = {
   return NameDirective;
 }(rxcomp.Directive);
 NameDirective.meta = {
-  selector: '[name]',
+  selector: '[[name]]',
   inputs: ['name']
 };var NumberPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(NumberPipe, _Pipe);
@@ -3012,9 +3087,11 @@ SvgIconStructure.meta = {
   _proto.hasPrev = function hasPrev() {
     var swiper = this.swiper;
 
-    if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
-      // console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
-      return true;
+    if (swiper) {
+      // console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides.length);
+      if (swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
+        return true;
+      }
     }
   };
 
@@ -3022,7 +3099,7 @@ SvgIconStructure.meta = {
     var swiper = this.swiper;
 
     if (swiper) {
-      var slidesPerView = swiper.params.slidesPerView || 1; // console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
+      var slidesPerView = swiper.params.slidesPerView === 'auto' ? 1 : swiper.params.slidesPerView || 1; // console.log('SwiperDirective.hasNext', swiper.slides.length, slidesPerView, swiper.activeIndex);
 
       if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
         return true;
@@ -3462,7 +3539,7 @@ ThronComponent.meta = {
 TitleDirective.meta = {
   selector: '[[title]]',
   inputs: ['title']
-};var factories = [ClickOutsideDirective, DownloadDirective, // DropDirective,
+};var factories = [AltDirective, ClickOutsideDirective, DownloadDirective, // DropDirective,
 DropdownDirective, DropdownItemDirective, // DropdownItemDirective,
 FilterItemComponent, IdDirective, LabelForDirective, // LanguageComponent,
 // LazyDirective,
@@ -3484,7 +3561,8 @@ CommonModule.meta = {
   imports: [],
   declarations: [].concat(factories, pipes),
   exports: [].concat(factories, pipes)
-};var ControlComponent = /*#__PURE__*/function (_Component) {
+};var UID = 10000;
+var ControlComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ControlComponent, _Component);
 
   function ControlComponent() {
@@ -3492,6 +3570,11 @@ CommonModule.meta = {
   }
 
   var _proto = ControlComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.uid = ++UID;
+    this.label = this.label || 'label';
+  };
 
   _proto.onChanges = function onChanges() {
     var _getContext = rxcomp.getContext(this),
@@ -3504,6 +3587,13 @@ CommonModule.meta = {
       flags[key] ? node.classList.add(key) : node.classList.remove(key);
     });
   };
+
+  _createClass(ControlComponent, [{
+    key: "uniqueId",
+    get: function get() {
+      return this.control.name + this.uid;
+    }
+  }]);
 
   return ControlComponent;
 }(rxcomp.Component);
@@ -3522,7 +3612,7 @@ ControlComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
 
     if (this.target === 'modal') {
       setTimeout(function () {
@@ -3581,7 +3671,7 @@ ControlCheckboxComponent.meta = {
   inputs: ['control', 'label', 'target'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input [id]=\"control.name\" type=\"checkbox\" class=\"control--checkbox\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"control.name\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--checkbox\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<input [id]=\"uniqueId\" type=\"checkbox\" class=\"control--checkbox\" [formControl]=\"control\" [value]=\"true\" />\n\t\t\t<label [labelFor]=\"uniqueId\">\n\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var KeyboardService = /*#__PURE__*/function () {
   function KeyboardService() {}
 
@@ -3669,7 +3759,8 @@ _defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = 
   _proto.onInit = function onInit() {
     var _this = this;
 
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
+
     this.dropped = false;
     this.dropdownId = DropdownDirective.nextId();
     KeyboardService.typing$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (word) {
@@ -3816,7 +3907,7 @@ ControlCustomSelectComponent.meta = {
   var _proto = ControlEmailComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
   };
 
   return ControlEmailComponent;
@@ -3826,7 +3917,7 @@ ControlEmailComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"control.name\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"uniqueId\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"uniqueId\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" required email />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlFileComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlFileComponent, _ControlComponent);
 
@@ -3837,7 +3928,8 @@ ControlEmailComponent.meta = {
   var _proto = ControlFileComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
+
     this.labels = window.labels || {};
     this.file = null;
     this.onReaderComplete = this.onReaderComplete.bind(this);
@@ -3886,7 +3978,7 @@ ControlFileComponent.meta = {
   var _proto = ControlPasswordComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
 
     var _getContext = rxcomp.getContext(this),
         node = _getContext.node;
@@ -3905,7 +3997,7 @@ ControlPasswordComponent.meta = {
   inputs: ['control', 'label'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"control.name\" type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<label [labelFor]=\"uniqueId\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"uniqueId\" type=\"password\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" />\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlPrivacyComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlPrivacyComponent, _ControlComponent);
 
@@ -3918,7 +4010,7 @@ ControlPasswordComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
 
     if (this.target === 'modal') {
       setTimeout(function () {
@@ -3993,7 +4085,7 @@ ControlPrivacyComponent.meta = {
   inputs: ['control', 'label', 'target'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--privacy\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<div class=\"group--inputs\">\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"control.name + '_true'\" [name]=\"control.name\" [value]=\"true\" (change)=\"onSelect(true)\" />\n\t\t\t\t<label [labelFor]=\"control.name + '_true'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Acconsento</span>\n\t\t\t\t</label>\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"control.name + '_false'\" [name]=\"control.name\" [value]=\"false\" (change)=\"onSelect(false)\" />\n\t\t\t\t<label [labelFor]=\"control.name + '_false'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Non acconsento</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<div class=\"description\">\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</div>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--privacy\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<div class=\"group--inputs\">\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_true'\" [name]=\"uniqueId\" [value]=\"true\" (change)=\"onSelect(true)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_true'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Acconsento</span>\n\t\t\t\t</label>\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_false'\" [name]=\"uniqueId\" [value]=\"false\" (change)=\"onSelect(false)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_false'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Non acconsento</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<div class=\"description\">\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</div>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlSearchComponent, _ControlComponent);
 
@@ -4004,7 +4096,8 @@ ControlPrivacyComponent.meta = {
   var _proto = ControlSearchComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
+
     this.disabled = this.disabled || false;
   };
 
@@ -4026,7 +4119,8 @@ ControlSearchComponent.meta = {
   var _proto = ControlTextComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
+
     this.disabled = this.disabled || false;
   };
 
@@ -4037,7 +4131,7 @@ ControlTextComponent.meta = {
   inputs: ['control', 'label', 'disabled'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input [id]=\"control.name\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"uniqueId\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t\t<input [id]=\"uniqueId\" type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlTextareaComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlTextareaComponent, _ControlComponent);
 
@@ -4048,7 +4142,8 @@ ControlTextComponent.meta = {
   var _proto = ControlTextareaComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.label = this.label || 'label';
+    _ControlComponent.prototype.onInit.call(this);
+
     this.disabled = this.disabled || false;
   };
 
@@ -4059,7 +4154,7 @@ ControlTextareaComponent.meta = {
   inputs: ['control', 'label', 'disabled'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"control.name\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<textarea [id]=\"control.name\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--textarea\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<label [labelFor]=\"uniqueId\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<textarea [id]=\"uniqueId\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [innerHTML]=\"label\" rows=\"4\" [disabled]=\"disabled\"></textarea>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ErrorsComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ErrorsComponent, _ControlComponent);
 
@@ -4621,6 +4716,20 @@ FiltersComponent.meta = {
           return 0;
         }
       });
+      /*
+      if (environment.flags.cart) {
+      	items.sort((a, b) => {
+      		if (a.configurable !== b.configurable) {
+      			return a.configurable ? -1 : 1;
+      		} else {
+      			return 0;
+      		}
+      	});
+      } else {
+      	items.forEach(x => x.configurable = false);
+      }
+      */
+
       return items;
     }));
   };
@@ -4656,7 +4765,7 @@ FiltersComponent.meta = {
   _proto.doFilterItem = function doFilterItem(key, item, value) {
     switch (key) {
       case 'ambience':
-        return item.ambience.id === value;
+        return item.ambiences.indexOf(value) !== -1;
 
       case 'category':
         return item.category.id === value;
@@ -4691,29 +4800,31 @@ AmbienceComponent.meta = {
     }
   };
 
-  AteliersAndStoresService.ateliers$ = function ateliers$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/ateliers-and-stores/ateliers.json');
-    } else {
-      return ApiService.get$('/ateliers-and-stores/ateliers.json');
-    }
-  };
-
-  AteliersAndStoresService.stores$ = function stores$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/ateliers-and-stores/stores.json');
-    } else {
-      return ApiService.get$('/ateliers-and-stores/stores.json');
-    }
-  };
-
   AteliersAndStoresService.filters$ = function filters$() {
     if (environment.flags.production) {
       return ApiService.get$('/ateliers-and-stores/filters');
     } else {
       return ApiService.get$('/ateliers-and-stores/filters.json');
     }
-  };
+  }
+  /*
+  static ateliers$() {
+  	if (environment.flags.production) {
+  		return ApiService.get$('/ateliers-and-stores/ateliers.json');
+  	} else {
+  		return ApiService.get$('/ateliers-and-stores/ateliers.json');
+  	}
+  }
+  
+  static stores$() {
+  	if (environment.flags.production) {
+  		return ApiService.get$('/ateliers-and-stores/stores.json');
+  	} else {
+  		return ApiService.get$('/ateliers-and-stores/stores.json');
+  	}
+  }
+  */
+  ;
 
   return AteliersAndStoresService;
 }();var AteliersAndStoresComponent = /*#__PURE__*/function (_Component) {
@@ -4958,7 +5069,7 @@ var GtmService = /*#__PURE__*/function () {
 
   CareersService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/careers/data.json');
+      return ApiService.get$('/careers/data');
     } else {
       return ApiService.get$('/careers/data.json');
     }
@@ -4966,7 +5077,7 @@ var GtmService = /*#__PURE__*/function () {
 
   CareersService.positions$ = function positions$() {
     if (environment.flags.production) {
-      return ApiService.get$('/careers/positions.json');
+      return ApiService.get$('/careers/positions');
     } else {
       return ApiService.get$('/careers/positions.json');
     }
@@ -4974,8 +5085,7 @@ var GtmService = /*#__PURE__*/function () {
 
   CareersService.submit$ = function submit$(payload) {
     if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$('/careers/submit.json', payload);
+      return ApiService.post$('/careers/submit', payload);
     } else {
       return ApiService.get$('/careers/submit.json');
     }
@@ -5632,6 +5742,28 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   return LinkedinService;
+}();var OrdersService = /*#__PURE__*/function () {
+  function OrdersService() {}
+
+  OrdersService.all$ = function all$() {
+    if (environment.flags.production) {
+      // !!! restituisce gli ordini effettuati dell'utente in sessione.
+      return ApiService.get$('/orders/all');
+    } else {
+      return ApiService.get$('/orders/all.json');
+    }
+  };
+
+  OrdersService.detail$ = function detail$(orderId) {
+    if (environment.flags.production) {
+      // !!! restituisce il dettaglio dell'ordine dell'utente in sessione con id == orderId.
+      return ApiService.get$("/orders/detail/" + orderId);
+    } else {
+      return ApiService.get$('/orders/detail.json');
+    }
+  };
+
+  return OrdersService;
 }();var CartComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(CartComponent, _Component);
 
@@ -5642,10 +5774,21 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   var _proto = CartComponent.prototype;
 
   _proto.onInit = function onInit() {
+    this.steps = CartSteps;
+    this.step = CartSteps.None;
     this.detectSocialLogin();
-    this.socialBusy = false;
-    this.form = null;
-    this.load$().pipe(operators.first()).subscribe();
+    this.checkPaymentParams();
+  };
+
+  _proto.checkPaymentParams = function checkPaymentParams() {
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    var params = Object.fromEntries(urlSearchParams.entries());
+
+    if (params.id != null) {
+      this.onComplete(params);
+    } else {
+      this.load$().pipe(operators.first()).subscribe();
+    }
   };
 
   _proto.load$ = function load$() {
@@ -5661,11 +5804,10 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   _proto.initWithData = function initWithData(data) {
     var _this2 = this;
 
-    this.steps = CartSteps;
-    this.step = CartSteps.None;
     this.errorDelivery = null;
     this.errorDiscount = null;
     this.errorPayment = null;
+    this.error = false;
     this.success = false;
     this.estimatedDelivery = null;
     this.items = null;
@@ -5674,6 +5816,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
       _this2.pushChanges();
     });
+    this.socialBusy = false;
     this.user = null;
     this.guest = null;
     this.shipmentCountryOptions = [];
@@ -5960,19 +6103,25 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
   _proto.onEdit = function onEdit(item) {
     // console.log('CartComponent.onEdit', item);
-    window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    // window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+    window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   };
 
   _proto.items$ = function items$() {
     var _this5 = this;
 
     return CartMiniService.items$().pipe(operators.switchMap(function (items) {
-      return CartService.estimatedDelivery$({
-        items: items
-      }).pipe(operators.map(function (data) {
-        _this5.estimatedDelivery = data.estimatedDelivery;
-        return items;
-      }));
+      if (items.length) {
+        return CartService.estimatedDelivery$({
+          items: items
+        }).pipe(operators.map(function (data) {
+          _this5.estimatedDelivery = data.estimatedDelivery;
+          return items;
+        }));
+      } else {
+        _this5.estimatedDelivery = null;
+        return rxjs.of(items);
+      }
     }));
   } // 2. CartSteps.Data
   ;
@@ -6222,8 +6371,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   _proto.detectSocialLogin = function detectSocialLogin() {
     if (window.name === 'linkedin' && window.opener) {
       var urlSearchParams = new URLSearchParams(window.location.search);
-      var params = Object.fromEntries(urlSearchParams.entries());
-      console.log('window', window.name, params);
+      var params = Object.fromEntries(urlSearchParams.entries()); // console.log('window', window.name, params);
 
       if (typeof window.opener.onSocialCallback === 'function') {
         window.opener.onSocialCallback(window.name, params);
@@ -6393,10 +6541,9 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
     var form = this.form; // console.log('CartComponent.onDelivery', form.value);
 
-    this.errorDiscount = null;
-    CartService.getDiscount$({
-      discountCode: form.value.discountCode
-    }).pipe(operators.first()).subscribe(function (discount) {
+    this.errorDiscount = null; //CartService.getDiscount$({ discountCode: form.value.discountCode }).pipe(
+
+    CartService.getDiscount$(form.value).pipe(operators.first()).subscribe(function (discount) {
       _this14.discount = discount;
 
       _this14.onPatch({
@@ -6416,6 +6563,8 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   ;
 
   _proto.onPayment = function onPayment(_) {
+    var _this15 = this;
+
     var form = this.form;
     var controls = this.controls;
     var paymentMethod = controls.paymentMethod.options.find(function (x) {
@@ -6425,15 +6574,59 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
     if (form.valid) {
       console.log('CartComponent.onPayment', form.value);
-      this.onComplete(); // !!! fake
+      CartService.doPayment$(form.value).pipe(operators.first()).subscribe(function (response) {
+        if (environment.flags.production) {
+          window.location.href = response.redirectUrl;
+        } else {
+          _this15.onComplete({
+            id: 444,
+            mp: 5,
+            result: 1,
+            transactionId: 'WEBSOLUTE27'
+          }); // !!! only on development
+
+        }
+      });
     }
   } // 6. CartSteps.Complete
   ;
 
-  _proto.onComplete = function onComplete() {
+  _proto.onComplete = function onComplete(params) {
+    var _this16 = this;
+
+    // ?id=27&mp=5&result=1&transactionid=WEBSOLUTE27
     this.step = CartSteps.Complete;
-    this.onPatch();
-    CartService.clear$().pipe(operators.first()).subscribe();
+    this.success = params.result === '1';
+    this.error = params.result === '-1';
+    this.paymentMethodId = params.mp;
+    this.transactionId = params.transactionId;
+    this.orderId = params.id;
+    this.order = null;
+
+    if (this.success) {
+      this.orderBusy = true;
+      CartMiniService.setItems([]);
+      CartService.setCart(null);
+      OrdersService.detail$(this.orderId).pipe(operators.first(), operators.tap(function (order) {
+        _this16.order = order;
+      }), operators.finalize(function (_) {
+        _this16.orderBusy = false;
+
+        _this16.pushChanges();
+      })).subscribe();
+    } // this.onPatch();
+
+  };
+
+  _proto.onOpenOrder = function onOpenOrder(orderId) {
+    ModalService.open$({
+      src: environment.template.modal.ordersModal,
+      data: {
+        orderId: orderId
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('CartComponent.onOpenOrder', event);
+    });
   };
 
   _createClass(CartComponent, [{
@@ -6457,13 +6650,13 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   }, {
     key: "selectedStore",
     get: function get() {
-      var _this15 = this;
+      var _this17 = this;
 
       if (!this.controls || !this.controls.stores || !this.controls.stores.value) {
         return null;
       } else {
         return this.controls.stores.value.find(function (x) {
-          return x.id === _this15.controls.store.value;
+          return x.id === _this17.controls.store.value;
         });
       }
     }
@@ -6487,7 +6680,7 @@ CartComponent.meta = {
 
   ContactsService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/contacts/data.json');
+      return ApiService.get$('/contacts/data');
     } else {
       return ApiService.get$('/contacts/data.json');
     }
@@ -6495,8 +6688,7 @@ CartComponent.meta = {
 
   ContactsService.submit$ = function submit$(payload) {
     if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$('/contacts/submit.json', payload);
+      return ApiService.post$('/contacts/submit', payload);
     } else {
       return ApiService.get$('/contacts/submit.json');
     }
@@ -6525,8 +6717,11 @@ CartComponent.meta = {
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       message: new rxcompForm.FormControl(null),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletter: new rxcompForm.FormControl(this.flag),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -6618,7 +6813,7 @@ ContactsComponent.meta = {
 
   DealersService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/dealers/all.json').pipe(operators.map(function (items) {
+      return ApiService.get$('/dealers/all').pipe(operators.map(function (items) {
         return items.sort(function (a, b) {
           return b.regions.length - a.regions.length;
         });
@@ -6634,7 +6829,7 @@ ContactsComponent.meta = {
 
   DealersService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/dealers/filters.json');
+      return ApiService.get$('/dealers/filters');
     } else {
       return ApiService.get$('/dealers/filters.json');
     }
@@ -7282,7 +7477,7 @@ NewsComponent.meta = {
 
   NewsletterService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/newsletter/data.json');
+      return ApiService.get$('/newsletter/data');
     } else {
       return ApiService.get$('/newsletter/data.json');
     }
@@ -7290,8 +7485,7 @@ NewsComponent.meta = {
 
   NewsletterService.submit$ = function submit$(payload) {
     if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$('/newsletter/submit.json', payload);
+      return ApiService.post$('/newsletter/submit', payload);
     } else {
       return ApiService.get$('/newsletter/submit.json');
     }
@@ -7327,7 +7521,9 @@ NewsComponent.meta = {
       engagement: new rxcompForm.FormControl(null),
       newsletter: true,
       newsletterLanguage: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -7453,28 +7649,7 @@ NewsletterComponent.meta = {
 }(rxcomp.Component);
 OrdersModalComponent.meta = {
   selector: '[orders-modal]'
-};var OrdersService = /*#__PURE__*/function () {
-  function OrdersService() {}
-
-  OrdersService.all$ = function all$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/orders/all.json');
-    } else {
-      return ApiService.get$('/orders/all.json');
-    }
-  };
-
-  OrdersService.detail$ = function detail$(item) {
-    if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$('/orders/detail.json', item);
-    } else {
-      return ApiService.get$('/orders/detail.json');
-    }
-  };
-
-  return OrdersService;
-}();var OrdersDetailComponent = /*#__PURE__*/function (_Component) {
+};var OrdersDetailComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(OrdersDetailComponent, _Component);
 
   function OrdersDetailComponent() {
@@ -7598,8 +7773,7 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 
     this.onEvent = this.onEvent.bind(this);
     var sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
-    sfy.init();
-    console.log('ProductsConfigureComponent.onInit', sfy, iframe);
+    sfy.init(); // console.log('ProductsConfigureComponent.onInit', sfy, iframe);
   };
 
   _proto.getIframeDocument = function getIframeDocument(iframe) {
@@ -7653,28 +7827,26 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onReady = function onReady(event) {
-    console.log('ProductsConfigureComponent.onReady', event);
+    // console.log('ProductsConfigureComponent.onReady', event);
     this.isReady = true; // this.addTexts();
 
     this.addButtons(); // this.addBreadcrumb();
   };
 
   _proto.onShowefyComplete = function onShowefyComplete(event) {
-    console.log('ProductsConfigureComponent.onShowefyComplete', event);
-
+    // console.log('ProductsConfigureComponent.onShowefyComplete', event);
     if (this.isConfiguring) {
       this.isComplete = true;
     }
   };
 
   _proto.onStartConfigurator = function onStartConfigurator(event) {
-    console.log('ProductsConfigureComponent.onStartConfigurator', event);
+    // console.log('ProductsConfigureComponent.onStartConfigurator', event);
     this.isConfiguring = true;
   };
 
   _proto.onButtonPressed = function onButtonPressed(event) {
-    console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
-
+    // console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
     switch (event.data.id) {
       case 'order':
         this.sfy.getProductExtData();
@@ -7784,10 +7956,15 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     var cartItem = this.product;
     cartItem.showefy = data;
 
+    if (data.product_code) {
+      cartItem.code = data.product_code;
+    }
+
     if (data.image) {
       cartItem.image = data.image;
     }
 
+    cartItem.title = cartItem.productTitle + " " + cartItem.code;
     console.log('ProductsConfigureComponent.onAddToCart', cartItem); // resetting purchase procedure
 
     CartService.setCart(null); // getting showefy price and adding to mini cart
@@ -7808,7 +7985,7 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     key: "showefyUrl",
     get: function get() {
       if (this.product) {
-        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + (this.product.familyCode ? "&codfam=" + this.product.familyCode : '') + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
       }
     }
   }]);
@@ -7838,6 +8015,20 @@ ProductsConfigureComponent.meta = {
           return 0;
         }
       });
+      /*
+      if (environment.flags.cart) {
+      	items.sort((a, b) => {
+      		if (a.configurable !== b.configurable) {
+      			return a.configurable ? -1 : 1;
+      		} else {
+      			return 0;
+      		}
+      	});
+      } else {
+      	items.forEach(x => x.configurable = false);
+      }
+      */
+
       return items;
     }));
   };
@@ -7911,7 +8102,8 @@ ProductsConfigureComponent.meta = {
   };
 
   _proto.configureProduct = function configureProduct(version) {
-    window.location.href = environment.slug.configureProduct + "?productId=" + version.productId + "&code=" + version.code;
+    // window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
+    window.location.href = this.product.url + "/config?productId=" + version.productId + "&code=" + version.code + (version.familyCode ? "&familyCode=" + version.familyCode : '');
   };
 
   _proto.onReservedArea = function onReservedArea() {
@@ -7971,6 +8163,20 @@ var ProductsService = /*#__PURE__*/function () {
           return 0;
         }
       });
+      /*
+      if (environment.flags.cart) {
+      	items.sort((a, b) => {
+      		if (a.configurable !== b.configurable) {
+      			return a.configurable ? -1 : 1;
+      		} else {
+      			return 0;
+      		}
+      	});
+      } else {
+      	items.forEach(x => x.configurable = false);
+      }
+      */
+
       return items;
     }));
   }
@@ -8031,7 +8237,7 @@ var ProductsService = /*#__PURE__*/function () {
         return item.category.id === value;
 
       case 'ambience':
-        return item.ambience.id === value;
+        return item.ambiences.indexOf(value) !== -1;
 
       case 'material':
         return item.materials.indexOf(value) !== -1;
@@ -8091,7 +8297,7 @@ ProjectsRegistrationModalComponent.meta = {
 
   ProjectsRegistrationService.data$ = function data$() {
     if (environment.flags.production) {
-      return ApiService.get$('/projects-registration/data.json');
+      return ApiService.get$('/projects-registration/data');
     } else {
       return ApiService.get$('/projects-registration/data.json');
     }
@@ -8099,8 +8305,7 @@ ProjectsRegistrationModalComponent.meta = {
 
   ProjectsRegistrationService.submit$ = function submit$(payload) {
     if (environment.flags.production) {
-      // !!! convert to .post$
-      return ApiService.get$('/projects-registration/submit.json', payload);
+      return ApiService.post$('/projects-registration/submit', payload);
     } else {
       return ApiService.get$('/projects-registration/submit.json');
     }
@@ -8143,7 +8348,11 @@ ProjectsRegistrationModalComponent.meta = {
       destination: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       products: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       picture: new rxcompForm.FormControl(null),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      //newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+      //commercial: new FormControl(null, [Validators.RequiredValidator()]),
+      //promotion: new FormControl(null, [Validators.RequiredValidator()]),
+      //newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -8413,7 +8622,7 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
   function ReservedAreaService() {}
 
   ReservedAreaService.all$ = function all$() {
-    return (environment.flags.production ? ApiService.get$("/reserved-area/all.json") : ApiService.get$("/reserved-area/all.json")).pipe(operators.map(function (items) {
+    return (environment.flags.production ? ApiService.post$("/reserved-area/all") : ApiService.get$("/reserved-area/all.json")).pipe(operators.map(function (items) {
       items.forEach(function (x) {
         x.title = ReservedAreaService.toTitleCase(x.title.replace(/_/g, ' '));
       });
@@ -8468,44 +8677,47 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
   var _proto = ReservedAreaComponent.prototype;
 
   _proto.onInit = function onInit() {
-    var _this = this;
-
     this.user = undefined;
     this.items = [];
     this.tree = [];
     this.files = [];
     this.visibleFiles = [];
     this.item = null;
-    this.load$().pipe(operators.first()).subscribe();
-    UserService.me$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (user) {
-      console.log('ReservedAreaComponent.user', user);
-      _this.user = user;
-
-      _this.pushChanges();
-
-      LocomotiveScrollService.update();
-    });
+    this.downloadBusy = false;
+    this.load$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe();
   };
 
   _proto.load$ = function load$() {
-    var _this2 = this;
+    var _this = this;
 
-    return ReservedAreaService.all$().pipe(operators.tap(function (items) {
-      _this2.items = items;
-      _this2.tree = _this2.getTree(items);
+    return UserService.me$().pipe(operators.switchMap(function (user) {
+      _this.user = user;
+      _this.downloadBusy = true;
 
-      _this2.pushChanges();
+      _this.pushChanges(); // LocomotiveScrollService.update();
+
+
+      return user ? ReservedAreaService.all$() : rxjs.of([]);
+    }), operators.tap(function (items) {
+      _this.items = items;
+      _this.tree = _this.getTree(items);
+      _this.visibleFiles = [];
+      _this.item = null;
+      _this.downloadBusy = false;
+
+      _this.pushChanges(); // LocomotiveScrollService.update();
+
     }));
   };
 
   _proto.getTree = function getTree(items, parentId) {
-    var _this3 = this;
+    var _this2 = this;
 
     var tree = items.filter(function (x) {
       return x.parentId === parentId && x.type === 'folder';
     }).map(function (x) {
       var item = Object.assign({}, x);
-      item.items = _this3.getTree(items, x.id);
+      item.items = _this2.getTree(items, x.id);
       return item;
     });
     return tree;
@@ -8545,10 +8757,10 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
   };
 
   _proto.onToggleFile = function onToggleFile(file) {
-    var _this4 = this;
+    var _this3 = this;
 
     (this.isAddedToFiles(file) ? FilesService.removeFile$(file) : FilesService.addFile$(file)).pipe(operators.first()).subscribe(function (_) {
-      _this4.pushChanges();
+      _this3.pushChanges();
     });
   };
 
@@ -8568,7 +8780,7 @@ ReservedAreaComponent.meta = {
   function StoreLocatorService() {}
 
   StoreLocatorService.all$ = function all$() {
-    return (environment.flags.production ? ApiService.get$("/store-locator/all.json") : ApiService.get$("/store-locator/all.json")).pipe(operators.map(function (items) {
+    return (environment.flags.production ? ApiService.get$("/store-locator/all") : ApiService.get$("/store-locator/all.json")).pipe(operators.map(function (items) {
       return items.sort(function (a, b) {
         return a.rank - b.rank;
       });
@@ -8577,7 +8789,7 @@ ReservedAreaComponent.meta = {
 
   StoreLocatorService.filters$ = function filters$() {
     if (environment.flags.production) {
-      return ApiService.get$('/store-locator/filters.json');
+      return ApiService.get$('/store-locator/filters');
     } else {
       return ApiService.get$('/store-locator/filters.json');
     }
@@ -10419,7 +10631,12 @@ MapComponent.meta = {
         clickable: true
       }
     };
-    this.init_(); // console.log('SwiperGalleryDirective.onInit');
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var target = node.classList.contains('swiper-container') ? node : node.querySelector('.swiper-container');
+    this.init_(target); // console.log('SwiperGalleryDirective.onInit');
   };
 
   return SwiperGalleryDirective;
@@ -10531,22 +10748,45 @@ SwiperNewsPropositionDirective.meta = {
       spaceBetween: 30,
       breakpoints: {
         768: {
-          slidesPerView: 2,
+          slidesPerView: 'auto',
           spaceBetween: 40
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 'auto',
           spaceBetween: 50
         },
         1440: {
-          slidesPerView: 3,
+          slidesPerView: 'auto',
           spaceBetween: 60
         },
         1920: {
-          slidesPerView: 3,
+          slidesPerView: 'auto',
           spaceBetween: 70
         }
       },
+
+      /*
+      slidesPerView: 1.5,
+      spaceBetween: 30,
+      breakpoints: {
+      	768: {
+      		slidesPerView: 2,
+      		spaceBetween: 40
+      	},
+      	1024: {
+      		slidesPerView: 3,
+      		spaceBetween: 50
+      	},
+      	1440: {
+      		slidesPerView: 3,
+      		spaceBetween: 60
+      	},
+      	1920: {
+      		slidesPerView: 3,
+      		spaceBetween: 70
+      	}
+      },
+      */
       speed: 600,
       centeredSlides: false,
       loop: false,
@@ -10667,7 +10907,8 @@ SwiperProjectsPropositionDirective.meta = {
 
   _proto.onEdit = function onEdit(item) {
     // console.log('CartMiniComponent.onEdit', item);
-    window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    // window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+    window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
   };
 
   _proto.onRemoveAll = function onRemoveAll(event) {
@@ -10872,9 +11113,13 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
       _this2.direction = event.direction;
       _this2.scrolled = event.scroll.y > 100;
       var opacity = 0.1 - 0.1 * Math.min(1, Math.max(0, (event.scroll.y - window.innerHeight * 3) / window.innerHeight / 3));
-      gsap.set(pictogram, {
-        opacity: opacity
-      }); // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
+
+      if (pictogram) {
+        gsap.set(pictogram, {
+          opacity: opacity
+        });
+      } // console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
+
     });
   };
 
@@ -11061,7 +11306,7 @@ NewsletterPropositionComponent.meta = {
     if (SearchService.items_) {
       return rxjs.of(SearchService.items_);
     } else {
-      return (environment.flags.production ? ApiService.get$("/search/search.json") : ApiService.get$("/search/search.json")).pipe(operators.tap(function (items) {
+      return (environment.flags.production ? ApiService.get$("/search/search") : ApiService.get$("/search/search.json")).pipe(operators.tap(function (items) {
         items.forEach(function (item) {
           item.title = SearchService.toTitleCase(item.title);
         });
@@ -11115,6 +11360,7 @@ NewsletterPropositionComponent.meta = {
   _proto.onInit = function onInit() {
     var _this = this;
 
+    this.busy = false;
     this.items = [];
     this.visibleItems = [];
     var form = this.form = new rxcompForm.FormGroup({
@@ -11124,17 +11370,24 @@ NewsletterPropositionComponent.meta = {
     this.search$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
       _this.items = items;
       _this.visibleItems = items.slice(0, Math.min(10, items.length));
+      _this.busy = false;
 
       _this.pushChanges();
     });
   };
 
   _proto.search$ = function search$() {
+    var _this2 = this;
+
     return this.form.changes$.pipe(operators.auditTime(500), operators.map(function (changes) {
       return changes.search;
-    }), operators.switchMap(function (query) {
+    }), operators.distinctUntilChanged(), operators.switchMap(function (query) {
       if (query != null && query.length > 1) {
-        return SearchService.search$(query);
+        _this2.busy = true;
+
+        _this2.pushChanges();
+
+        return SearchService.search$(query).pipe(operators.delay(2000));
       } else {
         return rxjs.of([]);
       }
@@ -11273,9 +11526,8 @@ TreeComponent.meta = {
 
     if (form.valid) {
       form.submitted = true;
-      UserService.accessData$(form.value).pipe(operators.first(), operators.switchMap(function (_) {
-        return UserService.signout$();
-      })).subscribe(function (response) {
+      UserService.accessData$(form.value).pipe(operators.first() //switchMap(_ => UserService.signout$())
+      ).subscribe(function (response) {
         console.log('UserAccessDataComponent.onSubmit', response);
         _this2.success = true;
         GtmService.push({
@@ -11497,6 +11749,72 @@ UserDeleteComponent.meta = {
 }(rxcomp.Component);
 UserDetailComponent.meta = {
   selector: '[user-detail]'
+};var UserEditPasswordComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(UserEditPasswordComponent, _Component);
+
+  function UserEditPasswordComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = UserEditPasswordComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      tokenEncoded: this.tokenEncoded,
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      password: new rxcompForm.FormControl(null, rxcompForm.Validators.RequiredValidator()),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+  };
+
+  _proto.onSubmit = function onSubmit() {
+    var _this2 = this;
+
+    var form = this.form;
+    console.log('UserEditPasswordComponent.onSubmit', form.value);
+
+    if (form.valid) {
+      form.submitted = true;
+      UserService.editPassword$(form.value).pipe(operators.first(), operators.switchMap(function (_) {
+        return UserService.signout$();
+      })).subscribe(function (response) {
+        console.log('UserEditPasswordComponent.onSubmit', response);
+        _this2.success = true;
+        GtmService.push({
+          'event': "EditPassword",
+          'form_name': "EditPassword"
+        });
+        form.reset();
+      }, function (error) {
+        console.log('UserEditPasswordComponent.error', error);
+        _this2.error = error;
+        form.submitted = false;
+
+        _this2.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return UserEditPasswordComponent;
+}(rxcomp.Component);
+UserEditPasswordComponent.meta = {
+  selector: '[user-edit-password]',
+  inputs: ['tokenEncoded']
 };var UserEditComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(UserEditComponent, _Component);
 
@@ -11512,6 +11830,7 @@ UserDetailComponent.meta = {
     this.user = null;
     this.error = null;
     this.success = false;
+    this.responseMessage = null;
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -11520,8 +11839,10 @@ UserDetailComponent.meta = {
       company: new rxcompForm.FormControl(null),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletter: new rxcompForm.FormControl(null),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
       checkRequest: window.antiforgery,
       checkField: ''
@@ -11581,6 +11902,7 @@ UserDetailComponent.meta = {
   _proto.onSubmit = function onSubmit() {
     var _this3 = this;
 
+    this.responseMessage = null;
     var form = this.form;
     console.log('UserEditComponent.onSubmit', form.value);
 
@@ -11588,6 +11910,7 @@ UserDetailComponent.meta = {
       form.submitted = true;
       UserService.edit$(form.value).pipe(operators.first()).subscribe(function (response) {
         console.log('UserEditComponent.onSubmit', response);
+        _this3.responseMessage = response.responseMessage;
         _this3.success = true;
         /*
         GtmService.push({
@@ -11730,7 +12053,8 @@ UserForgotComponent.meta = {
     ModalService.open$({
       src: environment.template.modal.userModal,
       data: {
-        view: 2
+        view: 2,
+        skipAutoClose: true
       }
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       console.log('UserComponent.onModalSignUp', event);
@@ -11814,7 +12138,8 @@ UserComponent.meta = {
     if (parentInstance instanceof ModalOutletComponent) {
       var data = parentInstance.modal.data;
       this.view = data.view;
-      this.me = data.me; // console.log('UserModalComponent.onInit', data);
+      this.me = data.me;
+      this.skipAutoClose = data.skipAutoClose; // console.log('UserModalComponent.onInit', data);
     }
 
     LocomotiveScrollService.stop();
@@ -11852,7 +12177,9 @@ UserComponent.meta = {
 
   _proto.onSignUp = function onSignUp(user) {
     // console.log('UserModalComponent.onSignUp', user);
-    ModalService.resolve(user);
+    if (!this.skipAutoClose) {
+      ModalService.resolve(user);
+    }
   };
 
   _proto.onSignIn = function onSignIn(user) {
@@ -11985,6 +12312,7 @@ UserSigninComponent.meta = {
     this.user = this.user || null;
     this.error = null;
     this.success = false;
+    this.responseMessage = null;
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(this.me.firstName || null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(this.me.lastName || null, [rxcompForm.Validators.RequiredValidator()]),
@@ -11995,8 +12323,10 @@ UserSigninComponent.meta = {
       email: new rxcompForm.FormControl(this.me.email || null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       password: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       passwordConfirm: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), MatchValidator('password', form)]),
-      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletter: new rxcompForm.FormControl(null),
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
       checkRequest: window.antiforgery,
       checkField: ''
@@ -12038,7 +12368,10 @@ UserSigninComponent.meta = {
       email: 'jhonappleseed@gmail.com',
       password: '********',
       passwordConfirm: '********',
-      privacy: true
+      privacy: true,
+      newsletter: false,
+      commercial: false,
+      promotion: false
     });
   };
 
@@ -12050,6 +12383,7 @@ UserSigninComponent.meta = {
   _proto.onSubmit = function onSubmit() {
     var _this3 = this;
 
+    this.responseMessage = null;
     var form = this.form;
     console.log('UserSignupComponent.onSubmit', form.value);
 
@@ -12057,6 +12391,7 @@ UserSigninComponent.meta = {
       form.submitted = true;
       UserService.signup$(form.value).pipe(operators.first()).subscribe(function (response) {
         console.log('UserSignupComponent.onSubmit', response);
+        _this3.responseMessage = response.responseMessage;
         _this3.success = true;
         GtmService.push({
           'event': "Registration",
@@ -12064,7 +12399,7 @@ UserSigninComponent.meta = {
         });
         form.reset();
 
-        _this3.signUp.next(response);
+        _this3.signUp.next(response.user);
       }, function (error) {
         console.log('UserSignupComponent.error', error);
         _this3.error = error;
@@ -12089,7 +12424,7 @@ UserSignupComponent.meta = {
   selector: '[user-signup]',
   outputs: ['signUp', 'viewSignIn'],
   inputs: ['me', 'user']
-};var factories$2 = [CartMiniComponent, ErrorComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserAccessDataComponent, UserComponent, UserDeleteComponent, UserEditComponent, UserForgotComponent, UserModalComponent, UserDetailComponent, UserSigninComponent, UserSignupComponent];
+};var factories$2 = [CartMiniComponent, ErrorComponent, FilesComponent, HeaderComponent, MapComponent, MenuDirective, NewsletterPropositionComponent, SearchComponent, SubmenuDirective, SwiperGalleryDirective, SwiperHomepageDirective, SwiperNewsPropositionDirective, SwiperProductsPropositionDirective, SwiperProjectsPropositionDirective, TreeComponent, UserAccessDataComponent, UserComponent, UserDeleteComponent, UserEditComponent, UserEditPasswordComponent, UserForgotComponent, UserModalComponent, UserDetailComponent, UserSigninComponent, UserSignupComponent];
 var pipes$2 = [];
 var SharedModule = /*#__PURE__*/function (_Module) {
   _inheritsLoose(SharedModule, _Module);

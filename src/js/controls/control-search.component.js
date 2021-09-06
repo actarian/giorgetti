@@ -3,7 +3,7 @@ import { ControlComponent } from './control.component';
 export class ControlSearchComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		this.disabled = this.disabled || false;
 	}
 

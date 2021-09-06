@@ -51,7 +51,7 @@
 		@include scrollbar();
 
 		.modal__inner {
-			padding: 50px 0 120px 0;
+			padding: 0 0 120px 0;
 		}
 	}
 }
@@ -148,5 +148,47 @@
 
 	@include media-up(md) {}
 
-	@include media-down(sm) {}
+	@include media-down(sm) {
+		.td--price {
+			text-align: right;
+		}
+
+		.title {
+			font-size: 32px;
+		}
+
+		.date,
+		.status {
+			font-size: 13px;
+		}
+	}
+}
+
+#order-history {
+
+	@include media-down(sm) {
+		.flex-table {
+			&>.tr {
+				flex-direction: column;
+				margin-bottom: 30px;
+
+				&>.th {
+					display: none;
+				}
+
+				&>.td {
+					padding: 10px 0;
+
+					&:before {
+						content: attr(data-title);
+						position: relative;
+						display: block;
+						font-size: 11px;
+						font-weight: 600;
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+	}
 }

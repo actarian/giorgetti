@@ -89,7 +89,10 @@
 						<div class="title">Area download</div>
 					</div>
 				</div>
-				<div class="row">
+				<!-- spinner -->
+				<div class="spinner" *if="downloadBusy"></div>
+				<!-- downloads -->
+				<div class="row" *if="!downloadBusy">
 					<div class="col-md-3">
 						<ul class="nav--files" [tree]="tree" (open)="onOpen($event)"></ul>
 					</div>

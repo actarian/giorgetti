@@ -1,4 +1,5 @@
 import { Module } from 'rxcomp';
+import { AltDirective } from './alt/alt.directive';
 import { ClickOutsideDirective } from './click-outside/click-outside.directive';
 import { DatePipe } from './date/date.pipe';
 import { DownloadDirective } from './download/download.directive';
@@ -28,6 +29,7 @@ import { ThronComponent } from './thron/thron.component';
 import { TitleDirective } from './title/title.directive';
 
 const factories = [
+	AltDirective,
 	ClickOutsideDirective,
 	DownloadDirective,
 	// DropDirective,

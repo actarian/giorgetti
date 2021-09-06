@@ -8,7 +8,7 @@ import { ControlComponent } from './control.component';
 export class ControlPrivacyComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		if (this.target === 'modal') {
 			setTimeout(() => {
 				this.link$().pipe(
@@ -72,14 +72,14 @@ ControlPrivacyComponent.meta = {
 	template: /* html */ `
 		<div class="group--form--privacy" [class]="{ required: control.validators.length }">
 			<div class="group--inputs">
-				<input type="radio" class="control--checkbox" [id]="control.name + '_true'" [name]="control.name" [value]="true" (change)="onSelect(true)" />
-				<label [labelFor]="control.name + '_true'">
+				<input type="radio" class="control--checkbox" [id]="uniqueId + '_true'" [name]="uniqueId" [value]="true" (change)="onSelect(true)" />
+				<label [labelFor]="uniqueId + '_true'">
 					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
 					<span>Acconsento</span>
 				</label>
-				<input type="radio" class="control--checkbox" [id]="control.name + '_false'" [name]="control.name" [value]="false" (change)="onSelect(false)" />
-				<label [labelFor]="control.name + '_false'">
+				<input type="radio" class="control--checkbox" [id]="uniqueId + '_false'" [name]="uniqueId" [value]="false" (change)="onSelect(false)" />
+				<label [labelFor]="uniqueId + '_false'">
 					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
 					<span>Non acconsento</span>

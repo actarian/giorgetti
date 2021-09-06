@@ -23,7 +23,7 @@ export class UserComponent extends Component {
 
 	onModalSignUp(event) {
 		// console.log('UserComponent.onModalSignUp');
-		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 2 } }).pipe(
+		ModalService.open$({ src: environment.template.modal.userModal, data: { view: 2, skipAutoClose: true } }).pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
 			console.log('UserComponent.onModalSignUp', event);

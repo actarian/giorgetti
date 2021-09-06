@@ -13,10 +13,10 @@
 				<div class="th"></div>
 			</div>
 			<div class="tr" *for="let order of orders">
-				<div class="td" [innerHTML]="order.id"></div>
-				<div class="td" [innerHTML]="order.date | date : { dateStyle: 'medium' }"></div>
-				<div class="td" [innerHTML]="order.totalPrice | number : { style: 'currency', currency: 'EUR' }"></div>
-				<div class="td" [innerHTML]="order.status"></div>
+				<div class="td" data-title="# Ordine" [innerHTML]="order.id"></div>
+				<div class="td" data-title="Data" [innerHTML]="order.date | date : { dateStyle: 'medium' }"></div>
+				<div class="td" data-title="Totale" [innerHTML]="order.totalPrice | number : { style: 'currency', currency: 'EUR' }"></div>
+				<div class="td" data-title="Stato" [innerHTML]="order.status"></div>
 				<div class="td"><button type="button" class="btn--more" (click)="onOpenOrder(order)">Visualizza ordine <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></button></div>
 			</div>
 		</div>

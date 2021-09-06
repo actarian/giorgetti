@@ -2,6 +2,7 @@
 export const environmentStatic = {
 	flags: {
 		production: false,
+		cart: true,
 	},
 	markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
 	defaultMarket: 'IT',

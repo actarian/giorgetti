@@ -1,7 +1,50 @@
 [swiper-gallery] {
-	@extend %swiper-hero;
-	align-items: stretch;
-	overflow: visible;
+
+	.swiper-container {
+		@extend %swiper-hero;
+		align-items: stretch;
+		overflow: visible;
+
+		@include media-up(xl) {
+			$gutter: 70px;
+			margin: 0px -$gutter;
+			margin-bottom: $gutter;
+			width: calc(100% + #{2 * $gutter});
+			padding: 0 $gutter;
+		}
+
+		@include media-between(lg, xl) {
+			$gutter: 60px;
+			margin: 0px -$gutter;
+			margin-bottom: $gutter;
+			width: calc(100% + #{2 * $gutter});
+			padding: 0 $gutter;
+		}
+
+		@include media-between(md, lg) {
+			$gutter: 50px;
+			margin: 0px -$gutter;
+			margin-bottom: $gutter;
+			width: calc(100% + #{2 * $gutter});
+			padding: 0 $gutter;
+		}
+
+		@include media-between(sm, md) {
+			$gutter: 40px;
+			margin: 0px -$gutter;
+			margin-bottom: $gutter;
+			width: calc(100% + #{2 * $gutter});
+			padding: 0 $gutter;
+		}
+
+		@include media-down(xs) {
+			$gutter: 30px;
+			margin: 0px -$gutter;
+			margin-bottom: $gutter;
+			width: calc(100% + #{2 * $gutter});
+			padding: 0 $gutter;
+		}
+	}
 
 	.swiper-slide {
 		width: auto;
@@ -21,44 +64,8 @@
 		width: 100%;
 	}
 
-	@include media-up(xl) {
-		$gutter: 70px;
-		margin: 0px -$gutter;
-		margin-bottom: $gutter;
-		width: calc(100% + #{2 * $gutter});
-		padding: 0 $gutter;
-	}
-
-	@include media-between(lg, xl) {
-		$gutter: 60px;
-		margin: 0px -$gutter;
-		margin-bottom: $gutter;
-		width: calc(100% + #{2 * $gutter});
-		padding: 0 $gutter;
-	}
-
-	@include media-between(md, lg) {
-		$gutter: 50px;
-		margin: 0px -$gutter;
-		margin-bottom: $gutter;
-		width: calc(100% + #{2 * $gutter});
-		padding: 0 $gutter;
-	}
-
-	@include media-between(sm, md) {
-		$gutter: 40px;
-		margin: 0px -$gutter;
-		margin-bottom: $gutter;
-		width: calc(100% + #{2 * $gutter});
-		padding: 0 $gutter;
-	}
-
-	@include media-down(xs) {
-		$gutter: 30px;
-		margin: 0px -$gutter;
-		margin-bottom: $gutter;
-		width: calc(100% + #{2 * $gutter});
-		padding: 0 $gutter;
+	.group--actions {
+		margin-bottom: 50px;
 	}
 }
 

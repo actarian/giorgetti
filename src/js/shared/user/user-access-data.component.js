@@ -40,7 +40,7 @@ export class UserAccessDataComponent extends Component {
 			form.submitted = true;
 			UserService.accessData$(form.value).pipe(
 				first(),
-				switchMap(_ => UserService.signout$())
+				//switchMap(_ => UserService.signout$())
 			).subscribe(response => {
 				console.log('UserAccessDataComponent.onSubmit', response);
 				this.success = true;

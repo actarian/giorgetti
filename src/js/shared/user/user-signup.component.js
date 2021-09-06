@@ -15,6 +15,7 @@ export class UserSignupComponent extends Component {
 		this.user = this.user || null;
 		this.error = null;
 		this.success = false;
+		this.responseMessage = null;
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(this.me.firstName || null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(this.me.lastName || null, [Validators.RequiredValidator()]),
@@ -25,8 +26,10 @@ export class UserSignupComponent extends Component {
 			email: new FormControl(this.me.email || null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
 			password: new FormControl(null, [Validators.RequiredValidator()]),
 			passwordConfirm: new FormControl(null, [Validators.RequiredValidator(), MatchValidator('password', form)]),
-			privacy: new FormControl(null, [Validators.RequiredValidator()]),
-			newsletter: new FormControl(null),
+			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
+			newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+			commercial: new FormControl(null, [Validators.RequiredValidator()]),
+			promotion: new FormControl(null, [Validators.RequiredValidator()]),
 			newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
 			checkRequest: window.antiforgery,
 			checkField: '',
@@ -72,6 +75,9 @@ export class UserSignupComponent extends Component {
 			password: '********',
 			passwordConfirm: '********',
 			privacy: true,
+			newsletter: false,
+			commercial: false,
+			promotion: false,
 		});
 	}
 
@@ -81,6 +87,7 @@ export class UserSignupComponent extends Component {
 	}
 
 	onSubmit() {
+		this.responseMessage = null;
 		const form = this.form;
 		console.log('UserSignupComponent.onSubmit', form.value);
 		if (form.valid) {
@@ -89,13 +96,14 @@ export class UserSignupComponent extends Component {
 				first(),
 			).subscribe(response => {
 				console.log('UserSignupComponent.onSubmit', response);
+				this.responseMessage = response.responseMessage;
 				this.success = true;
 				GtmService.push({
 					'event': "Registration",
 					'form_name': "Registrazione"
 				});
 				form.reset();
-				this.signUp.next(response);
+				this.signUp.next(response.user);
 			}, error => {
 				console.log('UserSignupComponent.error', error);
 				this.error = error;

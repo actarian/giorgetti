@@ -5,7 +5,7 @@ export class ContactsService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/contacts/data.json');
+			return ApiService.get$('/contacts/data');
 		} else {
 			return ApiService.get$('/contacts/data.json');
 		}
@@ -13,8 +13,7 @@ export class ContactsService {
 
 	static submit$(payload) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$('/contacts/submit.json', payload);
+			return ApiService.post$('/contacts/submit', payload);
 		} else {
 			return ApiService.get$('/contacts/submit.json');
 		}

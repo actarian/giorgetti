@@ -7,7 +7,7 @@ import { ControlComponent } from './control.component';
 export class ControlCustomSelectComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		this.dropped = false;
 		this.dropdownId = DropdownDirective.nextId();
 		KeyboardService.typing$().pipe(

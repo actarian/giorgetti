@@ -9,7 +9,7 @@ export class ReservedAreaService {
 	static all$() {
 		return (
 			environment.flags.production ?
-				ApiService.get$(`/reserved-area/all.json`) :
+				ApiService.post$(`/reserved-area/all`) :
 				ApiService.get$(`/reserved-area/all.json`)
 		).pipe(
 			map(items => {

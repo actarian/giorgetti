@@ -3,7 +3,7 @@ import { ControlComponent } from './control.component';
 export class ControlNumberComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		this.precision = this.precision || 3;
 		this.increment = this.increment || 1 / Math.pow(10, this.precision);
 		this.disabled = this.disabled || false;

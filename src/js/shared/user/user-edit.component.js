@@ -13,6 +13,7 @@ export class UserEditComponent extends Component {
 		this.user = null;
 		this.error = null;
 		this.success = false;
+		this.responseMessage = null;
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
@@ -21,8 +22,10 @@ export class UserEditComponent extends Component {
 			company: new FormControl(null),
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
 			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
-			privacy: new FormControl(null, [Validators.RequiredValidator()]),
-			newsletter: new FormControl(null),
+			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
+			newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+			commercial: new FormControl(null, [Validators.RequiredValidator()]),
+			promotion: new FormControl(null, [Validators.RequiredValidator()]),
 			newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
 			checkRequest: window.antiforgery,
 			checkField: '',
@@ -82,6 +85,7 @@ export class UserEditComponent extends Component {
 	}
 
 	onSubmit() {
+		this.responseMessage = null;
 		const form = this.form;
 		console.log('UserEditComponent.onSubmit', form.value);
 		if (form.valid) {
@@ -90,6 +94,7 @@ export class UserEditComponent extends Component {
 				first(),
 			).subscribe(response => {
 				console.log('UserEditComponent.onSubmit', response);
+				this.responseMessage = response.responseMessage;
 				this.success = true;
 				/*
 				GtmService.push({

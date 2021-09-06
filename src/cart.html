@@ -13,17 +13,7 @@
 	</div>
 
 	<div class="section--cart" cart>
-		<div class="container" *if="form">
-			<!--
-			<div class="title">Carrello</div>
-			<div class="abstract"><span [innerHTML]="items.length"></span>
-				<span *if="items.length == 1">articolo presente nel carrello</span>
-				<span *if="items.length > 1">articoli presenti nel carrello</span>
-			</div>
-			<div class="abstract" *if="items.length == 0">
-				Il carrello è vuoto.
-			</div>
-			-->
+		<div class="container" *if="step !== steps.None">
 			<!-- EMPTY -->
 			<div *if="step !== steps.Complete && items?.length == 0">
 				<div class="title">Carrello</div>
@@ -123,7 +113,9 @@
 						</div>
 						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 							<div class="group--cart">
-								<div class="estimated-delivery" *if="estimatedDelivery">Il tuo ordine sarà pronto <span [innerHTML]="estimatedDelivery | relativeDate"></span> più tempi di consegna</div>
+								<div class="estimated-delivery">
+									<span *if="estimatedDelivery">Il tuo ordine sarà pronto <span [innerHTML]="estimatedDelivery | relativeDate"></span> più tempi di consegna</span>
+								</div>
 								<button type="submit" class="btn--primary">Procedi</button>
 							</div>
 						</div>
@@ -460,51 +452,56 @@
 					</form>
 				</div>
 				<!-- 6. Complete -->
-				<div class="step step--complete" *if="step == steps.Complete">
-					<div class="divline"></div>
-					<div class="title">Ordine Completato</div>
-					<div class="abstract">
-						<p>Il tuo ordine è stato completato con successo, riceverai a breve una conferma d'ordine.</p>
-						<div *if="paymentMethod" [innerHTML]="paymentMethod.info"></div>
-						<p>Per assistenza o per ricevere ulteriori informazioni sul tuo ordine, contatta il nostro servizio clienti via telefono o e-mail:</p>
-					</div>
-					<div class="group--cta">
-						<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
-						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
-					</div>
-					<div class="group--cta">
-						<a href="/giorgetti/orders-detail.html?orderId=444" class="btn--secondary"><span>Rivedi l'ordine</span></a>
-					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<div class="group--address" *if="!selectedStore">
-								<div class="subtitle">Non è stato possibile trovare un negozio.</div>
-							</div>
-							<div *if="selectedStore">
-								<div class="group--address">
-									<div class="subtitle">Negozio di riferimento</div>
-									<div class="card--address">
-										<div class="card__content">
-											<div class="card__name" [innerHTML]="selectedStore.name"></div>
-											<div class="card__address" [innerHTML]="selectedStore.address"></div>
-											<div class="card__address">
-												<span class="card__city" [innerHTML]="selectedStore.city"></span>
-												<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+				<div class="step step--complete" *if="step == steps.Complete && success">
+					<!-- spinner -->
+					<div class="spinner" *if="orderBusy"></div>
+					<!-- order -->
+					<div *if="order">
+						<div class="title">Ordine Completato</div>
+						<div class="abstract">
+							<p>Il tuo ordine è stato completato con successo, riceverai a breve una conferma d'ordine.</p>
+							<div *if="order.paymentMethod" [innerHTML]="order.paymentMethod.info"></div>
+							<p>Per assistenza o per ricevere ulteriori informazioni sul tuo ordine, contatta il nostro servizio clienti via telefono o e-mail:</p>
+						</div>
+						<div class="group--cta">
+							<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
+							<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
+						</div>
+						<div class="group--cta">
+							<button type="button" class="btn--secondary" (click)="onOpenOrder(order.id)"><span>Rivedi l'ordine</span></button>
+						</div>
+						<div class="divline"></div>
+						<div class="row">
+							<div class="col-md-7">
+								<div class="group--address" *if="!order.store">
+									<div class="subtitle">Non è stato possibile trovare un negozio.</div>
+								</div>
+								<div *if="order.store">
+									<div class="group--address">
+										<div class="subtitle">Negozio di riferimento</div>
+										<div class="card--address">
+											<div class="card__content">
+												<div class="card__name" [innerHTML]="order.store.name"></div>
+												<div class="card__address" [innerHTML]="order.store.address"></div>
+												<div class="card__address">
+													<span class="card__city" [innerHTML]="order.store.city"></span>
+													<span class="card__country" [innerHTML]="order.store.country.name"></span>
+												</div>
+												<div class="card__phones" *if="order.store.phone || order.store.fax">
+													<a class="card__phone" [href]="'tel:' + order.store.phone" [innerHTML]="order.store.phone" *if="order.store.phone"></a>
+													<a class="card__fax" [href]="'tel:' + order.store.fax" [innerHTML]="order.store.fax" *if="order.store.fax"></a>
+												</div>
+												<a class="card__email" [href]="'mailto:' + order.store.email" [innerHTML]="order.store.email" *if="order.store.email"></a>
 											</div>
-											<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
-												<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
-												<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
-											</div>
-											<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 										</div>
 									</div>
-								</div>
-								<div class="group--timetable">
-									<div class="subtitle">Orari di apertura</div>
-									<div class="flex-table flex-table__sm">
-										<div class="tr" *for="let time of selectedStore.timetable">
-											<div class="td" [innerHTML]="time.name"></div>
-											<div class="td" [innerHTML]="time.value"></div>
+									<div class="group--timetable">
+										<div class="subtitle">Orari di apertura</div>
+										<div class="flex-table flex-table__sm">
+											<div class="tr" *for="let time of order.store.timetable">
+												<div class="td" [innerHTML]="time.name"></div>
+												<div class="td" [innerHTML]="time.value"></div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -512,9 +509,8 @@
 						</div>
 					</div>
 				</div>
-				<!-- Error -->
-				<div class="step step--error" *if="step == steps.Error">
-					<div class="divline"></div>
+				<!-- 6. Error -->
+				<div class="step step--error" *if="step == steps.Complete && error">
 					<div class="title">Impossibile completare l'ordine</div>
 					<div class="abstract">
 						<p>Si è verificato un problema durante la procedura d'acquisto, impossibile completare l'ordine.</p>
@@ -524,6 +520,7 @@
 						<a href="mailto:eshop@giorgettimeda.com" class="btn--primary"><span>eshop@giorgettimeda.com</span></a>
 						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
 					</div>
+					<div class="divline"></div>
 				</div>
 			</div>
 		</div>

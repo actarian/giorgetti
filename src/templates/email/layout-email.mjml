@@ -43,6 +43,25 @@
 
     <!-- Body -->
 
+    <!-- Simple Body -->
+    <mj-section padding="20px 10px 20px 10px">
+      <mj-column width="100%">
+        <!-- Title -->
+        <mj-text align="left" color="#35302C" font-family="BauerBodoni, serif" font-size="36px" line-height="36px" letter-spacing="-2px" text-transform="uppercase">
+          Title
+        </mj-text>
+        <!-- Abstract -->
+        <mj-text align="left" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
+          Abstract
+        </mj-text>
+        <!-- Text -->
+        <mj-text align="left" font-size="15px" color="#35302C" line-height="22px">
+          Text
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- End Simple Body -->
+
     <!-- Hero -->
     <mj-hero background-url="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg" mode="fixed-height" height="330px" background-width="600px" background-height="330px" background-color="#d1cdca" padding="80px 15px">
       <mj-text padding="40px 0 20px 0" align="center" color="#ffffff" font-family="BauerBodoni, serif" font-size="48px" line-height="48px" letter-spacing="-2px" text-transform="uppercase">

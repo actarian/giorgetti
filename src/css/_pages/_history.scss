@@ -161,6 +161,7 @@
 	.card__content {
 		position: relative;
 		background: #F8F7F7;
+		z-index: 1;
 	}
 
 	.card__title {
@@ -216,9 +217,8 @@
 			}
 
 			.card__title {
-				left: 30px;
 				top: 0;
-				transform: translateX(-1.1em) translateY(-50%);
+				transform: translateX(0) translateY(-50%);
 			}
 		}
 
@@ -228,9 +228,8 @@
 			}
 
 			.card__title {
-				right: 30px;
 				top: 0;
-				transform: translateX(1.1em) translateY(-50%);
+				transform: translateX(0) translateY(-50%);
 			}
 		}
 	}
@@ -254,11 +253,23 @@
 			.card__picture {
 				@include expand-right();
 			}
+
+			.card__title {
+				left: 30px;
+				top: 0;
+				transform: translateX(-1.1em) translateY(-50%);
+			}
 		}
 
 		&:nth-child(odd) {
 			.card__picture {
 				@include expand-left();
+			}
+
+			.card__title {
+				right: 30px;
+				top: 0;
+				transform: translateX(1.1em) translateY(-50%);
 			}
 		}
 	}

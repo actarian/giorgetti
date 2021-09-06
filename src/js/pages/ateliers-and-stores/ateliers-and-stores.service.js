@@ -11,6 +11,15 @@ export class AteliersAndStoresService {
 		}
 	}
 
+	static filters$() {
+		if (environment.flags.production) {
+			return ApiService.get$('/ateliers-and-stores/filters');
+		} else {
+			return ApiService.get$('/ateliers-and-stores/filters.json');
+		}
+	}
+
+	/*
 	static ateliers$() {
 		if (environment.flags.production) {
 			return ApiService.get$('/ateliers-and-stores/ateliers.json');
@@ -26,13 +35,6 @@ export class AteliersAndStoresService {
 			return ApiService.get$('/ateliers-and-stores/stores.json');
 		}
 	}
-
-	static filters$() {
-		if (environment.flags.production) {
-			return ApiService.get$('/ateliers-and-stores/filters');
-		} else {
-			return ApiService.get$('/ateliers-and-stores/filters.json');
-		}
-	}
+	*/
 
 }

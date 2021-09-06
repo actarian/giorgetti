@@ -3248,7 +3248,7 @@ h6 {
 .card--address .card__fax,
 .card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
 .section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
@@ -3298,7 +3298,7 @@ h6 {
   .card--address .card__fax,
   .card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
   .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-  .section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
   .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
   .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
   .section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
@@ -3337,7 +3337,7 @@ h6 {
   .card--address .card__fax:active,
   .card--address .card__email:active, .card--hero-products-detail .btn--more:active, .section--versions .btn--more:active,
   .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
-  .section--user-detail .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .section--product-proposition .btn--cta:active, .card--version .btn--download:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
+  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .section--product-proposition .btn--cta:active, .card--version .btn--download:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
   .header .btn--cart:active, .group--main .btn--close:active, .group--submenus .btn--back:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .group--filters .btn--submit:active, .modal--generic .btn--close:active, .card--hero-homepage .card__picture:active, .group--actions .btn--prev:active,
   .group--actions .btn--next:active, .group--video .btn--play:active, .card--news-proposition:active, .card--news-proposition .btn--more:active, .section--news-proposition .btn--prev:active,
   .section--news-proposition .btn--next:active, .card--project-proposition:active, .card--product-proposition:active, .section--products .btn--more:active, .card--hero-products-detail .card__picture:active, .card--version:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--discover:active, .card--project:active, .section--projects .btn--more:active, .card--design:active, .modal--projects-registration .btn--close:active, .modal--projects-registration .btn--link:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--discover:active, .card--news:active, .card--news .btn--discover:active, .section--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery > .card__video .btn--play:active, .card--gallery .btn--more:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--store-locator .btn--discover:active, .section--store-locator .btn--more:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .section--table .btn--more:active, .modal--careers .btn--close:active, .modal--careers .btn--link:active, .modal--materials .btn--close:active,
@@ -3376,7 +3376,7 @@ h6 {
   .card--address .card__fax:focus,
   .card--address .card__email:focus, .card--hero-products-detail .btn--more:focus, .section--versions .btn--more:focus,
   .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
-  .section--user-detail .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .section--product-proposition .btn--cta:focus, .card--version .btn--download:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
+  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .section--product-proposition .btn--cta:focus, .card--version .btn--download:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
   .header .btn--cart:focus, .group--main .btn--close:focus, .group--submenus .btn--back:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .group--filters .btn--submit:focus, .modal--generic .btn--close:focus, .card--hero-homepage .card__picture:focus, .group--actions .btn--prev:focus,
   .group--actions .btn--next:focus, .group--video .btn--play:focus, .card--news-proposition:focus, .card--news-proposition .btn--more:focus, .section--news-proposition .btn--prev:focus,
   .section--news-proposition .btn--next:focus, .card--project-proposition:focus, .card--product-proposition:focus, .section--products .btn--more:focus, .card--hero-products-detail .card__picture:focus, .card--version:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--discover:focus, .card--project:focus, .section--projects .btn--more:focus, .card--design:focus, .modal--projects-registration .btn--close:focus, .modal--projects-registration .btn--link:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--discover:focus, .card--news:focus, .card--news .btn--discover:focus, .section--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery > .card__video .btn--play:focus, .card--gallery .btn--more:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--store-locator .btn--discover:focus, .section--store-locator .btn--more:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .section--table .btn--more:focus, .modal--careers .btn--close:focus, .modal--careers .btn--link:focus, .modal--materials .btn--close:focus,
@@ -3415,7 +3415,7 @@ h6 {
   .card--address .card__fax:hover,
   .card--address .card__email:hover, .card--hero-products-detail .btn--more:hover, .section--versions .btn--more:hover,
   .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
-  .section--user-detail .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .section--product-proposition .btn--cta:hover, .card--version .btn--download:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
+  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .section--product-proposition .btn--cta:hover, .card--version .btn--download:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
   .header .btn--cart:hover, .group--main .btn--close:hover, .group--submenus .btn--back:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .group--filters .btn--submit:hover, .modal--generic .btn--close:hover, .card--hero-homepage .card__picture:hover, .group--actions .btn--prev:hover,
   .group--actions .btn--next:hover, .group--video .btn--play:hover, .card--news-proposition:hover, .card--news-proposition .btn--more:hover, .section--news-proposition .btn--prev:hover,
   .section--news-proposition .btn--next:hover, .card--project-proposition:hover, .card--product-proposition:hover, .section--products .btn--more:hover, .card--hero-products-detail .card__picture:hover, .card--version:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--discover:hover, .card--project:hover, .section--projects .btn--more:hover, .card--design:hover, .modal--projects-registration .btn--close:hover, .modal--projects-registration .btn--link:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--discover:hover, .card--news:hover, .card--news .btn--discover:hover, .section--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery > .card__video .btn--play:hover, .card--gallery .btn--more:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--store-locator .btn--discover:hover, .section--store-locator .btn--more:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .section--table .btn--more:hover, .modal--careers .btn--close:hover, .modal--careers .btn--link:hover, .modal--materials .btn--close:hover,
@@ -3454,7 +3454,7 @@ h6 {
   .card--address .card__fax:visited,
   .card--address .card__email:visited, .card--hero-products-detail .btn--more:visited, .section--versions .btn--more:visited,
   .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
-  .section--user-detail .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .section--product-proposition .btn--cta:visited, .card--version .btn--download:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
+  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .section--product-proposition .btn--cta:visited, .card--version .btn--download:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
   .header .btn--cart:visited, .group--main .btn--close:visited, .group--submenus .btn--back:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .group--filters .btn--submit:visited, .modal--generic .btn--close:visited, .card--hero-homepage .card__picture:visited, .group--actions .btn--prev:visited,
   .group--actions .btn--next:visited, .group--video .btn--play:visited, .card--news-proposition:visited, .card--news-proposition .btn--more:visited, .section--news-proposition .btn--prev:visited,
   .section--news-proposition .btn--next:visited, .card--project-proposition:visited, .card--product-proposition:visited, .section--products .btn--more:visited, .card--hero-products-detail .card__picture:visited, .card--version:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--discover:visited, .card--project:visited, .section--projects .btn--more:visited, .card--design:visited, .modal--projects-registration .btn--close:visited, .modal--projects-registration .btn--link:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--discover:visited, .card--news:visited, .card--news .btn--discover:visited, .section--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery > .card__video .btn--play:visited, .card--gallery .btn--more:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--store-locator .btn--discover:visited, .section--store-locator .btn--more:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .section--table .btn--more:visited, .modal--careers .btn--close:visited, .modal--careers .btn--link:visited, .modal--materials .btn--close:visited,
@@ -3498,7 +3498,7 @@ h6 {
 .card--address .card__fax,
 .card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
 .section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
@@ -3508,7 +3508,7 @@ h6 {
 .section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
@@ -3543,7 +3543,7 @@ h6 {
   .card--address .card__fax[disabled],
   .card--address .card__email[disabled], .card--hero-products-detail .btn--more[disabled], .section--versions .btn--more[disabled],
   .section--versions .btn--configure[disabled], .section--product-materials .btn--more[disabled], .group--insights .btn--more[disabled], .section--intro-sm .btn--more[disabled], .section--form .btn--submit[disabled], .section--materials-listing .btn--more[disabled], .section--user-detail .btn--primary[disabled],
-  .section--user-detail .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .section--product-proposition .btn--cta[disabled], .card--version .btn--download[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
+  .section--user-detail .btn--submit[disabled], .section--user-edit-password .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .section--product-proposition .btn--cta[disabled], .card--version .btn--download[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
   .header .btn--cart[disabled], .group--main .btn--close[disabled], .group--submenus .btn--back[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .group--filters .btn--submit[disabled], .modal--generic .btn--close[disabled], .card--hero-homepage .card__picture[disabled], .group--actions .btn--prev[disabled],
   .group--actions .btn--next[disabled], .group--video .btn--play[disabled], .card--news-proposition[disabled], .card--news-proposition .btn--more[disabled], .section--news-proposition .btn--prev[disabled],
   .section--news-proposition .btn--next[disabled], .card--project-proposition[disabled], .card--product-proposition[disabled], .section--products .btn--more[disabled], .card--hero-products-detail .card__picture[disabled], .card--version[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--discover[disabled], .card--project[disabled], .section--projects .btn--more[disabled], .card--design[disabled], .modal--projects-registration .btn--close[disabled], .modal--projects-registration .btn--link[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--discover[disabled], .card--news[disabled], .card--news .btn--discover[disabled], .section--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery > .card__video .btn--play[disabled], .card--gallery .btn--more[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--store-locator .btn--discover[disabled], .section--store-locator .btn--more[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .section--table .btn--more[disabled], .modal--careers .btn--close[disabled], .modal--careers .btn--link[disabled], .modal--materials .btn--close[disabled],
@@ -3661,7 +3661,7 @@ h6 {
 
 .card--hero-products-detail .btn--more, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3676,58 +3676,58 @@ h6 {
   border: 1px solid var(--background-secondary); }
   .card--hero-products-detail .btn--more, .section--versions .btn--more,
   .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-  .section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-products-detail .btn--more:active, .section--versions .btn--more:active,
+  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-products-detail .btn--more:active, .section--versions .btn--more:active,
   .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
-  .section--user-detail .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-products-detail .btn--more:focus, .section--versions .btn--more:focus,
+  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-products-detail .btn--more:focus, .section--versions .btn--more:focus,
   .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
-  .section--user-detail .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-products-detail .btn--more:visited, .section--versions .btn--more:visited,
+  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-products-detail .btn--more:visited, .section--versions .btn--more:visited,
   .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
-  .section--user-detail .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited {
+  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited {
     background-color: var(--background-secondary);
     color: var(--foreground-negative); }
   .card--hero-products-detail .btn--more:hover, .section--versions .btn--more:hover,
   .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
-  .section--user-detail .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover {
+  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative); }
   .card--hero-products-detail .btn--more:active:hover, .section--versions .btn--more:active:hover,
   .section--versions .btn--configure:active:hover, .section--product-materials .btn--more:active:hover, .group--insights .btn--more:active:hover, .section--intro-sm .btn--more:active:hover, .section--form .btn--submit:active:hover, .section--materials-listing .btn--more:active:hover, .section--user-detail .btn--primary:active:hover,
-  .section--user-detail .btn--submit:active:hover, .section--files .btn--more:active:hover, .section--cart-mini .btn--buy:active:hover, .section--cart .btn--primary:active:hover {
+  .section--user-detail .btn--submit:active:hover, .section--user-edit-password .btn--submit:active:hover, .section--files .btn--more:active:hover, .section--cart-mini .btn--buy:active:hover, .section--cart .btn--primary:active:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative);
     transition: none; }
   .card--hero-products-detail .disabled.btn--more, .section--versions .disabled.btn--more,
   .section--versions .disabled.btn--configure, .section--product-materials .disabled.btn--more, .group--insights .disabled.btn--more, .section--intro-sm .disabled.btn--more, .section--form .disabled.btn--submit, .section--materials-listing .disabled.btn--more, .section--user-detail .disabled.btn--primary,
-  .section--user-detail .disabled.btn--submit, .section--files .disabled.btn--more, .section--cart-mini .disabled.btn--buy, .section--cart .disabled.btn--primary, .card--hero-products-detail .disabled.btn--more:active, .section--versions .disabled.btn--more:active,
+  .section--user-detail .disabled.btn--submit, .section--user-edit-password .disabled.btn--submit, .section--files .disabled.btn--more, .section--cart-mini .disabled.btn--buy, .section--cart .disabled.btn--primary, .card--hero-products-detail .disabled.btn--more:active, .section--versions .disabled.btn--more:active,
   .section--versions .disabled.btn--configure:active, .section--product-materials .disabled.btn--more:active, .group--insights .disabled.btn--more:active, .section--intro-sm .disabled.btn--more:active, .section--form .disabled.btn--submit:active, .section--materials-listing .disabled.btn--more:active, .section--user-detail .disabled.btn--primary:active,
-  .section--user-detail .disabled.btn--submit:active, .section--files .disabled.btn--more:active, .section--cart-mini .disabled.btn--buy:active, .section--cart .disabled.btn--primary:active, .card--hero-products-detail .disabled.btn--more:focus, .section--versions .disabled.btn--more:focus,
+  .section--user-detail .disabled.btn--submit:active, .section--user-edit-password .disabled.btn--submit:active, .section--files .disabled.btn--more:active, .section--cart-mini .disabled.btn--buy:active, .section--cart .disabled.btn--primary:active, .card--hero-products-detail .disabled.btn--more:focus, .section--versions .disabled.btn--more:focus,
   .section--versions .disabled.btn--configure:focus, .section--product-materials .disabled.btn--more:focus, .group--insights .disabled.btn--more:focus, .section--intro-sm .disabled.btn--more:focus, .section--form .disabled.btn--submit:focus, .section--materials-listing .disabled.btn--more:focus, .section--user-detail .disabled.btn--primary:focus,
-  .section--user-detail .disabled.btn--submit:focus, .section--files .disabled.btn--more:focus, .section--cart-mini .disabled.btn--buy:focus, .section--cart .disabled.btn--primary:focus, .card--hero-products-detail .disabled.btn--more:hover, .section--versions .disabled.btn--more:hover,
+  .section--user-detail .disabled.btn--submit:focus, .section--user-edit-password .disabled.btn--submit:focus, .section--files .disabled.btn--more:focus, .section--cart-mini .disabled.btn--buy:focus, .section--cart .disabled.btn--primary:focus, .card--hero-products-detail .disabled.btn--more:hover, .section--versions .disabled.btn--more:hover,
   .section--versions .disabled.btn--configure:hover, .section--product-materials .disabled.btn--more:hover, .group--insights .disabled.btn--more:hover, .section--intro-sm .disabled.btn--more:hover, .section--form .disabled.btn--submit:hover, .section--materials-listing .disabled.btn--more:hover, .section--user-detail .disabled.btn--primary:hover,
-  .section--user-detail .disabled.btn--submit:hover, .section--files .disabled.btn--more:hover, .section--cart-mini .disabled.btn--buy:hover, .section--cart .disabled.btn--primary:hover, .card--hero-products-detail .disabled.btn--more:visited, .section--versions .disabled.btn--more:visited,
+  .section--user-detail .disabled.btn--submit:hover, .section--user-edit-password .disabled.btn--submit:hover, .section--files .disabled.btn--more:hover, .section--cart-mini .disabled.btn--buy:hover, .section--cart .disabled.btn--primary:hover, .card--hero-products-detail .disabled.btn--more:visited, .section--versions .disabled.btn--more:visited,
   .section--versions .disabled.btn--configure:visited, .section--product-materials .disabled.btn--more:visited, .group--insights .disabled.btn--more:visited, .section--intro-sm .disabled.btn--more:visited, .section--form .disabled.btn--submit:visited, .section--materials-listing .disabled.btn--more:visited, .section--user-detail .disabled.btn--primary:visited,
-  .section--user-detail .disabled.btn--submit:visited, .section--files .disabled.btn--more:visited, .section--cart-mini .disabled.btn--buy:visited, .section--cart .disabled.btn--primary:visited {
+  .section--user-detail .disabled.btn--submit:visited, .section--user-edit-password .disabled.btn--submit:visited, .section--files .disabled.btn--more:visited, .section--cart-mini .disabled.btn--buy:visited, .section--cart .disabled.btn--primary:visited {
     background-color: var(--background-secondary);
     color: var(--foreground-negative);
     pointer-events: none; }
-  .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg {
+  .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg {
     margin-right: 10px;
     width: 24px;
     height: 24px; }
   @media (min-width: 1024px) {
     .card--hero-products-detail .btn--more, .section--versions .btn--more,
     .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-    .section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
+    .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       min-width: 280px; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
     .card--hero-products-detail .btn--more, .section--versions .btn--more,
     .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-    .section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
+    .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       min-width: 200px; } }
   @media (max-width: 767.98px) {
     .card--hero-products-detail .btn--more, .section--versions .btn--more,
     .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-    .section--user-detail .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
+    .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       display: flex;
       width: 100%; } }
 
@@ -3958,24 +3958,24 @@ h6 {
 @media screen {
   [swiper-homepage], [swiper-products-proposition] .swiper-container,
   [swiper-news-proposition] .swiper-container,
-  [swiper-projects-proposition] .swiper-container, [swiper-gallery] {
+  [swiper-projects-proposition] .swiper-container, [swiper-gallery] .swiper-container {
     line-height: 0; }
-    [swiper-homepage] .swiper-slide, [swiper-products-proposition] .swiper-container .swiper-slide, [swiper-news-proposition] .swiper-container .swiper-slide, [swiper-projects-proposition] .swiper-container .swiper-slide, [swiper-gallery] .swiper-slide,
+    [swiper-homepage] .swiper-slide, [swiper-products-proposition] .swiper-container .swiper-slide, [swiper-news-proposition] .swiper-container .swiper-slide, [swiper-projects-proposition] .swiper-container .swiper-slide, [swiper-gallery] .swiper-container .swiper-slide,
     [swiper-homepage] .swiper-slide *,
     [swiper-products-proposition] .swiper-container .swiper-slide *,
     [swiper-news-proposition] .swiper-container .swiper-slide *,
     [swiper-projects-proposition] .swiper-container .swiper-slide *,
-    [swiper-gallery] .swiper-slide * {
+    [swiper-gallery] .swiper-container .swiper-slide * {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
           -ms-user-select: none;
               user-select: none; }
-    [swiper-homepage] .swiper-pagination-bullets, [swiper-products-proposition] .swiper-container .swiper-pagination-bullets, [swiper-news-proposition] .swiper-container .swiper-pagination-bullets, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullets, [swiper-gallery] .swiper-pagination-bullets,
+    [swiper-homepage] .swiper-pagination-bullets, [swiper-products-proposition] .swiper-container .swiper-pagination-bullets, [swiper-news-proposition] .swiper-container .swiper-pagination-bullets, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullets, [swiper-gallery] .swiper-container .swiper-pagination-bullets,
     .swiper-container-horizontal > [swiper-homepage] .swiper-pagination-bullets,
     [swiper-products-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
     [swiper-news-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
     [swiper-projects-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
-    .swiper-container-horizontal > [swiper-gallery] .swiper-pagination-bullets {
+    [swiper-gallery] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets {
       position: relative;
       display: flex;
       justify-content: center;
@@ -3983,7 +3983,7 @@ h6 {
       flex-wrap: wrap;
       padding: 20px 0;
       bottom: 0; }
-    [swiper-homepage] .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet, [swiper-gallery] .swiper-pagination-bullet {
+    [swiper-homepage] .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet, [swiper-gallery] .swiper-container .swiper-pagination-bullet {
       display: inline-block;
       position: relative;
       width: 18px;
@@ -3993,7 +3993,7 @@ h6 {
       background: transparent;
       opacity: 1;
       outline: none; }
-      [swiper-homepage] .swiper-pagination-bullet:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-gallery] .swiper-pagination-bullet:before {
+      [swiper-homepage] .swiper-pagination-bullet:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:before {
         content: '';
         display: block;
         position: absolute;
@@ -4007,18 +4007,18 @@ h6 {
         background: #16255b;
         opacity: 0;
         transition: opacity ease-in-out 350ms; }
-      [swiper-homepage] .swiper-pagination-bullet:hover:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-gallery] .swiper-pagination-bullet:hover:before {
+      [swiper-homepage] .swiper-pagination-bullet:hover:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:hover:before {
         opacity: 1; }
-    [swiper-homepage] .swiper-pagination-bullet-active:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-gallery] .swiper-pagination-bullet-active:before {
+    [swiper-homepage] .swiper-pagination-bullet-active:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet-active:before {
       opacity: 1; }
-    [swiper-homepage] > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-gallery] > .swiper-pagination-bullets .swiper-pagination-bullet {
+    [swiper-homepage] > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-gallery] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet {
       margin: 0 4px 4px 0; }
-    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-button-next,
+    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next,
     [swiper-homepage] .swiper-button-prev,
     [swiper-products-proposition] .swiper-container .swiper-button-prev,
     [swiper-news-proposition] .swiper-container .swiper-button-prev,
     [swiper-projects-proposition] .swiper-container .swiper-button-prev,
-    [swiper-gallery] .swiper-button-prev {
+    [swiper-gallery] .swiper-container .swiper-button-prev {
       outline: 0;
       /*
 			background: $background-tertiary;
@@ -4026,20 +4026,20 @@ h6 {
 			height: 50px;
 			border-radius: 50%;
 			*/ }
-      [swiper-homepage] .swiper-button-next:after, [swiper-products-proposition] .swiper-container .swiper-button-next:after, [swiper-news-proposition] .swiper-container .swiper-button-next:after, [swiper-projects-proposition] .swiper-container .swiper-button-next:after, [swiper-gallery] .swiper-button-next:after,
+      [swiper-homepage] .swiper-button-next:after, [swiper-products-proposition] .swiper-container .swiper-button-next:after, [swiper-news-proposition] .swiper-container .swiper-button-next:after, [swiper-projects-proposition] .swiper-container .swiper-button-next:after, [swiper-gallery] .swiper-container .swiper-button-next:after,
       [swiper-homepage] .swiper-button-prev:after,
       [swiper-products-proposition] .swiper-container .swiper-button-prev:after,
       [swiper-news-proposition] .swiper-container .swiper-button-prev:after,
       [swiper-projects-proposition] .swiper-container .swiper-button-prev:after,
-      [swiper-gallery] .swiper-button-prev:after {
+      [swiper-gallery] .swiper-container .swiper-button-prev:after {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); } }
   @media screen and (max-width: 767.98px) {
-    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-button-next,
+    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next,
     [swiper-homepage] .swiper-button-prev,
     [swiper-products-proposition] .swiper-container .swiper-button-prev,
     [swiper-news-proposition] .swiper-container .swiper-button-prev,
     [swiper-projects-proposition] .swiper-container .swiper-button-prev,
-    [swiper-gallery] .swiper-button-prev {
+    [swiper-gallery] .swiper-container .swiper-button-prev {
       display: none; } }
 
 .thron {
@@ -4216,47 +4216,47 @@ h6 {
     transform: translateX(0);
     opacity: 1; } }
 
-.group--submenus.active .nav--submenu > *, .group--submenu.active .nav--submenu > *, .group--search.active.active .container > * {
+.group--submenus.active .nav--submenu > *:not(.spinner), .group--submenu.active .nav--submenu > *:not(.spinner), .group--search.active .container > *:not(.spinner) {
   animation: stagger-left 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards; }
-  .group--submenus.active .nav--submenu > *:nth-child(1), .group--submenu.active .nav--submenu > *:nth-child(1), .group--search.active.active .container > *:nth-child(1) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(1), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(1), .group--search.active .container > *:not(.spinner):nth-child(1) {
     animation-delay: 0.15s; }
-  .group--submenus.active .nav--submenu > *:nth-child(2), .group--submenu.active .nav--submenu > *:nth-child(2), .group--search.active.active .container > *:nth-child(2) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(2), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(2), .group--search.active .container > *:not(.spinner):nth-child(2) {
     animation-delay: 0.2s; }
-  .group--submenus.active .nav--submenu > *:nth-child(3), .group--submenu.active .nav--submenu > *:nth-child(3), .group--search.active.active .container > *:nth-child(3) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(3), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(3), .group--search.active .container > *:not(.spinner):nth-child(3) {
     animation-delay: 0.25s; }
-  .group--submenus.active .nav--submenu > *:nth-child(4), .group--submenu.active .nav--submenu > *:nth-child(4), .group--search.active.active .container > *:nth-child(4) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(4), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(4), .group--search.active .container > *:not(.spinner):nth-child(4) {
     animation-delay: 0.3s; }
-  .group--submenus.active .nav--submenu > *:nth-child(5), .group--submenu.active .nav--submenu > *:nth-child(5), .group--search.active.active .container > *:nth-child(5) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(5), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(5), .group--search.active .container > *:not(.spinner):nth-child(5) {
     animation-delay: 0.35s; }
-  .group--submenus.active .nav--submenu > *:nth-child(6), .group--submenu.active .nav--submenu > *:nth-child(6), .group--search.active.active .container > *:nth-child(6) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(6), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(6), .group--search.active .container > *:not(.spinner):nth-child(6) {
     animation-delay: 0.4s; }
-  .group--submenus.active .nav--submenu > *:nth-child(7), .group--submenu.active .nav--submenu > *:nth-child(7), .group--search.active.active .container > *:nth-child(7) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(7), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(7), .group--search.active .container > *:not(.spinner):nth-child(7) {
     animation-delay: 0.45s; }
-  .group--submenus.active .nav--submenu > *:nth-child(8), .group--submenu.active .nav--submenu > *:nth-child(8), .group--search.active.active .container > *:nth-child(8) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(8), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(8), .group--search.active .container > *:not(.spinner):nth-child(8) {
     animation-delay: 0.5s; }
-  .group--submenus.active .nav--submenu > *:nth-child(9), .group--submenu.active .nav--submenu > *:nth-child(9), .group--search.active.active .container > *:nth-child(9) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(9), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(9), .group--search.active .container > *:not(.spinner):nth-child(9) {
     animation-delay: 0.55s; }
-  .group--submenus.active .nav--submenu > *:nth-child(10), .group--submenu.active .nav--submenu > *:nth-child(10), .group--search.active.active .container > *:nth-child(10) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(10), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(10), .group--search.active .container > *:not(.spinner):nth-child(10) {
     animation-delay: 0.6s; }
-  .group--submenus.active .nav--submenu > *:nth-child(11), .group--submenu.active .nav--submenu > *:nth-child(11), .group--search.active.active .container > *:nth-child(11) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(11), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(11), .group--search.active .container > *:not(.spinner):nth-child(11) {
     animation-delay: 0.65s; }
-  .group--submenus.active .nav--submenu > *:nth-child(12), .group--submenu.active .nav--submenu > *:nth-child(12), .group--search.active.active .container > *:nth-child(12) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(12), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(12), .group--search.active .container > *:not(.spinner):nth-child(12) {
     animation-delay: 0.7s; }
-  .group--submenus.active .nav--submenu > *:nth-child(13), .group--submenu.active .nav--submenu > *:nth-child(13), .group--search.active.active .container > *:nth-child(13) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(13), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(13), .group--search.active .container > *:not(.spinner):nth-child(13) {
     animation-delay: 0.75s; }
-  .group--submenus.active .nav--submenu > *:nth-child(14), .group--submenu.active .nav--submenu > *:nth-child(14), .group--search.active.active .container > *:nth-child(14) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(14), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(14), .group--search.active .container > *:not(.spinner):nth-child(14) {
     animation-delay: 0.8s; }
-  .group--submenus.active .nav--submenu > *:nth-child(15), .group--submenu.active .nav--submenu > *:nth-child(15), .group--search.active.active .container > *:nth-child(15) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(15), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(15), .group--search.active .container > *:not(.spinner):nth-child(15) {
     animation-delay: 0.85s; }
-  .group--submenus.active .nav--submenu > *:nth-child(16), .group--submenu.active .nav--submenu > *:nth-child(16), .group--search.active.active .container > *:nth-child(16) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(16), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(16), .group--search.active .container > *:not(.spinner):nth-child(16) {
     animation-delay: 0.9s; }
-  .group--submenus.active .nav--submenu > *:nth-child(17), .group--submenu.active .nav--submenu > *:nth-child(17), .group--search.active.active .container > *:nth-child(17) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(17), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(17), .group--search.active .container > *:not(.spinner):nth-child(17) {
     animation-delay: 0.95s; }
-  .group--submenus.active .nav--submenu > *:nth-child(18), .group--submenu.active .nav--submenu > *:nth-child(18), .group--search.active.active .container > *:nth-child(18) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(18), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(18), .group--search.active .container > *:not(.spinner):nth-child(18) {
     animation-delay: 1s; }
-  .group--submenus.active .nav--submenu > *:nth-child(19), .group--submenu.active .nav--submenu > *:nth-child(19), .group--search.active.active .container > *:nth-child(19) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(19), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(19), .group--search.active .container > *:not(.spinner):nth-child(19) {
     animation-delay: 1.05s; }
-  .group--submenus.active .nav--submenu > *:nth-child(20), .group--submenu.active .nav--submenu > *:nth-child(20), .group--search.active.active .container > *:nth-child(20) {
+  .group--submenus.active .nav--submenu > *:not(.spinner):nth-child(20), .group--submenu.active .nav--submenu > *:not(.spinner):nth-child(20), .group--search.active .container > *:not(.spinner):nth-child(20) {
     animation-delay: 1.1s; }
 
 [animation-enter] {
@@ -4494,7 +4494,7 @@ h6 {
   align-items: center;
   width: 100%;
   margin: 0;
-  padding: 10px 0 20px 0; }
+  padding: 50px 0 20px 0; }
   .form .group--cta > * + * {
     margin-left: 10px; }
   @media (max-width: 767.98px) {
@@ -4713,6 +4713,8 @@ fieldset,
     line-height: 1.4;
     text-transform: none;
     font-weight: var(--font-semibold); }
+  .section--form .group--form--privacy .description {
+    margin-bottom: 0; }
   .group--form--privacy.required label > span {
     flex-grow: 0; }
   .group--form--privacy.required label > .required__sign {
@@ -5108,6 +5110,9 @@ test-component code {
         height: 63px;
         color: currentColor;
         transition: all ease-in-out 250ms; }
+      .header .group--center .btn--logo:hover #badge {
+        transform-origin: 87% 50%;
+        animation: giorgetti-badge 2s 0.5s forwards 1; }
   .header .group--left,
   .header .group--right,
   .header .group--main {
@@ -5158,6 +5163,8 @@ test-component code {
     .header {
       padding: 9px 0;
       background: var(--background); }
+      .header .group--center .btn--logo svg {
+        width: 180px; }
       .header .nav--language {
         display: none; }
       .header .group--submenus {
@@ -5301,7 +5308,7 @@ test-component code {
 
 .nav--submenu {
   display: grid;
-  grid-template-rows: repeat(6, 0);
+  grid-template-rows: repeat(7, 0);
   grid-auto-flow: column;
   grid-auto-columns: 200px; }
   @media (min-width: 1920px) {
@@ -5728,14 +5735,21 @@ test-component code {
 
 @media (max-width: 767.98px) {
   .nav--results {
-    padding: 20px;
-    margin-top: 20px;
+    padding: 10px 15px;
+    margin-top: 15px;
     border-radius: 0;
     box-shadow: 0 10px 10px -2px rgba(0, 0, 0, 0.2); }
-    .nav--results > .nav__item > a > .nav__title {
-      margin-right: 0; }
-    .nav--results > .nav__item > a > .nav__url {
-      display: none; } }
+    .nav--results > .nav__item:not(:last-child) {
+      border-bottom: 1px solid #eee; }
+    .nav--results > .nav__item > a {
+      flex-wrap: wrap; }
+      .nav--results > .nav__item > a > .nav__title {
+        margin-right: 0;
+        padding-bottom: 0; }
+      .nav--results > .nav__item > a > .nav__url {
+        flex-basis: 100%;
+        font-size: 11px;
+        padding-bottom: 0; } }
 
 @keyframes clip-right {
   0% {
@@ -5752,6 +5766,14 @@ test-component code {
   100% {
     -webkit-clip-path: inset(0 0 0 0);
             clip-path: inset(0 0 0 0); } }
+
+@keyframes giorgetti-badge {
+  0% {
+    transform: rotate(0); }
+  50% {
+    transform: rotate(-180deg) scale(0.9); }
+  100% {
+    transform: rotate(-360deg); } }
 
 .footer {
   position: relative;
@@ -5865,16 +5887,26 @@ test-component code {
   align-items: center;
   padding: 100px 0;
   border-bottom: 1px solid var(--foreground); }
-  .group--giorgetti-battaglia .group--logo .btn--logo svg {
-    width: 400px;
+  .group--giorgetti-battaglia .group--logo svg {
     height: 74px;
-    color: currentColor; }
+    fill: currentColor; }
+  .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-1 {
+    width: 200px; }
+  .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-2 {
+    width: 36px; }
+  .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-3 {
+    width: 166px; }
   @media (max-width: 1023.98px) {
     .group--giorgetti-battaglia .group--logo {
       padding: 60px 0; }
-      .group--giorgetti-battaglia .group--logo .btn--logo svg {
-        width: 300px;
-        height: 56px; } }
+      .group--giorgetti-battaglia .group--logo svg {
+        height: 56px; }
+      .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-1 {
+        width: 150px; }
+      .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-2 {
+        width: 27px; }
+      .group--giorgetti-battaglia .group--logo .giorgetti-battaglia-3 {
+        width: 124.5px; } }
 
 @media (max-width: 1023.98px) {
   .group--footer-menu {
@@ -6349,9 +6381,14 @@ test-component code {
       height: 100%; }
     .card--hero-homepage .card__content {
       position: relative;
-      padding: 80px 0; }
+      min-height: 100vw;
+      display: flex;
+      align-items: center; }
+      .card--hero-homepage .card__content > .container {
+        padding-top: 80px;
+        padding-bottom: 80px; }
     .card--hero-homepage .card__title {
-      font-size: 72px; } }
+      font-size: 60px; } }
   @media (min-width: 1024px) {
     .card--hero-homepage .card__picture {
       position: relative;
@@ -6445,7 +6482,6 @@ test-component code {
   .section--products-proposition .title {
     margin-bottom: 20px;
     font-family: var(--font-secondary);
-    font-size: 72px;
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-transform: uppercase; }
@@ -6458,13 +6494,19 @@ test-component code {
       padding-top: 140px;
       padding-bottom: 340px; }
       .section--products-proposition:before {
-        height: 40%; } }
+        height: 40%; }
+      .section--products-proposition .title {
+        font-size: 72px; } }
   @media (min-width: 1440px) {
     .section--products-proposition:before {
-      height: 50%; } }
+      height: 50%; }
+    .section--products-proposition .title {
+      font-size: 72px; } }
   @media (max-width: 1023.98px) {
     .section--products-proposition {
-      padding: 80px 0; } }
+      padding: 80px 0; }
+      .section--products-proposition .title {
+        font-size: 60px; } }
 
 .group--video {
   position: relative;
@@ -6549,7 +6591,6 @@ test-component code {
 .section--video .title {
   margin-bottom: 20px;
   font-family: var(--font-secondary);
-  font-size: 72px;
   line-height: 1.1;
   letter-spacing: -0.03em;
   text-transform: uppercase; }
@@ -6570,13 +6611,17 @@ test-component code {
     left: -50vw; }
   .section--video .content {
     padding: 160px 0 0 0; }
+  .section--video .title {
+    font-size: 72px; }
   .section--video .group--video {
     margin-bottom: -250px;
     z-index: 1; } }
 
 @media (max-width: 1023.98px) {
   .section--video {
-    padding: 80px 0 0 0; } }
+    padding: 80px 0 0 0; }
+    .section--video .title {
+      font-size: 60px; } }
 
 @media (min-width: 1024px) {
   .section--video + .section--news-proposition {
@@ -6686,7 +6731,6 @@ test-component code {
   position: relative; }
   .section--news-proposition .title {
     font-family: var(--font-secondary);
-    font-size: 72px;
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-transform: uppercase; }
@@ -6725,10 +6769,14 @@ test-component code {
         top: 0;
         width: 100%;
         height: 50%;
-        background: #D1CDCA; } }
+        background: #D1CDCA; }
+      .section--news-proposition .title {
+        font-size: 72px; } }
   @media (max-width: 1023.98px) {
     .section--news-proposition {
-      padding: 80px 0 0 0; } }
+      padding: 80px 0 0 0; }
+      .section--news-proposition .title {
+        font-size: 60px; } }
 
 .card--project-proposition {
   display: flex;
@@ -6816,7 +6864,6 @@ test-component code {
   .section--projects-proposition .title {
     margin-bottom: 20px;
     font-family: var(--font-secondary);
-    font-size: 72px;
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-transform: uppercase; }
@@ -6834,10 +6881,14 @@ test-component code {
         bottom: 0;
         width: 100%;
         height: 50%;
-        background: #D1CDCA; } }
+        background: #D1CDCA; }
+      .section--projects-proposition .title {
+        font-size: 72px; } }
   @media (max-width: 1023.98px) {
     .section--projects-proposition {
-      padding: 80px 0 0 0; } }
+      padding: 80px 0 0 0; }
+      .section--projects-proposition .title {
+        font-size: 60px; } }
 
 .section--product-proposition .picture {
   position: relative;
@@ -6865,7 +6916,6 @@ test-component code {
 .section--product-proposition .title {
   margin-bottom: 20px;
   font-family: var(--font-secondary);
-  font-size: 72px;
   line-height: 1.1;
   letter-spacing: -0.03em;
   text-transform: uppercase; }
@@ -6881,19 +6931,84 @@ test-component code {
   .section--product-proposition .picture {
     box-shadow: 0 30px 60px -5px rgba(53, 48, 44, 0.15); }
   .section--product-proposition .group--cta {
-    display: flex; } }
+    display: flex; }
+  .section--product-proposition .title {
+    font-size: 72px; } }
 
 @media (max-width: 1023.98px) {
   .section--product-proposition {
     padding: 80px 0 0 0; }
     .section--product-proposition .picture {
       margin-bottom: 30px;
-      border: 1px solid var(--background-tertiary); } }
+      border: 1px solid var(--background-tertiary); }
+    .section--product-proposition .title {
+      font-size: 60px; } }
 
 [swiper-products-proposition] .swiper-container,
 [swiper-news-proposition] .swiper-container,
 [swiper-projects-proposition] .swiper-container {
   overflow: visible; }
+
+@media (min-width: 1920px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 20vw; } }
+
+@media (min-width: 1024px) and (max-width: 1919.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 25vw; } }
+
+@media (min-width: 768px) and (max-width: 1439.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 30vw; } }
+
+@media (max-width: 1023.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 35vw; } }
+
+@media (max-width: 767.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 40vw; } }
+
+@media (min-width: 1920px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 44.5vw; } }
+
+@media (min-width: 1024px) and (max-width: 1919.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 55.625vw; } }
+
+@media (min-width: 768px) and (max-width: 1439.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 66.75vw; } }
+
+@media (max-width: 1023.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 77.875vw; } }
+
+@media (max-width: 767.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 40vw; }
+    [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden; }
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > img,
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > svg,
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > video,
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > canvas,
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > .video,
+      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover; } }
+
+[swiper-products-proposition] .card--product-proposition > .card__picture {
+  width: 100%; }
 
 .card--product-proposition {
   display: flex;
@@ -6970,9 +7085,9 @@ test-component code {
       text-align: center;
       color: #6A6A6A; }
       .card--product-proposition > .card__picture .badge--configure svg {
-        margin-right: 10px;
-        width: 12px;
-        height: 12px;
+        margin-right: 7px;
+        width: 14px;
+        height: 14px;
         fill: #A19C96; }
   .card--product-proposition .card__title {
     display: block;
@@ -7322,14 +7437,6 @@ test-component code {
   justify-content: center;
   align-items: center; }
   .card--version .card__picture {
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
     margin-bottom: 30px;
     border: 1px solid rgba(209, 205, 202, 0.5);
     /*
@@ -7344,30 +7451,6 @@ test-component code {
 			opacity: 0.1;
 		}
 		*/ }
-    .card--version .card__picture > img,
-    .card--version .card__picture > svg,
-    .card--version .card__picture > video,
-    .card--version .card__picture > canvas,
-    .card--version .card__picture > .video,
-    .card--version .card__picture > iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      -o-object-fit: cover;
-         object-fit: cover; }
-    .card--version .card__picture > img {
-      width: auto;
-      max-height: 200px;
-      max-width: 100%;
-      -o-object-fit: none;
-         object-fit: none;
-      height: auto;
-      top: auto;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%); }
     .card--version .card__picture .badge--configure {
       position: absolute;
       display: flex;
@@ -7378,9 +7461,9 @@ test-component code {
       text-align: center;
       color: #6A6A6A; }
       .card--version .card__picture .badge--configure svg {
-        margin-right: 10px;
-        width: 12px;
-        height: 12px;
+        margin-right: 7px;
+        width: 14px;
+        height: 14px;
         fill: #A19C96; }
   .card--version .card__content {
     width: 100%; }
@@ -7415,12 +7498,53 @@ test-component code {
   @media (min-width: 1024px) {
     .card--version {
       height: 100%; }
+      .card--version .card__picture {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center; }
+        .card--version .card__picture > img,
+        .card--version .card__picture > svg,
+        .card--version .card__picture > video,
+        .card--version .card__picture > canvas,
+        .card--version .card__picture > .video,
+        .card--version .card__picture > iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          -o-object-fit: cover;
+             object-fit: cover; }
+        .card--version .card__picture > img {
+          width: auto;
+          max-height: 200px;
+          max-width: 100%;
+          -o-object-fit: none;
+             object-fit: none;
+          height: auto;
+          top: auto;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%); }
       .card--version .card__content {
         flex-grow: 1;
         display: flex;
         flex-direction: column; }
       .card--version .card__abstract {
         flex-grow: 1; } }
+  @media (max-width: 1023.98px) {
+    .card--version .card__picture {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      padding: 10px; } }
 
 .listing--versions {
   position: relative;
@@ -7702,6 +7826,17 @@ test-component code {
   overflow: hidden !important; }
   .section--products-configure iframe .header {
     display: none; }
+
+@media (min-width: 1024px) {
+  .section--products-configure iframe {
+    height: calc(100vh - 280px) !important; } }
+
+@media (max-width: 1023.98px) {
+  .section--products-configure iframe {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    margin-right: -15px;
+    height: 100vh !important; } }
 
 .card--hero-project {
   position: relative;
@@ -8753,49 +8888,54 @@ test-component code {
         margin-right: 15px;
         margin-bottom: 70px; } }
 
-[swiper-gallery] {
+[swiper-gallery] .swiper-container {
   align-items: stretch;
   overflow: visible; }
-  [swiper-gallery] .swiper-slide {
-    width: auto;
-    height: auto;
-    max-width: 100%; }
-    [swiper-gallery] .swiper-slide .card--gallery {
-      height: 100%; }
-      [swiper-gallery] .swiper-slide .card--gallery > .card__picture {
-        flex: 1 0 auto; }
-  [swiper-gallery] .swiper-slide--video {
-    width: 100%; }
   @media (min-width: 1920px) {
-    [swiper-gallery] {
+    [swiper-gallery] .swiper-container {
       margin: -70px;
       margin-bottom: 70px;
       width: calc(100% + 140px);
       padding: 0 70px; } }
   @media (min-width: 1440px) {
-    [swiper-gallery] {
+    [swiper-gallery] .swiper-container {
       margin: -60px;
       margin-bottom: 60px;
       width: calc(100% + 120px);
       padding: 0 60px; } }
   @media (min-width: 1024px) and (max-width: 1919.98px) {
-    [swiper-gallery] {
+    [swiper-gallery] .swiper-container {
       margin: -50px;
       margin-bottom: 50px;
       width: calc(100% + 100px);
       padding: 0 50px; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
-    [swiper-gallery] {
+    [swiper-gallery] .swiper-container {
       margin: -40px;
       margin-bottom: 40px;
       width: calc(100% + 80px);
       padding: 0 40px; } }
   @media (max-width: 767.98px) {
-    [swiper-gallery] {
+    [swiper-gallery] .swiper-container {
       margin: -30px;
       margin-bottom: 30px;
       width: calc(100% + 60px);
       padding: 0 30px; } }
+
+[swiper-gallery] .swiper-slide {
+  width: auto;
+  height: auto;
+  max-width: 100%; }
+  [swiper-gallery] .swiper-slide .card--gallery {
+    height: 100%; }
+    [swiper-gallery] .swiper-slide .card--gallery > .card__picture {
+      flex: 1 0 auto; }
+
+[swiper-gallery] .swiper-slide--video {
+  width: 100%; }
+
+[swiper-gallery] .group--actions {
+  margin-bottom: 50px; }
 
 .card--gallery {
   position: relative;
@@ -9826,7 +9966,8 @@ test-component code {
     width: 100%; }
   .card--history .card__content {
     position: relative;
-    background: #F8F7F7; }
+    background: #F8F7F7;
+    z-index: 1; }
   .card--history .card__title {
     font-family: var(--font-secondary);
     line-height: 1.1;
@@ -9858,15 +9999,13 @@ test-component code {
     .card--history:nth-child(even) .card__content {
       margin-right: -7vw !important; }
     .card--history:nth-child(even) .card__title {
-      left: 30px;
       top: 0;
-      transform: translateX(-1.1em) translateY(-50%); }
+      transform: translateX(0) translateY(-50%); }
     .card--history:nth-child(odd) .card__content {
       margin-left: -7vw !important; }
     .card--history:nth-child(odd) .card__title {
-      right: 30px;
       top: 0;
-      transform: translateX(1.1em) translateY(-50%); } }
+      transform: translateX(0) translateY(-50%); } }
   @media (min-width: 1920px) {
     .card--history {
       display: flex;
@@ -9897,6 +10036,11 @@ test-component code {
   @media (min-width: 1920px) and (min-width: 1920px) {
     .card--history:nth-child(even) .card__picture {
       margin-right: calc(-50vw + (1280px - 70px) / 2); } }
+  @media (min-width: 1920px) {
+      .card--history:nth-child(even) .card__title {
+        left: 30px;
+        top: 0;
+        transform: translateX(-1.1em) translateY(-50%); } }
   @media (min-width: 1920px) and (min-width: 768px) {
     .card--history:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (768px - 40px) / 2); } }
@@ -9909,6 +10053,11 @@ test-component code {
   @media (min-width: 1920px) and (min-width: 1920px) {
     .card--history:nth-child(odd) .card__picture {
       margin-left: calc(-50vw + (1280px - 70px) / 2); } }
+  @media (min-width: 1920px) {
+      .card--history:nth-child(odd) .card__title {
+        right: 30px;
+        top: 0;
+        transform: translateX(1.1em) translateY(-50%); } }
   @media (min-width: 1440px) {
     .card--history {
       display: flex;
@@ -10023,14 +10172,14 @@ test-component code {
       opacity: 0.03; }
   .card--prize .card__content {
     position: relative;
-    background: #D1CDCA; }
+    background: #D1CDCA;
+    z-index: 1; }
   .card--prize .card__title {
     font-family: var(--font-secondary);
     line-height: 1.1;
     letter-spacing: -0.05em;
     text-transform: uppercase;
-    color: #A19C96;
-    white-space: nowrap; }
+    color: #A19C96; }
   .card--prize .card__abstract {
     font-family: var(--font-secondary);
     line-height: 1.2;
@@ -10045,7 +10194,8 @@ test-component code {
       padding: 80px 110px; }
     .card--prize .card__title {
       position: absolute;
-      font-size: 140px; }
+      font-size: min(132px, 11vw);
+      white-space: nowrap; }
     .card--prize .card__abstract {
       font-size: 48px; }
     .card--prize .card__description {
@@ -10055,15 +10205,15 @@ test-component code {
     .card--prize:nth-child(even) .card__content {
       margin-right: -7vw !important; }
     .card--prize:nth-child(even) .card__title {
-      left: 30px;
+      left: 0;
       top: 0;
-      transform: translateX(-1.1em) translateY(-50%); }
+      transform: translateX(0) translateY(-50%); }
     .card--prize:nth-child(odd) .card__content {
       margin-left: -7vw !important; }
     .card--prize:nth-child(odd) .card__title {
-      right: 30px;
+      right: 0;
       top: 0;
-      transform: translateX(1.1em) translateY(-50%); } }
+      transform: translateX(0) translateY(-50%); } }
   @media (min-width: 1920px) {
     .card--prize {
       display: flex;
@@ -10196,7 +10346,9 @@ test-component code {
     .card--prize .card__content {
       padding: 20px 20px 40px 20px; }
     .card--prize .card__title {
-      font-size: 72px; }
+      font-size: 72px;
+      line-height: 0.9;
+      margin-bottom: 20px; }
     .card--prize .card__abstract {
       font-size: 32px; }
     .card--prize .card__description {
@@ -10265,6 +10417,8 @@ test-component code {
       margin-bottom: 180px; }
     .section--intro-sm .description + .group--cta {
       margin-top: -140px; }
+    .section--intro-sm .description + .form {
+      margin-top: -100px; }
     .section--intro-sm .group--cta {
       display: flex;
       align-items: center; }
@@ -10289,6 +10443,8 @@ test-component code {
     .section--intro-sm .description {
       margin-bottom: 60px; }
     .section--intro-sm .description + .group--cta {
+      margin-top: -30px; }
+    .section--intro-sm .description + .form {
       margin-top: -30px; }
     .section--intro-sm .group--cta {
       display: flex;
@@ -10634,7 +10790,6 @@ test-component code {
   .section--dealers .title {
     margin-bottom: 100px;
     font-family: var(--font-secondary);
-    font-size: 72px;
     line-height: 1.1;
     text-align: center;
     letter-spacing: -0.027em;
@@ -10701,6 +10856,12 @@ test-component code {
         flex-direction: column; }
         .section--dealers .group--cta > * + * {
           margin-top: 30px; } }
+  @media (min-width: 1024px) {
+    .section--dealers .title {
+      font-size: 72px; } }
+  @media (max-width: 1023.98px) {
+    .section--dealers .title {
+      font-size: 60px; } }
 
 .listing--dealers {
   position: relative;
@@ -11000,6 +11161,8 @@ test-component code {
     text-transform: uppercase; }
   .section--form-negative .description {
     font-size: 18px; }
+  .section--form-negative .group--form--privacy .description {
+    font-size: 14px; }
   .section--form-negative .group--center > .title,
   .section--form-negative .group--left > .title {
     margin-bottom: 120px; }
@@ -12099,6 +12262,21 @@ test-component code {
       margin-top: 20px; }
     .section--user-detail .btn--link + .btn--link {
       margin-top: 10px; } }
+
+.section--user-edit-password .group--cta {
+  justify-content: flex-start;
+  margin: 30px 0; }
+
+@media (min-width: 1024px) {
+  .section--user-edit-password .group--cta {
+    display: flex;
+    align-items: center; } }
+
+@media (max-width: 1023.98px) {
+  .section--user-edit-password .group--cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; } }
 
 .card--gdpr {
   margin-bottom: 15px; }
@@ -13440,6 +13618,24 @@ test-component code {
     padding: 4px 10px;
     margin: 0 4px;
     background: #f8f8f8; }
+  .tr--cart .made-to-order {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--foreground-primary);
+    cursor: pointer; }
+    .tr--cart .made-to-order svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      fill: currentColor; }
+    @media (max-width: 767.98px) {
+      .tr--cart .made-to-order svg {
+        width: 18px;
+        height: 18px; }
+      .tr--cart .made-to-order span {
+        display: none; } }
   .tr--cart .btn--remove {
     display: flex;
     align-items: center;
@@ -13890,7 +14086,7 @@ error-component {
         .modal--orders::-webkit-scrollbar-track:hover {
           background-color: transparent; }
       .modal--orders .modal__inner {
-        padding: 50px 0 120px 0; } }
+        padding: 0 0 120px 0; } }
 
 .section--orders .flex-table {
   margin-bottom: 80px; }
@@ -13977,6 +14173,31 @@ error-component {
     background-color: transparent;
     color: var(--foreground);
     pointer-events: none; }
+
+@media (max-width: 1023.98px) {
+  .section--orders .td--price {
+    text-align: right; }
+  .section--orders .title {
+    font-size: 32px; }
+  .section--orders .date,
+  .section--orders .status {
+    font-size: 13px; } }
+
+@media (max-width: 1023.98px) {
+  #order-history .flex-table > .tr {
+    flex-direction: column;
+    margin-bottom: 30px; }
+    #order-history .flex-table > .tr > .th {
+      display: none; }
+    #order-history .flex-table > .tr > .td {
+      padding: 10px 0; }
+      #order-history .flex-table > .tr > .td:before {
+        content: attr(data-title);
+        position: relative;
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase; } }
 
 .section--index {
   padding: 0 0 80px 0; }

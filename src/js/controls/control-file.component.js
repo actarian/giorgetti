@@ -3,7 +3,7 @@ import { ControlComponent } from './control.component';
 export class ControlFileComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		this.labels = window.labels || {};
 		this.file = null;
 		this.onReaderComplete = this.onReaderComplete.bind(this);

@@ -62,7 +62,8 @@ export class ProductsDetailComponent extends Component {
 	}
 
 	configureProduct(version) {
-		window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}`;
+		// window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
+		window.location.href = `${this.product.url}/config?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
 	}
 
 	onReservedArea() {

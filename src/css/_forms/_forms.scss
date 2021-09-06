@@ -234,7 +234,8 @@ $invalid-negative: $foreground-primary;
 		align-items: center;
 		width: 100%;
 		margin: 0;
-		padding: 10px 0 20px 0;
+		// padding: 10px 0 20px 0;
+		padding: 50px 0 20px 0;
 
 		&>*+* {
 			margin-left: 10px;
@@ -514,6 +515,12 @@ fieldset,
 		line-height: 1.4;
 		text-transform: none;
 		font-weight: $font-semibold;
+	}
+
+	.section--form & {
+		.description {
+			margin-bottom: 0;
+		}
 	}
 
 	&.required {

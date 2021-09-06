@@ -163,8 +163,12 @@ window.antiforgery = "949c21d9-2e33-44df-8560-9d5b502c02fc";
 							<div control-custom-select [control]="controls.country" label="Paese"></div>
 							<div control-text [control]="controls.city" label="Città"></div>
 							<div control-textarea [control]="controls.message" label="Messaggio"></div>
-							<div class="full" control-checkbox [control]="controls.privacy" label="Ho letto l&amp;#39;&amp;lt;a href=&amp;quot;/privacy/&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa&amp;lt;/a&gt; e do il consenso al trattamento del dato"></div>
-							<div class="full" control-checkbox [control]="controls.newsletter" label="Desidero iscrivermi alla newsletter"></div>
+
+							<div class="full" control-checkbox [control]="controls.privacy" label="Ho letto l&amp;#39;&amp;lt;a href=&amp;quot;/it/it/privacy-policy&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;informativa&amp;lt;/a&gt; e do il consenso al trattamento del dato"></div>
+							<div class="full" control-privacy [control]="controls.newsletter" label="Al trattamento dei miei dati personali per attività di marketing diretto tramite iscrizione a newsletter."></div>
+							<!-- <div control-custom-select [control]="controls.newsletterLanguage" label="Lingua della newsletter" *if="controls.newsletter.value"></div> -->
+							<div class="full" control-privacy [control]="controls.commercial" label="Al trattamento dei miei dati personali per attività di profilazione, al fine di proporle comunicazioni commerciali più vicine ai miei interessi."></div>
+							<div class="full" control-privacy [control]="controls.promotion" label="Alla cessione dei miei dati personali per attività promozionali di terzi. I soggetti terzi a cui i dati saranno ceduti sono unicamente Società del gruppo."></div>
 						</div>
 						<div class="group--error" *if="error">
 							<span class="status-code" [innerHTML]="error.statusCode"></span>

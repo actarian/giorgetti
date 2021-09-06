@@ -1,5 +1,6 @@
 import { Component } from 'rxcomp';
-import { first, takeUntil, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { first, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
@@ -16,25 +17,29 @@ export class ReservedAreaComponent extends Component {
 		this.files = [];
 		this.visibleFiles = [];
 		this.item = null;
+		this.downloadBusy = false;
 		this.load$().pipe(
-			first(),
-		).subscribe();
-		UserService.me$().pipe(
 			takeUntil(this.unsubscribe$),
-		).subscribe(user => {
-			console.log('ReservedAreaComponent.user', user);
-			this.user = user;
-			this.pushChanges();
-			LocomotiveScrollService.update();
-		});
+		).subscribe();
 	}
 
 	load$() {
-		return ReservedAreaService.all$().pipe(
+		return UserService.me$().pipe(
+			switchMap(user => {
+				this.user = user;
+				this.downloadBusy = true;
+				this.pushChanges();
+				// LocomotiveScrollService.update();
+				return user ? ReservedAreaService.all$() : of([]);
+			}),
 			tap(items => {
 				this.items = items;
 				this.tree = this.getTree(items);
+				this.visibleFiles = [];
+				this.item = null;
+				this.downloadBusy = false;
 				this.pushChanges();
+				// LocomotiveScrollService.update();
 			}),
 		);
 	}

@@ -5,16 +5,17 @@ export class OrdersService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/orders/all.json');
+			// !!! restituisce gli ordini effettuati dell'utente in sessione.
+			return ApiService.get$('/orders/all');
 		} else {
 			return ApiService.get$('/orders/all.json');
 		}
 	}
 
-	static detail$(item) {
+	static detail$(orderId) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$('/orders/detail.json', item);
+			// !!! restituisce il dettaglio dell'ordine dell'utente in sessione con id == orderId.
+			return ApiService.get$(`/orders/detail/${orderId}`);
 		} else {
 			return ApiService.get$('/orders/detail.json');
 		}

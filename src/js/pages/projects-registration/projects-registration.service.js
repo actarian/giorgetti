@@ -5,7 +5,7 @@ export class ProjectsRegistrationService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/projects-registration/data.json');
+			return ApiService.get$('/projects-registration/data');
 		} else {
 			return ApiService.get$('/projects-registration/data.json');
 		}
@@ -13,8 +13,7 @@ export class ProjectsRegistrationService {
 
 	static submit$(payload) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$('/projects-registration/submit.json', payload);
+			return ApiService.post$('/projects-registration/submit', payload);
 		} else {
 			return ApiService.get$('/projects-registration/submit.json');
 		}

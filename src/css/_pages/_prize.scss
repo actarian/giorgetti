@@ -24,6 +24,7 @@
 	.card__content {
 		position: relative;
 		background: #D1CDCA;
+		z-index: 1;
 	}
 
 	.card__title {
@@ -32,7 +33,6 @@
 		letter-spacing: -0.05em;
 		text-transform: uppercase;
 		color: #A19C96;
-		white-space: nowrap;
 	}
 
 	.card__abstract {
@@ -58,7 +58,8 @@
 
 		.card__title {
 			position: absolute;
-			font-size: 140px;
+			font-size: #{'min(132px, 11vw)'};
+			white-space: nowrap;
 		}
 
 		.card__abstract {
@@ -79,9 +80,9 @@
 			}
 
 			.card__title {
-				left: 30px;
+				left: 0;
 				top: 0;
-				transform: translateX(-1.1em) translateY(-50%);
+				transform: translateX(0) translateY(-50%);
 			}
 		}
 
@@ -91,9 +92,9 @@
 			}
 
 			.card__title {
-				right: 30px;
+				right: 0;
 				top: 0;
-				transform: translateX(1.1em) translateY(-50%);
+				transform: translateX(0) translateY(-50%);
 			}
 		}
 	}
@@ -194,6 +195,8 @@
 
 		.card__title {
 			font-size: 72px;
+			line-height: 0.9;
+			margin-bottom: 20px;
 		}
 
 		.card__abstract {

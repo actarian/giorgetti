@@ -10,6 +10,6 @@ export class IdDirective extends Directive {
 }
 
 IdDirective.meta = {
-	selector: '[id]',
+	selector: '[[id]]',
 	inputs: ['id']
 };

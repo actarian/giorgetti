@@ -5,7 +5,7 @@ export class NewsletterService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/newsletter/data.json');
+			return ApiService.get$('/newsletter/data');
 		} else {
 			return ApiService.get$('/newsletter/data.json');
 		}
@@ -13,8 +13,7 @@ export class NewsletterService {
 
 	static submit$(payload) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$('/newsletter/submit.json', payload);
+			return ApiService.post$('/newsletter/submit', payload);
 		} else {
 			return ApiService.get$('/newsletter/submit.json');
 		}

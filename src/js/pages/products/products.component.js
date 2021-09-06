@@ -27,7 +27,7 @@ export class ProductsComponent extends FiltersComponent {
 			case 'category':
 				return item.category.id === value;
 			case 'ambience':
-				return item.ambience.id === value;
+				return item.ambiences.indexOf(value) !== -1;
 			case 'material':
 				return item.materials.indexOf(value) !== -1;
 			case 'designer':

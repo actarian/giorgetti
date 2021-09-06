@@ -9,6 +9,27 @@ export class SwiperProductsPropositionDirective extends SwiperDirective {
 			spaceBetween: 30,
 			breakpoints: {
 				768: {
+					slidesPerView: 'auto',
+					spaceBetween: 40,
+				},
+				1024: {
+					slidesPerView: 'auto',
+					spaceBetween: 50
+				},
+				1440: {
+					slidesPerView: 'auto',
+					spaceBetween: 60
+				},
+				1920: {
+					slidesPerView: 'auto',
+					spaceBetween: 70
+				}
+			},
+			/*
+			slidesPerView: 1.5,
+			spaceBetween: 30,
+			breakpoints: {
+				768: {
 					slidesPerView: 2,
 					spaceBetween: 40
 				},
@@ -25,6 +46,7 @@ export class SwiperProductsPropositionDirective extends SwiperDirective {
 					spaceBetween: 70
 				}
 			},
+			*/
 			speed: 600,
 			centeredSlides: false,
 			loop: false,

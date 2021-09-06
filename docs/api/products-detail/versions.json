@@ -2,7 +2,8 @@
   {
     "id": 1,
     "productId": 5254,
-    "code": "63230",
+    "code": "63220",
+    "familyCode": "PROGETTI",
     "url": "https://www.giorgettimeda.com/downloads/4574/11818/ADAM_compressed.pdf",
     "image": "/giorgetti/img/products-detail/versions/7204_t_ADAM_001.jpg",
     "configurable": true,
@@ -13,7 +14,9 @@
     "id": 1,
     "productId": 5254,
     "code": "63230",
+    "familyCode": "PROGETTI",
     "url": "https://www.giorgettimeda.com/downloads/4574/11818/ADAM_compressed.pdf",
+    "configurable": true,
     "image": "/giorgetti/img/products-detail/versions/7205_t_ADAM_002.jpg",
     "title": "ADAM 02",
     "measures": "cm 210 x 100 x h 84<br />in 82 3/4 x 39 3/8 x h 33"
@@ -21,20 +24,20 @@
   {
     "id": 1,
     "productId": 5254,
-    "code": "63230",
+    "code": "63340",
+    "familyCode": "PROGETTI",
     "url": "https://www.giorgettimeda.com/downloads/4574/11818/ADAM_compressed.pdf",
-    "image": "/giorgetti/img/products-detail/versions/7206_t_ADAM_003.jpg",
     "configurable": true,
+    "image": "/giorgetti/img/products-detail/versions/7206_t_ADAM_003.jpg",
     "title": "ADAM 03",
     "measures": "cm 250 x 100 x h 84<br />in 98 1/2 x 39 3/8 x h 33"
   },
   {
     "id": 1,
     "productId": 5254,
-    "code": "63230",
+    "code": "63222",
     "url": "https://www.giorgettimeda.com/downloads/4574/11818/ADAM_compressed.pdf",
     "image": "/giorgetti/img/products-detail/versions/7207_t_ADAM_004.jpg",
-    "configurable": true,
     "title": "ADAM 04",
     "measures": "cm 250 x 100 x h 84<br />in 98 1/2 x 39 3/8 x h 33"
   },
@@ -44,7 +47,6 @@
     "code": "63230",
     "url": "https://www.giorgettimeda.com/downloads/4574/11818/ADAM_compressed.pdf",
     "image": "/giorgetti/img/products-detail/versions/7208_t_ADAM_005.jpg",
-    "configurable": true,
     "title": "ADAM 05",
     "measures": "cm 310 x 100 x h 84<br />in 122 x 39 3/8 x h 33"
   },

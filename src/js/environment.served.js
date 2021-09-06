@@ -2,6 +2,7 @@
 export const environmentServed = {
 	flags: {
 		production: true,
+		cart: true,
 	},
 	markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
 	defaultMarket: 'IT',

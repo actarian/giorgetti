@@ -22,7 +22,7 @@ export class ProductsConfigureComponent extends Component {
 
 	get showefyUrl() {
 		if (this.product) {
-			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=${this.priceListByMarket}&codprod=${this.product.code}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
+			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${environment.currentMarket.toLowerCase()}&list=${this.priceListByMarket}&codprod=${this.product.code}${this.product.familyCode ? `&codfam=${this.product.familyCode}` : ''}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
 		}
 	}
 
@@ -43,7 +43,7 @@ export class ProductsConfigureComponent extends Component {
 		this.onEvent = this.onEvent.bind(this);
 		const sfy = this.sfy = new SFYFrame(iframe, this.token, this.onEvent);
 		sfy.init();
-		console.log('ProductsConfigureComponent.onInit', sfy, iframe);
+		// console.log('ProductsConfigureComponent.onInit', sfy, iframe);
 	}
 
 	getIframeDocument(iframe) {
@@ -89,7 +89,7 @@ export class ProductsConfigureComponent extends Component {
 	}
 
 	onReady(event) {
-		console.log('ProductsConfigureComponent.onReady', event);
+		// console.log('ProductsConfigureComponent.onReady', event);
 		this.isReady = true;
 		// this.addTexts();
 		this.addButtons();
@@ -97,19 +97,19 @@ export class ProductsConfigureComponent extends Component {
 	}
 
 	onShowefyComplete(event) {
-		console.log('ProductsConfigureComponent.onShowefyComplete', event);
+		// console.log('ProductsConfigureComponent.onShowefyComplete', event);
 		if (this.isConfiguring) {
 			this.isComplete = true;
 		}
 	}
 
 	onStartConfigurator(event) {
-		console.log('ProductsConfigureComponent.onStartConfigurator', event);
+		// console.log('ProductsConfigureComponent.onStartConfigurator', event);
 		this.isConfiguring = true;
 	}
 
 	onButtonPressed(event) {
-		console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
+		// console.log('ProductsConfigureComponent.onButtonPressed', event, 'buttonId', event.data.id);
 		switch (event.data.id) {
 			case 'order':
 				this.sfy.getProductExtData();
@@ -212,9 +212,13 @@ export class ProductsConfigureComponent extends Component {
 	onAddToCart(data) {
 		const cartItem = this.product;
 		cartItem.showefy = data;
+		if (data.product_code) {
+			cartItem.code = data.product_code;
+		}
 		if (data.image) {
 			cartItem.image = data.image;
 		}
+		cartItem.title = `${cartItem.productTitle} ${cartItem.code}`;
 		console.log('ProductsConfigureComponent.onAddToCart', cartItem);
 		// resetting purchase procedure
 		CartService.setCart(null);

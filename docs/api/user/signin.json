@@ -8,5 +8,7 @@
 	"email": "jhonappleseed@gmail.com",
   "privacy": true,
   "newsletter": true,
-  "newsletterLanguage": 1
+  "newsletterLanguage": 1,
+  "commercial": false,
+  "promotion": false
 }

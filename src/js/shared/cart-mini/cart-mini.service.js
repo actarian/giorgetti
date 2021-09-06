@@ -27,13 +27,15 @@ export class CartMiniService {
 		return index !== -1;
 	}
 
-	static setItems(items) {
+	static setItems(items, skip) {
 		if (items) {
 			LocalStorageService.set(CartMiniService.STORAGE_KEY, items);
 		} else {
 			LocalStorageService.delete(CartMiniService.STORAGE_KEY);
 		}
-		CartMiniService.items$_.next(items);
+		if (!skip) {
+			CartMiniService.items$_.next(items);
+		}
 	}
 
 	static items$() {
@@ -83,7 +85,7 @@ export class CartMiniService {
 	}
 
 	static addItem$(item, qty = 1) {
-		const count = CartMiniService.count;
+		// const count = CartMiniService.count;
 		return of(Object.assign({}, item, { qty })).pipe(
 			map(item => {
 				const items = CartMiniService.currentItems.slice();
@@ -100,9 +102,9 @@ export class CartMiniService {
 				}
 			}),
 			tap(_ => {
-				if (count === 0) {
-					HeaderService.setHeader('cart');
-				}
+				// if (count === 0) {
+				HeaderService.setHeader('cart');
+				// }
 			}),
 		)
 	}
@@ -151,7 +153,7 @@ export class CartMiniService {
 	}
 
 	static match(item, item_) {
-		return item_.id === item.id && item_.code === item.code && ((!item_.showefy && !item.showefy) || (item_.showefy && item.showefy && item_.showefy.product_link === item.showefy.product_link));
+		return item_.id === item.id && item_.code === item.code && ((!item_.showefy && !item.showefy) || (item_.showefy && item.showefy && item_.showefy.internalstr === item.showefy.internalstr));
 	}
 
 	static find(item, items) {

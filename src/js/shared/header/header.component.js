@@ -69,7 +69,9 @@ export class HeaderComponent extends Component {
 			this.direction = event.direction;
 			this.scrolled = event.scroll.y > 100;
 			const opacity = 0.1 - 0.1 * Math.min(1, Math.max(0, (event.scroll.y - window.innerHeight * 3) / window.innerHeight / 3));
-			gsap.set(pictogram, { opacity });
+			if (pictogram) {
+				gsap.set(pictogram, { opacity });
+			}
 			// console.log('HeaderComponent', event.scroll.y, event.direction, event.speed);
 		});
 	}

@@ -44,60 +44,66 @@
 	<!-- PRODUCTS DETAIL GALLERY -->
 	<div class="section--products-detail-gallery">
 		<div class="container">
-			<div class="swiper-container" swiper-gallery>
-				<div class="swiper-wrapper">
-					<!-- video -->
-					<div class="swiper-slide swiper-slide--video">
-						<div class="card--gallery">
-							<div class="card__video" thron="https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=gruppoconcorde&amp;xcontentId=0e72b47c-73d3-431a-93b2-5d9409424bc0&amp;pkey=yz1hpd" m3u8="https://gruppoconcorde-cdn.thron.com/delivery/public/video/gruppoconcorde/0e72b47c-73d3-431a-93b2-5d9409424bc0/yz1hpd/STREAMHTTPIOSHD/AtlasConcorde_Norde_Trailer.m3u8" controls>
-								<div class="video">
-									<div class="thron"></div>
-								</div>
-								<button type="button" class="btn--play" (click)="toggle($event)"><svg class="play"><use xlink:href="#play"></use></svg></button>
-							</div>
-						</div>
-					</div>
-					<!-- image -->
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/products-detail/gallery-01.jpg" />
-								<div class="over">
-									<div class="over__title">Adam 01</div>
+			<div swiper-gallery>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<!-- video -->
+						<div class="swiper-slide swiper-slide--video">
+							<div class="card--gallery">
+								<div class="card__video" thron="https://gruppoconcorde-view.thron.com/api/xcontents/resources/delivery/getContentDetail?clientId=gruppoconcorde&amp;xcontentId=0e72b47c-73d3-431a-93b2-5d9409424bc0&amp;pkey=yz1hpd" m3u8="https://gruppoconcorde-cdn.thron.com/delivery/public/video/gruppoconcorde/0e72b47c-73d3-431a-93b2-5d9409424bc0/yz1hpd/STREAMHTTPIOSHD/AtlasConcorde_Norde_Trailer.m3u8" controls>
+									<div class="video">
+										<div class="thron"></div>
+									</div>
+									<button type="button" class="btn--play" (click)="toggle($event)"><svg class="play"><use xlink:href="#play"></use></svg></button>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/projects-detail/gallery-02.jpg" />
-								<div class="over">
-									<div class="over__title">Adam 02</div>
+						<!-- image -->
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/products-detail/gallery-01.jpg" />
+									<div class="over">
+										<div class="over__title">Adam 01</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/projects-detail/gallery-02.jpg" />
+									<div class="over">
+										<div class="over__title">Adam 02</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/projects-detail/gallery-03.jpg" />
+									<div class="over">
+										<div class="over__title">Adam 03</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/projects-detail/gallery-04.jpg" />
+									<div class="over">
+										<div class="over__title">Adam 04</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/projects-detail/gallery-03.jpg" />
-								<div class="over">
-									<div class="over__title">Adam 03</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/projects-detail/gallery-04.jpg" />
-								<div class="over">
-									<div class="over__title">Adam 04</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				</div>
+				<div class="group--actions">
+					<button type="button" class="btn--prev" [class]="{ active: hasPrev() }" (click)="slidePrev()"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
+					<button type="button" class="btn--next" [class]="{ active: hasNext() }" (click)="slideNext()"><svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg></button>
 				</div>
 			</div>
 		</div>
@@ -146,17 +152,27 @@
 					<div class="card--version">
 						<div class="card__picture">
 							<img [src]="item.image" />
-							<div class="badge--configure" *if="item.configurable"><svg class="edit"><use xlink:href="#edit"></use></svg> Personalizzabile</div>
+							<div class="badge--configure" *if="item.configurable && ('cart' | flag)">
+								<svg class="cart"><use xlink:href="#cart"></use></svg>
+								<span *if="item.madeToOrder">Made to order</span>
+								<span *if="!item.madeToOrder">Ready to order</span>
+							</div>
+							<div class="badge--configure" *if="item.configurable && !('cart' | flag)">
+								<svg class="edit"><use xlink:href="#edit"></use></svg>
+								<span>Personalizzabile</span>
+							</div>
 						</div>
 						<div class="card__content">
 							<div class="card__title" [innerHTML]="item.title"></div>
 							<div class="card__abstract" [innerHTML]="item.abstract" *if="item.abstract"></div>
 							<div class="card__measures" [innerHTML]="item.measures"></div>
 							<div class="card__cta" *if="item.configurable">
-								<button type="button" class="btn--configure" (click)="configureProduct(item)">Personalizza</button>
+								<button type="button" class="btn--configure" (click)="configureProduct(item)">
+									<span *if="('cart' | flag)">Configura e Acquista</span>
+									<span *if="!('cart' | flag)">Configura</span>
+								</button>
 							</div>
 							<div class="card__cta" *if="!item.configurable">
-								<!-- <a [href]="item.url" download target="_blank" class="btn--download">Scarica il pdf</a> -->
 								<a href="/giorgetti/products-detail.html#insights" class="btn--download" (locomotiveScrollTo)="'#insights'">Scarica il pdf</a>
 							</div>
 						</div>

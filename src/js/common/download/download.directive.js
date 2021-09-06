@@ -10,6 +10,6 @@ export class DownloadDirective extends Directive {
 }
 
 DownloadDirective.meta = {
-	selector: '[download]',
+	selector: '[[download]]',
 	inputs: ['download']
 };

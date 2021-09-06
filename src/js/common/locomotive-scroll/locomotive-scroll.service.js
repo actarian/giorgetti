@@ -50,7 +50,14 @@ export class LocomotiveScrollService {
 	}
 
 	static useLocomotiveScroll() {
-		return window.innerWidth >= 768 && !this.isMacLike();
+		return window.innerWidth >= 768 && !this.isTouchDevice();
+	}
+
+	static isTouchDevice() {
+		const userAgent = navigator.userAgent.toLowerCase();
+		const isTablet = /(mac|ipad|tablet|(android(?!.*mobile))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+		const isSmartphone = /(ipod|iphone|(android(?!.*mobile))|(windows(?!.*phone)(.*touch)))/.test(userAgent);
+		return isTablet || isSmartphone;
 	}
 
 	static isMacLike() {
@@ -105,11 +112,13 @@ export class LocomotiveScrollService {
 					body.addEventListener('scroll', () => {
 						const y = body.scrollTop; // window.pageYOffset; // body.scrollTop;
 						const direction = y >= previousY ? 'down' : 'up';
-						// console.log('scroll', y, direction);
-						previousY = y;
-						event.direction = direction;
-						event.scroll.y = y;
-						LocomotiveScrollService.scroll(event);
+						if (Math.abs(y - previousY) > 90) {
+							// console.log('scroll', y, direction);
+							previousY = y;
+							event.direction = direction;
+							event.scroll.y = y;
+							LocomotiveScrollService.scroll(event);
+						}
 					}, true);
 				}
 				return LocomotiveScrollService.scroll$;

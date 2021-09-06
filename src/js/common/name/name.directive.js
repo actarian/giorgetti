@@ -10,6 +10,6 @@ export class NameDirective extends Directive {
 }
 
 NameDirective.meta = {
-	selector: '[name]',
+	selector: '[[name]]',
 	inputs: ['name']
 };

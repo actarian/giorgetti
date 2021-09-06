@@ -11,7 +11,7 @@ export class SearchService {
 		} else {
 			return (
 				environment.flags.production ?
-					ApiService.get$(`/search/search.json`) :
+					ApiService.get$(`/search/search`) :
 					ApiService.get$(`/search/search.json`)
 			).pipe(
 				tap(items => {

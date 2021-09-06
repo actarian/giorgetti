@@ -7,7 +7,7 @@ export class StoreLocatorService {
 	static all$() {
 		return (
 			environment.flags.production ?
-				ApiService.get$(`/store-locator/all.json`) :
+				ApiService.get$(`/store-locator/all`) :
 				ApiService.get$(`/store-locator/all.json`)
 		).pipe(
 			map(items => items.sort((a, b) => {
@@ -18,7 +18,7 @@ export class StoreLocatorService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/store-locator/filters.json');
+			return ApiService.get$('/store-locator/filters');
 		} else {
 			return ApiService.get$('/store-locator/filters.json');
 		}

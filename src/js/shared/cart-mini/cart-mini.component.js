@@ -43,7 +43,8 @@ export class CartMiniComponent extends Component {
 
 	onEdit(item) {
 		// console.log('CartMiniComponent.onEdit', item);
-		window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		// window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		window.location.href = `${item.url}/config?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
 	}
 
 	onRemoveAll(event) {

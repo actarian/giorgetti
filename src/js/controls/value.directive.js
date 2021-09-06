@@ -12,6 +12,6 @@ export class ValueDirective extends Directive {
 }
 
 ValueDirective.meta = {
-	selector: '[value]',
+	selector: '[[value]]',
 	inputs: ['value'],
 };

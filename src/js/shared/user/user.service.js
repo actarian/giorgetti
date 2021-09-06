@@ -48,7 +48,7 @@ export class UserService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/user/data.json');
+			return ApiService.get$('/giorgetti/user/data');
 		} else {
 			return ApiService.get$('/user/data.json');
 		}
@@ -56,43 +56,46 @@ export class UserService {
 
 	static forgot$(payload) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$(`/user/forgot.json`, payload);
+			return ApiService.post$('/giorgetti/user/forgot', payload);
 		} else {
 			return ApiService.get$(`/user/forgot.json`);
 		}
 	}
 
 	static me$() {
-		const sessionUser = SessionStorageService.get('user');
-		if (sessionUser) {
-			return of(sessionUser).pipe(
-				switchMap(user => {
-					this.setUser(new User(user));
-					return this.user$_;
-				}),
-			);
+		if (UserService.busyMe) {
+			return this.user$_;
 		} else {
-			return (
-				environment.flags.production ?
-					ApiService.get$(`/user/me`) :
-					ApiService.get$(`/user/me.json`)
-			).pipe(
-				map((response) => {
-					return this.mapUser(response);
+			UserService.busyMe = true;
+			return of(1).pipe(
+				switchMap(_ => {
+					if (environment.flags.production) {
+						return ApiService.get$(`/giorgetti/user/me`);
+					} else {
+						const sessionUser = SessionStorageService.get('user');
+						if (sessionUser) {
+							return of(sessionUser);
+						} else {
+							return ApiService.get$(`/user/me.json`);
+						}
+					}
+				}),
+				map((user) => {
+					console.log('UserService.user$', user);
+					return this.mapUser(user);
 				}),
 				catchError(_ => of(null)),
 				switchMap(user => {
 					this.setUser(user);
 					return this.user$_;
 				}),
-			);
+			)
 		}
 	}
 
 	static signin$(payload) {
 		return (
-			environment.flags.production ? ApiService.post$(`/user/signin`, payload) : ApiService.get$(`/user/signin.json`)
+			environment.flags.production ? ApiService.post$(`/giorgetti/user/signin`, payload) : ApiService.get$(`/user/signin.json`)
 		).pipe(
 			map((response) => this.mapUser(response)),
 			tap((user) => this.setUser(user)),
@@ -101,7 +104,7 @@ export class UserService {
 
 	static signout$() {
 		return (
-			environment.flags.production ? ApiService.post$(`/user/signout`) : ApiService.get$(`/user/signout.json`)
+			environment.flags.production ? ApiService.post$(`/giorgetti/user/signout`) : ApiService.get$(`/user/signout.json`)
 		).pipe(
 			tap((_) => this.setUser(null)),
 		);
@@ -110,20 +113,37 @@ export class UserService {
 	static signup$(payload) {
 		// console.log('UserService.signup$', payload);
 		return (
-			environment.flags.production ? ApiService.post$(`/user/signup`, payload) : ApiService.get$(`/user/signup.json`)
+			environment.flags.production ? ApiService.post$(`/giorgetti/user/signup`, payload) : ApiService.get$(`/user/signup.json`)
 		).pipe(
-			map((response) => this.mapUser(response)),
-			tap((user) => this.setUser(user)),
+			map((response) => {
+				response.user = this.mapUser(response.user);
+				return response;
+			}),
+			tap((response) => this.setUser(response.user)),
+			//document.location.reload(),
 		);
 	}
 
 	static edit$(payload) {
 		// console.log('UserService.edit$', payload);
 		return (
-			environment.flags.production ? ApiService.post$(`/user/edit`, payload) : ApiService.get$(`/user/edit.json`)
+			environment.flags.production ? ApiService.post$(`/giorgetti/user/edit`, payload) : ApiService.get$(`/user/edit.json`)
 		).pipe(
-			map((response) => this.mapUser(response)),
-			tap((user) => this.setUser(user)),
+			map((response) => {
+				response.user = this.mapUser(response.user);
+				return response;
+			}),
+			tap((response) => this.setUser(response.user)),
+			//document.location.reload(),
+		);
+	}
+
+	static editPassword$(payload) {
+		// console.log('UserService.editPassword$', payload);
+		return (
+			environment.flags.production ?
+				ApiService.post$(`/giorgetti/user/edit-password`, payload) :
+				ApiService.get$(`/user/edit-password.json`)
 		);
 	}
 
@@ -131,8 +151,7 @@ export class UserService {
 		// console.log('UserService.accessData$', payload);
 		return (
 			environment.flags.production ?
-				// !!! convert to .post$
-				ApiService.get$(`/user/access-data.json`, payload) :
+				ApiService.post$(`/giorgetti/user/access-data`, payload) :
 				ApiService.get$(`/user/access-data.json`)
 		);
 	}
@@ -141,15 +160,14 @@ export class UserService {
 		// console.log('UserService.delete$', payload);
 		return (
 			environment.flags.production ?
-				// !!! convert to .post$
-				ApiService.get$(`/user/delete.json`, payload) :
+				ApiService.post$(`/giorgetti/user/delete`, payload) :
 				ApiService.get$(`/user/delete.json`)
 		);
 	}
 
 	static gdpr$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/user/gdpr.json');
+			return ApiService.get$('/giorgetti/user/gdpr');
 		} else {
 			return ApiService.get$('/user/gdpr.json');
 		}

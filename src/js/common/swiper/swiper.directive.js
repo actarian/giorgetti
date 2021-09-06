@@ -52,17 +52,19 @@ export class SwiperDirective extends Component {
 
 	hasPrev() {
 		const swiper = this.swiper;
-		if (swiper && swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
-			// console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides);
-			return true;
+		if (swiper) {
+			// console.log('SwiperDirective.hasPrev', swiper.activeIndex, swiper.realIndex, swiper.slides.length);
+			if (swiper.activeIndex > 0 && swiper.slides.length > swiper.activeIndex) {
+				return true;
+			}
 		}
 	}
 
 	hasNext() {
 		const swiper = this.swiper;
 		if (swiper) {
-			const slidesPerView = swiper.params.slidesPerView || 1;
-			// console.log('SwiperDirective.hasNext', swiper.slides.length, swiper.params.slidesPerView);
+			const slidesPerView = swiper.params.slidesPerView === 'auto' ? 1 : (swiper.params.slidesPerView || 1);
+			// console.log('SwiperDirective.hasNext', swiper.slides.length, slidesPerView, swiper.activeIndex);
 			if (swiper.activeIndex < swiper.slides.length - slidesPerView) {
 				return true;
 			}

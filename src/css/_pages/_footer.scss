@@ -175,24 +175,44 @@
 		padding: 100px 0;
 		border-bottom: 1px solid $foreground;
 
+		svg {
+			height: 74px;
+			fill: currentColor;
+		}
+
+		.giorgetti-battaglia-1 {
+			width: 200px;
+		}
+
+		.giorgetti-battaglia-2 {
+			width: 36px;
+		}
+
+		.giorgetti-battaglia-3 {
+			width: 166px;
+		}
+
 		.btn--logo {
 			@extend %btn;
-
-			svg {
-				width: 400px;
-				height: 74px;
-				color: currentColor;
-			}
 		}
 
 		@include media-down(sm) {
 			padding: 60px 0;
 
-			.btn--logo {
-				svg {
-					width: 300px;
-					height: 56px;
-				}
+			svg {
+				height: 56px;
+			}
+
+			.giorgetti-battaglia-1 {
+				width: 150px;
+			}
+
+			.giorgetti-battaglia-2 {
+				width: 27px;
+			}
+
+			.giorgetti-battaglia-3 {
+				width: 124.5px;
 			}
 		}
 	}

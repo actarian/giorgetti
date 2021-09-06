@@ -8,7 +8,7 @@ import { ControlComponent } from './control.component';
 export class ControlCheckboxComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		if (this.target === 'modal') {
 			setTimeout(() => {
 				this.link$().pipe(
@@ -59,8 +59,8 @@ ControlCheckboxComponent.meta = {
 	inputs: ['control', 'label', 'target'],
 	template: /* html */ `
 		<div class="group--form--checkbox" [class]="{ required: control.validators.length }">
-			<input [id]="control.name" type="checkbox" class="control--checkbox" [formControl]="control" [value]="true" />
-			<label [labelFor]="control.name">
+			<input [id]="uniqueId" type="checkbox" class="control--checkbox" [formControl]="control" [value]="true" />
+			<label [labelFor]="uniqueId">
 				<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 				<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
 				<span [innerHTML]="label | html"></span>

@@ -1,6 +1,6 @@
 import { Component, getContext } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
-import { combineLatest } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { finalize, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { FacebookService } from '../../common/facebook/facebook.service';
 import { GoogleService } from '../../common/google/google.service';
@@ -13,6 +13,7 @@ import RequiredIfValidator from '../../controls/required-if.validator';
 import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 import { UserService } from '../../shared/user/user.service';
+import { OrdersService } from '../orders/orders.service';
 import { CartService, CartSteps } from './cart.service';
 
 export class CartComponent extends Component {
@@ -46,12 +47,22 @@ export class CartComponent extends Component {
 	}
 
 	onInit() {
+		this.steps = CartSteps;
+		this.step = CartSteps.None;
 		this.detectSocialLogin();
-		this.socialBusy = false;
-		this.form = null;
-		this.load$().pipe(
-			first(),
-		).subscribe();
+		this.checkPaymentParams();
+	}
+
+	checkPaymentParams() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const params = Object.fromEntries(urlSearchParams.entries());
+		if (params.id != null) {
+			this.onComplete(params);
+		} else {
+			this.load$().pipe(
+				first(),
+			).subscribe();
+		}
 	}
 
 	load$() {
@@ -64,11 +75,10 @@ export class CartComponent extends Component {
 	}
 
 	initWithData(data) {
-		this.steps = CartSteps;
-		this.step = CartSteps.None;
 		this.errorDelivery = null;
 		this.errorDiscount = null;
 		this.errorPayment = null;
+		this.error = false;
 		this.success = false;
 		this.estimatedDelivery = null;
 		this.items = null;
@@ -78,6 +88,7 @@ export class CartComponent extends Component {
 			this.items = items;
 			this.pushChanges();
 		});
+		this.socialBusy = false;
 		this.user = null;
 		this.guest = null;
 		this.shipmentCountryOptions = [];
@@ -204,6 +215,7 @@ export class CartComponent extends Component {
 			paymentMethod: controls.paymentMethod.options[0].id,
 		}, true);
 		this.pushChanges();
+
 		CartService.cart$().pipe(
 			first(),
 		).subscribe(cart => {
@@ -329,18 +341,24 @@ export class CartComponent extends Component {
 
 	onEdit(item) {
 		// console.log('CartComponent.onEdit', item);
-		window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		// window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		window.location.href = `${item.url}/config?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
 	}
 
 	items$() {
 		return CartMiniService.items$().pipe(
 			switchMap(items => {
-				return CartService.estimatedDelivery$({ items }).pipe(
-					map(data => {
-						this.estimatedDelivery = data.estimatedDelivery;
-						return items;
-					}),
-				);
+				if (items.length) {
+					return CartService.estimatedDelivery$({ items }).pipe(
+						map(data => {
+							this.estimatedDelivery = data.estimatedDelivery;
+							return items;
+						}),
+					);
+				} else {
+					this.estimatedDelivery = null;
+					return of(items);
+				}
 			}),
 		);
 	}
@@ -553,7 +571,7 @@ export class CartComponent extends Component {
 		if (window.name === 'linkedin' && window.opener) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
 			const params = Object.fromEntries(urlSearchParams.entries());
-			console.log('window', window.name, params);
+			// console.log('window', window.name, params);
 			if (typeof window.opener.onSocialCallback === 'function') {
 				window.opener.onSocialCallback(window.name, params);
 			}
@@ -685,7 +703,8 @@ export class CartComponent extends Component {
 		const form = this.form;
 		// console.log('CartComponent.onDelivery', form.value);
 		this.errorDiscount = null;
-		CartService.getDiscount$({ discountCode: form.value.discountCode }).pipe(
+		//CartService.getDiscount$({ discountCode: form.value.discountCode }).pipe(
+		CartService.getDiscount$(form.value).pipe(
 			first(),
 		).subscribe(discount => {
 			this.discount = discount;
@@ -710,17 +729,52 @@ export class CartComponent extends Component {
 		this.paymentMethod = paymentMethod;
 		if (form.valid) {
 			console.log('CartComponent.onPayment', form.value);
-			this.onComplete(); // !!! fake
+			CartService.doPayment$(form.value).pipe(
+				first(),
+			).subscribe(response => {
+				if (environment.flags.production) {
+					window.location.href = response.redirectUrl;
+				} else {
+					this.onComplete({ id: 444, mp: 5, result: 1, transactionId: 'WEBSOLUTE27' }); // !!! only on development
+				}
+			});
 		}
 	}
 
 	// 6. CartSteps.Complete
-	onComplete() {
+	onComplete(params) {
+		// ?id=27&mp=5&result=1&transactionid=WEBSOLUTE27
 		this.step = CartSteps.Complete;
-		this.onPatch();
-		CartService.clear$().pipe(
-			first(),
-		).subscribe();
+		this.success = params.result === '1';
+		this.error = params.result === '-1';
+		this.paymentMethodId = params.mp;
+		this.transactionId = params.transactionId;
+		this.orderId = params.id;
+		this.order = null;
+		if (this.success) {
+			this.orderBusy = true;
+			CartMiniService.setItems([]);
+			CartService.setCart(null);
+			OrdersService.detail$(this.orderId).pipe(
+				first(),
+				tap(order => {
+					this.order = order;
+				}),
+				finalize(_ => {
+					this.orderBusy = false;
+					this.pushChanges();
+				}),
+			).subscribe();
+		}
+		// this.onPatch();
+	}
+
+	onOpenOrder(orderId) {
+		ModalService.open$({ src: environment.template.modal.ordersModal, data: { orderId: orderId } }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('CartComponent.onOpenOrder', event);
+		});
 	}
 }
 

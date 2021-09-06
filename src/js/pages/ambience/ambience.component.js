@@ -25,7 +25,7 @@ export class AmbienceComponent extends FiltersComponent {
 	doFilterItem(key, item, value) {
 		switch (key) {
 			case 'ambience':
-				return item.ambience.id === value;
+				return item.ambiences.indexOf(value) !== -1;
 			case 'category':
 				return item.category.id === value;
 			case 'material':

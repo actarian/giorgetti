@@ -64,38 +64,44 @@
 	<div class="section--gallery">
 		<div class="container">
 			<div class="title">Materie</div>
-			<div class="swiper-container" swiper-gallery>
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/materials/materials-01.jpg" />
-								<div class="over">
-									<div class="over__title">Materie 01</div>
+			<div swiper-gallery>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/materials/materials-01.jpg" />
+									<div class="over">
+										<div class="over__title">Materie 01</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/materials/materials-02.jpg" />
+									<div class="over">
+										<div class="over__title">Materie 02</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card--gallery">
+								<div class="card__picture">
+									<img src="/giorgetti/img/materials/materials-03.jpg" />
+									<div class="over">
+										<div class="over__title">Materie 03</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/materials/materials-02.jpg" />
-								<div class="over">
-									<div class="over__title">Materie 02</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="card--gallery">
-							<div class="card__picture">
-								<img src="/giorgetti/img/materials/materials-03.jpg" />
-								<div class="over">
-									<div class="over__title">Materie 03</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				</div>
+				<div class="group--actions">
+					<button type="button" class="btn--prev" [class]="{ active: hasPrev() }" (click)="slidePrev()"><svg class="arrow-prev"><use xlink:href="#arrow-prev"></use></svg></button>
+					<button type="button" class="btn--next" [class]="{ active: hasNext() }" (click)="slideNext()"><svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg></button>
 				</div>
 			</div>
 		</div>

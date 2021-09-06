@@ -27,7 +27,9 @@ export class NewsletterComponent extends Component {
 			engagement: new FormControl(null),
 			newsletter: true,
 			newsletterLanguage: new FormControl(null, [Validators.RequiredValidator()]),
-			privacy: new FormControl(null, [Validators.RequiredValidator()]),
+			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
+			commercial: new FormControl(null, [Validators.RequiredValidator()]),
+			promotion: new FormControl(null, [Validators.RequiredValidator()]),
 			checkRequest: window.antiforgery,
 			checkField: '',
 		});

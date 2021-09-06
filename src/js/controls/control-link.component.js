@@ -3,7 +3,7 @@ import { ControlComponent } from './control.component';
 export class ControlLinkComponent extends ControlComponent {
 
 	onInit() {
-		this.label = this.label || 'label';
+		super.onInit();
 		this.disabled = this.disabled || false;
 		const { node } = getContext(this);
 		const input = this.input = node.querySelector('input');

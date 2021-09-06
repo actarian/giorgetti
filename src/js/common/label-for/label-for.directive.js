@@ -10,6 +10,6 @@ export class LabelForDirective extends Directive {
 }
 
 LabelForDirective.meta = {
-	selector: '[labelFor]',
+	selector: '[[labelFor]]',
 	inputs: ['labelFor']
 };

@@ -1,5 +1,5 @@
 import { BehaviorSubject, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
 import { environment } from '../../environment';
@@ -107,13 +107,15 @@ export class CartService {
 		}
 	}
 
-	static setCart(cart) {
+	static setCart(cart, skip) {
 		if (cart) {
 			LocalStorageService.set(CartService.STORAGE_KEY, cart);
 		} else {
 			LocalStorageService.delete(CartService.STORAGE_KEY);
 		}
-		CartService.cart$_.next(cart);
+		if (!skip) {
+			CartService.cart$_.next(cart);
+		}
 	}
 
 	static cart$() {
@@ -146,8 +148,7 @@ export class CartService {
 
 	static estimatedDelivery$(cart) {
 		if (environment.flags.production) {
-			// !!! convertire in post ApiService.post$('/cart/estimated-delivery', cart);
-			return ApiService.get$('/cart/estimated-delivery.json');
+			return ApiService.post$('/cart/estimated-delivery', cart);
 		} else {
 			return ApiService.get$('/cart/estimated-delivery.json');
 		}
@@ -161,9 +162,9 @@ export class CartService {
 		}
 	}
 
-	static getStores$(payload) {
+	static getStores$(cart) {
 		if (environment.flags.production) {
-			return ApiService.post$('/cart/stores', payload);
+			return ApiService.post$('/cart/stores', cart);
 		} else {
 			return ApiService.get$('/cart/stores.json');
 		}
@@ -171,9 +172,19 @@ export class CartService {
 
 	static getDiscount$(payload) {
 		if (environment.flags.production) {
-			return ApiService.get$('/cart/discount.json');
+			return ApiService.post$('/cart/discount', payload);
 		} else {
 			return ApiService.get$('/cart/discount.json');
 		}
+	}
+
+	static doPayment$(cart) {
+		return (environment.flags.production ? ApiService.post$('/cart/payment', cart) : ApiService.get$('/cart/payment.json')).pipe(
+			tap(_ => {
+				// !!! clearing cart with skip option!
+				CartMiniService.setItems([], true);
+				CartService.setCart(cart, true);
+			}),
+		)
 	}
 }

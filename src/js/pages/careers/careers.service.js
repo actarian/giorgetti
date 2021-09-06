@@ -5,7 +5,7 @@ export class CareersService {
 
 	static data$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/careers/data.json');
+			return ApiService.get$('/careers/data');
 		} else {
 			return ApiService.get$('/careers/data.json');
 		}
@@ -13,7 +13,7 @@ export class CareersService {
 
 	static positions$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/careers/positions.json');
+			return ApiService.get$('/careers/positions');
 		} else {
 			return ApiService.get$('/careers/positions.json');
 		}
@@ -21,8 +21,7 @@ export class CareersService {
 
 	static submit$(payload) {
 		if (environment.flags.production) {
-			// !!! convert to .post$
-			return ApiService.get$('/careers/submit.json', payload);
+			return ApiService.post$('/careers/submit', payload);
 		} else {
 			return ApiService.get$('/careers/submit.json');
 		}

@@ -14,6 +14,7 @@ export class UserModalComponent extends UserComponent {
 			const data = parentInstance.modal.data;
 			this.view = data.view;
 			this.me = data.me;
+			this.skipAutoClose = data.skipAutoClose;
 			// console.log('UserModalComponent.onInit', data);
 		}
 		LocomotiveScrollService.stop();
@@ -48,7 +49,9 @@ export class UserModalComponent extends UserComponent {
 
 	onSignUp(user) {
 		// console.log('UserModalComponent.onSignUp', user);
-		ModalService.resolve(user);
+		if (!this.skipAutoClose) {
+			ModalService.resolve(user);
+		}
 	}
 
 	onSignIn(user) {

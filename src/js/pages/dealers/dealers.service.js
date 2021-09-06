@@ -6,7 +6,7 @@ export class DealersService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/dealers/all.json').pipe(
+			return ApiService.get$('/dealers/all').pipe(
 				map(items => items.sort((a, b) => {
 					return b.regions.length - a.regions.length;
 				})),
@@ -22,7 +22,7 @@ export class DealersService {
 
 	static filters$() {
 		if (environment.flags.production) {
-			return ApiService.get$('/dealers/filters.json');
+			return ApiService.get$('/dealers/filters');
 		} else {
 			return ApiService.get$('/dealers/filters.json');
 		}
