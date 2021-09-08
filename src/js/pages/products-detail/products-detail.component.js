@@ -11,6 +11,10 @@ import { ProductsDetailService } from './products-detail.service';
 
 export class ProductsDetailComponent extends Component {
 
+	get firstConfigurableVersion() {
+		return this.items && this.items.find(x => x.configurable);
+	}
+
 	onInit() {
 		this.items = [];
 		this.visibleItems = [];
@@ -62,8 +66,15 @@ export class ProductsDetailComponent extends Component {
 	}
 
 	configureProduct(version) {
-		// window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
-		window.location.href = `${this.product.url}/config?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
+		version = version || this.firstConfigurableVersion;
+		if (!version) {
+			return;
+		}
+		if (environment.flags.production) {
+			window.location.href = `${this.product.url}/config?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
+		} else {
+			window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
+		}
 	}
 
 	onReservedArea() {

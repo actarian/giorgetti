@@ -3,6 +3,18 @@
 
 <main class="main" products-detail [product]="{ 'id': 5254, 'code': '63230', 'url': '/giorgetti/products-detail.html', 'image': '/giorgetti/img/products/572_n_LISTING_progetti.jpg', 'title': 'Progetti' }">
 
+	<div class="section--products-detail-nav">
+		<div class="container" locomotive-scroll-sticky target=".nav--products-detail" until=".footer">
+			<ul class="nav--products-detail">
+				<li class="nav__item"><a href="#details" (locomotiveScrollTo)="'#details'">Dettagli</a></li>
+				<li class="nav__item"><a href="#versions" (locomotiveScrollTo)="'#versions'">Versioni</a></li>
+				<li class="nav__item"><a href="#materials" (locomotiveScrollTo)="'#materials'">Materie</a></li>
+				<li class="nav__item"><a href="#insights" (locomotiveScrollTo)="'#insights'">Approfondimenti</a></li>
+				<li class="nav__item nav__item--shop" *if="firstConfigurableVersion"><button type="button" (click)="configureProduct()">Acquista ora</button></li>
+			</ul>
+		</div>
+	</div>
+
 	<div class="section--breadcrumb">
 		<div class="container">
 			<ul class="nav--breadcrumb">
@@ -28,10 +40,12 @@
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
 							<div class="card__cta">
 								<button type="button" class="btn--more" (locomotiveScrollTo)="'#versions'">Scopri le versioni</button>
+								<!--
 								<button type="button" class="btn--more" (click)="onAddToCart(product)">
 									<span *if="!isAddedToCart({ 'id': 1 })">Acquista</span>
 									<span *if="isAddedToCart({ 'id': 1 })">Vai al carrello</span>
 								</button>
+								-->
 							</div>
 							<div class="card__designer">Designer Carlo Colombo 2018</div>
 						</div>
@@ -110,7 +124,7 @@
 	</div>
 
 	<!-- DETAILS -->
-	<div class="section--details">
+	<div class="section--details" id="details">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
@@ -152,6 +166,7 @@
 					<div class="card--version">
 						<div class="card__picture">
 							<img [src]="item.image" />
+							<!--
 							<div class="badge--configure" *if="item.configurable && ('cart' | flag)">
 								<svg class="cart"><use xlink:href="#cart"></use></svg>
 								<span *if="item.madeToOrder">Made to order</span>
@@ -161,6 +176,11 @@
 								<svg class="edit"><use xlink:href="#edit"></use></svg>
 								<span>Personalizzabile</span>
 							</div>
+							-->
+						</div>
+						<div class="badge--buy" *if="item.configurable">
+							<span *if="('cart' | flag)">Acquista ora</span>
+							<span *if="!('cart' | flag)">Personalizzabile</span>
 						</div>
 						<div class="card__content">
 							<div class="card__title" [innerHTML]="item.title"></div>
@@ -187,7 +207,7 @@
 	</div>
 
 	<!-- PRODUCT MATERIALS -->
-	<div class="section--product-materials">
+	<div class="section--product-materials" id="materials">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">

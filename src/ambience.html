@@ -182,6 +182,7 @@
 							<span class="over">
 								<span class="over__title" [innerHTML]="item.title"></span>
 							</span>
+							<!--
 							<div class="badge--configure" *if="item.configurable && ('cart' | flag)">
 								<svg class="cart"><use xlink:href="#cart"></use></svg>
 								<span *if="item.madeToOrder">Made to order</span>
@@ -191,7 +192,12 @@
 								<svg class="edit"><use xlink:href="#edit"></use></svg>
 								<span>Personalizzabile</span>
 							</div>
+							-->
 						</span>
+						<div class="badge--buy" *if="item.configurable">
+							<span *if="('cart' | flag)">Acquista ora</span>
+							<span *if="!('cart' | flag)">Personalizzabile</span>
+						</div>
 						<span class="card__content">
 							<span class="card__title" [innerHTML]="item.title"></span>
 						</span>

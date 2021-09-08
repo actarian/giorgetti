@@ -37,6 +37,7 @@
 							<div class="th td--unitary-price">Prezzo unitario</div>
 							<div class="th td--qty">Quantità</div>
 							<div class="th td--remove"></div>
+							<div class="th td--alert"></div>
 							<div class="th td--price">Prezzo</div>
 						</div>
 						<div class="tr tr--cart" *for="let item of items">
@@ -74,6 +75,15 @@
 									<!-- rimuovi x -->
 									<svg class="bin"><use xlink:href="#bin"></use></svg>
 								</button>
+							</div>
+							<div class="td td--alert">
+								<span class="made-to-order" title="Articolo non restituibile" *if="item.madeToOrder">
+									<svg class="alert"><use xlink:href="#alert"></use></svg>
+									<span>Made to order</span>
+								</span>
+								<span class="ready-to-order" title="Articolo restituibile" *if="!item.madeToOrder">
+									<span>Ready to order</span>
+								</span>
 							</div>
 							<div class="td td--price">
 								<span class="price" [innerHTML]="(item.price.price * item.qty) | number : { style: 'currency', currency: 'EUR' }"></span>

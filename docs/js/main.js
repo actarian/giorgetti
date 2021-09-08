@@ -6103,8 +6103,11 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
   _proto.onEdit = function onEdit(item) {
     // console.log('CartComponent.onEdit', item);
-    // window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
-    window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    if (environment.flags.production) {
+      window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    } else {
+      window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    }
   };
 
   _proto.items$ = function items$() {
@@ -8102,8 +8105,17 @@ ProductsConfigureComponent.meta = {
   };
 
   _proto.configureProduct = function configureProduct(version) {
-    // window.location.href = `${environment.slug.configureProduct}?productId=${version.productId}&code=${version.code}${version.familyCode ? `&familyCode=${version.familyCode}` : ''}`;
-    window.location.href = this.product.url + "/config?productId=" + version.productId + "&code=" + version.code + (version.familyCode ? "&familyCode=" + version.familyCode : '');
+    version = version || this.firstConfigurableVersion;
+
+    if (!version) {
+      return;
+    }
+
+    if (environment.flags.production) {
+      window.location.href = this.product.url + "/config?productId=" + version.productId + "&code=" + version.code + (version.familyCode ? "&familyCode=" + version.familyCode : '');
+    } else {
+      window.location.href = environment.slug.configureProduct + "?productId=" + version.productId + "&code=" + version.code + (version.familyCode ? "&familyCode=" + version.familyCode : '');
+    }
   };
 
   _proto.onReservedArea = function onReservedArea() {
@@ -8128,6 +8140,15 @@ ProductsConfigureComponent.meta = {
       }
     });
   };
+
+  _createClass(ProductsDetailComponent, [{
+    key: "firstConfigurableVersion",
+    get: function get() {
+      return this.items && this.items.find(function (x) {
+        return x.configurable;
+      });
+    }
+  }]);
 
   return ProductsDetailComponent;
 }(rxcomp.Component);
@@ -8217,10 +8238,17 @@ var ProductsService = /*#__PURE__*/function () {
     _FiltersComponent.prototype.onInit.call(this);
 
     this.categoryId = this.categoryId || null;
+    this.shop = this.shop || false;
   };
 
   _proto.load$ = function load$() {
-    return rxjs.combineLatest([ProductsService.all$(), ProductsService.filters$()]);
+    var _this = this;
+
+    return rxjs.combineLatest([ProductsService.all$().pipe(operators.map(function (products) {
+      return products.filter(function (x) {
+        return _this.shop ? x.configurable : true;
+      });
+    })), ProductsService.filters$()]);
   };
 
   _proto.setFiltersParams = function setFiltersParams() {
@@ -8257,7 +8285,7 @@ var ProductsService = /*#__PURE__*/function () {
 }(FiltersComponent);
 ProductsComponent.meta = {
   selector: '[products]',
-  inputs: ['categoryId']
+  inputs: ['categoryId', 'shop']
 };var ProjectsRegistrationModalComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ProjectsRegistrationModalComponent, _Component);
 
@@ -10907,8 +10935,11 @@ SwiperProjectsPropositionDirective.meta = {
 
   _proto.onEdit = function onEdit(item) {
     // console.log('CartMiniComponent.onEdit', item);
-    // window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
-    window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    if (environment.flags.production) {
+      window.location.href = item.url + "/config?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    } else {
+      window.location.href = environment.slug.configureProduct + "?productId=" + item.id + "&code=" + item.code + (item.showefy ? "&sl=" + item.showefy.product_link.split('&sl=')[1] : '');
+    }
   };
 
   _proto.onRemoveAll = function onRemoveAll(event) {

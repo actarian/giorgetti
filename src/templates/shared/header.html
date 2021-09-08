@@ -60,11 +60,12 @@
 		</div>
 		<div class="group--main" [class]="{ active: header == 'menu' }">
 			<ul class="nav--main">
-				<li class="nav__item" [class]="{ active: menu == 1 }"><span [menu]="1">Collezione</span></li>
+				<li class="nav__item" [class]="{ active: menu == 1 }"><span [menu]="1">Prodotti</span></li>
 				<li class="nav__item" [class]="{ active: menu == 2 }"><span [menu]="2">Ambienti</span></li>
 				<li class="nav__item" [class]="{ active: menu == 3 }"><span [menu]="3">Giorgetti World</span></li>
 				<li class="nav__item" [class]="{ active: menu == 4 }"><span [menu]="4">News</span></li>
 				<li class="nav__item" [class]="{ active: menu == 5 }"><span [menu]="5">Progetti</span></li>
+				<li class="nav__item nav__item--shop" *if="'cart' | flag"><a href="/giorgetti/products.html">E-Shop</a></li>
 				<li class="nav__item hidden-sm-up"><span (click)="onToggle('search')">Cerca <svg class="search"><use xlink:href="#search"></use></svg></span></li>
 				<li class="nav__item hidden-sm-up"><a href="/giorgetti/reserved-area.html" [class]="{ active: user }">Area Riservata <svg class="user"><use xlink:href="#user"></use></svg></a></li>
 				<!--
@@ -106,6 +107,7 @@
 							<li class="nav__item"><a href="/giorgetti/products.html" data-picture="/giorgetti/img/menu/collections/16-archetipi.jpg">Archetipi</a></li>
 							<li class="nav__item"><a href="/giorgetti/products.html" data-picture="/giorgetti/img/menu/collections/17-atmosphere.jpg">Complementi Atmosphere</a></li>
 							<li class="nav__item"><a href="/giorgetti/products.html" data-picture="/giorgetti/img/menu/default.jpg" class="all">Tutti i prodotti</a></li>
+							<li class="nav__item"><a href="/giorgetti/products.html" data-picture="/giorgetti/img/menu/default.jpg" class="all" *if="'cart' | flag">Tutti i prodotti acquistabili ora</a></li>
 						</ul>
 						<div class="group--picture">
 							<img src="/giorgetti/img/menu/default.jpg" data-target />

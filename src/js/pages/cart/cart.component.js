@@ -341,8 +341,11 @@ export class CartComponent extends Component {
 
 	onEdit(item) {
 		// console.log('CartComponent.onEdit', item);
-		// window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
-		window.location.href = `${item.url}/config?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		if (environment.flags.production) {
+			window.location.href = `${item.url}/config?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		} else {
+			window.location.href = `${environment.slug.configureProduct}?productId=${item.id}&code=${item.code}${item.showefy ? `&sl=${item.showefy.product_link.split('&sl=')[1]}` : ''}`;
+		}
 	}
 
 	items$() {

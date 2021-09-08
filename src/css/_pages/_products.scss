@@ -1,5 +1,6 @@
 .card--product-proposition {
 	@extend %btn;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -75,6 +76,20 @@
 		}
 	}
 
+	.badge--buy {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		top: -10px;
+		right: -10px;
+		padding: 10px 20px;
+		font-size: 14px;
+		line-height: 1;
+		text-align: center;
+		background: #6A6A6A;
+		color: white;
+	}
+
 	.card__title {
 		display: block;
 		margin-bottom: 15px;
@@ -90,7 +105,6 @@
 	}
 
 	&:hover {
-
 		&>.card__picture {
 			img {
 				transform: scale(1.1, 1.1);

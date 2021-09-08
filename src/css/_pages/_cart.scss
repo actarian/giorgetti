@@ -284,12 +284,12 @@
 		background: #f8f8f8;
 	}
 
-	.made-to-order {
+	.made-to-order,
+	.ready-to-order {
 		display: flex;
 		align-items: center;
 		font-size: 11px;
 		font-weight: 600;
-		color: $foreground-primary;
 		cursor: pointer;
 
 		svg {
@@ -309,6 +309,14 @@
 				display: none;
 			}
 		}
+	}
+
+	.made-to-order {
+		color: $foreground-primary;
+	}
+
+	.ready-to-order {
+		color: #8dad5a;
 	}
 
 	.btn--remove {

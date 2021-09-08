@@ -1,4 +1,5 @@
 import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FiltersComponent } from '../../shared/filters/filters.component';
 import { ProductsService } from './products.service';
 
@@ -7,11 +8,16 @@ export class ProductsComponent extends FiltersComponent {
 	onInit() {
 		super.onInit();
 		this.categoryId = this.categoryId || null;
+		this.shop = this.shop || false;
 	}
 
 	load$() {
 		return combineLatest([
-			ProductsService.all$(),
+			ProductsService.all$().pipe(
+				map(products => {
+					return products.filter(x => this.shop ? x.configurable : true);
+				}),
+			),
 			ProductsService.filters$(),
 		]);
 	}
@@ -43,5 +49,5 @@ export class ProductsComponent extends FiltersComponent {
 
 ProductsComponent.meta = {
 	selector: '[products]',
-	inputs: ['categoryId'],
+	inputs: ['categoryId', 'shop'],
 };

@@ -24,7 +24,8 @@
     ],
     "url": "/giorgetti/products-detail.html",
     "image": "/giorgetti/img/products/4240_n_LISTING_50250.jpg",
-    "title": "50250"
+    "title": "50250",
+    "configurable": true
   },
   {
     "id": 1,
@@ -51,7 +52,9 @@
     ],
     "url": "/giorgetti/products-detail.html",
     "image": "/giorgetti/img/products/4462_n_Giorgetti_SL_Adam_bench_005_listing-sedie-poltroncine.jpg",
-    "title": "Adam <em>panca</em>"
+    "title": "Adam <em>panca</em>",
+    "configurable": true,
+    "large": true
   },
   {
     "id": 1,

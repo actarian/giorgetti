@@ -247,7 +247,6 @@
 
 	&>.nav__item {
 		position: static;
-		margin-bottom: -10px;
 		font-size: 14px;
 		line-height: 1.5;
 		letter-spacing: 0.05em;
@@ -256,7 +255,7 @@
 
 		&>a,
 		&>span {
-			padding: 5px 5px 10px 5px;
+			padding: 5px;
 			display: flex;
 			align-items: center;
 
@@ -272,7 +271,7 @@
 				display: block;
 				position: absolute;
 				left: 0;
-				bottom: 0px;
+				bottom: -4px;
 				width: 100%;
 				height: 4px;
 				background: $background-negative;
@@ -294,9 +293,37 @@
 		}
 	}
 
+	&>.nav__item--shop {
+
+		&>a,
+		&>span {
+			padding: 5px 17px;
+
+			&:after {
+				display: none;
+			}
+
+			&,
+			&:link,
+			&:active,
+			&:focus,
+			&:visited,
+			&:hover {
+				background: #646464;
+				color: $foreground-negative;
+			}
+		}
+	}
+
 	@include media-up(sm) {
+		&>.nav__item {
+			margin-top: 1px;
+			margin-bottom: -10px;
+			padding-bottom: 4px;
+		}
+
 		&>.nav__item+.nav__item {
-			margin-left: 50px;
+			margin-left: 40px;
 		}
 	}
 
@@ -312,12 +339,21 @@
 			&>span {
 				display: inline-flex;
 				padding: 0 0 2px 0;
-				margin-bottom: 1.5em;
+				margin-bottom: 0.7em;
 
 				&:after {
+					bottom: 0;
 					height: 2px;
 					transform-origin: left;
 				}
+			}
+		}
+
+		&>.nav__item--shop {
+
+			&>a,
+			&>span {
+				padding: 4px 12px;
 			}
 		}
 
