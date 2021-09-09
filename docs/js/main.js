@@ -4688,6 +4688,147 @@ var FiltersComponent = /*#__PURE__*/function (_Component) {
 }(rxcomp.Component);
 FiltersComponent.meta = {
   selector: '[filters]'
+};// import { combineLatest } from 'rxjs';
+var ProductsService = /*#__PURE__*/function () {
+  function ProductsService() {}
+
+  ProductsService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ProductsService.sort$(ApiService.get$('/products/all'));
+    } else {
+      return ProductsService.sort$(ApiService.get$('/products/all.json'));
+    }
+  };
+
+  ProductsService.filters$ = function filters$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/products/filters');
+    } else {
+      return ApiService.get$('/products/filters.json');
+    }
+  };
+
+  ProductsService.sort$ = function sort$(items$) {
+    return items$.pipe(operators.map(function (items) {
+      items.sort(function (a, b) {
+        if (a.configurable !== b.configurable) {
+          return a.configurable ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
+      /*
+      if (environment.flags.cart) {
+      	items.sort((a, b) => {
+      		if (a.configurable !== b.configurable) {
+      			return a.configurable ? -1 : 1;
+      		} else {
+      			return 0;
+      		}
+      	});
+      } else {
+      	items.forEach(x => x.configurable = false);
+      }
+      */
+
+      return items;
+    }));
+  }
+  /*
+  static fake$() {
+  	return combineLatest([ProductsService.all$(), ApiService.get$('/products/all_.json')]).pipe(
+  		map(data => {
+  			const items = data[0];
+  			const items_ = data[1];
+  			items.forEach((item, i) => {
+  				const other = items_.find(x => x.title === item.title);
+  				if (other) {
+  					item.category = {
+  						id: 1,
+  						name: other.url.replace('https://www.giorgettimeda.com/it/prodotti/', '').split('/')[0],
+  					};
+  				}
+  			});
+  			console.log(JSON.stringify(items));
+  			return items;
+  		})
+  	);
+  }
+  */
+  ;
+
+  return ProductsService;
+}();var SHOP_OPTION_ID = environment.flags.production ? 1 : 1;
+var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(ProductsComponent, _FiltersComponent);
+
+  function ProductsComponent() {
+    return _FiltersComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ProductsComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+
+    this.categoryId = this.categoryId || null;
+    this.shop = this.shop || false;
+  };
+
+  _proto.load$ = function load$() {
+    var _this = this;
+
+    return rxjs.combineLatest([ProductsService.all$().pipe(operators.map(function (products) {
+      return products.filter(function (x) {
+        return _this.shop ? x.configurable : true;
+      });
+    })), ProductsService.filters$()]);
+  };
+
+  _proto.setFiltersParams = function setFiltersParams() {
+    if (this.categoryId) {
+      this.filters.category.set({
+        value: this.categoryId
+      });
+    }
+
+    if (this.shop) {
+      this.filters.shop.set({
+        value: SHOP_OPTION_ID
+      });
+    }
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'category':
+        return item.category.id === value;
+
+      case 'ambience':
+        return item.ambiences.indexOf(value) !== -1;
+
+      case 'material':
+        return item.materials.indexOf(value) !== -1;
+
+      case 'designer':
+        return item.designers.indexOf(value) !== -1;
+
+      case 'shop':
+        return value === SHOP_OPTION_ID ? item.configurable : true;
+
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+      default:
+        return false;
+    }
+  };
+
+  return ProductsComponent;
+}(FiltersComponent);
+ProductsComponent.meta = {
+  selector: '[products]',
+  inputs: ['categoryId', 'shop']
 };var AmbienceService = /*#__PURE__*/function () {
   function AmbienceService() {}
 
@@ -4775,6 +4916,9 @@ FiltersComponent.meta = {
 
       case 'designer':
         return item.designers.indexOf(value) !== -1;
+
+      case 'shop':
+        return value === SHOP_OPTION_ID ? item.configurable : true;
 
       case 'search':
         return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
@@ -8155,137 +8299,6 @@ ProductsConfigureComponent.meta = {
 ProductsDetailComponent.meta = {
   selector: '[products-detail]',
   inputs: ['product']
-};// import { combineLatest } from 'rxjs';
-var ProductsService = /*#__PURE__*/function () {
-  function ProductsService() {}
-
-  ProductsService.all$ = function all$() {
-    if (environment.flags.production) {
-      return ProductsService.sort$(ApiService.get$('/products/all'));
-    } else {
-      return ProductsService.sort$(ApiService.get$('/products/all.json'));
-    }
-  };
-
-  ProductsService.filters$ = function filters$() {
-    if (environment.flags.production) {
-      return ApiService.get$('/products/filters');
-    } else {
-      return ApiService.get$('/products/filters.json');
-    }
-  };
-
-  ProductsService.sort$ = function sort$(items$) {
-    return items$.pipe(operators.map(function (items) {
-      items.sort(function (a, b) {
-        if (a.configurable !== b.configurable) {
-          return a.configurable ? -1 : 1;
-        } else {
-          return 0;
-        }
-      });
-      /*
-      if (environment.flags.cart) {
-      	items.sort((a, b) => {
-      		if (a.configurable !== b.configurable) {
-      			return a.configurable ? -1 : 1;
-      		} else {
-      			return 0;
-      		}
-      	});
-      } else {
-      	items.forEach(x => x.configurable = false);
-      }
-      */
-
-      return items;
-    }));
-  }
-  /*
-  static fake$() {
-  	return combineLatest([ProductsService.all$(), ApiService.get$('/products/all_.json')]).pipe(
-  		map(data => {
-  			const items = data[0];
-  			const items_ = data[1];
-  			items.forEach((item, i) => {
-  				const other = items_.find(x => x.title === item.title);
-  				if (other) {
-  					item.category = {
-  						id: 1,
-  						name: other.url.replace('https://www.giorgettimeda.com/it/prodotti/', '').split('/')[0],
-  					};
-  				}
-  			});
-  			console.log(JSON.stringify(items));
-  			return items;
-  		})
-  	);
-  }
-  */
-  ;
-
-  return ProductsService;
-}();var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
-  _inheritsLoose(ProductsComponent, _FiltersComponent);
-
-  function ProductsComponent() {
-    return _FiltersComponent.apply(this, arguments) || this;
-  }
-
-  var _proto = ProductsComponent.prototype;
-
-  _proto.onInit = function onInit() {
-    _FiltersComponent.prototype.onInit.call(this);
-
-    this.categoryId = this.categoryId || null;
-    this.shop = this.shop || false;
-  };
-
-  _proto.load$ = function load$() {
-    var _this = this;
-
-    return rxjs.combineLatest([ProductsService.all$().pipe(operators.map(function (products) {
-      return products.filter(function (x) {
-        return _this.shop ? x.configurable : true;
-      });
-    })), ProductsService.filters$()]);
-  };
-
-  _proto.setFiltersParams = function setFiltersParams() {
-    if (this.categoryId) {
-      this.filters.category.set({
-        value: this.categoryId
-      });
-    }
-  };
-
-  _proto.doFilterItem = function doFilterItem(key, item, value) {
-    switch (key) {
-      case 'category':
-        return item.category.id === value;
-
-      case 'ambience':
-        return item.ambiences.indexOf(value) !== -1;
-
-      case 'material':
-        return item.materials.indexOf(value) !== -1;
-
-      case 'designer':
-        return item.designers.indexOf(value) !== -1;
-
-      case 'search':
-        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-
-      default:
-        return false;
-    }
-  };
-
-  return ProductsComponent;
-}(FiltersComponent);
-ProductsComponent.meta = {
-  selector: '[products]',
-  inputs: ['categoryId', 'shop']
 };var ProjectsRegistrationModalComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ProjectsRegistrationModalComponent, _Component);
 

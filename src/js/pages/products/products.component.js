@@ -1,7 +1,10 @@
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environment';
 import { FiltersComponent } from '../../shared/filters/filters.component';
 import { ProductsService } from './products.service';
+
+export const SHOP_OPTION_ID = environment.flags.production ? 1 : 1;
 
 export class ProductsComponent extends FiltersComponent {
 
@@ -26,6 +29,9 @@ export class ProductsComponent extends FiltersComponent {
 		if (this.categoryId) {
 			this.filters.category.set({ value: this.categoryId });
 		}
+		if (this.shop) {
+			this.filters.shop.set({ value: SHOP_OPTION_ID });
+		}
 	}
 
 	doFilterItem(key, item, value) {
@@ -38,6 +44,8 @@ export class ProductsComponent extends FiltersComponent {
 				return item.materials.indexOf(value) !== -1;
 			case 'designer':
 				return item.designers.indexOf(value) !== -1;
+			case 'shop':
+				return value === SHOP_OPTION_ID ? item.configurable : true;
 			case 'search':
 				return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
 			default:

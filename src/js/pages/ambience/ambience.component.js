@@ -1,5 +1,6 @@
 import { combineLatest } from 'rxjs';
 import { FiltersComponent } from '../../shared/filters/filters.component';
+import { SHOP_OPTION_ID } from '../products/products.component';
 import { AmbienceService } from './ambience.service';
 
 export class AmbienceComponent extends FiltersComponent {
@@ -32,6 +33,8 @@ export class AmbienceComponent extends FiltersComponent {
 				return item.materials.indexOf(value) !== -1;
 			case 'designer':
 				return item.designers.indexOf(value) !== -1;
+			case 'shop':
+				return value === SHOP_OPTION_ID ? item.configurable : true;
 			case 'search':
 				return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1;
 			default:

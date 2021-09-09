@@ -8,7 +8,7 @@
 
 	<main class="main" products [categoryId]="1">
 -->
-<main class="main" products shop="true">
+<main class="main" products>
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -47,6 +47,7 @@
 					<div class="filters__select" name="Ambiente" [filter]="filters.ambience" [filters]="filters" (change)="onFilterDidChange()"></div>
 					<!-- <div class="filters__select" name="Materiale" [filter]="filters.material" [filters]="filters" (change)="onFilterDidChange()"></div> -->
 					<div class="filters__select" name="Designer" [filter]="filters.designer" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<div class="filters__select" name="E-Shop" [filter]="filters.shop" [filters]="filters" (change)="onFilterDidChange()"></div>
 					<!--
 					<div class="filters__select" *if="!categoryId">
 						<div control-custom-select [control]="controls.category" label="Tipologia" select="Tipologia"></div>

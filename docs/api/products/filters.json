@@ -183,6 +183,20 @@
       }
     ]
   },
+  "shop": {
+    "label": "E-Shop",
+    "mode": "select",
+    "options": [
+      {
+        "value": 1,
+        "label": "Acquistabili"
+      },
+      {
+        "value": 2,
+        "label": "Tutti"
+      }
+    ]
+  },
   "search": {
     "label": "Cerca",
     "mode": "query"

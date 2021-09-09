@@ -1,4 +1,10 @@
-.section--products-detail-nav {}
+.section--products-detail-nav {
+
+	@include media-down(xs) {
+		display: none;
+	}
+
+}
 
 .nav--products-detail {
 	@extend %nav;

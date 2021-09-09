@@ -7360,6 +7360,10 @@ test-component code {
         margin-right: 15px;
         margin-bottom: 70px; } }
 
+@media (max-width: 767.98px) {
+  .section--products-detail-nav {
+    display: none; } }
+
 .nav--products-detail {
   position: relative;
   padding: 10px 0;
