@@ -22,6 +22,17 @@
       { "value": 17, "label": "Complementi atmosphere" }
     ]
   },
+  "subcategory": {
+    "label": "Categoria",
+    "mode": "select",
+    "options": [
+      { "value": 100, "label": "Tappeti" },
+      { "value": 200, "label": "Illuminazione" },
+      { "value": 300, "label": "Complementi d'arredo" },
+      { "value": 400, "label": "Accessori" },
+      { "value": 500, "label": "Svago" }
+    ]
+  },
   "ambience": {
     "label": "Ambiente",
     "mode": "select",

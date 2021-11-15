@@ -1,0 +1,36 @@
+{
+  "category": {
+    "label": "Tipologia",
+    "mode": "select",
+    "options": [
+      {
+        "value": 410,
+        "label": "Small talk"
+      },
+      {
+        "value": 222,
+        "label": "Photo journal"
+      },
+      {
+        "value": 408,
+        "label": "In numbers"
+      },
+      {
+        "value": 223,
+        "label": "Hotspot"
+      },
+      {
+        "value": 409,
+        "label": "Environment"
+      },
+      {
+        "value": 409,
+        "label": "Back to the future"
+      }
+    ]
+  },
+  "search": {
+    "label": "Cerca",
+    "mode": "query"
+  }
+}

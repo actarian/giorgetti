@@ -12,6 +12,8 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
 import { DealersComponent } from './pages/dealers/dealers.component';
 import { DesignersComponent } from './pages/designers/designers.component';
 import { GenericModalComponent } from './pages/generic/generic-modal.component';
+import { MagazineComponent } from './pages/magazine/magazine.component';
+import { MarketPropositionModalComponent } from './pages/market-proposition/market-proposition-modal.component';
 import { MarketsAndLanguagesModalComponent } from './pages/markets-and-languages/markets-and-languages-modal.component';
 import { MaterialsModalComponent } from './pages/materials/materials-modal.component';
 import { MaterialsComponent } from './pages/materials/materials.component';
@@ -50,7 +52,9 @@ AppModule.meta = {
 		DealersComponent,
 		DesignersComponent,
 		GenericModalComponent,
+		MagazineComponent,
 		MarketsAndLanguagesModalComponent,
+		MarketPropositionModalComponent,
 		MaterialsComponent,
 		MaterialsModalComponent,
 		NewsComponent,

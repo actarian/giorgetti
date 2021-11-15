@@ -7,6 +7,7 @@
 	example:
 
 	<main class="main" products [categoryId]="1">
+	<main class="main" products [categoryId]="17" [subcategoryId]="100">
 -->
 <main class="main" products>
 
@@ -44,6 +45,7 @@
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
 					<div class="filters__select" name="Tipologia" [filter]="filters.category" [filters]="filters" (change)="onFilterDidChange()" *if="!categoryId"></div>
+					<div class="filters__select" name="Categoria" [filter]="filters.subcategory" [filters]="filters" (change)="onFilterDidChange()" *if="categoryId == 17"></div>
 					<div class="filters__select" name="Ambiente" [filter]="filters.ambience" [filters]="filters" (change)="onFilterDidChange()"></div>
 					<!-- <div class="filters__select" name="Materiale" [filter]="filters.material" [filters]="filters" (change)="onFilterDidChange()"></div> -->
 					<div class="filters__select" name="Designer" [filter]="filters.designer" [filters]="filters" (change)="onFilterDidChange()"></div>

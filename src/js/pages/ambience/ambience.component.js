@@ -28,7 +28,10 @@ export class AmbienceComponent extends FiltersComponent {
 			case 'ambience':
 				return item.ambiences.indexOf(value) !== -1;
 			case 'category':
-				return item.category.id === value;
+				// return item.category.id === value;
+				return item.categories.indexOf(value) !== -1;
+			case 'subcategory':
+				return item.subcategories.indexOf(value) !== -1;
 			case 'material':
 				return item.materials.indexOf(value) !== -1;
 			case 'designer':

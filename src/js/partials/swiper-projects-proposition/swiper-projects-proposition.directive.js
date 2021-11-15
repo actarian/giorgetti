@@ -4,10 +4,11 @@ import { SwiperDirective } from '../../common/swiper/swiper.directive';
 export class SwiperProjectsPropositionDirective extends SwiperDirective {
 
 	onInit() {
+		const inHomepage = document.querySelector('.main--homepage') != null;
 		this.options = {
 			slidesPerView: 1.5,
 			spaceBetween: 30,
-			breakpoints: {
+			breakpoints: inHomepage ? {
 				768: {
 					slidesPerView: 2,
 					spaceBetween: 40
@@ -22,6 +23,23 @@ export class SwiperProjectsPropositionDirective extends SwiperDirective {
 				},
 				1920: {
 					slidesPerView: 3,
+					spaceBetween: 70
+				}
+			} : {
+				768: {
+					slidesPerView: 2,
+					spaceBetween: 40
+				},
+				1024: {
+					slidesPerView: 4,
+					spaceBetween: 50
+				},
+				1440: {
+					slidesPerView: 4,
+					spaceBetween: 60
+				},
+				1920: {
+					slidesPerView: 4,
 					spaceBetween: 70
 				}
 			},

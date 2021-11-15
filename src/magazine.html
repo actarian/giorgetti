@@ -1,0 +1,96 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<script>
+window.environment = {
+	labels: {
+		select: 'Seleziona'
+	}
+}
+
+</script>
+
+<main class="main" magazine>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><span>Magazine</span></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--news">
+		<div class="container">
+			<div class="title">Magazine</div>
+			<div class="card--hero-news">
+				<a href="/giorgetti/magazine-detail.html" class="card__picture">
+					<img src="https://www.giorgettimeda.com/media/immagini/8912_z_1Downtown-Design_Dubai2021_04b-min.jpg" />
+					<div class="over">
+						<div class="over__date">29.10.2021</div>
+						<div class="over__title">GIORGETTI PARTECIPA A DOWNTOWN DESIGN DUBAI 2021</div>
+					</div>
+				</a>
+				<div class="card__content" scroll scrollSpeed="1.5">
+					<div class="card__date">29.10.2021</div>
+					<div class="card__title">GIORGETTI PARTECIPA A DOWNTOWN DESIGN DUBAI 2021</div>
+					<div class="card__cta">
+						<a href="/giorgetti/magazine-detail.html" class="btn--discover"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- filters -->
+	<div class="section--filters" *if="!busy">
+		<div class="container">
+			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
+				<div class="group--filters">
+					<div class="filters__title">Cerca articoli inerenti a</div>
+					<div class="filters__select" name="Tipologia" [filter]="filters.category" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<div class="filters__search">
+						<div control-search [control]="controls.search" label="Cerca"></div>
+					</div>
+					<div class="filters__cta">
+						<button type="submit" class="btn--submit">Cerca</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="section--news">
+		<div class="container">
+			<!-- spinner -->
+			<div class="spinner" *if="busy"></div>
+			<!-- results -->
+			<div class="listing--news">
+				<div class="listing__item" *for="let item of visibleItems">
+					<div class="card--news">
+						<a [href]="item.url" class="card__picture">
+							<img loading="lazy" [src]="item.image" />
+							<span class="over">
+								<span class="over__title" [innerHTML]="item.title"></span>
+							</span>
+						</a>
+						<div class="card__content">
+							<div class="card__date" [innerHTML]="item.date" *if="item.date"></div>
+							<div class="card__title" [innerHTML]="item.title"></div>
+							<div class="card__cta">
+								<a [href]="item.url" class="btn--discover"><span>Leggi l’articolo</span> <svg class="arrow-sm-right"><use xlink:href="#arrow-sm-right"></use></svg></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- more -->
+			<div class="group--cta">
+				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

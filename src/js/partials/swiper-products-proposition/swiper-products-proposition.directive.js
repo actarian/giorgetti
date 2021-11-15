@@ -5,7 +5,8 @@ export class SwiperProductsPropositionDirective extends SwiperDirective {
 
 	onInit() {
 		this.options = {
-			slidesPerView: 1.5,
+			slidesPerView: 'auto',
+			// slidesPerView: 1.5,
 			spaceBetween: 30,
 			breakpoints: {
 				768: {

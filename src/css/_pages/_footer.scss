@@ -233,8 +233,12 @@
 	@extend %nav-vertical;
 
 	.nav__item--title {
+		max-width: 100%;
+		min-height: 42px;
 		text-transform: uppercase;
-		white-space: nowrap;
+		white-space: normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	&>.nav__item {

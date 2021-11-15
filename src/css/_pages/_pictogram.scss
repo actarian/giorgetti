@@ -2,6 +2,8 @@
 	position: fixed;
 	opacity: 0.1;
 	animation: linear-rotate 480000ms linear infinite;
+	pointer-events: none;
+	z-index: -1;
 
 	&>img {
 		width: 100%;

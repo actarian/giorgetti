@@ -1,0 +1,24 @@
+<div class="modal--market-proposition" market-proposition-modal>
+	<div class="pictogram"><img src="/giorgetti/img/pictogram.jpg" /></div>
+	<div class="modal__content">
+		<div class="modal__header" (click)="onClose()">
+			<button type="button" class="btn--close"><svg class="close"><use xlink:href="#close"></use></svg></button>
+		</div>
+		<div class="modal__inner">
+			<!--
+			<a href="/giorgetti/" class="btn--logo"><svg class="giorgetti"><use xlink:href="#giorgetti"></use></svg></a>
+			-->
+			<div class="group--market-proposition" *if="proposedMarket && proposedLanguage">
+				<div class="title">Attenzione</div>
+				<div class="abstract">Sembra che tu stia navigando un mercato diverso dal tuo.</div>
+				<div class="group--cta">
+					<button type="button" class="btn--secondary" (click)="onClose()">Procedi sul mercato corrente</button>
+					<a class="btn--primary" [href]="proposedLanguage.url">
+						<span>Vai al mercato <span [innerHTML]="proposedMarket.name"></span></span>
+						<svg class="arrow-next"><use xlink:href="#arrow-next"></use></svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

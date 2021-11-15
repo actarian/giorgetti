@@ -76,13 +76,13 @@ ControlPrivacyComponent.meta = {
 				<label [labelFor]="uniqueId + '_true'">
 					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
-					<span>Acconsento</span>
+					<span [innerHTML]="labels.acconsento"></span>
 				</label>
 				<input type="radio" class="control--checkbox" [id]="uniqueId + '_false'" [name]="uniqueId" [value]="false" (change)="onSelect(false)" />
 				<label [labelFor]="uniqueId + '_false'">
 					<svg class="icon icon--checkbox"><use xlink:href="#checkbox"></use></svg>
 					<svg class="icon icon--checkbox-checked"><use xlink:href="#checkbox-checked"></use></svg>
-					<span>Non acconsento</span>
+					<span [innerHTML]="labels.non_acconsento"></span>
 				</label>
 			</div>
 			<div class="description">

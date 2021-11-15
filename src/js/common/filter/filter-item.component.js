@@ -3,10 +3,6 @@ import { LocomotiveScrollService } from '../locomotive-scroll/locomotive-scroll.
 
 export class FilterItemComponent extends Component {
 
-	onInit() {
-
-	}
-
 	closeFilter() {
 		this.filter.active = false;
 		this.change.next();
@@ -41,6 +37,11 @@ export class FilterItemComponent extends Component {
 	onLeave() {
 		LocomotiveScrollService.start();
 	}
+
+	onClick(item) {
+		this.filter.set(item);
+		LocomotiveScrollService.start();
+	}
 }
 
 FilterItemComponent.meta = {
@@ -57,7 +58,7 @@ FilterItemComponent.meta = {
 			<div class="category" [innerHTML]="name"></div>
 			<ul class="nav--options">
 				<li class="nav--options__item" [class]="{ active: filter.has(item), disabled: item.disabled, empty: !item.value }" *for="let item of filter.options">
-					<span class="option" (click)="filter.set(item)">
+					<span class="option" (click)="onClick(item)">
 						<span class="name" [innerHTML]="item.label | label"></span>
 						<!-- <span class="count" [innerHTML]="item.count || ''"></span> -->
 					</span>

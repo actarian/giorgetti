@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/magazine-detail.html",
+    "image": "https://www.giorgettimeda.com/media/immagini/8510_z_NEWS_london_design_festival-min.jpg",
+    "date": "09.9.2021",
+    "title": "GIORGETTI ALLA LONDON DESIGN WEEK 2021",
+    "abstract": "Dal 17 al 21 maggio, fra icone del brand e nuove collezioni, Giorgetti London mette in scena il suo lifestyle."
+  },
+  {
+    "id": 1,
+    "category": {
+      "name": "Residential",
+      "id": 223
+    },
+    "url": "/giorgetti/magazine-detail.html",
+    "image": "https://www.giorgettimeda.com/media/immagini/8707_t_listing_news-magazine.jpg",
+    "date": "06.9.2021",
+    "title": "GM",
+    "abstract": ""
+  }
+]

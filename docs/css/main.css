@@ -3255,16 +3255,17 @@ h6 {
 .card--contact .card__fax,
 .card--contact .card__email, .section--user-detail .btn--link, .card--address .card__phone,
 .card--address .card__fax,
-.card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
-.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+.card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
-.group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+.group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
+.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
 .modal--materials .btn--prev,
 .modal--materials .btn--next, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
-.section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
+.section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .modal--market-proposition .btn--logo, .modal--market-proposition .btn--close, .modal--market-proposition .btn--secondary,
+.modal--market-proposition .btn--primary, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
   display: inline-block;
   padding: 0;
@@ -3306,16 +3307,17 @@ h6 {
   .card--contact .card__fax,
   .card--contact .card__email, .section--user-detail .btn--link, .card--address .card__phone,
   .card--address .card__fax,
-  .card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
-  .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+  .card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+  .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
   .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
-  .group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-  .section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+  .group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
+  .section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
   .modal--materials .btn--prev,
   .modal--materials .btn--next, .modal--user .btn--close,
   .section--auth .btn--close, .modal--user .btn--link,
-  .section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
+  .section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .modal--market-proposition .btn--logo, .modal--market-proposition .btn--close, .modal--market-proposition .btn--secondary,
+  .modal--market-proposition .btn--primary, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
   .nav--index > .nav__item > span, .nav--language > li > a:active, .nav--service > li > a:active, .nav--main > li > a:active, .nav--social > li > a:active, .nav--colophon > li > a:active, .nav--breadcrumb > li > a:active, .nav--products-detail > li > a:active, .nav--share > li > a:active, .nav--secondary > li > a:active, .nav--markets > li > a:active, .nav--markets > .nav__item ul > li > a:active, .nav--steps > li > a:active, .nav--footer-menu > li > a:active, .nav--dropdown > li > a:active, .nav--options > li > a:active, .nav--submenu > li > a:active, .nav--results > li > a:active, .nav--files > li > a:active, .nav--files ul > li > a:active, .nav--index > li > a:active,
   .nav--language > li > button:active,
   .nav--service > li > button:active,
@@ -3346,16 +3348,17 @@ h6 {
   .card--contact .card__fax:active,
   .card--contact .card__email:active, .section--user-detail .btn--link:active, .card--address .card__phone:active,
   .card--address .card__fax:active,
-  .card--address .card__email:active, .card--hero-products-detail .btn--more:active, .section--versions .btn--more:active,
-  .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
-  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .section--product-proposition .btn--cta:active, .card--version .btn--download:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
+  .card--address .card__email:active, .card--hero-products-detail__old .btn--more:active, .section--versions .btn--more:active,
+  .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .card--hero-products-detail .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
+  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .card--version .btn--download:active, .section--product-proposition .btn--cta:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
   .header .btn--cart:active, .group--main .btn--close:active, .group--submenus .btn--back:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .group--filters .btn--submit:active, .modal--generic .btn--close:active, .card--hero-homepage .card__picture:active, .group--actions .btn--prev:active,
-  .group--actions .btn--next:active, .group--video .btn--play:active, .card--news-proposition:active, .card--news-proposition .btn--more:active, .section--news-proposition .btn--prev:active,
-  .section--news-proposition .btn--next:active, .card--project-proposition:active, .card--product-proposition:active, .section--products .btn--more:active, .card--hero-products-detail .card__picture:active, .card--version:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--discover:active, .card--project:active, .section--projects .btn--more:active, .card--design:active, .modal--projects-registration .btn--close:active, .modal--projects-registration .btn--link:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--discover:active, .card--news:active, .card--news .btn--discover:active, .section--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery > .card__video .btn--play:active, .card--gallery .btn--more:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--store-locator .btn--discover:active, .section--store-locator .btn--more:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .section--table .btn--more:active, .modal--careers .btn--close:active, .modal--careers .btn--link:active, .modal--materials .btn--close:active,
+  .group--actions .btn--next:active, .group--video .btn--play:active, .card--product-proposition:active, .section--products .btn--more:active, .card--hero-products-detail__old .card__picture:active, .card--version:active, .card--hero-products-detail .card__picture:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--discover:active, .card--project:active, .section--projects .btn--more:active, .card--design:active, .card--project-proposition:active, .modal--projects-registration .btn--close:active, .modal--projects-registration .btn--link:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--discover:active, .card--news:active, .card--news .btn--discover:active, .section--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery > .card__video .btn--play:active, .card--gallery .btn--more:active, .card--news-proposition:active, .card--news-proposition .btn--more:active, .section--news-proposition .btn--prev:active,
+  .section--news-proposition .btn--next:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--store-locator .btn--discover:active, .section--store-locator .btn--more:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .section--table .btn--more:active, .modal--careers .btn--close:active, .modal--careers .btn--link:active, .modal--materials .btn--close:active,
   .modal--materials .btn--prev:active,
   .modal--materials .btn--next:active, .modal--user .btn--close:active,
   .section--auth .btn--close:active, .modal--user .btn--link:active,
-  .section--auth .btn--link:active, .modal--social-login .btn--close:active, .modal--social-login .btn--link:active, .card--file:active, .card--file .btn--action:active, .files .btn--title:active, .modal--markets-and-languages .btn--logo:active, .modal--markets-and-languages .btn--close:active, .card--cart-item .card__title:active, .card--cart-item .btn--action:active, .section--cart-mini .btn--close:active, .tr--cart .group--info .right__title:active, .tr--cart .btn--remove:active, .tr--cart .btn--action:active, .btn--accordion:active, .card--address:active, error-component .error:active, error-component .error .btn--detail:active, .modal--orders .btn--close:active, .section--orders .btn--link:active, .section--index .title:active, .nav--index > .nav__item > a:active,
+  .section--auth .btn--link:active, .modal--social-login .btn--close:active, .modal--social-login .btn--link:active, .card--file:active, .card--file .btn--action:active, .files .btn--title:active, .modal--markets-and-languages .btn--logo:active, .modal--markets-and-languages .btn--close:active, .modal--market-proposition .btn--logo:active, .modal--market-proposition .btn--close:active, .modal--market-proposition .btn--secondary:active,
+  .modal--market-proposition .btn--primary:active, .card--cart-item .card__title:active, .card--cart-item .btn--action:active, .section--cart-mini .btn--close:active, .tr--cart .group--info .right__title:active, .tr--cart .btn--remove:active, .tr--cart .btn--action:active, .btn--accordion:active, .card--address:active, error-component .error:active, error-component .error .btn--detail:active, .modal--orders .btn--close:active, .section--orders .btn--link:active, .section--index .title:active, .nav--index > .nav__item > a:active,
   .nav--index > .nav__item > span:active, .nav--language > li > a:focus, .nav--service > li > a:focus, .nav--main > li > a:focus, .nav--social > li > a:focus, .nav--colophon > li > a:focus, .nav--breadcrumb > li > a:focus, .nav--products-detail > li > a:focus, .nav--share > li > a:focus, .nav--secondary > li > a:focus, .nav--markets > li > a:focus, .nav--markets > .nav__item ul > li > a:focus, .nav--steps > li > a:focus, .nav--footer-menu > li > a:focus, .nav--dropdown > li > a:focus, .nav--options > li > a:focus, .nav--submenu > li > a:focus, .nav--results > li > a:focus, .nav--files > li > a:focus, .nav--files ul > li > a:focus, .nav--index > li > a:focus,
   .nav--language > li > button:focus,
   .nav--service > li > button:focus,
@@ -3386,16 +3389,17 @@ h6 {
   .card--contact .card__fax:focus,
   .card--contact .card__email:focus, .section--user-detail .btn--link:focus, .card--address .card__phone:focus,
   .card--address .card__fax:focus,
-  .card--address .card__email:focus, .card--hero-products-detail .btn--more:focus, .section--versions .btn--more:focus,
-  .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
-  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .section--product-proposition .btn--cta:focus, .card--version .btn--download:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
+  .card--address .card__email:focus, .card--hero-products-detail__old .btn--more:focus, .section--versions .btn--more:focus,
+  .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .card--hero-products-detail .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
+  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .card--version .btn--download:focus, .section--product-proposition .btn--cta:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
   .header .btn--cart:focus, .group--main .btn--close:focus, .group--submenus .btn--back:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .group--filters .btn--submit:focus, .modal--generic .btn--close:focus, .card--hero-homepage .card__picture:focus, .group--actions .btn--prev:focus,
-  .group--actions .btn--next:focus, .group--video .btn--play:focus, .card--news-proposition:focus, .card--news-proposition .btn--more:focus, .section--news-proposition .btn--prev:focus,
-  .section--news-proposition .btn--next:focus, .card--project-proposition:focus, .card--product-proposition:focus, .section--products .btn--more:focus, .card--hero-products-detail .card__picture:focus, .card--version:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--discover:focus, .card--project:focus, .section--projects .btn--more:focus, .card--design:focus, .modal--projects-registration .btn--close:focus, .modal--projects-registration .btn--link:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--discover:focus, .card--news:focus, .card--news .btn--discover:focus, .section--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery > .card__video .btn--play:focus, .card--gallery .btn--more:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--store-locator .btn--discover:focus, .section--store-locator .btn--more:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .section--table .btn--more:focus, .modal--careers .btn--close:focus, .modal--careers .btn--link:focus, .modal--materials .btn--close:focus,
+  .group--actions .btn--next:focus, .group--video .btn--play:focus, .card--product-proposition:focus, .section--products .btn--more:focus, .card--hero-products-detail__old .card__picture:focus, .card--version:focus, .card--hero-products-detail .card__picture:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--discover:focus, .card--project:focus, .section--projects .btn--more:focus, .card--design:focus, .card--project-proposition:focus, .modal--projects-registration .btn--close:focus, .modal--projects-registration .btn--link:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--discover:focus, .card--news:focus, .card--news .btn--discover:focus, .section--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery > .card__video .btn--play:focus, .card--gallery .btn--more:focus, .card--news-proposition:focus, .card--news-proposition .btn--more:focus, .section--news-proposition .btn--prev:focus,
+  .section--news-proposition .btn--next:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--store-locator .btn--discover:focus, .section--store-locator .btn--more:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .section--table .btn--more:focus, .modal--careers .btn--close:focus, .modal--careers .btn--link:focus, .modal--materials .btn--close:focus,
   .modal--materials .btn--prev:focus,
   .modal--materials .btn--next:focus, .modal--user .btn--close:focus,
   .section--auth .btn--close:focus, .modal--user .btn--link:focus,
-  .section--auth .btn--link:focus, .modal--social-login .btn--close:focus, .modal--social-login .btn--link:focus, .card--file:focus, .card--file .btn--action:focus, .files .btn--title:focus, .modal--markets-and-languages .btn--logo:focus, .modal--markets-and-languages .btn--close:focus, .card--cart-item .card__title:focus, .card--cart-item .btn--action:focus, .section--cart-mini .btn--close:focus, .tr--cart .group--info .right__title:focus, .tr--cart .btn--remove:focus, .tr--cart .btn--action:focus, .btn--accordion:focus, .card--address:focus, error-component .error:focus, error-component .error .btn--detail:focus, .modal--orders .btn--close:focus, .section--orders .btn--link:focus, .section--index .title:focus, .nav--index > .nav__item > a:focus,
+  .section--auth .btn--link:focus, .modal--social-login .btn--close:focus, .modal--social-login .btn--link:focus, .card--file:focus, .card--file .btn--action:focus, .files .btn--title:focus, .modal--markets-and-languages .btn--logo:focus, .modal--markets-and-languages .btn--close:focus, .modal--market-proposition .btn--logo:focus, .modal--market-proposition .btn--close:focus, .modal--market-proposition .btn--secondary:focus,
+  .modal--market-proposition .btn--primary:focus, .card--cart-item .card__title:focus, .card--cart-item .btn--action:focus, .section--cart-mini .btn--close:focus, .tr--cart .group--info .right__title:focus, .tr--cart .btn--remove:focus, .tr--cart .btn--action:focus, .btn--accordion:focus, .card--address:focus, error-component .error:focus, error-component .error .btn--detail:focus, .modal--orders .btn--close:focus, .section--orders .btn--link:focus, .section--index .title:focus, .nav--index > .nav__item > a:focus,
   .nav--index > .nav__item > span:focus, .nav--language > li > a:hover, .nav--service > li > a:hover, .nav--main > li > a:hover, .nav--social > li > a:hover, .nav--colophon > li > a:hover, .nav--breadcrumb > li > a:hover, .nav--products-detail > li > a:hover, .nav--share > li > a:hover, .nav--secondary > li > a:hover, .nav--markets > li > a:hover, .nav--markets > .nav__item ul > li > a:hover, .nav--steps > li > a:hover, .nav--footer-menu > li > a:hover, .nav--dropdown > li > a:hover, .nav--options > li > a:hover, .nav--submenu > li > a:hover, .nav--results > li > a:hover, .nav--files > li > a:hover, .nav--files ul > li > a:hover, .nav--index > li > a:hover,
   .nav--language > li > button:hover,
   .nav--service > li > button:hover,
@@ -3426,16 +3430,17 @@ h6 {
   .card--contact .card__fax:hover,
   .card--contact .card__email:hover, .section--user-detail .btn--link:hover, .card--address .card__phone:hover,
   .card--address .card__fax:hover,
-  .card--address .card__email:hover, .card--hero-products-detail .btn--more:hover, .section--versions .btn--more:hover,
-  .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
-  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .section--product-proposition .btn--cta:hover, .card--version .btn--download:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
+  .card--address .card__email:hover, .card--hero-products-detail__old .btn--more:hover, .section--versions .btn--more:hover,
+  .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .card--hero-products-detail .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
+  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .card--version .btn--download:hover, .section--product-proposition .btn--cta:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
   .header .btn--cart:hover, .group--main .btn--close:hover, .group--submenus .btn--back:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .group--filters .btn--submit:hover, .modal--generic .btn--close:hover, .card--hero-homepage .card__picture:hover, .group--actions .btn--prev:hover,
-  .group--actions .btn--next:hover, .group--video .btn--play:hover, .card--news-proposition:hover, .card--news-proposition .btn--more:hover, .section--news-proposition .btn--prev:hover,
-  .section--news-proposition .btn--next:hover, .card--project-proposition:hover, .card--product-proposition:hover, .section--products .btn--more:hover, .card--hero-products-detail .card__picture:hover, .card--version:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--discover:hover, .card--project:hover, .section--projects .btn--more:hover, .card--design:hover, .modal--projects-registration .btn--close:hover, .modal--projects-registration .btn--link:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--discover:hover, .card--news:hover, .card--news .btn--discover:hover, .section--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery > .card__video .btn--play:hover, .card--gallery .btn--more:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--store-locator .btn--discover:hover, .section--store-locator .btn--more:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .section--table .btn--more:hover, .modal--careers .btn--close:hover, .modal--careers .btn--link:hover, .modal--materials .btn--close:hover,
+  .group--actions .btn--next:hover, .group--video .btn--play:hover, .card--product-proposition:hover, .section--products .btn--more:hover, .card--hero-products-detail__old .card__picture:hover, .card--version:hover, .card--hero-products-detail .card__picture:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--discover:hover, .card--project:hover, .section--projects .btn--more:hover, .card--design:hover, .card--project-proposition:hover, .modal--projects-registration .btn--close:hover, .modal--projects-registration .btn--link:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--discover:hover, .card--news:hover, .card--news .btn--discover:hover, .section--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery > .card__video .btn--play:hover, .card--gallery .btn--more:hover, .card--news-proposition:hover, .card--news-proposition .btn--more:hover, .section--news-proposition .btn--prev:hover,
+  .section--news-proposition .btn--next:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--store-locator .btn--discover:hover, .section--store-locator .btn--more:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .section--table .btn--more:hover, .modal--careers .btn--close:hover, .modal--careers .btn--link:hover, .modal--materials .btn--close:hover,
   .modal--materials .btn--prev:hover,
   .modal--materials .btn--next:hover, .modal--user .btn--close:hover,
   .section--auth .btn--close:hover, .modal--user .btn--link:hover,
-  .section--auth .btn--link:hover, .modal--social-login .btn--close:hover, .modal--social-login .btn--link:hover, .card--file:hover, .card--file .btn--action:hover, .files .btn--title:hover, .modal--markets-and-languages .btn--logo:hover, .modal--markets-and-languages .btn--close:hover, .card--cart-item .card__title:hover, .card--cart-item .btn--action:hover, .section--cart-mini .btn--close:hover, .tr--cart .group--info .right__title:hover, .tr--cart .btn--remove:hover, .tr--cart .btn--action:hover, .btn--accordion:hover, .card--address:hover, error-component .error:hover, error-component .error .btn--detail:hover, .modal--orders .btn--close:hover, .section--orders .btn--link:hover, .section--index .title:hover, .nav--index > .nav__item > a:hover,
+  .section--auth .btn--link:hover, .modal--social-login .btn--close:hover, .modal--social-login .btn--link:hover, .card--file:hover, .card--file .btn--action:hover, .files .btn--title:hover, .modal--markets-and-languages .btn--logo:hover, .modal--markets-and-languages .btn--close:hover, .modal--market-proposition .btn--logo:hover, .modal--market-proposition .btn--close:hover, .modal--market-proposition .btn--secondary:hover,
+  .modal--market-proposition .btn--primary:hover, .card--cart-item .card__title:hover, .card--cart-item .btn--action:hover, .section--cart-mini .btn--close:hover, .tr--cart .group--info .right__title:hover, .tr--cart .btn--remove:hover, .tr--cart .btn--action:hover, .btn--accordion:hover, .card--address:hover, error-component .error:hover, error-component .error .btn--detail:hover, .modal--orders .btn--close:hover, .section--orders .btn--link:hover, .section--index .title:hover, .nav--index > .nav__item > a:hover,
   .nav--index > .nav__item > span:hover, .nav--language > li > a:visited, .nav--service > li > a:visited, .nav--main > li > a:visited, .nav--social > li > a:visited, .nav--colophon > li > a:visited, .nav--breadcrumb > li > a:visited, .nav--products-detail > li > a:visited, .nav--share > li > a:visited, .nav--secondary > li > a:visited, .nav--markets > li > a:visited, .nav--markets > .nav__item ul > li > a:visited, .nav--steps > li > a:visited, .nav--footer-menu > li > a:visited, .nav--dropdown > li > a:visited, .nav--options > li > a:visited, .nav--submenu > li > a:visited, .nav--results > li > a:visited, .nav--files > li > a:visited, .nav--files ul > li > a:visited, .nav--index > li > a:visited,
   .nav--language > li > button:visited,
   .nav--service > li > button:visited,
@@ -3466,16 +3471,17 @@ h6 {
   .card--contact .card__fax:visited,
   .card--contact .card__email:visited, .section--user-detail .btn--link:visited, .card--address .card__phone:visited,
   .card--address .card__fax:visited,
-  .card--address .card__email:visited, .card--hero-products-detail .btn--more:visited, .section--versions .btn--more:visited,
-  .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
-  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .section--product-proposition .btn--cta:visited, .card--version .btn--download:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
+  .card--address .card__email:visited, .card--hero-products-detail__old .btn--more:visited, .section--versions .btn--more:visited,
+  .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .card--hero-products-detail .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
+  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .card--version .btn--download:visited, .section--product-proposition .btn--cta:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
   .header .btn--cart:visited, .group--main .btn--close:visited, .group--submenus .btn--back:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .group--filters .btn--submit:visited, .modal--generic .btn--close:visited, .card--hero-homepage .card__picture:visited, .group--actions .btn--prev:visited,
-  .group--actions .btn--next:visited, .group--video .btn--play:visited, .card--news-proposition:visited, .card--news-proposition .btn--more:visited, .section--news-proposition .btn--prev:visited,
-  .section--news-proposition .btn--next:visited, .card--project-proposition:visited, .card--product-proposition:visited, .section--products .btn--more:visited, .card--hero-products-detail .card__picture:visited, .card--version:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--discover:visited, .card--project:visited, .section--projects .btn--more:visited, .card--design:visited, .modal--projects-registration .btn--close:visited, .modal--projects-registration .btn--link:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--discover:visited, .card--news:visited, .card--news .btn--discover:visited, .section--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery > .card__video .btn--play:visited, .card--gallery .btn--more:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--store-locator .btn--discover:visited, .section--store-locator .btn--more:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .section--table .btn--more:visited, .modal--careers .btn--close:visited, .modal--careers .btn--link:visited, .modal--materials .btn--close:visited,
+  .group--actions .btn--next:visited, .group--video .btn--play:visited, .card--product-proposition:visited, .section--products .btn--more:visited, .card--hero-products-detail__old .card__picture:visited, .card--version:visited, .card--hero-products-detail .card__picture:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--discover:visited, .card--project:visited, .section--projects .btn--more:visited, .card--design:visited, .card--project-proposition:visited, .modal--projects-registration .btn--close:visited, .modal--projects-registration .btn--link:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--discover:visited, .card--news:visited, .card--news .btn--discover:visited, .section--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery > .card__video .btn--play:visited, .card--gallery .btn--more:visited, .card--news-proposition:visited, .card--news-proposition .btn--more:visited, .section--news-proposition .btn--prev:visited,
+  .section--news-proposition .btn--next:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--store-locator .btn--discover:visited, .section--store-locator .btn--more:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .section--table .btn--more:visited, .modal--careers .btn--close:visited, .modal--careers .btn--link:visited, .modal--materials .btn--close:visited,
   .modal--materials .btn--prev:visited,
   .modal--materials .btn--next:visited, .modal--user .btn--close:visited,
   .section--auth .btn--close:visited, .modal--user .btn--link:visited,
-  .section--auth .btn--link:visited, .modal--social-login .btn--close:visited, .modal--social-login .btn--link:visited, .card--file:visited, .card--file .btn--action:visited, .files .btn--title:visited, .modal--markets-and-languages .btn--logo:visited, .modal--markets-and-languages .btn--close:visited, .card--cart-item .card__title:visited, .card--cart-item .btn--action:visited, .section--cart-mini .btn--close:visited, .tr--cart .group--info .right__title:visited, .tr--cart .btn--remove:visited, .tr--cart .btn--action:visited, .btn--accordion:visited, .card--address:visited, error-component .error:visited, error-component .error .btn--detail:visited, .modal--orders .btn--close:visited, .section--orders .btn--link:visited, .section--index .title:visited, .nav--index > .nav__item > a:visited,
+  .section--auth .btn--link:visited, .modal--social-login .btn--close:visited, .modal--social-login .btn--link:visited, .card--file:visited, .card--file .btn--action:visited, .files .btn--title:visited, .modal--markets-and-languages .btn--logo:visited, .modal--markets-and-languages .btn--close:visited, .modal--market-proposition .btn--logo:visited, .modal--market-proposition .btn--close:visited, .modal--market-proposition .btn--secondary:visited,
+  .modal--market-proposition .btn--primary:visited, .card--cart-item .card__title:visited, .card--cart-item .btn--action:visited, .section--cart-mini .btn--close:visited, .tr--cart .group--info .right__title:visited, .tr--cart .btn--remove:visited, .tr--cart .btn--action:visited, .btn--accordion:visited, .card--address:visited, error-component .error:visited, error-component .error .btn--detail:visited, .modal--orders .btn--close:visited, .section--orders .btn--link:visited, .section--index .title:visited, .nav--index > .nav__item > a:visited,
   .nav--index > .nav__item > span:visited {
     color: inherit;
     text-decoration: none;
@@ -3511,19 +3517,21 @@ h6 {
 .card--contact .card__fax,
 .card--contact .card__email, .section--user-detail .btn--link, .card--address .card__phone,
 .card--address .card__fax,
-.card--address .card__email, .card--hero-products-detail .btn--more, .section--versions .btn--more,
-.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
+.card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
 .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
-.group--actions .btn--next, .group--video .btn--play, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--project-proposition, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail .card__picture, .card--version, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+.group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
+.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
 .modal--materials .btn--prev,
 .modal--materials .btn--next, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
-.section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
+.section--auth .btn--link, .modal--social-login .btn--close, .modal--social-login .btn--link, .card--file, .card--file .btn--action, .files .btn--title, .modal--markets-and-languages .btn--logo, .modal--markets-and-languages .btn--close, .modal--market-proposition .btn--logo, .modal--market-proposition .btn--close, .modal--market-proposition .btn--secondary,
+.modal--market-proposition .btn--primary, .card--cart-item .card__title, .card--cart-item .btn--action, .section--cart-mini .btn--close, .tr--cart .group--info .right__title, .tr--cart .btn--remove, .tr--cart .btn--action, .btn--accordion, .card--address, error-component .error, error-component .error .btn--detail, .modal--orders .btn--close, .section--orders .btn--link, .section--index .title, .nav--index > .nav__item > a,
 .nav--index > .nav__item > span {
-  transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--products-detail > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--products-detail > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--project-proposition svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail .card__picture svg, .card--version svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms;
+  transition-property: background-color, color, border, opacity; }
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--products-detail > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--products-detail > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail__old .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-products-detail .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .card--version .btn--download svg, .section--product-proposition .btn--cta svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail__old .card__picture svg, .card--version svg, .card--hero-products-detail .card__picture svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .card--project-proposition svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .modal--market-proposition .btn--logo svg, .modal--market-proposition .btn--close svg, .modal--market-proposition .btn--secondary svg, .modal--market-proposition .btn--primary svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
@@ -3557,16 +3565,17 @@ h6 {
   .card--contact .card__fax[disabled],
   .card--contact .card__email[disabled], .section--user-detail .btn--link[disabled], .card--address .card__phone[disabled],
   .card--address .card__fax[disabled],
-  .card--address .card__email[disabled], .card--hero-products-detail .btn--more[disabled], .section--versions .btn--more[disabled],
-  .section--versions .btn--configure[disabled], .section--product-materials .btn--more[disabled], .group--insights .btn--more[disabled], .section--intro-sm .btn--more[disabled], .section--form .btn--submit[disabled], .section--materials-listing .btn--more[disabled], .section--user-detail .btn--primary[disabled],
-  .section--user-detail .btn--submit[disabled], .section--user-edit-password .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .section--product-proposition .btn--cta[disabled], .card--version .btn--download[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
+  .card--address .card__email[disabled], .card--hero-products-detail__old .btn--more[disabled], .section--versions .btn--more[disabled],
+  .section--versions .btn--configure[disabled], .section--product-materials .btn--more[disabled], .group--insights .btn--more[disabled], .card--hero-products-detail .btn--more[disabled], .section--intro-sm .btn--more[disabled], .section--form .btn--submit[disabled], .section--materials-listing .btn--more[disabled], .section--user-detail .btn--primary[disabled],
+  .section--user-detail .btn--submit[disabled], .section--user-edit-password .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .card--version .btn--download[disabled], .section--product-proposition .btn--cta[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
   .header .btn--cart[disabled], .group--main .btn--close[disabled], .group--submenus .btn--back[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .group--filters .btn--submit[disabled], .modal--generic .btn--close[disabled], .card--hero-homepage .card__picture[disabled], .group--actions .btn--prev[disabled],
-  .group--actions .btn--next[disabled], .group--video .btn--play[disabled], .card--news-proposition[disabled], .card--news-proposition .btn--more[disabled], .section--news-proposition .btn--prev[disabled],
-  .section--news-proposition .btn--next[disabled], .card--project-proposition[disabled], .card--product-proposition[disabled], .section--products .btn--more[disabled], .card--hero-products-detail .card__picture[disabled], .card--version[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--discover[disabled], .card--project[disabled], .section--projects .btn--more[disabled], .card--design[disabled], .modal--projects-registration .btn--close[disabled], .modal--projects-registration .btn--link[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--discover[disabled], .card--news[disabled], .card--news .btn--discover[disabled], .section--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery > .card__video .btn--play[disabled], .card--gallery .btn--more[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--store-locator .btn--discover[disabled], .section--store-locator .btn--more[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .section--table .btn--more[disabled], .modal--careers .btn--close[disabled], .modal--careers .btn--link[disabled], .modal--materials .btn--close[disabled],
+  .group--actions .btn--next[disabled], .group--video .btn--play[disabled], .card--product-proposition[disabled], .section--products .btn--more[disabled], .card--hero-products-detail__old .card__picture[disabled], .card--version[disabled], .card--hero-products-detail .card__picture[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--discover[disabled], .card--project[disabled], .section--projects .btn--more[disabled], .card--design[disabled], .card--project-proposition[disabled], .modal--projects-registration .btn--close[disabled], .modal--projects-registration .btn--link[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--discover[disabled], .card--news[disabled], .card--news .btn--discover[disabled], .section--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery > .card__video .btn--play[disabled], .card--gallery .btn--more[disabled], .card--news-proposition[disabled], .card--news-proposition .btn--more[disabled], .section--news-proposition .btn--prev[disabled],
+  .section--news-proposition .btn--next[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--store-locator .btn--discover[disabled], .section--store-locator .btn--more[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .section--table .btn--more[disabled], .modal--careers .btn--close[disabled], .modal--careers .btn--link[disabled], .modal--materials .btn--close[disabled],
   .modal--materials .btn--prev[disabled],
   .modal--materials .btn--next[disabled], .modal--user .btn--close[disabled],
   .section--auth .btn--close[disabled], .modal--user .btn--link[disabled],
-  .section--auth .btn--link[disabled], .modal--social-login .btn--close[disabled], .modal--social-login .btn--link[disabled], .card--file[disabled], .card--file .btn--action[disabled], .files .btn--title[disabled], .modal--markets-and-languages .btn--logo[disabled], .modal--markets-and-languages .btn--close[disabled], .card--cart-item .card__title[disabled], .card--cart-item .btn--action[disabled], .section--cart-mini .btn--close[disabled], .tr--cart .group--info .right__title[disabled], .tr--cart .btn--remove[disabled], .tr--cart .btn--action[disabled], .btn--accordion[disabled], .card--address[disabled], error-component .error[disabled], error-component .error .btn--detail[disabled], .modal--orders .btn--close[disabled], .section--orders .btn--link[disabled], .section--index .title[disabled], .nav--index > .nav__item > a[disabled],
+  .section--auth .btn--link[disabled], .modal--social-login .btn--close[disabled], .modal--social-login .btn--link[disabled], .card--file[disabled], .card--file .btn--action[disabled], .files .btn--title[disabled], .modal--markets-and-languages .btn--logo[disabled], .modal--markets-and-languages .btn--close[disabled], .modal--market-proposition .btn--logo[disabled], .modal--market-proposition .btn--close[disabled], .modal--market-proposition .btn--secondary[disabled],
+  .modal--market-proposition .btn--primary[disabled], .card--cart-item .card__title[disabled], .card--cart-item .btn--action[disabled], .section--cart-mini .btn--close[disabled], .tr--cart .group--info .right__title[disabled], .tr--cart .btn--remove[disabled], .tr--cart .btn--action[disabled], .btn--accordion[disabled], .card--address[disabled], error-component .error[disabled], error-component .error .btn--detail[disabled], .modal--orders .btn--close[disabled], .section--orders .btn--link[disabled], .section--index .title[disabled], .nav--index > .nav__item > a[disabled],
   .nav--index > .nav__item > span[disabled] {
     opacity: 0.5;
     pointer-events: none; }
@@ -3675,8 +3684,8 @@ h6 {
   .card--address .card__email:hover:after {
     transform: scaleX(0); }
 
-.card--hero-products-detail .btn--more, .section--versions .btn--more,
-.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+.card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+.section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
 .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
   display: inline-flex;
   align-items: center;
@@ -3690,59 +3699,59 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.043em;
   border: 1px solid var(--background-secondary); }
-  .card--hero-products-detail .btn--more, .section--versions .btn--more,
-  .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-products-detail .btn--more:active, .section--versions .btn--more:active,
-  .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
-  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-products-detail .btn--more:focus, .section--versions .btn--more:focus,
-  .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
-  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-products-detail .btn--more:visited, .section--versions .btn--more:visited,
-  .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
+  .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+  .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-products-detail__old .btn--more:active, .section--versions .btn--more:active,
+  .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .card--hero-products-detail .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
+  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-products-detail__old .btn--more:focus, .section--versions .btn--more:focus,
+  .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .card--hero-products-detail .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
+  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-products-detail__old .btn--more:visited, .section--versions .btn--more:visited,
+  .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .card--hero-products-detail .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
   .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited {
     background-color: var(--background-secondary);
     color: var(--foreground-negative); }
-  .card--hero-products-detail .btn--more:hover, .section--versions .btn--more:hover,
-  .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
+  .card--hero-products-detail__old .btn--more:hover, .section--versions .btn--more:hover,
+  .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .card--hero-products-detail .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
   .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative); }
-  .card--hero-products-detail .btn--more:active:hover, .section--versions .btn--more:active:hover,
-  .section--versions .btn--configure:active:hover, .section--product-materials .btn--more:active:hover, .group--insights .btn--more:active:hover, .section--intro-sm .btn--more:active:hover, .section--form .btn--submit:active:hover, .section--materials-listing .btn--more:active:hover, .section--user-detail .btn--primary:active:hover,
+  .card--hero-products-detail__old .btn--more:active:hover, .section--versions .btn--more:active:hover,
+  .section--versions .btn--configure:active:hover, .section--product-materials .btn--more:active:hover, .group--insights .btn--more:active:hover, .card--hero-products-detail .btn--more:active:hover, .section--intro-sm .btn--more:active:hover, .section--form .btn--submit:active:hover, .section--materials-listing .btn--more:active:hover, .section--user-detail .btn--primary:active:hover,
   .section--user-detail .btn--submit:active:hover, .section--user-edit-password .btn--submit:active:hover, .section--files .btn--more:active:hover, .section--cart-mini .btn--buy:active:hover, .section--cart .btn--primary:active:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative);
     transition: none; }
-  .card--hero-products-detail .disabled.btn--more, .section--versions .disabled.btn--more,
-  .section--versions .disabled.btn--configure, .section--product-materials .disabled.btn--more, .group--insights .disabled.btn--more, .section--intro-sm .disabled.btn--more, .section--form .disabled.btn--submit, .section--materials-listing .disabled.btn--more, .section--user-detail .disabled.btn--primary,
-  .section--user-detail .disabled.btn--submit, .section--user-edit-password .disabled.btn--submit, .section--files .disabled.btn--more, .section--cart-mini .disabled.btn--buy, .section--cart .disabled.btn--primary, .card--hero-products-detail .disabled.btn--more:active, .section--versions .disabled.btn--more:active,
-  .section--versions .disabled.btn--configure:active, .section--product-materials .disabled.btn--more:active, .group--insights .disabled.btn--more:active, .section--intro-sm .disabled.btn--more:active, .section--form .disabled.btn--submit:active, .section--materials-listing .disabled.btn--more:active, .section--user-detail .disabled.btn--primary:active,
-  .section--user-detail .disabled.btn--submit:active, .section--user-edit-password .disabled.btn--submit:active, .section--files .disabled.btn--more:active, .section--cart-mini .disabled.btn--buy:active, .section--cart .disabled.btn--primary:active, .card--hero-products-detail .disabled.btn--more:focus, .section--versions .disabled.btn--more:focus,
-  .section--versions .disabled.btn--configure:focus, .section--product-materials .disabled.btn--more:focus, .group--insights .disabled.btn--more:focus, .section--intro-sm .disabled.btn--more:focus, .section--form .disabled.btn--submit:focus, .section--materials-listing .disabled.btn--more:focus, .section--user-detail .disabled.btn--primary:focus,
-  .section--user-detail .disabled.btn--submit:focus, .section--user-edit-password .disabled.btn--submit:focus, .section--files .disabled.btn--more:focus, .section--cart-mini .disabled.btn--buy:focus, .section--cart .disabled.btn--primary:focus, .card--hero-products-detail .disabled.btn--more:hover, .section--versions .disabled.btn--more:hover,
-  .section--versions .disabled.btn--configure:hover, .section--product-materials .disabled.btn--more:hover, .group--insights .disabled.btn--more:hover, .section--intro-sm .disabled.btn--more:hover, .section--form .disabled.btn--submit:hover, .section--materials-listing .disabled.btn--more:hover, .section--user-detail .disabled.btn--primary:hover,
-  .section--user-detail .disabled.btn--submit:hover, .section--user-edit-password .disabled.btn--submit:hover, .section--files .disabled.btn--more:hover, .section--cart-mini .disabled.btn--buy:hover, .section--cart .disabled.btn--primary:hover, .card--hero-products-detail .disabled.btn--more:visited, .section--versions .disabled.btn--more:visited,
-  .section--versions .disabled.btn--configure:visited, .section--product-materials .disabled.btn--more:visited, .group--insights .disabled.btn--more:visited, .section--intro-sm .disabled.btn--more:visited, .section--form .disabled.btn--submit:visited, .section--materials-listing .disabled.btn--more:visited, .section--user-detail .disabled.btn--primary:visited,
+  .card--hero-products-detail__old .disabled.btn--more, .section--versions .disabled.btn--more,
+  .section--versions .disabled.btn--configure, .section--product-materials .disabled.btn--more, .group--insights .disabled.btn--more, .card--hero-products-detail .disabled.btn--more, .section--intro-sm .disabled.btn--more, .section--form .disabled.btn--submit, .section--materials-listing .disabled.btn--more, .section--user-detail .disabled.btn--primary,
+  .section--user-detail .disabled.btn--submit, .section--user-edit-password .disabled.btn--submit, .section--files .disabled.btn--more, .section--cart-mini .disabled.btn--buy, .section--cart .disabled.btn--primary, .card--hero-products-detail__old .disabled.btn--more:active, .section--versions .disabled.btn--more:active,
+  .section--versions .disabled.btn--configure:active, .section--product-materials .disabled.btn--more:active, .group--insights .disabled.btn--more:active, .card--hero-products-detail .disabled.btn--more:active, .section--intro-sm .disabled.btn--more:active, .section--form .disabled.btn--submit:active, .section--materials-listing .disabled.btn--more:active, .section--user-detail .disabled.btn--primary:active,
+  .section--user-detail .disabled.btn--submit:active, .section--user-edit-password .disabled.btn--submit:active, .section--files .disabled.btn--more:active, .section--cart-mini .disabled.btn--buy:active, .section--cart .disabled.btn--primary:active, .card--hero-products-detail__old .disabled.btn--more:focus, .section--versions .disabled.btn--more:focus,
+  .section--versions .disabled.btn--configure:focus, .section--product-materials .disabled.btn--more:focus, .group--insights .disabled.btn--more:focus, .card--hero-products-detail .disabled.btn--more:focus, .section--intro-sm .disabled.btn--more:focus, .section--form .disabled.btn--submit:focus, .section--materials-listing .disabled.btn--more:focus, .section--user-detail .disabled.btn--primary:focus,
+  .section--user-detail .disabled.btn--submit:focus, .section--user-edit-password .disabled.btn--submit:focus, .section--files .disabled.btn--more:focus, .section--cart-mini .disabled.btn--buy:focus, .section--cart .disabled.btn--primary:focus, .card--hero-products-detail__old .disabled.btn--more:hover, .section--versions .disabled.btn--more:hover,
+  .section--versions .disabled.btn--configure:hover, .section--product-materials .disabled.btn--more:hover, .group--insights .disabled.btn--more:hover, .card--hero-products-detail .disabled.btn--more:hover, .section--intro-sm .disabled.btn--more:hover, .section--form .disabled.btn--submit:hover, .section--materials-listing .disabled.btn--more:hover, .section--user-detail .disabled.btn--primary:hover,
+  .section--user-detail .disabled.btn--submit:hover, .section--user-edit-password .disabled.btn--submit:hover, .section--files .disabled.btn--more:hover, .section--cart-mini .disabled.btn--buy:hover, .section--cart .disabled.btn--primary:hover, .card--hero-products-detail__old .disabled.btn--more:visited, .section--versions .disabled.btn--more:visited,
+  .section--versions .disabled.btn--configure:visited, .section--product-materials .disabled.btn--more:visited, .group--insights .disabled.btn--more:visited, .card--hero-products-detail .disabled.btn--more:visited, .section--intro-sm .disabled.btn--more:visited, .section--form .disabled.btn--submit:visited, .section--materials-listing .disabled.btn--more:visited, .section--user-detail .disabled.btn--primary:visited,
   .section--user-detail .disabled.btn--submit:visited, .section--user-edit-password .disabled.btn--submit:visited, .section--files .disabled.btn--more:visited, .section--cart-mini .disabled.btn--buy:visited, .section--cart .disabled.btn--primary:visited {
     background-color: var(--background-secondary);
     color: var(--foreground-negative);
     pointer-events: none; }
-  .card--hero-products-detail .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg {
+  .card--hero-products-detail__old .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-products-detail .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg {
     margin-right: 10px;
     width: 24px;
     height: 24px; }
   @media (min-width: 1024px) {
-    .card--hero-products-detail .btn--more, .section--versions .btn--more,
-    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+    .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
     .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       min-width: 280px; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
-    .card--hero-products-detail .btn--more, .section--versions .btn--more,
-    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+    .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
     .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       min-width: 200px; } }
   @media (max-width: 767.98px) {
-    .card--hero-products-detail .btn--more, .section--versions .btn--more,
-    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
+    .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
+    .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
     .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary {
       display: flex;
       width: 100%; } }
@@ -3789,7 +3798,7 @@ h6 {
       display: flex;
       width: 100%; } }
 
-.group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
+.group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3802,32 +3811,32 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.043em;
   border: 1px solid var(--background-secondary); }
-  .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .group--actions .btn--cta:active, .section--product-proposition .btn--cta:active, .card--version .btn--download:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .group--actions .btn--cta:focus, .section--product-proposition .btn--cta:focus, .card--version .btn--download:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .group--actions .btn--cta:visited, .section--product-proposition .btn--cta:visited, .card--version .btn--download:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited {
+  .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .group--actions .btn--cta:active, .card--version .btn--download:active, .section--product-proposition .btn--cta:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .group--actions .btn--cta:focus, .card--version .btn--download:focus, .section--product-proposition .btn--cta:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .group--actions .btn--cta:visited, .card--version .btn--download:visited, .section--product-proposition .btn--cta:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited {
     background-color: var(--background);
     color: #232221; }
-  .group--actions .btn--cta:hover, .section--product-proposition .btn--cta:hover, .card--version .btn--download:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover {
+  .group--actions .btn--cta:hover, .card--version .btn--download:hover, .section--product-proposition .btn--cta:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative); }
-  .group--actions .btn--cta:active:hover, .section--product-proposition .btn--cta:active:hover, .card--version .btn--download:active:hover, .section--intro-sm .btn--secondary:active:hover, .section--user-detail .btn--secondary:active:hover, .files .btn--secondary:active:hover, .section--cart-mini .btn--secondary:active:hover, .section--cart .btn--secondary:active:hover {
+  .group--actions .btn--cta:active:hover, .card--version .btn--download:active:hover, .section--product-proposition .btn--cta:active:hover, .section--intro-sm .btn--secondary:active:hover, .section--user-detail .btn--secondary:active:hover, .files .btn--secondary:active:hover, .section--cart-mini .btn--secondary:active:hover, .section--cart .btn--secondary:active:hover {
     background-color: var(--background-secondary);
     color: var(--foreground-negative);
     transition: none; }
-  .group--actions .disabled.btn--cta, .section--product-proposition .disabled.btn--cta, .card--version .disabled.btn--download, .section--intro-sm .disabled.btn--secondary, .section--user-detail .disabled.btn--secondary, .files .disabled.btn--secondary, .section--cart-mini .disabled.btn--secondary, .section--cart .disabled.btn--secondary, .group--actions .disabled.btn--cta:active, .section--product-proposition .disabled.btn--cta:active, .card--version .disabled.btn--download:active, .section--intro-sm .disabled.btn--secondary:active, .section--user-detail .disabled.btn--secondary:active, .files .disabled.btn--secondary:active, .section--cart-mini .disabled.btn--secondary:active, .section--cart .disabled.btn--secondary:active, .group--actions .disabled.btn--cta:focus, .section--product-proposition .disabled.btn--cta:focus, .card--version .disabled.btn--download:focus, .section--intro-sm .disabled.btn--secondary:focus, .section--user-detail .disabled.btn--secondary:focus, .files .disabled.btn--secondary:focus, .section--cart-mini .disabled.btn--secondary:focus, .section--cart .disabled.btn--secondary:focus, .group--actions .disabled.btn--cta:hover, .section--product-proposition .disabled.btn--cta:hover, .card--version .disabled.btn--download:hover, .section--intro-sm .disabled.btn--secondary:hover, .section--user-detail .disabled.btn--secondary:hover, .files .disabled.btn--secondary:hover, .section--cart-mini .disabled.btn--secondary:hover, .section--cart .disabled.btn--secondary:hover, .group--actions .disabled.btn--cta:visited, .section--product-proposition .disabled.btn--cta:visited, .card--version .disabled.btn--download:visited, .section--intro-sm .disabled.btn--secondary:visited, .section--user-detail .disabled.btn--secondary:visited, .files .disabled.btn--secondary:visited, .section--cart-mini .disabled.btn--secondary:visited, .section--cart .disabled.btn--secondary:visited {
+  .group--actions .disabled.btn--cta, .card--version .disabled.btn--download, .section--product-proposition .disabled.btn--cta, .section--intro-sm .disabled.btn--secondary, .section--user-detail .disabled.btn--secondary, .files .disabled.btn--secondary, .section--cart-mini .disabled.btn--secondary, .section--cart .disabled.btn--secondary, .group--actions .disabled.btn--cta:active, .card--version .disabled.btn--download:active, .section--product-proposition .disabled.btn--cta:active, .section--intro-sm .disabled.btn--secondary:active, .section--user-detail .disabled.btn--secondary:active, .files .disabled.btn--secondary:active, .section--cart-mini .disabled.btn--secondary:active, .section--cart .disabled.btn--secondary:active, .group--actions .disabled.btn--cta:focus, .card--version .disabled.btn--download:focus, .section--product-proposition .disabled.btn--cta:focus, .section--intro-sm .disabled.btn--secondary:focus, .section--user-detail .disabled.btn--secondary:focus, .files .disabled.btn--secondary:focus, .section--cart-mini .disabled.btn--secondary:focus, .section--cart .disabled.btn--secondary:focus, .group--actions .disabled.btn--cta:hover, .card--version .disabled.btn--download:hover, .section--product-proposition .disabled.btn--cta:hover, .section--intro-sm .disabled.btn--secondary:hover, .section--user-detail .disabled.btn--secondary:hover, .files .disabled.btn--secondary:hover, .section--cart-mini .disabled.btn--secondary:hover, .section--cart .disabled.btn--secondary:hover, .group--actions .disabled.btn--cta:visited, .card--version .disabled.btn--download:visited, .section--product-proposition .disabled.btn--cta:visited, .section--intro-sm .disabled.btn--secondary:visited, .section--user-detail .disabled.btn--secondary:visited, .files .disabled.btn--secondary:visited, .section--cart-mini .disabled.btn--secondary:visited, .section--cart .disabled.btn--secondary:visited {
     background-color: var(--background);
     color: #232221;
     pointer-events: none; }
-  .group--actions .btn--cta svg, .section--product-proposition .btn--cta svg, .card--version .btn--download svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg {
+  .group--actions .btn--cta svg, .card--version .btn--download svg, .section--product-proposition .btn--cta svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg {
     margin-right: 10px;
     width: 24px;
     height: 24px; }
   @media (min-width: 1024px) {
-    .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
+    .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
       min-width: 280px; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
-    .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
+    .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
       min-width: 200px; } }
   @media (max-width: 767.98px) {
-    .group--actions .btn--cta, .section--product-proposition .btn--cta, .card--version .btn--download, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
+    .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary {
       display: flex;
       width: 100%; } }
 
@@ -3972,26 +3981,24 @@ h6 {
     transform: rotate(360deg); } }
 
 @media screen {
-  [swiper-homepage], [swiper-products-proposition] .swiper-container,
-  [swiper-news-proposition] .swiper-container,
-  [swiper-projects-proposition] .swiper-container, [swiper-gallery] .swiper-container {
+  [swiper-homepage], [swiper-products-proposition] .swiper-container, [swiper-projects-proposition] .swiper-container, [swiper-gallery] .swiper-container, [swiper-news-proposition] .swiper-container {
     line-height: 0; }
-    [swiper-homepage] .swiper-slide, [swiper-products-proposition] .swiper-container .swiper-slide, [swiper-news-proposition] .swiper-container .swiper-slide, [swiper-projects-proposition] .swiper-container .swiper-slide, [swiper-gallery] .swiper-container .swiper-slide,
+    [swiper-homepage] .swiper-slide, [swiper-products-proposition] .swiper-container .swiper-slide, [swiper-projects-proposition] .swiper-container .swiper-slide, [swiper-gallery] .swiper-container .swiper-slide, [swiper-news-proposition] .swiper-container .swiper-slide,
     [swiper-homepage] .swiper-slide *,
     [swiper-products-proposition] .swiper-container .swiper-slide *,
-    [swiper-news-proposition] .swiper-container .swiper-slide *,
     [swiper-projects-proposition] .swiper-container .swiper-slide *,
-    [swiper-gallery] .swiper-container .swiper-slide * {
+    [swiper-gallery] .swiper-container .swiper-slide *,
+    [swiper-news-proposition] .swiper-container .swiper-slide * {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
           -ms-user-select: none;
               user-select: none; }
-    [swiper-homepage] .swiper-pagination-bullets, [swiper-products-proposition] .swiper-container .swiper-pagination-bullets, [swiper-news-proposition] .swiper-container .swiper-pagination-bullets, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullets, [swiper-gallery] .swiper-container .swiper-pagination-bullets,
+    [swiper-homepage] .swiper-pagination-bullets, [swiper-products-proposition] .swiper-container .swiper-pagination-bullets, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullets, [swiper-gallery] .swiper-container .swiper-pagination-bullets, [swiper-news-proposition] .swiper-container .swiper-pagination-bullets,
     .swiper-container-horizontal > [swiper-homepage] .swiper-pagination-bullets,
     [swiper-products-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
-    [swiper-news-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
     [swiper-projects-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
-    [swiper-gallery] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets {
+    [swiper-gallery] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets,
+    [swiper-news-proposition] .swiper-container-horizontal > .swiper-container .swiper-pagination-bullets {
       position: relative;
       display: flex;
       justify-content: center;
@@ -3999,7 +4006,7 @@ h6 {
       flex-wrap: wrap;
       padding: 20px 0;
       bottom: 0; }
-    [swiper-homepage] .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet, [swiper-gallery] .swiper-container .swiper-pagination-bullet {
+    [swiper-homepage] .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet, [swiper-gallery] .swiper-container .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet {
       display: inline-block;
       position: relative;
       width: 18px;
@@ -4009,7 +4016,7 @@ h6 {
       background: transparent;
       opacity: 1;
       outline: none; }
-      [swiper-homepage] .swiper-pagination-bullet:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:before {
+      [swiper-homepage] .swiper-pagination-bullet:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:before {
         content: '';
         display: block;
         position: absolute;
@@ -4023,18 +4030,18 @@ h6 {
         background: #16255b;
         opacity: 0;
         transition: opacity ease-in-out 350ms; }
-      [swiper-homepage] .swiper-pagination-bullet:hover:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:hover:before {
+      [swiper-homepage] .swiper-pagination-bullet:hover:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:hover:before {
         opacity: 1; }
-    [swiper-homepage] .swiper-pagination-bullet-active:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet-active:before {
+    [swiper-homepage] .swiper-pagination-bullet-active:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet-active:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet-active:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet-active:before {
       opacity: 1; }
-    [swiper-homepage] > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-gallery] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet {
+    [swiper-homepage] > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-products-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-projects-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-gallery] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet, [swiper-news-proposition] .swiper-container > .swiper-pagination-bullets .swiper-pagination-bullet {
       margin: 0 4px 4px 0; }
-    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next,
+    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next,
     [swiper-homepage] .swiper-button-prev,
     [swiper-products-proposition] .swiper-container .swiper-button-prev,
-    [swiper-news-proposition] .swiper-container .swiper-button-prev,
     [swiper-projects-proposition] .swiper-container .swiper-button-prev,
-    [swiper-gallery] .swiper-container .swiper-button-prev {
+    [swiper-gallery] .swiper-container .swiper-button-prev,
+    [swiper-news-proposition] .swiper-container .swiper-button-prev {
       outline: 0;
       /*
 			background: $background-tertiary;
@@ -4042,20 +4049,20 @@ h6 {
 			height: 50px;
 			border-radius: 50%;
 			*/ }
-      [swiper-homepage] .swiper-button-next:after, [swiper-products-proposition] .swiper-container .swiper-button-next:after, [swiper-news-proposition] .swiper-container .swiper-button-next:after, [swiper-projects-proposition] .swiper-container .swiper-button-next:after, [swiper-gallery] .swiper-container .swiper-button-next:after,
+      [swiper-homepage] .swiper-button-next:after, [swiper-products-proposition] .swiper-container .swiper-button-next:after, [swiper-projects-proposition] .swiper-container .swiper-button-next:after, [swiper-gallery] .swiper-container .swiper-button-next:after, [swiper-news-proposition] .swiper-container .swiper-button-next:after,
       [swiper-homepage] .swiper-button-prev:after,
       [swiper-products-proposition] .swiper-container .swiper-button-prev:after,
-      [swiper-news-proposition] .swiper-container .swiper-button-prev:after,
       [swiper-projects-proposition] .swiper-container .swiper-button-prev:after,
-      [swiper-gallery] .swiper-container .swiper-button-prev:after {
+      [swiper-gallery] .swiper-container .swiper-button-prev:after,
+      [swiper-news-proposition] .swiper-container .swiper-button-prev:after {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); } }
   @media screen and (max-width: 767.98px) {
-    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next,
+    [swiper-homepage] .swiper-button-next, [swiper-products-proposition] .swiper-container .swiper-button-next, [swiper-projects-proposition] .swiper-container .swiper-button-next, [swiper-gallery] .swiper-container .swiper-button-next, [swiper-news-proposition] .swiper-container .swiper-button-next,
     [swiper-homepage] .swiper-button-prev,
     [swiper-products-proposition] .swiper-container .swiper-button-prev,
-    [swiper-news-proposition] .swiper-container .swiper-button-prev,
     [swiper-projects-proposition] .swiper-container .swiper-button-prev,
-    [swiper-gallery] .swiper-container .swiper-button-prev {
+    [swiper-gallery] .swiper-container .swiper-button-prev,
+    [swiper-news-proposition] .swiper-container .swiper-button-prev {
       display: none; } }
 
 .thron {
@@ -5312,16 +5319,23 @@ test-component code {
   .nav--main > .nav__item--shop > span:focus,
   .nav--main > .nav__item--shop > span:visited,
   .nav--main > .nav__item--shop > span:hover {
-    background: #646464;
+    background: #837f7b;
     color: var(--foreground-negative); }
+
+@media (min-width: 1024px) {
+  .nav--main > .nav__item + .nav__item {
+    margin-left: 40px; } }
 
 @media (min-width: 768px) {
   .nav--main > .nav__item {
     margin-top: 1px;
     margin-bottom: -10px;
-    padding-bottom: 4px; }
+    padding-bottom: 4px;
+    white-space: nowrap; } }
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
   .nav--main > .nav__item + .nav__item {
-    margin-left: 40px; } }
+    margin-left: 20px; } }
 
 @media (max-width: 767.98px) {
   .nav--main {
@@ -5956,8 +5970,12 @@ test-component code {
     padding: 120px 0; } }
 
 .nav--footer-menu .nav__item--title {
+  max-width: 100%;
+  min-height: 42px;
   text-transform: uppercase;
-  white-space: nowrap; }
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 .nav--footer-menu > .nav__item > a,
 .nav--footer-menu > .nav__item > button {
@@ -6060,21 +6078,23 @@ test-component code {
     justify-content: center;
     margin-top: 15px; } }
 
-.page > .pictogram, .modal--markets-and-languages .pictogram {
+.page > .pictogram, .modal--markets-and-languages .pictogram, .modal--market-proposition .pictogram {
   position: fixed;
   opacity: 0.1;
-  animation: linear-rotate 480000ms linear infinite; }
-  .page > .pictogram > img, .modal--markets-and-languages .pictogram > img {
+  animation: linear-rotate 480000ms linear infinite;
+  pointer-events: none;
+  z-index: -1; }
+  .page > .pictogram > img, .modal--markets-and-languages .pictogram > img, .modal--market-proposition .pictogram > img {
     width: 100%;
     height: 100%; }
   @media (min-width: 1024px) {
-    .page > .pictogram, .modal--markets-and-languages .pictogram {
+    .page > .pictogram, .modal--markets-and-languages .pictogram, .modal--market-proposition .pictogram {
       top: 0;
       right: -10vw;
       width: 60vw;
       height: 60vw; } }
   @media (max-width: 1023.98px) {
-    .page > .pictogram, .modal--markets-and-languages .pictogram {
+    .page > .pictogram, .modal--markets-and-languages .pictogram, .modal--market-proposition .pictogram {
       top: 20vw;
       right: -10vw;
       width: 80vw;
@@ -6509,44 +6529,6 @@ test-component code {
     .group--actions .btn--next:not(.active) {
       pointer-events: none; }
 
-.section--products-proposition {
-  position: relative; }
-  .section--products-proposition:before {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    background: #D1CDCA; }
-  .section--products-proposition .title {
-    margin-bottom: 20px;
-    font-family: var(--font-secondary);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    text-transform: uppercase; }
-  .section--products-proposition .abstract {
-    margin-bottom: 40px;
-    font-size: 16px;
-    letter-spacing: 0.04em; }
-  @media (min-width: 1024px) {
-    .section--products-proposition {
-      padding-top: 140px;
-      padding-bottom: 340px; }
-      .section--products-proposition:before {
-        height: 40%; }
-      .section--products-proposition .title {
-        font-size: 72px; } }
-  @media (min-width: 1440px) {
-    .section--products-proposition:before {
-      height: 50%; }
-    .section--products-proposition .title {
-      font-size: 72px; } }
-  @media (max-width: 1023.98px) {
-    .section--products-proposition {
-      padding: 80px 0; }
-      .section--products-proposition .title {
-        font-size: 60px; } }
-
 .group--video {
   position: relative;
   cursor: pointer; }
@@ -6662,146 +6644,17 @@ test-component code {
     .section--video .title {
       font-size: 60px; } }
 
-@media (min-width: 1024px) {
-  .section--video + .section--news-proposition {
-    padding-top: 450px; } }
-
-.card--news-proposition {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; }
-  .card--news-proposition > .card__picture {
-    display: block;
-    position: relative;
-    width: 100%;
-    padding-top: 58.54839%;
-    overflow: hidden;
-    margin-bottom: 20px; }
-    .card--news-proposition > .card__picture > img,
-    .card--news-proposition > .card__picture > svg,
-    .card--news-proposition > .card__picture > video,
-    .card--news-proposition > .card__picture > canvas,
-    .card--news-proposition > .card__picture > .video,
-    .card--news-proposition > .card__picture > iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      -o-object-fit: cover;
-         object-fit: cover; }
-    .card--news-proposition > .card__picture img {
-      transition: transform ease-in-out 250ms; }
-    .card--news-proposition > .card__picture:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      opacity: 0.03; }
-    .card--news-proposition > .card__picture .over {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 15px;
-      opacity: 0;
-      background: rgba(53, 48, 44, 0.4);
-      pointer-events: none;
-      transition: opacity ease-in-out 250ms; }
-      .card--news-proposition > .card__picture .over__title {
-        font-family: var(--font-secondary);
-        font-size: 36px;
-        line-height: 1.2;
-        text-align: center;
-        letter-spacing: -0.041em;
-        text-transform: uppercase;
-        color: var(--foreground-negative); }
-  .card--news-proposition .card__date {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px; }
-  .card--news-proposition .card__title {
-    flex-grow: 1;
-    display: block;
-    margin-bottom: 30px;
-    font-size: 18px;
-    line-height: 1.2; }
-  .card--news-proposition .card__abstract {
-    display: none; }
-  .card--news-proposition .btn--more {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    line-height: 1; }
-    .card--news-proposition .btn--more svg {
-      width: 20px;
-      height: 20px;
-      margin: 2px 0 0 12px;
-      transition: all ease-in-out 250ms; }
-    .card--news-proposition .btn--more:hover svg {
-      transform: translateX(5px); }
-  .card--news-proposition:hover > .card__picture img {
-    transform: scale(1.1, 1.1); }
-  .card--news-proposition:hover > .card__picture .over {
-    opacity: 0; }
-  @media (max-width: 767.98px) {
-    .card--news-proposition > .card__content {
-      padding: 0 20px;
-      width: 100%; } }
-
-@media (min-width: 768px) and (-webkit-min-device-pixel-ratio: 0) {
-  .card--news-proposition {
-    height: 100%; }
-    .card--news-proposition > .card__content {
-      flex: 1 1 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column; } }
-
-.section--news-proposition {
+.main--homepage .section--news-proposition {
   position: relative; }
-  .section--news-proposition .title {
+  .main--homepage .section--news-proposition .title {
     font-family: var(--font-secondary);
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-transform: uppercase; }
-  .section--news-proposition .btn--prev, .section--news-proposition .btn--prev:active, .section--news-proposition .btn--prev:focus, .section--news-proposition .btn--prev:visited,
-  .section--news-proposition .btn--next,
-  .section--news-proposition .btn--next:active,
-  .section--news-proposition .btn--next:focus,
-  .section--news-proposition .btn--next:visited {
-    background-color: transparent;
-    color: var(--foreground); }
-  .section--news-proposition .btn--prev:hover,
-  .section--news-proposition .btn--next:hover {
-    background-color: var(--background-secondary);
-    color: var(--foreground); }
-  .section--news-proposition .btn--prev:active:hover,
-  .section--news-proposition .btn--next:active:hover {
-    background-color: var(--background-secondary);
-    color: #232221;
-    transition: none; }
-  .section--news-proposition .btn--prev.disabled, .section--news-proposition .btn--prev.disabled:active, .section--news-proposition .btn--prev.disabled:focus, .section--news-proposition .btn--prev.disabled:hover, .section--news-proposition .btn--prev.disabled:visited,
-  .section--news-proposition .btn--next.disabled,
-  .section--news-proposition .btn--next.disabled:active,
-  .section--news-proposition .btn--next.disabled:focus,
-  .section--news-proposition .btn--next.disabled:hover,
-  .section--news-proposition .btn--next.disabled:visited {
-    background-color: transparent;
-    color: var(--foreground);
-    pointer-events: none; }
   @media (min-width: 1024px) {
-    .section--news-proposition {
+    .main--homepage .section--news-proposition {
       padding: 240px 0; }
-      .section--news-proposition:before {
+      .main--homepage .section--news-proposition:before {
         content: '';
         position: absolute;
         left: 0;
@@ -6809,111 +6662,30 @@ test-component code {
         width: 100%;
         height: 50%;
         background: #D1CDCA; }
-      .section--news-proposition .title {
+      .main--homepage .section--news-proposition .title {
         font-size: 72px; } }
   @media (max-width: 1023.98px) {
-    .section--news-proposition {
+    .main--homepage .section--news-proposition {
       padding: 80px 0 0 0; }
-      .section--news-proposition .title {
+      .main--homepage .section--news-proposition .title {
         font-size: 60px; } }
 
-.card--project-proposition {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; }
-  .card--project-proposition > .card__picture {
-    display: block;
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
-    overflow: hidden;
-    margin-bottom: 20px; }
-    .card--project-proposition > .card__picture > img,
-    .card--project-proposition > .card__picture > svg,
-    .card--project-proposition > .card__picture > video,
-    .card--project-proposition > .card__picture > canvas,
-    .card--project-proposition > .card__picture > .video,
-    .card--project-proposition > .card__picture > iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      -o-object-fit: cover;
-         object-fit: cover; }
-    .card--project-proposition > .card__picture img {
-      transition: transform ease-in-out 250ms; }
-    .card--project-proposition > .card__picture .over {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 15px;
-      opacity: 0;
-      background: rgba(53, 48, 44, 0.4);
-      pointer-events: none;
-      transition: opacity ease-in-out 250ms; }
-      .card--project-proposition > .card__picture .over__title {
-        margin-bottom: 20px;
-        font-family: var(--font-secondary);
-        font-size: 48px;
-        line-height: 1.2;
-        text-align: center;
-        letter-spacing: -0.041em;
-        text-transform: uppercase;
-        color: var(--foreground-negative); }
-      .card--project-proposition > .card__picture .over__country {
-        font-size: 18px;
-        line-height: 1.2;
-        text-align: center;
-        color: var(--foreground-negative); }
-  .card--project-proposition .card__title {
-    display: block;
-    margin-bottom: 15px;
-    font-size: 18px;
-    line-height: 1.2;
-    text-transform: uppercase; }
-  .card--project-proposition .card__country {
-    display: block; }
-  .card--project-proposition:hover > .card__picture img {
-    transform: scale(1.1, 1.1); }
-  .card--project-proposition:hover > .card__picture .over {
-    opacity: 0; }
-  @media (max-width: 767.98px) {
-    .card--project-proposition > .card__content {
-      padding: 0 20px;
-      width: 100%; } }
-
-@media (min-width: 768px) and (-webkit-min-device-pixel-ratio: 0) {
-  .card--project-proposition {
-    height: 100%; }
-    .card--project-proposition > .card__content {
-      flex: 1 1 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column; } }
-
-.section--projects-proposition {
+.main--homepage .section--projects-proposition {
   position: relative; }
-  .section--projects-proposition .title {
+  .main--homepage .section--projects-proposition .title {
     margin-bottom: 20px;
     font-family: var(--font-secondary);
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-transform: uppercase; }
-  .section--projects-proposition .abstract {
+  .main--homepage .section--projects-proposition .abstract {
     margin-bottom: 40px;
     font-size: 16px;
     letter-spacing: 0.04em; }
   @media (min-width: 1024px) {
-    .section--projects-proposition {
+    .main--homepage .section--projects-proposition {
       padding-bottom: 300px; }
-      .section--projects-proposition:before {
+      .main--homepage .section--projects-proposition:before {
         content: '';
         position: absolute;
         left: 0;
@@ -6921,133 +6693,17 @@ test-component code {
         width: 100%;
         height: 50%;
         background: #D1CDCA; }
-      .section--projects-proposition .title {
+      .main--homepage .section--projects-proposition .title {
         font-size: 72px; } }
   @media (max-width: 1023.98px) {
-    .section--projects-proposition {
+    .main--homepage .section--projects-proposition {
       padding: 80px 0 0 0; }
-      .section--projects-proposition .title {
+      .main--homepage .section--projects-proposition .title {
         font-size: 60px; } }
 
-.section--product-proposition .picture {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /*
-		&:after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #000000;
-			opacity: 0.03;
-		}
-		*/ }
-  .section--product-proposition .picture > img {
-    width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover; }
-
-.section--product-proposition .title {
-  margin-bottom: 20px;
-  font-family: var(--font-secondary);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  text-transform: uppercase; }
-
-.section--product-proposition .abstract {
-  margin-bottom: 40px;
-  font-size: 16px;
-  letter-spacing: 0.04em; }
-
 @media (min-width: 1024px) {
-  .section--product-proposition .row {
-    align-items: center; }
-  .section--product-proposition .picture {
-    box-shadow: 0 30px 60px -5px rgba(53, 48, 44, 0.15); }
-  .section--product-proposition .group--cta {
-    display: flex; }
-  .section--product-proposition .title {
-    font-size: 72px; } }
-
-@media (max-width: 1023.98px) {
-  .section--product-proposition {
-    padding: 80px 0 0 0; }
-    .section--product-proposition .picture {
-      margin-bottom: 30px;
-      border: 1px solid var(--background-tertiary); }
-    .section--product-proposition .title {
-      font-size: 60px; } }
-
-[swiper-products-proposition] .swiper-container,
-[swiper-news-proposition] .swiper-container,
-[swiper-projects-proposition] .swiper-container {
-  overflow: visible; }
-
-@media (min-width: 1920px) {
-  [swiper-products-proposition] .swiper-slide {
-    width: 20vw; } }
-
-@media (min-width: 1024px) and (max-width: 1919.98px) {
-  [swiper-products-proposition] .swiper-slide {
-    width: 25vw; } }
-
-@media (min-width: 768px) and (max-width: 1439.98px) {
-  [swiper-products-proposition] .swiper-slide {
-    width: 30vw; } }
-
-@media (max-width: 1023.98px) {
-  [swiper-products-proposition] .swiper-slide {
-    width: 35vw; } }
-
-@media (max-width: 767.98px) {
-  [swiper-products-proposition] .swiper-slide {
-    width: 40vw; } }
-
-@media (min-width: 1920px) {
-  [swiper-products-proposition] .swiper-slide.large {
-    width: 44.5vw; } }
-
-@media (min-width: 1024px) and (max-width: 1919.98px) {
-  [swiper-products-proposition] .swiper-slide.large {
-    width: 55.625vw; } }
-
-@media (min-width: 768px) and (max-width: 1439.98px) {
-  [swiper-products-proposition] .swiper-slide.large {
-    width: 66.75vw; } }
-
-@media (max-width: 1023.98px) {
-  [swiper-products-proposition] .swiper-slide.large {
-    width: 77.875vw; } }
-
-@media (max-width: 767.98px) {
-  [swiper-products-proposition] .swiper-slide.large {
-    width: 40vw; }
-    [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture {
-      position: relative;
-      width: 100%;
-      padding-top: 100%;
-      overflow: hidden; }
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > img,
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > svg,
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > video,
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > canvas,
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > .video,
-      [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        -o-object-fit: cover;
-           object-fit: cover; } }
-
-[swiper-products-proposition] .card--product-proposition > .card__picture {
-  width: 100%; }
+  .main--homepage .section--video + .section--news-proposition {
+    padding-top: 450px; } }
 
 .card--product-proposition {
   position: relative;
@@ -7139,7 +6795,7 @@ test-component code {
     font-size: 14px;
     line-height: 1;
     text-align: center;
-    background: #6A6A6A;
+    background: #837f7b;
     color: white; }
   .card--product-proposition .card__title {
     display: block;
@@ -7360,8 +7016,8 @@ test-component code {
         margin-right: 15px;
         margin-bottom: 70px; } }
 
-@media (max-width: 767.98px) {
-  .section--products-detail-nav {
+@media (max-width: 1023.98px) {
+  .section--products-detail-nav .nav--products-detail > .nav__item:not(:last-child) {
     display: none; } }
 
 .nav--products-detail {
@@ -7376,18 +7032,17 @@ test-component code {
     left: -50%;
     width: 200%;
     height: 100%;
-    background: var(--background);
-    border-bottom: 1px solid #D1CDCA; }
+    background: var(--background-tertiary); }
   .nav--products-detail > .nav__item {
-    font-size: 18px;
-    line-height: 1;
+    background: transparent;
+    font-size: 14px;
     letter-spacing: 0.05em;
-    background: transparent; }
+    line-height: 1; }
     .nav--products-detail > .nav__item > a,
     .nav--products-detail > .nav__item > span,
     .nav--products-detail > .nav__item > button {
       padding: 10px 0;
-      font-size: 16px; }
+      text-transform: uppercase; }
       .nav--products-detail > .nav__item > a:after,
       .nav--products-detail > .nav__item > span:after,
       .nav--products-detail > .nav__item > button:after {
@@ -7411,9 +7066,8 @@ test-component code {
   .nav--products-detail > .nav__item--shop > a,
   .nav--products-detail > .nav__item--shop > span,
   .nav--products-detail > .nav__item--shop > button {
-    font-size: 14px;
-    text-transform: uppercase;
-    padding: 10px 20px; }
+    padding: 10px 20px;
+    text-transform: uppercase; }
     .nav--products-detail > .nav__item--shop > a:after,
     .nav--products-detail > .nav__item--shop > span:after,
     .nav--products-detail > .nav__item--shop > button:after {
@@ -7431,7 +7085,13 @@ test-component code {
     .nav--products-detail > .nav__item--shop > button:focus,
     .nav--products-detail > .nav__item--shop > button:visited,
     .nav--products-detail > .nav__item--shop > button:hover {
-      background: #646464;
+      border: 1px solid #837f7b;
+      color: var(--foreground); }
+    .nav--products-detail > .nav__item--shop > a:hover,
+    .nav--products-detail > .nav__item--shop > span:hover,
+    .nav--products-detail > .nav__item--shop > button:hover {
+      border: 1px solid #837f7b;
+      background: #837f7b;
       color: var(--foreground-negative); }
   @media (min-width: 1024px) {
     .nav--products-detail {
@@ -7446,31 +7106,31 @@ test-component code {
         margin-bottom: 2px;
         background: var(--background-tertiary); } }
 
-.card--hero-products-detail {
+.card--hero-products-detail__old {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center; }
-  .card--hero-products-detail .card__picture {
+  .card--hero-products-detail__old .card__picture {
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: visible;
     width: 100%; }
-    .card--hero-products-detail .card__picture > img {
+    .card--hero-products-detail__old .card__picture > img {
       width: 100%;
       height: 100%;
       -o-object-fit: cover;
          object-fit: cover; }
-  .card--hero-products-detail .card__content {
+  .card--hero-products-detail__old .card__content {
     width: 100%; }
-  .card--hero-products-detail .card__title {
+  .card--hero-products-detail__old .card__title {
     margin-bottom: 10px;
     font-family: var(--font-secondary);
     line-height: 1.0;
     letter-spacing: -0.015em;
     text-transform: uppercase; }
-    .card--hero-products-detail .card__title > em {
+    .card--hero-products-detail__old .card__title > em {
       display: block;
       margin-bottom: 72px;
       font-family: var(--font-secondary);
@@ -7478,63 +7138,66 @@ test-component code {
       line-height: 1.2;
       letter-spacing: 0.03em;
       color: #6A6A6A; }
-  .card--hero-products-detail .card__abstract {
+  .card--hero-products-detail__old .card__abstract {
     font-size: 18px;
     letter-spacing: 0.03em;
     color: #6A6A6A; }
-  .card--hero-products-detail .card__cta {
+  .card--hero-products-detail__old .card__cta {
     margin-top: 40px; }
-  .card--hero-products-detail .card__designer {
+  .card--hero-products-detail__old .card__designer {
     margin-top: 100px;
     font-size: 14px;
     letter-spacing: 0.05em;
     color: #6A6A6A; }
   @media (min-width: 1024px) {
-    .card--hero-products-detail {
+    .card--hero-products-detail__old {
       margin-bottom: 60px;
       justify-content: flex-start; }
-      .card--hero-products-detail .card__picture {
+      .card--hero-products-detail__old .card__picture {
         position: relative; }
-      .card--hero-products-detail .card__content {
+      .card--hero-products-detail__old .card__content {
         position: absolute;
         height: 100%;
         max-height: calc(100vh - 135px);
         display: flex;
         flex-direction: column;
         justify-content: center; }
-      .card--hero-products-detail .card__title {
+      .card--hero-products-detail__old .card__title {
         font-size: 72px; }
-        .card--hero-products-detail .card__title > em {
+        .card--hero-products-detail__old .card__title > em {
           font-size: 48px; }
-      .card--hero-products-detail .card__cta {
+      .card--hero-products-detail__old .card__cta {
         display: flex;
         align-items: center; }
-        .card--hero-products-detail .card__cta .btn--more {
+        .card--hero-products-detail__old .card__cta .btn--more {
           flex: 1 1 280px;
           min-width: 0 !important; }
-      .card--hero-products-detail .btn--more + .btn--more {
+      .card--hero-products-detail__old .btn--more + .btn--more {
         margin-left: 20px; } }
+  @media (min-width: 1024px) {
+    .card--hero-products-detail__old .card__cta {
+      align-items: stretch; } }
   @media (min-width: 1920px) {
-    .card--hero-products-detail .card__title {
+    .card--hero-products-detail__old .card__title {
       font-size: 96px; } }
   @media (max-width: 1023.98px) {
-    .card--hero-products-detail {
+    .card--hero-products-detail__old {
       justify-content: center; }
-      .card--hero-products-detail .card__picture {
+      .card--hero-products-detail__old .card__picture {
         position: relative; }
-      .card--hero-products-detail .card__content {
+      .card--hero-products-detail__old .card__content {
         position: relative;
         padding: 80px 0; }
-      .card--hero-products-detail .card__title {
+      .card--hero-products-detail__old .card__title {
         font-size: 64px; }
-      .card--hero-products-detail .card__cta {
+      .card--hero-products-detail__old .card__cta {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: 60px; }
-        .card--hero-products-detail .card__cta .btn--more {
+        .card--hero-products-detail__old .card__cta .btn--more {
           min-width: 280px; }
-      .card--hero-products-detail .btn--more + .btn--more {
+      .card--hero-products-detail__old .btn--more + .btn--more {
         margin-top: 20px; } }
 
 @media (min-width: 1024px) {
@@ -7613,7 +7276,7 @@ test-component code {
     font-size: 12px;
     line-height: 1;
     text-align: center;
-    background: #6A6A6A;
+    background: #837f7b;
     color: white; }
   .card--version .card__content {
     width: 100%; }
@@ -7966,6 +7629,269 @@ test-component code {
 
 .hidden {
   display: none; }
+
+.card--hero-products-detail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .card--hero-products-detail .card__picture {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+    width: 100%; }
+  .card--hero-products-detail .card__content {
+    width: 100%; }
+  .card--hero-products-detail .card__title {
+    margin-bottom: 10px;
+    font-family: var(--font-secondary);
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    text-transform: uppercase; }
+    .card--hero-products-detail .card__title > em {
+      display: block;
+      margin-bottom: 72px;
+      font-family: var(--font-secondary);
+      font-style: normal;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+      color: #6A6A6A; }
+  .card--hero-products-detail .card__abstract {
+    font-size: 18px;
+    letter-spacing: 0.03em;
+    color: #6A6A6A; }
+  .card--hero-products-detail .card__cta {
+    margin-top: 40px; }
+  .card--hero-products-detail .card__designer {
+    margin-top: 100px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: #6A6A6A; }
+  @media (min-width: 1024px) {
+    .card--hero-products-detail {
+      margin-bottom: 60px;
+      justify-content: flex-start; }
+      .card--hero-products-detail .card__picture {
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 0;
+        height: calc(100vh - 135px); }
+        .card--hero-products-detail .card__picture > img {
+          width: auto;
+          height: auto;
+          max-width: calc(50% + 80px);
+          max-height: 100%;
+          -o-object-fit: contain;
+             object-fit: contain; }
+      .card--hero-products-detail .card__content {
+        position: absolute;
+        height: 100%;
+        max-height: calc(100vh - 135px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center; }
+      .card--hero-products-detail .card__title {
+        font-size: 72px; }
+        .card--hero-products-detail .card__title > em {
+          font-size: 48px; }
+      .card--hero-products-detail .card__cta {
+        display: flex;
+        align-items: center; }
+        .card--hero-products-detail .card__cta .btn--more {
+          flex: 1 1 280px;
+          min-width: 0 !important; }
+      .card--hero-products-detail .btn--more + .btn--more {
+        margin-left: 20px; } }
+  @media (min-width: 1024px) {
+    .card--hero-products-detail .card__cta {
+      align-items: stretch; } }
+  @media (min-width: 1920px) {
+    .card--hero-products-detail .card__title {
+      font-size: 96px; } }
+  @media (max-width: 1023.98px) {
+    .card--hero-products-detail {
+      justify-content: center; }
+      .card--hero-products-detail .card__picture {
+        justify-content: flex-start;
+        align-items: flex-start;
+        max-height: 100vw; }
+        .card--hero-products-detail .card__picture > img {
+          max-width: 100%;
+          max-height: 100vw;
+          -o-object-fit: contain;
+             object-fit: contain; }
+      .card--hero-products-detail .card__content {
+        position: relative;
+        padding: 40px 0 80px 0; }
+      .card--hero-products-detail .card__title {
+        font-size: 64px; }
+      .card--hero-products-detail .card__cta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 60px; }
+        .card--hero-products-detail .card__cta .btn--more {
+          min-width: 280px; }
+      .card--hero-products-detail .btn--more + .btn--more {
+        margin-top: 20px; } }
+
+.section--products-proposition {
+  position: relative; }
+  .section--products-proposition:before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    background: #D1CDCA; }
+  .section--products-proposition .title {
+    margin-bottom: 20px;
+    font-family: var(--font-secondary);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase; }
+  .section--products-proposition .abstract {
+    margin-bottom: 40px;
+    font-size: 16px;
+    letter-spacing: 0.04em; }
+  @media (min-width: 1024px) {
+    .section--products-proposition {
+      padding-top: 140px;
+      padding-bottom: 340px; }
+      .section--products-proposition:before {
+        height: 40%; }
+      .section--products-proposition .title {
+        font-size: 72px; } }
+  @media (min-width: 1440px) {
+    .section--products-proposition:before {
+      height: 50%; }
+    .section--products-proposition .title {
+      font-size: 72px; } }
+  @media (max-width: 1023.98px) {
+    .section--products-proposition {
+      padding: 80px 0; }
+      .section--products-proposition .title {
+        font-size: 60px; } }
+
+.section--product-proposition .picture {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #000000;
+			opacity: 0.03;
+		}
+		*/ }
+  .section--product-proposition .picture > img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover; }
+
+.section--product-proposition .title {
+  margin-bottom: 20px;
+  font-family: var(--font-secondary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase; }
+
+.section--product-proposition .abstract {
+  margin-bottom: 40px;
+  font-size: 16px;
+  letter-spacing: 0.04em; }
+
+@media (min-width: 1024px) {
+  .section--product-proposition .row {
+    align-items: center; }
+  .section--product-proposition .picture {
+    box-shadow: 0 30px 60px -5px rgba(53, 48, 44, 0.15); }
+  .section--product-proposition .group--cta {
+    display: flex; }
+  .section--product-proposition .title {
+    font-size: 72px; } }
+
+@media (max-width: 1023.98px) {
+  .section--product-proposition {
+    padding: 80px 0 0 0; }
+    .section--product-proposition .picture {
+      margin-bottom: 30px;
+      border: 1px solid var(--background-tertiary); }
+    .section--product-proposition .title {
+      font-size: 60px; } }
+
+[swiper-products-proposition] .swiper-container {
+  overflow: visible; }
+
+@media (min-width: 1920px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 20vw; } }
+
+@media (min-width: 1024px) and (max-width: 1919.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 25vw; } }
+
+@media (min-width: 768px) and (max-width: 1439.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 30vw; } }
+
+@media (max-width: 1023.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 35vw; } }
+
+@media (max-width: 767.98px) {
+  [swiper-products-proposition] .swiper-slide {
+    width: 45vw; } }
+
+[swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture {
+  position: relative;
+  width: 100%;
+  padding-top: 50%;
+  overflow: hidden; }
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > img,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > svg,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > video,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > canvas,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > .video,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover; }
+
+@media (min-width: 1920px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 40vw; } }
+
+@media (min-width: 1024px) and (max-width: 1919.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 50vw; } }
+
+@media (min-width: 768px) and (max-width: 1439.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 60vw; } }
+
+@media (max-width: 1023.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 70vw; } }
+
+@media (max-width: 767.98px) {
+  [swiper-products-proposition] .swiper-slide.large {
+    width: 90vw; } }
+
+[swiper-products-proposition] .card--product-proposition > .card__picture {
+  width: 100%; }
 
 .section--products-configure iframe {
   position: relative;
@@ -8410,11 +8336,33 @@ test-component code {
     margin-bottom: 15px;
     font-size: 18px;
     line-height: 1.2;
+    text-align: center;
     text-transform: uppercase; }
   .card--design:hover > .card__picture img {
     transform: scale(1.1, 1.1); }
   .card--design:hover > .card__picture .over {
     opacity: 0; }
+  .large > .card--design > .card__picture {
+    position: relative;
+    width: 100%;
+    padding-top: 46.08295%;
+    overflow: hidden; }
+    .large > .card--design > .card__picture > img,
+    .large > .card--design > .card__picture > svg,
+    .large > .card--design > .card__picture > video,
+    .large > .card--design > .card__picture > canvas,
+    .large > .card--design > .card__picture > .video,
+    .large > .card--design > .card__picture > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .large > .card--design > .card__picture img {
+      -o-object-fit: contain;
+         object-fit: contain; }
   @media (max-width: 767.98px) {
     .card--design > .card__content {
       padding: 0 20px;
@@ -8445,10 +8393,16 @@ test-component code {
       align-items: stretch; }
       .listing--design > .listing__item {
         width: 100%;
-        flex: 0 0 calc(33.33333% - 70px);
-        max-width: calc(33.33333% - 70px);
+        flex: 0 0 calc(25% - 70px);
+        max-width: calc(25% - 70px);
         margin-left: 35px;
-        margin-right: 35px; } }
+        margin-right: 35px; }
+        .listing--design > .listing__item.large {
+          width: 100%;
+          flex: 0 0 calc(50% - 70px);
+          max-width: calc(50% - 70px);
+          margin-left: 35px;
+          margin-right: 35px; } }
   @media (min-width: 1024px) and (max-width: 1919.98px) {
     .listing--design {
       margin-left: -30px;
@@ -8456,10 +8410,16 @@ test-component code {
       align-items: stretch; }
       .listing--design > .listing__item {
         width: 100%;
-        flex: 0 0 calc(33.33333% - 60px);
-        max-width: calc(33.33333% - 60px);
+        flex: 0 0 calc(25% - 60px);
+        max-width: calc(25% - 60px);
         margin-left: 30px;
-        margin-right: 30px; } }
+        margin-right: 30px; }
+        .listing--design > .listing__item.large {
+          width: 100%;
+          flex: 0 0 calc(50% - 60px);
+          max-width: calc(50% - 60px);
+          margin-left: 30px;
+          margin-right: 30px; } }
   @media (min-width: 768px) and (max-width: 1439.98px) {
     .listing--design {
       margin-left: -25px;
@@ -8467,10 +8427,16 @@ test-component code {
       align-items: stretch; }
       .listing--design > .listing__item {
         width: 100%;
-        flex: 0 0 calc(33.33333% - 50px);
-        max-width: calc(33.33333% - 50px);
+        flex: 0 0 calc(25% - 50px);
+        max-width: calc(25% - 50px);
         margin-left: 25px;
-        margin-right: 25px; } }
+        margin-right: 25px; }
+        .listing--design > .listing__item.large {
+          width: 100%;
+          flex: 0 0 calc(50% - 50px);
+          max-width: calc(50% - 50px);
+          margin-left: 25px;
+          margin-right: 25px; } }
   @media (max-width: 1023.98px) {
     .listing--design {
       margin-left: -20px;
@@ -8481,18 +8447,128 @@ test-component code {
         flex: 0 0 calc(50% - 40px);
         max-width: calc(50% - 40px);
         margin-left: 20px;
-        margin-right: 20px; } }
+        margin-right: 20px; }
+        .listing--design > .listing__item.large {
+          width: 100%;
+          flex: 0 0 calc(100% - 40px);
+          max-width: calc(100% - 40px);
+          margin-left: 20px;
+          margin-right: 20px; } }
   @media (max-width: 767.98px) {
     .listing--design {
       margin-left: -15px;
       margin-right: -15px; }
       .listing--design > .listing__item {
         width: 100%;
-        flex: 0 0 calc(100% - 30px);
-        max-width: calc(100% - 30px);
+        flex: 0 0 calc(50% - 30px);
+        max-width: calc(50% - 30px);
         margin-left: 15px;
-        margin-right: 15px;
-        margin-bottom: 70px; } }
+        margin-right: 15px; }
+        .listing--design > .listing__item.large {
+          width: 100%;
+          flex: 0 0 calc(100% - 30px);
+          max-width: calc(100% - 30px);
+          margin-left: 15px;
+          margin-right: 15px; } }
+
+.card--project-proposition {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+  .card--project-proposition > .card__picture {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    margin-bottom: 20px; }
+    .card--project-proposition > .card__picture > img,
+    .card--project-proposition > .card__picture > svg,
+    .card--project-proposition > .card__picture > video,
+    .card--project-proposition > .card__picture > canvas,
+    .card--project-proposition > .card__picture > .video,
+    .card--project-proposition > .card__picture > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .card--project-proposition > .card__picture img {
+      transition: transform ease-in-out 250ms; }
+    .card--project-proposition > .card__picture .over {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      opacity: 0;
+      background: rgba(53, 48, 44, 0.4);
+      pointer-events: none;
+      transition: opacity ease-in-out 250ms; }
+      .card--project-proposition > .card__picture .over__title {
+        margin-bottom: 20px;
+        font-family: var(--font-secondary);
+        font-size: 48px;
+        line-height: 1.2;
+        text-align: center;
+        letter-spacing: -0.041em;
+        text-transform: uppercase;
+        color: var(--foreground-negative); }
+      .card--project-proposition > .card__picture .over__country {
+        font-size: 18px;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--foreground-negative); }
+  .card--project-proposition .card__title {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 1.2;
+    text-transform: uppercase; }
+  .card--project-proposition .card__country {
+    display: block; }
+  .card--project-proposition:hover > .card__picture img {
+    transform: scale(1.1, 1.1); }
+  .card--project-proposition:hover > .card__picture .over {
+    opacity: 0; }
+  @media (max-width: 767.98px) {
+    .card--project-proposition > .card__content {
+      padding: 0 20px;
+      width: 100%; } }
+
+@media (min-width: 768px) and (-webkit-min-device-pixel-ratio: 0) {
+  .card--project-proposition {
+    height: 100%; }
+    .card--project-proposition > .card__content {
+      flex: 1 1 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column; } }
+
+.section--projects-proposition {
+  position: relative; }
+  .section--projects-proposition .title {
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -0.027em;
+    text-transform: uppercase; }
+  @media (min-width: 1024px) {
+    .section--projects-proposition {
+      padding-bottom: 120px; } }
+  @media (max-width: 1023.98px) {
+    .section--projects-proposition {
+      padding: 80px 0 0 0; } }
+
+[swiper-projects-proposition] .swiper-container {
+  overflow: visible; }
 
 .modal--projects-registration {
   background: var(--background);
@@ -9369,6 +9445,149 @@ test-component code {
 
 .nav--share > .nav__item + .nav__item {
   margin-left: 20px; }
+
+.card--news-proposition {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+  .card--news-proposition > .card__picture {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    margin-bottom: 20px; }
+    .card--news-proposition > .card__picture > img,
+    .card--news-proposition > .card__picture > svg,
+    .card--news-proposition > .card__picture > video,
+    .card--news-proposition > .card__picture > canvas,
+    .card--news-proposition > .card__picture > .video,
+    .card--news-proposition > .card__picture > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .card--news-proposition > .card__picture img {
+      transition: transform ease-in-out 250ms; }
+    .card--news-proposition > .card__picture:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      opacity: 0.03; }
+    .card--news-proposition > .card__picture .over {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      opacity: 0;
+      background: rgba(53, 48, 44, 0.4);
+      pointer-events: none;
+      transition: opacity ease-in-out 250ms; }
+      .card--news-proposition > .card__picture .over__title {
+        font-family: var(--font-secondary);
+        font-size: 36px;
+        line-height: 1.2;
+        text-align: center;
+        letter-spacing: -0.041em;
+        text-transform: uppercase;
+        color: var(--foreground-negative); }
+  .card--news-proposition .card__date {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px; }
+  .card--news-proposition .card__title {
+    flex-grow: 1;
+    display: block;
+    margin-bottom: 30px;
+    font-size: 18px;
+    line-height: 1.2; }
+  .card--news-proposition .card__abstract {
+    display: none; }
+  .card--news-proposition .btn--more {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1; }
+    .card--news-proposition .btn--more svg {
+      width: 20px;
+      height: 20px;
+      margin: 2px 0 0 12px;
+      transition: all ease-in-out 250ms; }
+    .card--news-proposition .btn--more:hover svg {
+      transform: translateX(5px); }
+  .card--news-proposition:hover > .card__picture img {
+    transform: scale(1.1, 1.1); }
+  .card--news-proposition:hover > .card__picture .over {
+    opacity: 0; }
+  @media (max-width: 767.98px) {
+    .card--news-proposition > .card__content {
+      padding: 0 20px;
+      width: 100%; } }
+
+@media (min-width: 768px) and (-webkit-min-device-pixel-ratio: 0) {
+  .card--news-proposition {
+    height: 100%; }
+    .card--news-proposition > .card__content {
+      flex: 1 1 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column; } }
+
+.section--news-proposition {
+  position: relative; }
+  .section--news-proposition .title {
+    font-family: var(--font-secondary);
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -0.027em;
+    text-transform: uppercase; }
+  .section--news-proposition .btn--prev, .section--news-proposition .btn--prev:active, .section--news-proposition .btn--prev:focus, .section--news-proposition .btn--prev:visited,
+  .section--news-proposition .btn--next,
+  .section--news-proposition .btn--next:active,
+  .section--news-proposition .btn--next:focus,
+  .section--news-proposition .btn--next:visited {
+    background-color: transparent;
+    color: var(--foreground); }
+  .section--news-proposition .btn--prev:hover,
+  .section--news-proposition .btn--next:hover {
+    background-color: var(--background-secondary);
+    color: var(--foreground); }
+  .section--news-proposition .btn--prev:active:hover,
+  .section--news-proposition .btn--next:active:hover {
+    background-color: var(--background-secondary);
+    color: #232221;
+    transition: none; }
+  .section--news-proposition .btn--prev.disabled, .section--news-proposition .btn--prev.disabled:active, .section--news-proposition .btn--prev.disabled:focus, .section--news-proposition .btn--prev.disabled:hover, .section--news-proposition .btn--prev.disabled:visited,
+  .section--news-proposition .btn--next.disabled,
+  .section--news-proposition .btn--next.disabled:active,
+  .section--news-proposition .btn--next.disabled:focus,
+  .section--news-proposition .btn--next.disabled:hover,
+  .section--news-proposition .btn--next.disabled:visited {
+    background-color: transparent;
+    color: var(--foreground);
+    pointer-events: none; }
+  @media (min-width: 1024px) {
+    .section--news-proposition {
+      padding: 120px 0; } }
+  @media (max-width: 1023.98px) {
+    .section--news-proposition {
+      padding: 80px 0 0 0; } }
+
+[swiper-news-proposition] .swiper-container {
+  overflow: visible; }
 
 .card--designer {
   display: flex;
@@ -10558,7 +10777,12 @@ test-component code {
   @media (min-width: 1024px) {
     .section--intro-sm .title {
       margin-top: 120px;
+      margin-bottom: 100px;
       font-size: 72px; }
+    .section--intro-sm .title + .abstract {
+      margin-top: -70px; }
+    .section--intro-sm .title + .description {
+      margin-top: -70px; }
     .section--intro-sm .abstract {
       margin-bottom: 80px; }
     .section--intro-sm .description {
@@ -10587,7 +10811,12 @@ test-component code {
       padding: 0; }
     .section--intro-sm .title {
       margin-top: 60px;
+      margin-bottom: 60px;
       font-size: 48px; }
+    .section--intro-sm .title + .abstract {
+      margin-top: -30px; }
+    .section--intro-sm .title + .description {
+      margin-top: -30px; }
     .section--intro-sm .abstract {
       margin-bottom: 30px; }
     .section--intro-sm .description {
@@ -10926,12 +11155,12 @@ test-component code {
       display: flex;
       flex-direction: column;
       align-items: flex-start; } }
-  .card--dealer.primary {
+  .card--dealer.evidence {
     padding: 20px 30px 30px 30px;
     border: 1px solid var(--background-tertiary);
     border-radius: 8px; }
     @media (max-width: 767.98px) {
-      .card--dealer.primary {
+      .card--dealer.evidence {
         padding: 20px 30px 20px; } }
 
 .section--dealers {
@@ -13020,7 +13249,8 @@ test-component code {
   width: auto;
   overflow: hidden; }
   .modal--markets-and-languages .pictogram {
-    position: absolute; }
+    position: absolute;
+    z-index: 0; }
     @media (min-width: 1024px) {
       .modal--markets-and-languages .pictogram {
         top: 50%;
@@ -13267,6 +13497,172 @@ test-component code {
   display: flex;
   flex-direction: column;
   align-items: center; }
+
+.modal--market-proposition {
+  position: relative;
+  background: var(--background);
+  display: flex;
+  width: auto;
+  overflow: hidden; }
+  .modal--market-proposition .pictogram {
+    position: absolute;
+    z-index: 0; }
+    @media (min-width: 1024px) {
+      .modal--market-proposition .pictogram {
+        top: 50%;
+        left: 50%;
+        margin-top: -30vw;
+        margin-left: -30vw; } }
+    @media (max-width: 1023.98px) {
+      .modal--market-proposition .pictogram {
+        top: 50%;
+        left: 50%;
+        margin-top: -40vw;
+        margin-left: -40vw; } }
+  .modal--market-proposition .modal__content {
+    position: relative;
+    display: block; }
+  .modal--market-proposition .modal__header {
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    width: 100%;
+    height: 50px; }
+  .modal--market-proposition .modal__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent; }
+  .modal--market-proposition .btn--logo {
+    padding: 0 18px;
+    margin-bottom: 30px; }
+    .modal--market-proposition .btn--logo svg {
+      width: 220px;
+      height: 63px;
+      color: currentColor;
+      transition: all ease-in-out 250ms; }
+  .modal--market-proposition .title,
+  .modal--market-proposition .subtitle {
+    margin: 25px 0;
+    font-family: var(--font-secondary);
+    line-height: 1;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1px solid var(--background-tertiary);
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0; }
+  .modal--market-proposition .subtitle {
+    font-size: 19px; }
+  .modal--market-proposition .btn--close svg {
+    width: 24px;
+    height: 24px; }
+  .modal--market-proposition .group--cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    text-align: center; }
+  .modal--market-proposition .btn--secondary,
+  .modal--market-proposition .btn--primary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid;
+    margin: 15px 0 0 0; }
+    .modal--market-proposition .btn--secondary svg,
+    .modal--market-proposition .btn--primary svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      margin-left: 10px;
+      transition: transform ease-in-out 250ms; }
+  .modal--market-proposition .btn--primary, .modal--market-proposition .btn--primary:link, .modal--market-proposition .btn--primary:active, .modal--market-proposition .btn--primary:focus, .modal--market-proposition .btn--primary:visited {
+    background: #837f7b;
+    color: var(--foreground-negative); }
+  .modal--market-proposition .btn--primary:hover {
+    background: #837f7b;
+    color: var(--foreground-negative); }
+    .modal--market-proposition .btn--primary:hover svg {
+      transform: translateX(5px); }
+  @media (min-width: 768px) {
+    .modal--market-proposition {
+      justify-content: space-between;
+      align-items: stretch;
+      max-width: calc(100% - 200px);
+      max-height: calc(100vh - 200px);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -10px rgba(53, 48, 44, 0.35); }
+      .modal--market-proposition .modal__inner {
+        padding: 50px 60px 80px;
+        height: 600px;
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto; }
+        .modal--market-proposition .modal__inner::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+          border-radius: 3px; }
+        .modal--market-proposition .modal__inner::-webkit-scrollbar-button {
+          display: none; }
+        .modal--market-proposition .modal__inner::-webkit-scrollbar-button:hover {
+          display: none; }
+        .modal--market-proposition .modal__inner::-webkit-scrollbar-thumb {
+          background-color: var(--black-40);
+          box-shadow: none;
+          border-radius: 2px; }
+          .modal--market-proposition .modal__inner::-webkit-scrollbar-thumb:hover {
+            background-color: var(--black-40); }
+        .modal--market-proposition .modal__inner::-webkit-scrollbar-track {
+          background-color: transparent;
+          border-radius: 2px; }
+          .modal--market-proposition .modal__inner::-webkit-scrollbar-track:hover {
+            background-color: transparent; }
+      .modal--market-proposition .modal__content {
+        height: 600px;
+        max-height: 100%; }
+      .modal--market-proposition .title {
+        font-size: 48px; } }
+  @media (min-width: 768px) and (max-width: 1439.98px) {
+    .modal--market-proposition {
+      max-width: calc(100% - 120px); } }
+  @media (max-width: 767.98px) {
+    .modal--market-proposition {
+      flex-direction: column;
+      width: calc(100vw - 40px);
+      max-width: 100%;
+      max-height: 100%;
+      max-height: calc(100vh - 80px);
+      overflow-x: hidden;
+      overflow-y: auto; }
+      .modal--market-proposition::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px; }
+      .modal--market-proposition::-webkit-scrollbar-button {
+        display: none; }
+      .modal--market-proposition::-webkit-scrollbar-button:hover {
+        display: none; }
+      .modal--market-proposition::-webkit-scrollbar-thumb {
+        background-color: var(--black-40);
+        box-shadow: none;
+        border-radius: 2px; }
+        .modal--market-proposition::-webkit-scrollbar-thumb:hover {
+          background-color: var(--black-40); }
+      .modal--market-proposition::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 2px; }
+        .modal--market-proposition::-webkit-scrollbar-track:hover {
+          background-color: transparent; }
+      .modal--market-proposition .modal__inner {
+        padding: 50px 40px 120px 40px; }
+      .modal--market-proposition .title {
+        font-size: 32px; } }
 
 .card--cart-item {
   display: flex;

@@ -309,9 +309,15 @@
 			&:focus,
 			&:visited,
 			&:hover {
-				background: #646464;
+				background: #837f7b;
 				color: $foreground-negative;
 			}
+		}
+	}
+
+	@include media-up(md) {
+		&>.nav__item+.nav__item {
+			margin-left: 40px;
 		}
 	}
 
@@ -320,10 +326,13 @@
 			margin-top: 1px;
 			margin-bottom: -10px;
 			padding-bottom: 4px;
+			white-space: nowrap;
 		}
+	}
 
+	@include media-only(sm) {
 		&>.nav__item+.nav__item {
-			margin-left: 40px;
+			margin-left: 20px;
 		}
 	}
 

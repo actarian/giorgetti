@@ -99,6 +99,7 @@ export class SwiperDirective extends Component {
 			on.slideChange = () => {
 				const swiper = this.swiper;
 				if (swiper) {
+					console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
 					this.index = swiper.activeIndex;
 					this.events$.next(this.index);
 					this.pushChanges();
@@ -126,14 +127,15 @@ export class SwiperDirective extends Component {
 	swiperInitOrUpdate_() {
 		if (this.enabled) {
 			const target = this.target;
-			if (this.swiper) {
-				this.swiper.update();
+			let swiper = this.swiper;
+			if (swiper) {
+				swiper.update();
+				// swiper.slideTo(0, 0);
 			} else {
-				let swiper;
 				const on = this.options.on || (this.options.on = {});
 				const callback = on.init;
 				if (!on.init || !on.init.swiperDirectiveInit) {
-					on.init = function() {
+					on.init = function () {
 						gsap.to(target, {
 							duration: 0.4,
 							opacity: 1,
@@ -149,11 +151,26 @@ export class SwiperDirective extends Component {
 				}
 				gsap.set(target, { opacity: 1 });
 				swiper = new Swiper(target, this.options);
+				// swiper.slideTo(0, 0);
 				// console.log(swiper);
 				this.swiper = swiper;
-				this.swiper._opening = true;
+				swiper._opening = true;
 				target.classList.add('swiper-init');
 			}
+			const { node } = getContext(this);
+			const images = Array.prototype.slice.call(node.querySelectorAll('img'));
+			images.forEach(x => {
+				const onLoad = () => {
+					x.removeEventListener('load', onLoad);
+					if (swiper.activeIndex > 0) {
+						console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
+						setTimeout(() => {
+							swiper.slideTo(0, 0);
+						}, 1);
+					}
+				};
+				x.addEventListener('load', onLoad);
+			});
 		}
 	}
 

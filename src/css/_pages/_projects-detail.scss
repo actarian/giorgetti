@@ -110,6 +110,7 @@
 		margin-bottom: 15px;
 		font-size: 18px;
 		line-height: 1.2;
+		text-align: center;
 		text-transform: uppercase;
 	}
 
@@ -122,6 +123,16 @@
 
 			.over {
 				opacity: 0;
+			}
+		}
+	}
+
+	.large>& {
+		&>.card__picture {
+			@include aspect-clip(2.17, 1);
+
+			img {
+				object-fit: contain;
 			}
 		}
 	}
@@ -166,7 +177,11 @@
 		align-items: stretch;
 
 		&>.listing__item {
-			@include as-col(4, 12, $gutter);
+			@include as-col(3, 12, $gutter);
+
+			&.large {
+				@include as-col(6, 12, $gutter);
+			}
 		}
 	}
 
@@ -177,7 +192,11 @@
 		align-items: stretch;
 
 		&>.listing__item {
-			@include as-col(4, 12, $gutter);
+			@include as-col(3, 12, $gutter);
+
+			&.large {
+				@include as-col(6, 12, $gutter);
+			}
 		}
 	}
 
@@ -188,7 +207,11 @@
 		align-items: stretch;
 
 		&>.listing__item {
-			@include as-col(4, 12, $gutter);
+			@include as-col(3, 12, $gutter);
+
+			&.large {
+				@include as-col(6, 12, $gutter);
+			}
 		}
 	}
 
@@ -200,6 +223,10 @@
 
 		&>.listing__item {
 			@include as-col(6, 12, $gutter);
+
+			&.large {
+				@include as-col(12, 12, $gutter);
+			}
 		}
 	}
 
@@ -209,8 +236,11 @@
 		margin-right: - $gutter / 2;
 
 		&>.listing__item {
-			@include as-col(12, 12, $gutter);
-			margin-bottom: 70px;
+			@include as-col(6, 12, $gutter);
+
+			&.large {
+				@include as-col(12, 12, $gutter);
+			}
 		}
 	}
 }

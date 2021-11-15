@@ -123,7 +123,8 @@
 		&>span {
 			@extend %nav-item;
 			line-height: 1;
-			transition: ease-in-out all $fast;
+			transition: ease-in-out $fast;
+			transition-property: background-color, color, border, opacity;
 
 			.icon {
 				margin-right: 10px;

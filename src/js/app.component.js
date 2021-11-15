@@ -23,6 +23,24 @@ export class AppComponent extends Component {
 		CartMiniService.items$().pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(_ => this.pushChanges());
+		setTimeout(() => {
+			this.checkUserMarket();
+		}, 2000);
+	}
+
+	checkUserMarket() {
+		if (environment.userMarket !== environment.currentMarket) {
+			this.onOpenMarketProposition();
+		}
+	}
+
+	onOpenMarketProposition() {
+		HeaderService.onBack();
+		ModalService.open$({ src: environment.template.modal.marketPropositionModal }).pipe(
+			takeUntil(this.unsubscribe$)
+		).subscribe(event => {
+			console.log('AppComponent.onOpenMarketProposition', event);
+		});
 	}
 
 	onOpenMarketAndLanguage() {

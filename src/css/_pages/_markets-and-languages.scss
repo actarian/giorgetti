@@ -8,6 +8,7 @@
 	.pictogram {
 		@extend %pictogram;
 		position: absolute;
+		z-index: 0;
 
 		@include media-up(md) {
 			top: 50%;

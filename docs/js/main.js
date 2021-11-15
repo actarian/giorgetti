@@ -174,6 +174,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
   defaultMarket: 'IT',
   currentMarket: 'IT',
+  userCountry: 'IT',
+  userMarket: 'IT',
   languages: ['it', 'en', 'de', 'ch'],
   defaultLanguage: 'it',
   currentLanguage: 'it',
@@ -189,6 +191,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
       careersModal: '/template/modals/careers-modal.cshtml',
       genericModal: '/template/modals/generic-modal.cshtml',
       marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
+      marketPropositionModal: '/template/modals/market-proposition-modal.cshtml',
       materialsModal: '/template/modals/materials-modal.cshtml',
       ordersModal: '/template/modals/orders-modal.cshtml',
       projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
@@ -230,6 +233,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   markets: ['IT', 'EU', 'AM', 'AS', 'IN'],
   defaultMarket: 'IT',
   currentMarket: 'IT',
+  userCountry: 'IT',
+  userMarket: 'IT',
   languages: ['it', 'en', 'de', 'ch'],
   defaultLanguage: 'it',
   currentLanguage: 'it',
@@ -245,6 +250,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
       careersModal: '/giorgetti/partials/modals/careers-modal.html',
       genericModal: '/giorgetti/partials/modals/generic-modal.html',
       marketsAndLanguagesModal: '/giorgetti/partials/modals/markets-and-languages-modal.html',
+      marketPropositionModal: '/giorgetti/partials/modals/market-proposition-modal.html',
       materialsModal: '/giorgetti/partials/modals/materials-modal.html',
       ordersModal: '/giorgetti/partials/modals/orders-modal.html',
       projectsRegistrationModal: '/giorgetti/partials/modals/projects-registration-modal.html',
@@ -1547,6 +1553,24 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
     CartMiniService.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       return _this.pushChanges();
     });
+    setTimeout(function () {
+      _this.checkUserMarket();
+    }, 2000);
+  };
+
+  _proto.checkUserMarket = function checkUserMarket() {
+    if (environment.userMarket !== environment.currentMarket) {
+      this.onOpenMarketProposition();
+    }
+  };
+
+  _proto.onOpenMarketProposition = function onOpenMarketProposition() {
+    HeaderService.onBack();
+    ModalService.open$({
+      src: environment.template.modal.marketPropositionModal
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('AppComponent.onOpenMarketProposition', event);
+    });
   };
 
   _proto.onOpenMarketAndLanguage = function onOpenMarketAndLanguage() {
@@ -2194,8 +2218,6 @@ EnvPipe.meta = {
 
   var _proto = FilterItemComponent.prototype;
 
-  _proto.onInit = function onInit() {};
-
   _proto.closeFilter = function closeFilter() {
     this.filter.active = false;
     this.change.next(); // this.pushChanges();
@@ -2231,6 +2253,11 @@ EnvPipe.meta = {
     LocomotiveScrollService.start();
   };
 
+  _proto.onClick = function onClick(item) {
+    this.filter.set(item);
+    LocomotiveScrollService.start();
+  };
+
   return FilterItemComponent;
 }(rxcomp.Component);
 FilterItemComponent.meta = {
@@ -2239,7 +2266,7 @@ FilterItemComponent.meta = {
   inputs: ['filter', 'filters', 'name'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--filter\" (click)=\"toggleFilter(filter)\" (clickOutside)=\"closeFilter(filter)\">\n\t\t\t<span class=\"label\" [innerHTML]=\"filter.getLabel() || name\"></span>\n\t\t\t<svg class=\"caret-down\" *if=\"!filter.hasAny()\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<svg class=\"close-sm\" *if=\"filter.hasAny()\" (click)=\"clearFilter($event, filter)\"><use xlink:href=\"#close-sm\"></use></svg>\n\t\t</div>\n\t\t<div class=\"options\" *if=\"filter.active\" (mouseenter)=\"onEnter()\" (mouseleave)=\"onLeave()\">\n\t\t\t<div class=\"category\" [innerHTML]=\"name\"></div>\n\t\t\t<ul class=\"nav--options\">\n\t\t\t\t<li class=\"nav--options__item\" [class]=\"{ active: filter.has(item), disabled: item.disabled, empty: !item.value }\" *for=\"let item of filter.options\">\n\t\t\t\t\t<span class=\"option\" (click)=\"filter.set(item)\">\n\t\t\t\t\t\t<span class=\"name\" [innerHTML]=\"item.label | label\"></span>\n\t\t\t\t\t\t<!-- <span class=\"count\" [innerHTML]=\"item.count || ''\"></span> -->\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t\t"
+  "\n\t\t<div class=\"group--filter\" (click)=\"toggleFilter(filter)\" (clickOutside)=\"closeFilter(filter)\">\n\t\t\t<span class=\"label\" [innerHTML]=\"filter.getLabel() || name\"></span>\n\t\t\t<svg class=\"caret-down\" *if=\"!filter.hasAny()\"><use xlink:href=\"#caret-down\"></use></svg>\n\t\t\t<svg class=\"close-sm\" *if=\"filter.hasAny()\" (click)=\"clearFilter($event, filter)\"><use xlink:href=\"#close-sm\"></use></svg>\n\t\t</div>\n\t\t<div class=\"options\" *if=\"filter.active\" (mouseenter)=\"onEnter()\" (mouseleave)=\"onLeave()\">\n\t\t\t<div class=\"category\" [innerHTML]=\"name\"></div>\n\t\t\t<ul class=\"nav--options\">\n\t\t\t\t<li class=\"nav--options__item\" [class]=\"{ active: filter.has(item), disabled: item.disabled, empty: !item.value }\" *for=\"let item of filter.options\">\n\t\t\t\t\t<span class=\"option\" (click)=\"onClick(item)\">\n\t\t\t\t\t\t<span class=\"name\" [innerHTML]=\"item.label | label\"></span>\n\t\t\t\t\t\t<!-- <span class=\"count\" [innerHTML]=\"item.count || ''\"></span> -->\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t\t"
 };var FlagPipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(FlagPipe, _Pipe);
 
@@ -3146,6 +3173,7 @@ SvgIconStructure.meta = {
         var swiper = _this.swiper;
 
         if (swiper) {
+          console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
           _this.index = swiper.activeIndex;
 
           _this.events$.next(_this.index);
@@ -3176,11 +3204,11 @@ SvgIconStructure.meta = {
   _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
     if (this.enabled) {
       var target = this.target;
+      var swiper = this.swiper;
 
-      if (this.swiper) {
-        this.swiper.update();
+      if (swiper) {
+        swiper.update(); // swiper.slideTo(0, 0);
       } else {
-        var swiper;
         var on = this.options.on || (this.options.on = {});
         var callback = on.init;
 
@@ -3206,12 +3234,32 @@ SvgIconStructure.meta = {
         gsap.set(target, {
           opacity: 1
         });
-        swiper = new Swiper(target, this.options); // console.log(swiper);
+        swiper = new Swiper(target, this.options); // swiper.slideTo(0, 0);
+        // console.log(swiper);
 
         this.swiper = swiper;
-        this.swiper._opening = true;
+        swiper._opening = true;
         target.classList.add('swiper-init');
       }
+
+      var _getContext2 = rxcomp.getContext(this),
+          node = _getContext2.node;
+
+      var images = Array.prototype.slice.call(node.querySelectorAll('img'));
+      images.forEach(function (x) {
+        var onLoad = function onLoad() {
+          x.removeEventListener('load', onLoad);
+
+          if (swiper.activeIndex > 0) {
+            console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
+            setTimeout(function () {
+              swiper.slideTo(0, 0);
+            }, 1);
+          }
+        };
+
+        x.addEventListener('load', onLoad);
+      });
     }
   };
 
@@ -4085,7 +4133,7 @@ ControlPrivacyComponent.meta = {
   inputs: ['control', 'label', 'target'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form--privacy\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<div class=\"group--inputs\">\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_true'\" [name]=\"uniqueId\" [value]=\"true\" (change)=\"onSelect(true)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_true'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Acconsento</span>\n\t\t\t\t</label>\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_false'\" [name]=\"uniqueId\" [value]=\"false\" (change)=\"onSelect(false)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_false'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span>Non acconsento</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<div class=\"description\">\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</div>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
+  "\n\t\t<div class=\"group--form--privacy\" [class]=\"{ required: control.validators.length }\">\n\t\t\t<div class=\"group--inputs\">\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_true'\" [name]=\"uniqueId\" [value]=\"true\" (change)=\"onSelect(true)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_true'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span [innerHTML]=\"labels.acconsento\"></span>\n\t\t\t\t</label>\n\t\t\t\t<input type=\"radio\" class=\"control--checkbox\" [id]=\"uniqueId + '_false'\" [name]=\"uniqueId\" [value]=\"false\" (change)=\"onSelect(false)\" />\n\t\t\t\t<label [labelFor]=\"uniqueId + '_false'\">\n\t\t\t\t\t<svg class=\"icon icon--checkbox\"><use xlink:href=\"#checkbox\"></use></svg>\n\t\t\t\t\t<svg class=\"icon icon--checkbox-checked\"><use xlink:href=\"#checkbox-checked\"></use></svg>\n\t\t\t\t\t<span [innerHTML]=\"labels.non_acconsento\"></span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<div class=\"description\">\n\t\t\t\t<span [innerHTML]=\"label | html\"></span>\n\t\t\t\t<span class=\"required__sign\">*</span>\n\t\t\t</div>\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t"
 };var ControlSearchComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlSearchComponent, _ControlComponent);
 
@@ -4772,23 +4820,24 @@ var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
     _FiltersComponent.prototype.onInit.call(this);
 
     this.categoryId = this.categoryId || null;
+    this.subcategoryId = this.subcategoryId || null;
     this.shop = this.shop || false;
   };
 
   _proto.load$ = function load$() {
-    var _this = this;
-
-    return rxjs.combineLatest([ProductsService.all$().pipe(operators.map(function (products) {
-      return products.filter(function (x) {
-        return _this.shop ? x.configurable : true;
-      });
-    })), ProductsService.filters$()]);
+    return rxjs.combineLatest([ProductsService.all$(), ProductsService.filters$()]);
   };
 
   _proto.setFiltersParams = function setFiltersParams() {
     if (this.categoryId) {
       this.filters.category.set({
         value: this.categoryId
+      });
+    }
+
+    if (this.subcategoryId) {
+      this.filters.subcategory.set({
+        value: this.subcategoryId
       });
     }
 
@@ -4802,7 +4851,11 @@ var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
   _proto.doFilterItem = function doFilterItem(key, item, value) {
     switch (key) {
       case 'category':
-        return item.category.id === value;
+        // return item.category.id === value;
+        return item.categories.indexOf(value) !== -1;
+
+      case 'subcategory':
+        return item.subcategories.indexOf(value) !== -1;
 
       case 'ambience':
         return item.ambiences.indexOf(value) !== -1;
@@ -4828,7 +4881,7 @@ var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
 }(FiltersComponent);
 ProductsComponent.meta = {
   selector: '[products]',
-  inputs: ['categoryId', 'shop']
+  inputs: ['categoryId', 'subcategoryId', 'shop']
 };var AmbienceService = /*#__PURE__*/function () {
   function AmbienceService() {}
 
@@ -4909,7 +4962,11 @@ ProductsComponent.meta = {
         return item.ambiences.indexOf(value) !== -1;
 
       case 'category':
-        return item.category.id === value;
+        // return item.category.id === value;
+        return item.categories.indexOf(value) !== -1;
+
+      case 'subcategory':
+        return item.subcategories.indexOf(value) !== -1;
 
       case 'material':
         return item.materials.indexOf(value) !== -1;
@@ -7103,19 +7160,154 @@ DesignersComponent.meta = {
 }(rxcomp.Component);
 GenericModalComponent.meta = {
   selector: '[generic-modal]'
+};var MagazineService = /*#__PURE__*/function () {
+  function MagazineService() {}
+
+  MagazineService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/magazine/all');
+    } else {
+      return ApiService.get$('/magazine/all.json');
+    }
+  };
+
+  MagazineService.filters$ = function filters$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/magazine/filters');
+    } else {
+      return ApiService.get$('/magazine/filters.json');
+    }
+  };
+
+  return MagazineService;
+}();var MagazineComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(MagazineComponent, _FiltersComponent);
+
+  function MagazineComponent() {
+    return _FiltersComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = MagazineComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+
+    this.categoryId = this.categoryId || null;
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([MagazineService.all$(), MagazineService.filters$()]);
+  };
+
+  _proto.setFiltersParams = function setFiltersParams() {
+    if (this.categoryId) {
+      this.filters.category.set({
+        value: this.categoryId
+      });
+    }
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      case 'category':
+        return item.category.id === value;
+
+      case 'search':
+        return item.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+
+      default:
+        return false;
+    }
+  };
+
+  return MagazineComponent;
+}(FiltersComponent);
+MagazineComponent.meta = {
+  selector: '[magazine]',
+  inputs: ['categoryId']
 };var MarketsAndLanguagesService = /*#__PURE__*/function () {
   function MarketsAndLanguagesService() {}
 
   MarketsAndLanguagesService.all$ = function all$(currentCoId) {
     if (environment.flags.production) {
-      return ApiService.get$('/markets-and-languages/all?currentCoId=' + currentCoId);
+      return ApiService.get$('/markets-and-languages/all-nolangselector?currentCoId=' + currentCoId);
     } else {
       return ApiService.get$('/markets-and-languages/all.json');
     }
   };
 
   return MarketsAndLanguagesService;
-}();var MarketsAndLanguagesModalComponent = /*#__PURE__*/function (_Component) {
+}();var MarketPropositionModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MarketPropositionModalComponent, _Component);
+
+  function MarketPropositionModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MarketPropositionModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    _Component.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+    }
+
+    LocomotiveScrollService.stop();
+    this.currentMarket = environment.currentMarket;
+    this.currentLanguage = environment.currentLanguage;
+    this.markets = [];
+    this.proposedMarket = null;
+    MarketsAndLanguagesService.all$(environment.currentCoId).pipe(operators.first()).subscribe(function (markets) {
+      _this.markets = markets;
+      var proposedMarket = markets.find(function (x) {
+        return x.code === environment.userMarket;
+      });
+
+      if (!proposedMarket) {
+        proposedMarket = markets.find(function (x) {
+          return x.code === 'ww';
+        }) || markets[0];
+      }
+
+      _this.proposedMarket = proposedMarket;
+      var proposedLanguage = proposedMarket.languages.find(function (x) {
+        return x.code === environment.currentLanguage;
+      });
+
+      if (!proposedLanguage) {
+        proposedLanguage = proposedMarket.languages[0];
+      }
+
+      _this.proposedLanguage = proposedLanguage;
+
+      _this.pushChanges();
+    });
+  };
+
+  _proto.setMarket = function setMarket(market) {
+    this.currentMarket = market.code;
+    this.pushChanges();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return MarketPropositionModalComponent;
+}(rxcomp.Component);
+MarketPropositionModalComponent.meta = {
+  selector: '[market-proposition-modal]'
+};var MarketsAndLanguagesModalComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(MarketsAndLanguagesModalComponent, _Component);
 
   function MarketsAndLanguagesModalComponent() {
@@ -8129,10 +8321,22 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "currentMarket",
+    get: function get() {
+      var currentMarket = environment.currentMarket.toLowerCase();
+      var userMarket = environment.userMarket.toLowerCase();
+
+      if (userMarket !== currentMarket) {
+        return 'xx';
+      } else {
+        return currentMarket;
+      }
+    }
+  }, {
     key: "showefyUrl",
     get: function get() {
       if (this.product) {
-        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + environment.currentMarket.toLowerCase() + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + (this.product.familyCode ? "&codfam=" + this.product.familyCode : '') + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + this.currentMarket + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + (this.product.familyCode ? "&codfam=" + this.product.familyCode : '') + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
       }
     }
   }]);
@@ -10659,8 +10863,11 @@ MapComponent.meta = {
       spaceBetween: 40,
       speed: 600,
       centeredSlides: true,
+
+      /*
       loop: true,
       loopAdditionalSlides: 100,
+      */
       keyboardControl: true,
       mousewheelControl: false,
       keyboard: {
@@ -10726,24 +10933,42 @@ SwiperHomepageDirective.meta = {
   var _proto = SwiperNewsPropositionDirective.prototype;
 
   _proto.onInit = function onInit() {
+    var inHomepage = document.querySelector('.main--homepage') != null;
     this.options = {
-      slidesPerView: 1,
+      slidesPerView: 1.5,
       spaceBetween: 30,
-      breakpoints: {
+      breakpoints: inHomepage ? {
         768: {
           slidesPerView: 2,
           spaceBetween: 40
         },
         1024: {
-          slidesPerView: 2,
+          slidesPerView: 3,
           spaceBetween: 50
         },
         1440: {
-          slidesPerView: 2,
+          slidesPerView: 3,
           spaceBetween: 60
         },
         1920: {
+          slidesPerView: 3,
+          spaceBetween: 70
+        }
+      } : {
+        768: {
           slidesPerView: 2,
+          spaceBetween: 40
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 50
+        },
+        1440: {
+          slidesPerView: 4,
+          spaceBetween: 60
+        },
+        1920: {
+          slidesPerView: 4,
           spaceBetween: 70
         }
       },
@@ -10785,7 +11010,8 @@ SwiperNewsPropositionDirective.meta = {
 
   _proto.onInit = function onInit() {
     this.options = {
-      slidesPerView: 1.5,
+      slidesPerView: 'auto',
+      // slidesPerView: 1.5,
       spaceBetween: 30,
       breakpoints: {
         768: {
@@ -10865,10 +11091,11 @@ SwiperProductsPropositionDirective.meta = {
   var _proto = SwiperProjectsPropositionDirective.prototype;
 
   _proto.onInit = function onInit() {
+    var inHomepage = document.querySelector('.main--homepage') != null;
     this.options = {
       slidesPerView: 1.5,
       spaceBetween: 30,
-      breakpoints: {
+      breakpoints: inHomepage ? {
         768: {
           slidesPerView: 2,
           spaceBetween: 40
@@ -10883,6 +11110,23 @@ SwiperProductsPropositionDirective.meta = {
         },
         1920: {
           slidesPerView: 3,
+          spaceBetween: 70
+        }
+      } : {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 40
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 50
+        },
+        1440: {
+          slidesPerView: 4,
+          spaceBetween: 60
+        },
+        1920: {
+          slidesPerView: 4,
           spaceBetween: 70
         }
       },
@@ -12494,6 +12738,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MarketsAndLanguagesModalComponent, MarketPropositionModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

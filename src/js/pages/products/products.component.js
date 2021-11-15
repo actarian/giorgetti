@@ -1,5 +1,4 @@
 import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '../../environment';
 import { FiltersComponent } from '../../shared/filters/filters.component';
 import { ProductsService } from './products.service';
@@ -11,16 +10,13 @@ export class ProductsComponent extends FiltersComponent {
 	onInit() {
 		super.onInit();
 		this.categoryId = this.categoryId || null;
+		this.subcategoryId = this.subcategoryId || null;
 		this.shop = this.shop || false;
 	}
 
 	load$() {
 		return combineLatest([
-			ProductsService.all$().pipe(
-				map(products => {
-					return products.filter(x => this.shop ? x.configurable : true);
-				}),
-			),
+			ProductsService.all$(),
 			ProductsService.filters$(),
 		]);
 	}
@@ -28,6 +24,9 @@ export class ProductsComponent extends FiltersComponent {
 	setFiltersParams() {
 		if (this.categoryId) {
 			this.filters.category.set({ value: this.categoryId });
+		}
+		if (this.subcategoryId) {
+			this.filters.subcategory.set({ value: this.subcategoryId });
 		}
 		if (this.shop) {
 			this.filters.shop.set({ value: SHOP_OPTION_ID });
@@ -37,7 +36,10 @@ export class ProductsComponent extends FiltersComponent {
 	doFilterItem(key, item, value) {
 		switch (key) {
 			case 'category':
-				return item.category.id === value;
+				// return item.category.id === value;
+				return item.categories.indexOf(value) !== -1;
+			case 'subcategory':
+				return item.subcategories.indexOf(value) !== -1;
 			case 'ambience':
 				return item.ambiences.indexOf(value) !== -1;
 			case 'material':
@@ -57,5 +59,5 @@ export class ProductsComponent extends FiltersComponent {
 
 ProductsComponent.meta = {
 	selector: '[products]',
-	inputs: ['categoryId', 'shop'],
+	inputs: ['categoryId', 'subcategoryId', 'shop'],
 };

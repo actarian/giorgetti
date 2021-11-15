@@ -3,6 +3,7 @@
 
 <main class="main" products-detail [product]="{ 'id': 5254, 'code': '63230', 'url': '/giorgetti/products-detail.html', 'image': '/giorgetti/img/products/572_n_LISTING_progetti.jpg', 'title': 'Progetti' }">
 
+	<!--
 	<div class="section--products-detail-nav">
 		<div class="container" locomotive-scroll-sticky target=".nav--products-detail" until=".footer">
 			<ul class="nav--products-detail">
@@ -14,6 +15,7 @@
 			</ul>
 		</div>
 	</div>
+	-->
 
 	<div class="section--breadcrumb">
 		<div class="container">
@@ -39,6 +41,7 @@
 							<div class="card__title">Adam <em>Divano</em></div>
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
 							<div class="card__cta">
+								<button type="button" class="btn--more" *if="firstConfigurableVersion" (click)="configureProduct()">Acquista ora</button>
 								<button type="button" class="btn--more" (locomotiveScrollTo)="'#versions'">Scopri le versioni</button>
 								<!--
 								<button type="button" class="btn--more" (click)="onAddToCart(product)">
