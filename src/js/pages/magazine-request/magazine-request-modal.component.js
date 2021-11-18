@@ -6,9 +6,8 @@ import { ModalService } from '../../common/modal/modal.service';
 export class MagazineRequestModalComponent extends Component {
 
 	onInit() {
-		super.onInit();
-		const { parentInstance } = getContext(this);
 		this.magazineId = null;
+		const { parentInstance } = getContext(this);
 		if (parentInstance instanceof ModalOutletComponent) {
 			const data = parentInstance.modal.data;
 			this.magazineId = data.magazineId;

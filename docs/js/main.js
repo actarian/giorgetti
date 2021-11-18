@@ -7162,6 +7162,41 @@ DesignersComponent.meta = {
 }(rxcomp.Component);
 GenericModalComponent.meta = {
   selector: '[generic-modal]'
+};var MagazineRequestModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MagazineRequestModalComponent, _Component);
+
+  function MagazineRequestModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MagazineRequestModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.magazineId = null;
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.magazineId = data.magazineId; // console.log('MagazineRequestModalComponent.onInit', data);
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return MagazineRequestModalComponent;
+}(rxcomp.Component);
+MagazineRequestModalComponent.meta = {
+  selector: '[magazine-request-modal]'
 };var MagazineRequestPropositionComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(MagazineRequestPropositionComponent, _Component);
 
@@ -7242,6 +7277,7 @@ MagazineRequestPropositionComponent.meta = {
       streetNumber: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       //
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       checkRequest: window.antiforgery,
@@ -7286,6 +7322,7 @@ MagazineRequestPropositionComponent.meta = {
       region: region,
       city: 'Pesaro',
       privacy: true,
+      newsletter: false,
       commercial: false,
       promotion: false,
       checkRequest: window.antiforgery,
@@ -12911,6 +12948,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestPropositionComponent, MagazineRequestComponent, MarketsAndLanguagesModalComponent, MarketPropositionModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestComponent, MagazineRequestModalComponent, MagazineRequestPropositionComponent, MarketPropositionModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

@@ -32,6 +32,7 @@ export class MagazineRequestComponent extends Component {
 			streetNumber: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			//
 			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
+			newsletter: new FormControl(null, [Validators.RequiredValidator()]),
 			commercial: new FormControl(null, [Validators.RequiredValidator()]),
 			promotion: new FormControl(null, [Validators.RequiredValidator()]),
 			checkRequest: window.antiforgery,
@@ -78,6 +79,7 @@ export class MagazineRequestComponent extends Component {
 			region: region,
 			city: 'Pesaro',
 			privacy: true,
+			newsletter: false,
 			commercial: false,
 			promotion: false,
 			checkRequest: window.antiforgery,
