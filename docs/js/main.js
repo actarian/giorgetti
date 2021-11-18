@@ -190,6 +190,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     modal: {
       careersModal: '/template/modals/careers-modal.cshtml',
       genericModal: '/template/modals/generic-modal.cshtml',
+      magazineRequestModal: '/template/modals/magazine-request-modal.cshtml',
       marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
       marketPropositionModal: '/template/modals/market-proposition-modal.cshtml',
       materialsModal: '/template/modals/materials-modal.cshtml',
@@ -249,6 +250,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     modal: {
       careersModal: '/giorgetti/partials/modals/careers-modal.html',
       genericModal: '/giorgetti/partials/modals/generic-modal.html',
+      magazineRequestModal: '/giorgetti/partials/modals/magazine-request-modal.html',
       marketsAndLanguagesModal: '/giorgetti/partials/modals/markets-and-languages-modal.html',
       marketPropositionModal: '/giorgetti/partials/modals/market-proposition-modal.html',
       materialsModal: '/giorgetti/partials/modals/materials-modal.html',
@@ -7160,6 +7162,177 @@ DesignersComponent.meta = {
 }(rxcomp.Component);
 GenericModalComponent.meta = {
   selector: '[generic-modal]'
+};var MagazineRequestPropositionComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MagazineRequestPropositionComponent, _Component);
+
+  function MagazineRequestPropositionComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MagazineRequestPropositionComponent.prototype;
+
+  _proto.onOpen = function onOpen() {
+    ModalService.open$({
+      src: environment.template.modal.magazineRequestModal,
+      data: {
+        magazineId: this.magazineId
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('MagazineRequestPropositionComponent.onOpen', event);
+    });
+  };
+
+  return MagazineRequestPropositionComponent;
+}(rxcomp.Component);
+MagazineRequestPropositionComponent.meta = {
+  selector: '[magazine-request-proposition]',
+  inputs: ['magazineId']
+};var MagazineRequestService = /*#__PURE__*/function () {
+  function MagazineRequestService() {}
+
+  MagazineRequestService.data$ = function data$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/magazine-request/data');
+    } else {
+      return ApiService.get$('/magazine-request/data.json');
+    }
+  };
+
+  MagazineRequestService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      return ApiService.post$('/magazine-request/submit', payload);
+    } else {
+      return ApiService.get$('/magazine-request/submit.json');
+    }
+  };
+
+  return MagazineRequestService;
+}();var MagazineRequestComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(MagazineRequestComponent, _Component);
+
+  function MagazineRequestComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = MagazineRequestComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    this.response = null;
+    this.error = null;
+    this.success = false;
+    var form = this.form = new rxcompForm.FormGroup({
+      magazineId: this.magazineId,
+      printedCopy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      //
+      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      email: new rxcompForm.FormControl(email, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      telephone: new rxcompForm.FormControl(null),
+      occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
+      // required if country === 114, Italy
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      //
+      province: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      zipCode: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      address: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      streetNumber: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      //
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return MagazineRequestService.data$().pipe(operators.tap(function (data) {
+      var controls = _this2.controls;
+      controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
+      controls.country.options = FormService.toSelectOptions(data.country.options);
+      controls.region.options = FormService.toSelectOptions(data.region.options);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
+    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    var region = controls.region.options.length > 1 ? controls.region.options[1].id : null;
+    form.patch({
+      printedCopy: false,
+      firstName: 'Jhon',
+      lastName: 'Appleseed',
+      email: 'jhonappleseed@gmail.com',
+      telephone: '0721 411112',
+      occupation: occupation,
+      country: country,
+      region: region,
+      city: 'Pesaro',
+      privacy: true,
+      commercial: false,
+      promotion: false,
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit(model) {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('MagazineRequestComponent.onSubmit', form.value); // console.log('MagazineRequestComponent.onSubmit', 'form.valid', valid);
+
+    if (form.valid) {
+      // console.log('MagazineRequestComponent.onSubmit', form.value);
+      form.submitted = true;
+      MagazineRequestService.submit$(form.value).pipe(operators.first()).subscribe(function (response) {
+        _this3.response = response;
+        _this3.success = true;
+        form.reset();
+        GtmService.push({
+          'event': "MagazineRequest",
+          'form_name': "MagazineRequest"
+        });
+      }, function (error) {
+        console.log('MagazineRequestComponent.error', error);
+        _this3.error = error;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return MagazineRequestComponent;
+}(rxcomp.Component);
+MagazineRequestComponent.meta = {
+  selector: '[magazine-request]',
+  inputs: ['magazineId']
 };var MagazineService = /*#__PURE__*/function () {
   function MagazineService() {}
 
@@ -12738,6 +12911,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MarketsAndLanguagesModalComponent, MarketPropositionModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestPropositionComponent, MagazineRequestComponent, MarketsAndLanguagesModalComponent, MarketPropositionModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

@@ -49,6 +49,9 @@
 						<a href="#"><svg class="events"><use xlink:href="#events"></use></svg></a>
 					</li>
 					<li class="nav__item">
+						<a href="/giorgetti/magazine.html"><svg class="magazine"><use xlink:href="#magazine"></use></svg></a>
+					</li>
+					<li class="nav__item">
 						<button type="button" (click)="onToggle('search')"><svg class="search"><use xlink:href="#search"></use></svg></button>
 					</li>
 					<li class="nav__item" *if="'cart' | flag">
@@ -78,6 +81,9 @@
 				</li>
 				<li class="nav__item hidden-sm-up">
 					<a href="#">Eventi <svg class="events"><use xlink:href="#events"></use></svg></a>
+				</li>
+				<li class="nav__item hidden-sm-up">
+					<a href="#">Magazine <svg class="magazine"><use xlink:href="#magazine"></use></svg></a>
 				</li>
 				<li class="nav__item hidden-sm-up">
 					<span (click)="onOpenMarketAndLanguage($event)">

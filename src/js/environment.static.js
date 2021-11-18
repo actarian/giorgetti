@@ -23,6 +23,7 @@ export const environmentStatic = {
 		modal: {
 			careersModal: '/giorgetti/partials/modals/careers-modal.html',
 			genericModal: '/giorgetti/partials/modals/generic-modal.html',
+			magazineRequestModal: '/giorgetti/partials/modals/magazine-request-modal.html',
 			marketsAndLanguagesModal: '/giorgetti/partials/modals/markets-and-languages-modal.html',
 			marketPropositionModal: '/giorgetti/partials/modals/market-proposition-modal.html',
 			materialsModal: '/giorgetti/partials/modals/materials-modal.html',

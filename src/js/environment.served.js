@@ -23,6 +23,7 @@ export const environmentServed = {
 		modal: {
 			careersModal: '/template/modals/careers-modal.cshtml',
 			genericModal: '/template/modals/generic-modal.cshtml',
+			magazineRequestModal: '/template/modals/magazine-request-modal.cshtml',
 			marketsAndLanguagesModal: '/template/modals/markets-and-languages-modal.cshtml',
 			marketPropositionModal: '/template/modals/market-proposition-modal.cshtml',
 			materialsModal: '/template/modals/materials-modal.cshtml',
