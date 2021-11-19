@@ -14784,12 +14784,13 @@ error-component {
 	}
 	*/ }
   .btn--magazine-request svg {
-    width: 24px;
-    height: 24px;
-    margin: 2px 0 0 12px;
-    transition: all ease-in-out 250ms; }
-  .btn--magazine-request:hover svg {
+    width: 16px;
+    height: 16px;
+    margin: 2px 0 0 8px;
+    transition: all ease-in-out 250ms;
     transform: translateY(-3px); }
+  .btn--magazine-request:hover svg {
+    transform: translateY(0px); }
 
 .title + .magazine-request-proposition > .container {
   margin-top: -60px;

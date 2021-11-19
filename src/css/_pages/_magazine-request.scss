@@ -25,15 +25,16 @@
 	border-bottom: 1px solid #c4c1bd;
 
 	svg {
-		width: 24px;
-		height: 24px;
-		margin: 2px 0 0 12px;
+		width: 16px;
+		height: 16px;
+		margin: 2px 0 0 8px;
 		transition: all ease-in-out $fast;
+		transform: translateY(-3px);
 	}
 
 	&:hover {
 		svg {
-			transform: translateY(-3px);
+			transform: translateY(0px);
 		}
 	}
 
