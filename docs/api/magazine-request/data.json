@@ -1109,5 +1109,14 @@
         "label": "Veneto"
       }
     ]
+  },
+  "magazine": {
+    "label": "Professione",
+    "options": [
+      {
+        "value": 3000,
+        "label": "GM#01"
+      }
+    ]
   }
 }

@@ -7172,14 +7172,11 @@ GenericModalComponent.meta = {
   var _proto = MagazineRequestModalComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.magazineId = null;
-
     var _getContext = rxcomp.getContext(this),
         parentInstance = _getContext.parentInstance;
 
     if (parentInstance instanceof ModalOutletComponent) {
-      var data = parentInstance.modal.data;
-      this.magazineId = data.magazineId; // console.log('MagazineRequestModalComponent.onInit', data);
+      var data = parentInstance.modal.data; // console.log('MagazineRequestModalComponent.onInit', data);
     }
 
     LocomotiveScrollService.stop();
@@ -7209,9 +7206,7 @@ MagazineRequestModalComponent.meta = {
   _proto.onOpen = function onOpen() {
     ModalService.open$({
       src: environment.template.modal.magazineRequestModal,
-      data: {
-        magazineId: this.magazineId
-      }
+      data: {}
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       console.log('MagazineRequestPropositionComponent.onOpen', event);
     });
@@ -7220,8 +7215,7 @@ MagazineRequestModalComponent.meta = {
   return MagazineRequestPropositionComponent;
 }(rxcomp.Component);
 MagazineRequestPropositionComponent.meta = {
-  selector: '[magazine-request-proposition]',
-  inputs: ['magazineId']
+  selector: '[magazine-request-proposition]'
 };var MagazineRequestService = /*#__PURE__*/function () {
   function MagazineRequestService() {}
 
@@ -7258,8 +7252,7 @@ MagazineRequestPropositionComponent.meta = {
     this.error = null;
     this.success = false;
     var form = this.form = new rxcompForm.FormGroup({
-      magazineId: this.magazineId,
-      printedCopy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      magazine: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       //
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -7269,8 +7262,10 @@ MagazineRequestPropositionComponent.meta = {
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
       // required if country === 114, Italy
-      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       //
+      printedCopy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      //
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       province: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       zipCode: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       address: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
@@ -7297,6 +7292,7 @@ MagazineRequestPropositionComponent.meta = {
 
     return MagazineRequestService.data$().pipe(operators.tap(function (data) {
       var controls = _this2.controls;
+      controls.magazine.options = FormService.toSelectOptions(data.magazine.options);
       controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
       controls.country.options = FormService.toSelectOptions(data.country.options);
       controls.region.options = FormService.toSelectOptions(data.region.options);
@@ -7308,11 +7304,12 @@ MagazineRequestPropositionComponent.meta = {
   _proto.test = function test() {
     var form = this.form;
     var controls = this.controls;
+    var magazine = controls.magazine.options.length > 1 ? controls.magazine.options[1].id : null;
     var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
     var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
     var region = controls.region.options.length > 1 ? controls.region.options[1].id : null;
     form.patch({
-      printedCopy: false,
+      magazine: magazine,
       firstName: 'Jhon',
       lastName: 'Appleseed',
       email: 'jhonappleseed@gmail.com',
@@ -7320,6 +7317,7 @@ MagazineRequestPropositionComponent.meta = {
       occupation: occupation,
       country: country,
       region: region,
+      printedCopy: false,
       city: 'Pesaro',
       privacy: true,
       newsletter: false,
@@ -7368,8 +7366,7 @@ MagazineRequestPropositionComponent.meta = {
   return MagazineRequestComponent;
 }(rxcomp.Component);
 MagazineRequestComponent.meta = {
-  selector: '[magazine-request]',
-  inputs: ['magazineId']
+  selector: '[magazine-request]'
 };var MagazineService = /*#__PURE__*/function () {
   function MagazineService() {}
 

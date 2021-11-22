@@ -14,8 +14,7 @@ export class MagazineRequestComponent extends Component {
 		this.error = null;
 		this.success = false;
 		const form = this.form = new FormGroup({
-			magazineId: this.magazineId,
-			printedCopy: new FormControl(null, [Validators.RequiredValidator()]),
+			magazine: new FormControl(null, [Validators.RequiredValidator()]),
 			//
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
@@ -24,8 +23,10 @@ export class MagazineRequestComponent extends Component {
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
 			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
-			city: new FormControl(null, [Validators.RequiredValidator()]),
 			//
+			printedCopy: new FormControl(null, [Validators.RequiredValidator()]),
+			//
+			city: new FormControl(null, [Validators.RequiredValidator()]),
 			province: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			zipCode: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			address: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
@@ -54,6 +55,7 @@ export class MagazineRequestComponent extends Component {
 		return MagazineRequestService.data$().pipe(
 			tap(data => {
 				const controls = this.controls;
+				controls.magazine.options = FormService.toSelectOptions(data.magazine.options);
 				controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
 				controls.country.options = FormService.toSelectOptions(data.country.options);
 				controls.region.options = FormService.toSelectOptions(data.region.options);
@@ -65,11 +67,12 @@ export class MagazineRequestComponent extends Component {
 	test() {
 		const form = this.form;
 		const controls = this.controls;
+		const magazine = controls.magazine.options.length > 1 ? controls.magazine.options[1].id : null;
 		const occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
 		const country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
 		const region = controls.region.options.length > 1 ? controls.region.options[1].id : null;
 		form.patch({
-			printedCopy: false,
+			magazine: magazine,
 			firstName: 'Jhon',
 			lastName: 'Appleseed',
 			email: 'jhonappleseed@gmail.com',
@@ -77,6 +80,7 @@ export class MagazineRequestComponent extends Component {
 			occupation: occupation,
 			country: country,
 			region: region,
+			printedCopy: false,
 			city: 'Pesaro',
 			privacy: true,
 			newsletter: false,
@@ -124,5 +128,4 @@ export class MagazineRequestComponent extends Component {
 
 MagazineRequestComponent.meta = {
 	selector: '[magazine-request]',
-	inputs: ['magazineId'],
 };

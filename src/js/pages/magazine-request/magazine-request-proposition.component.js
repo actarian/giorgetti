@@ -6,7 +6,7 @@ import { environment } from '../../environment';
 export class MagazineRequestPropositionComponent extends Component {
 
 	onOpen() {
-		ModalService.open$({ src: environment.template.modal.magazineRequestModal, data: { magazineId: this.magazineId } }).pipe(
+		ModalService.open$({ src: environment.template.modal.magazineRequestModal, data: {} }).pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe(event => {
 			console.log('MagazineRequestPropositionComponent.onOpen', event);
@@ -17,5 +17,4 @@ export class MagazineRequestPropositionComponent extends Component {
 
 MagazineRequestPropositionComponent.meta = {
 	selector: '[magazine-request-proposition]',
-	inputs: ['magazineId'],
 };

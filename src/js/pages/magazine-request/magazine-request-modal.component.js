@@ -6,11 +6,9 @@ import { ModalService } from '../../common/modal/modal.service';
 export class MagazineRequestModalComponent extends Component {
 
 	onInit() {
-		this.magazineId = null;
 		const { parentInstance } = getContext(this);
 		if (parentInstance instanceof ModalOutletComponent) {
 			const data = parentInstance.modal.data;
-			this.magazineId = data.magazineId;
 			// console.log('MagazineRequestModalComponent.onInit', data);
 		}
 		LocomotiveScrollService.stop();

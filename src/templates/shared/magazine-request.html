@@ -1,10 +1,12 @@
-<div class="section--form" magazine-request [magazineId]="magazineId">
+<div class="section--form" magazine-request>
 	<div class="container" *if="!success">
-		<div class="title">Richiedi il Magazine GM1</div>
+		<div class="title">Richiedi GM</div>
 		<div class="abstract">Completa il form per richiedere il magazine in formato pdf o versione stampata.</div>
 		<form class="form" [formGroup]="form" (submit)="onSubmit($event)" name="form" role="form" novalidate autocomplete="off">
 			<div class="listing--form-compact">
 				<input name="checkField" [formControl]="controls.checkField" value="" type="text" style="display:none !important;" />
+				<!---->
+				<div class="full" control-custom-select [control]="controls.magazine" label="Seleziona il Magazine"></div>
 				<!---->
 				<div control-text [control]="controls.firstName" label="Nome"></div>
 				<div control-text [control]="controls.lastName" label="Cognome"></div>
@@ -15,6 +17,7 @@
 				<div control-custom-select [control]="controls.region" label="Regione" *if="controls.country.value == 114"></div>
 				<!---->
 				<div class="full" control-checkbox [control]="controls.printedCopy" label="Desideri ricevere anche la versione stampata del Magazine?"></div>
+				<!---->
 				<div control-text [control]="controls.city" label="Città" *if="controls.printedCopy.value == true"></div>
 				<div control-text [control]="controls.province" label="Provincia" *if="controls.printedCopy.value == true"></div>
 				<div control-text [control]="controls.zipCode" label="CAP" *if="controls.printedCopy.value == true"></div>

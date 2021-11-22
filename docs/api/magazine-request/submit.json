@@ -1,7 +1,7 @@
 {
   "statusCode": 200,
   "status": "success",
-  "title": "Magazine GM1",
-  "fileName": "magazine-gm1.pdf",
-  "url": "/files/magazine-gm1.pdf"
+  "title": "Magazine GM#01",
+  "fileName": "magazine-gm-01.pdf",
+  "url": "/files/magazine-gm-01.pdf"
 }
