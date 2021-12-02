@@ -29,7 +29,7 @@ export class AppComponent extends Component {
 	}
 
 	checkUserMarket() {
-		if (environment.userMarket !== environment.currentMarket) {
+		if (environment.userMarket !== environment.currentMarket && document.cookie.indexOf('marketPropositionAccepted') === -1) {
 			this.onOpenMarketProposition();
 		}
 	}

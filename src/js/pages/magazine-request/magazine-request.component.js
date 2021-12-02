@@ -18,15 +18,15 @@ export class MagazineRequestComponent extends Component {
 			//
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
-			email: new FormControl(email, [Validators.RequiredValidator(), Validators.EmailValidator()]),
+			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
 			telephone: new FormControl(null),
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
 			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
 			//
-			printedCopy: new FormControl(null, [Validators.RequiredValidator()]),
+			printedCopy: new FormControl(null),
 			//
-			city: new FormControl(null, [Validators.RequiredValidator()]),
+			city: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			province: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			zipCode: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
 			address: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
@@ -81,7 +81,7 @@ export class MagazineRequestComponent extends Component {
 			country: country,
 			region: region,
 			printedCopy: false,
-			city: 'Pesaro',
+			city: null,
 			privacy: true,
 			newsletter: false,
 			commercial: false,

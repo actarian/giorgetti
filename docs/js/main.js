@@ -1561,7 +1561,7 @@ _defineProperty(UserService, "user$_", new rxjs.BehaviorSubject(null));var AppCo
   };
 
   _proto.checkUserMarket = function checkUserMarket() {
-    if (environment.userMarket !== environment.currentMarket) {
+    if (environment.userMarket !== environment.currentMarket && document.cookie.indexOf('marketPropositionAccepted') === -1) {
       this.onOpenMarketProposition();
     }
   };
@@ -7256,16 +7256,16 @@ MagazineRequestPropositionComponent.meta = {
       //
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      email: new rxcompForm.FormControl(email, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       telephone: new rxcompForm.FormControl(null),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
       // required if country === 114, Italy
       //
-      printedCopy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      printedCopy: new rxcompForm.FormControl(null),
       //
-      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      city: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       province: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       zipCode: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
       address: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
@@ -7318,7 +7318,7 @@ MagazineRequestPropositionComponent.meta = {
       country: country,
       region: region,
       printedCopy: false,
-      city: 'Pesaro',
+      city: null,
       privacy: true,
       newsletter: false,
       commercial: false,
@@ -7503,6 +7503,7 @@ MagazineComponent.meta = {
   };
 
   _proto.onClose = function onClose() {
+    document.cookie = "marketPropositionAccepted=1; expires=0; path=/";
     ModalService.reject();
   };
 

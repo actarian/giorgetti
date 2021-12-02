@@ -5,6 +5,7 @@ import { ModalOutletComponent } from '../../common/modal/modal-outlet.component'
 import { ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
 import { MarketsAndLanguagesService } from '../markets-and-languages/markets-and-languages.service';
+import {LocalStorageService} from "../../common/storage/local-storage.service";
 
 export class MarketPropositionModalComponent extends Component {
 
@@ -43,6 +44,7 @@ export class MarketPropositionModalComponent extends Component {
 	}
 
 	onClose() {
+		document.cookie = "marketPropositionAccepted=1; expires=0; path=/";
 		ModalService.reject();
 	}
 
