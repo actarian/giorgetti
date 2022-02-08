@@ -1,5 +1,6 @@
 import { Component, getContext } from 'rxcomp';
 import { first } from 'rxjs/operators';
+import { GtmService } from '../../common/gtm/gtm.service';
 import { LocationService } from '../../common/location/location.service';
 import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
@@ -236,6 +237,7 @@ export class ProductsConfigureComponent extends Component {
 		CartMiniService.getPriceAndAddItem$(cartItem).pipe(
 			first(),
 		).subscribe();
+		GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Aggiungi al Carrello' });
 	}
 }
 

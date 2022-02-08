@@ -1,5 +1,6 @@
 import { Component, getContext } from 'rxcomp';
 import { first, takeUntil } from 'rxjs/operators';
+import { GtmService } from '../../common/gtm/gtm.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
 import { environment } from '../../environment';
@@ -25,6 +26,7 @@ export class ProductsDetailComponent extends Component {
 			this.visibleItems = this.items.slice(0, Math.min(4, this.items.length));
 			this.pushChanges();
 		});
+		GtmService.push({ 'pageCategory': 'Scheda Prodotto' });
 	}
 
 	isAddedToCart(item) {

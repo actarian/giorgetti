@@ -9,7 +9,8 @@ export default function RequiredIfValidator(fieldName, formGroup, shouldBe) {
 		} else if (formGroup) {
 			field = formGroup.get(fieldName);
 		}
-		return (!value && field && (shouldBe != null ? field.value === shouldBe : field.value != null)) ? { required: { value: value, requiredIf: fieldName } } : null;
+		// console.log('RequiredIfValidator', field.value, shouldBe != null ? field.value === shouldBe : field.value);
+		return (!value && field && (shouldBe != null ? field.value === shouldBe : field.value)) ? { required: { value: value, requiredIf: fieldName } } : null;
 	});
 
 }

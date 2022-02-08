@@ -24,7 +24,7 @@ export class HighlightPipe extends Pipe {
 			// return match.toLowerCase() === x.toLowerCase() ? '<strong>' + match + '</strong>' : match;
 		});
 		// text = HighlightPipe.decodeHTML(text);
-		console.log(text, query);
+		// console.log(text, query);
 		return text;
 	}
 

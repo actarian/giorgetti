@@ -128,12 +128,12 @@
 }
 
 .card--news {
-	@extend %btn;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 
 	&>.card__picture {
+		@extend %btn;
 		display: block;
 		@include aspect-clip(1, 1);
 		margin-bottom: 20px;

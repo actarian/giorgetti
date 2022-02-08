@@ -93,6 +93,10 @@ export class CartService {
 		return `cart_${environment.currentMarket}`;
 	}
 
+	static get STORAGE_PENDING_KEY() {
+		return `cart_pending_${environment.currentMarket}`;
+	}
+
 	static cart$_ = new BehaviorSubject(null);
 
 	static get currentCart() {
@@ -116,6 +120,29 @@ export class CartService {
 		if (!skip) {
 			CartService.cart$_.next(cart);
 		}
+	}
+
+	static setPendingCart(cart) {
+		if (cart) {
+			LocalStorageService.set(CartService.STORAGE_PENDING_KEY, cart);
+			LocalStorageService.delete(CartService.STORAGE_KEY);
+		} else {
+			LocalStorageService.delete(CartService.STORAGE_PENDING_KEY);
+		}
+	}
+
+	static hasPendingCart() {
+		const cart = LocalStorageService.get(CartService.STORAGE_PENDING_KEY);
+		return cart != null;
+	}
+
+	static resumePendingCart() {
+		const cart = LocalStorageService.get(CartService.STORAGE_PENDING_KEY);
+		if (cart) {
+			this.setPendingCart(null);
+			this.setCart(cart);
+		}
+		return cart;
 	}
 
 	static cart$() {
@@ -150,7 +177,14 @@ export class CartService {
 		if (environment.flags.production) {
 			return ApiService.post$('/cart/estimated-delivery', cart);
 		} else {
-			return ApiService.get$('/cart/estimated-delivery.json');
+			return ApiService.get$('/cart/estimated-delivery.json').pipe(
+				map(x => {
+					let estimatedDelivery = new Date();
+					estimatedDelivery.setDate(estimatedDelivery.getDate() + 0);
+					x.estimatedDelivery = estimatedDelivery;
+					return x;
+				}),
+			);
 		}
 	}
 
@@ -181,9 +215,9 @@ export class CartService {
 	static doPayment$(cart) {
 		return (environment.flags.production ? ApiService.post$('/cart/payment', cart) : ApiService.get$('/cart/payment.json')).pipe(
 			tap(_ => {
-				// !!! clearing cart with skip option!
-				CartMiniService.setItems([], true);
-				CartService.setCart(cart, true);
+				// setting local storage pending payment
+				CartMiniService.setPendingItems(CartMiniService.currentItems);
+				CartService.setPendingCart(CartService.currentCart);
 			}),
 		)
 	}

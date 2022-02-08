@@ -124,7 +124,8 @@
 						<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 							<div class="group--cart">
 								<div class="estimated-delivery">
-									<span *if="estimatedDelivery">Il tuo ordine sarà pronto <span [innerHTML]="estimatedDelivery | relativeDate"></span> più tempi di consegna</span>
+									<span *if="estimatedDelivery && !readyToShip">Il tuo ordine sarà pronto <span [innerHTML]="estimatedDelivery | relativeDate"></span> più tempi di consegna</span>
+									<span *if="readyToShip">Tempi di consegna stimati 5gg lavorativi</span>
 								</div>
 								<button type="submit" class="btn--primary">Procedi</button>
 							</div>
@@ -206,13 +207,13 @@
 								<div control-custom-select [control]="controls.data.controls.country" label="Paese"></div>
 								<div control-textarea [control]="controls.data.controls.message" label="Messaggio"></div>
 							</div>
-							<div control-checkbox [control]="controls.data.controls.invoice" label="Hai bisogno della fattura?"></div>
+							<div control-checkbox [control]="controls.data.controls.invoice" label="Hai bisogno della fattura?" (change)="onRevalidate()"></div>
 							<div class="listing--form-compact" *if="controls.data.controls.invoice.value">
 								<div control-text [control]="controls.data.controls.invoiceData.controls.taxNumber" label="Partita IVA / CF"></div>
 								<div control-text [control]="controls.data.controls.invoiceData.controls.sdi" label="SDI"></div>
 								<div control-text [control]="controls.data.controls.invoiceData.controls.pec" label="PEC"></div>
 							</div>
-							<div control-checkbox [control]="controls.data.controls.billing" label="I dati di fatturazione differiscono dalle informazioni personali?"></div>
+							<div control-checkbox [control]="controls.data.controls.billing" label="I dati di fatturazione differiscono dalle informazioni personali?" (change)="onRevalidate()"></div>
 							<div class="listing--form-compact" *if="controls.data.controls.billing.value">
 								<div control-text [control]="controls.data.controls.billingData.controls.company" label="Azienda"></div>
 								<div control-text [control]="controls.data.controls.billingData.controls.firstName" label="Nome"></div>
@@ -531,6 +532,12 @@
 						<a href="tel:0039036275275" class="btn--primary"><span>+39.0362.75275</span></a>
 					</div>
 					<div class="divline"></div>
+					<div locomotive-scroll-sticky target=".group--cart" [bottom]="true" *if="hasPendingCart">
+						<div class="group--cart">
+							<span>oppure</span>
+							<button type="submit" class="btn--primary" (click)="onRetry($event)">Ritenta o seleziona un altro metodo pagamento</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -979,4 +979,17 @@ test-component {
 	}
 }
 
+[control-search] {
+	.search {
+		fill: currentColor;
+		opacity: 0.6;
+		transition: opacity ease-in-out $fast;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
 @import './_controls/_select';

@@ -1,8 +1,10 @@
-import { Component } from 'rxcomp';
+import { Component, getContext } from 'rxcomp';
 import { FormControl, FormGroup, Validators } from 'rxcomp-form';
 import { of } from 'rxjs';
 import { auditTime, delay, distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import { SearchService } from './search.service';
+
+export const SEARCH_LIMIT_RESULT = 50;
 
 export class SearchComponent extends Component {
 
@@ -18,10 +20,18 @@ export class SearchComponent extends Component {
 			takeUntil(this.unsubscribe$),
 		).subscribe((items) => {
 			this.items = items;
-			this.visibleItems = items.slice(0, Math.min(10, items.length));
+			this.visibleItems = items.slice(0, Math.min(SEARCH_LIMIT_RESULT, items.length));
 			this.busy = false;
 			this.pushChanges();
 		});
+		setTimeout(() => {
+			const { node } = getContext(this);
+			const input = node.querySelector('.control--text');
+			if (input) {
+				input.focus();
+			}
+			// console.log('SearchComponent', input);
+		}, 300);
 	}
 
 	search$() {
@@ -34,7 +44,7 @@ export class SearchComponent extends Component {
 					this.busy = true;
 					this.pushChanges();
 					return SearchService.search$(query).pipe(
-						delay(2000),
+						delay(1),
 					);
 				} else {
 					return of([]);

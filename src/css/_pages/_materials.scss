@@ -81,11 +81,73 @@
 	}
 }
 
+.reserved-section--secondary {
+	.nav--secondary {
+
+		&.nav-fixed-position {
+			position: fixed;
+			z-index:1;
+			li.nav__item {
+				a {
+					margin: 0 20px;
+				}
+
+				button {
+					margin: 0 20px;
+				}
+			}
+		}
+	}
+}
+@media(min-width:1440px){
+	.reserved-section--secondary {
+		.nav--secondary {
+
+			&.nav-fixed-position {
+				position: fixed;
+				z-index: 1;
+
+				li.nav__item {
+					a {
+						margin: 0 40px;
+					}
+
+					button {
+						margin: 0 40px;
+					}
+				}
+			}
+		}
+	}
+}
+
 .section--materials {
 
 	.nav--secondary {
 		position: relative;
 		z-index: 2;
+
+		&.nav-fixed-position {
+			position: fixed;
+
+			li.nav__item {
+				a {
+					margin: 0 31px;
+				}
+			}
+		}
+
+		@media(min-width:1440px) {
+			&.nav-fixed-position {
+				position: fixed;
+
+				li.nav__item {
+					a {
+						margin: 0 46px;
+					}
+				}
+			}
+		}
 	}
 
 	.picture {

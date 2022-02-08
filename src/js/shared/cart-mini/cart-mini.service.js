@@ -11,6 +11,10 @@ export class CartMiniService {
 		return `cartItems_${environment.currentMarket}`;
 	}
 
+	static get STORAGE_PENDING_KEY() {
+		return `cartItems_pending_${environment.currentMarket}`;
+	}
+
 	static items$_ = new BehaviorSubject([]);
 
 	static get currentItems() {
@@ -36,6 +40,24 @@ export class CartMiniService {
 		if (!skip) {
 			CartMiniService.items$_.next(items);
 		}
+	}
+
+	static setPendingItems(items) {
+		if (items) {
+			LocalStorageService.set(CartMiniService.STORAGE_PENDING_KEY, items);
+			LocalStorageService.delete(CartMiniService.STORAGE_KEY);
+		} else {
+			LocalStorageService.delete(CartMiniService.STORAGE_PENDING_KEY);
+		}
+	}
+
+	static resumePendingItems() {
+		const items = LocalStorageService.get(CartMiniService.STORAGE_PENDING_KEY);
+		if (items) {
+			this.setPendingItems(null);
+			this.setItems(items);
+		}
+		return items;
 	}
 
 	static items$() {

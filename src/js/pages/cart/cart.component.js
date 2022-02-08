@@ -5,9 +5,11 @@ import { finalize, first, map, switchMap, takeUntil, tap } from 'rxjs/operators'
 import { FacebookService } from '../../common/facebook/facebook.service';
 import { GoogleService } from '../../common/google/google.service';
 import { GoogleMapsService } from '../../common/googlemaps/googlemaps.service';
+import { GtmService } from '../../common/gtm/gtm.service';
 import { LinkedinService } from '../../common/linkedin/linkedin.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { ModalResolveEvent, ModalService } from '../../common/modal/modal.service';
+import { NumberPipe } from '../../common/number/number.pipe';
 import { FormService } from '../../controls/form.service';
 import RequiredIfValidator from '../../controls/required-if.validator';
 import { environment } from '../../environment';
@@ -27,7 +29,7 @@ export class CartComponent extends Component {
 			total += this.delivery.price;
 		}
 		if (this.discount) {
-			total += this.discount.price;
+			total += this.discount.value;
 		}
 		return total;
 	}
@@ -47,8 +49,11 @@ export class CartComponent extends Component {
 	}
 
 	onInit() {
+		this.busy = false;
+		this.orderBusy = false;
+		this.hasPendingCart = false;
 		this.steps = CartSteps;
-		this.step = CartSteps.None;
+		this.setStep(CartSteps.None);
 		this.detectSocialLogin();
 		this.checkPaymentParams();
 	}
@@ -80,6 +85,7 @@ export class CartComponent extends Component {
 		this.errorPayment = null;
 		this.error = false;
 		this.success = false;
+		this.readyToShip = false;
 		this.estimatedDelivery = null;
 		this.items = null;
 		this.items$().pipe(
@@ -160,7 +166,6 @@ export class CartComponent extends Component {
 		form.changes$.pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe((_) => {
-			// console.log('form', form.value);
 			this.pushChanges();
 			LocomotiveScrollService.update();
 		});
@@ -220,7 +225,12 @@ export class CartComponent extends Component {
 			first(),
 		).subscribe(cart => {
 			if (cart) {
-				this.step = cart.step;
+				const step = this.getStepParam();
+				if (step === '1') {
+					this.setStep(CartSteps.Items);
+				} else {
+					this.setStep(cart.step);
+				}
 				this.guest = cart.guest;
 				this.deliveryData = cart.deliveryData;
 				this.billingData = cart.billingData;
@@ -238,10 +248,42 @@ export class CartComponent extends Component {
 					}));
 				}
 			} else {
-				this.step = CartSteps.Items;
+				this.setStep(CartSteps.Items);
 			}
 			this.onPatch(cart, true);
 		});
+	}
+
+	getStepParam() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const params = Object.fromEntries(urlSearchParams.entries());
+		if (params.step != null) {
+			urlSearchParams.delete('step');
+			if (window.history.replaceState) {
+				// console.log(window.location, urlSearchParams);
+				const search = urlSearchParams.toString();
+				const newUrl = window.location.origin + window.location.pathname + (search !== '' ? '?' + search : search);
+				window.history.replaceState(null, document.title, newUrl);
+			}
+		}
+		return params.step;
+	}
+
+	onRevalidate() {
+		// console.log('onRevalidate');
+		this.controls.data.controls.invoiceData.controls.taxNumber.statusSubject.next(null);
+		this.controls.data.controls.invoiceData.controls.sdi.statusSubject.next(null);
+		this.controls.data.controls.invoiceData.controls.pec.statusSubject.next(null);
+
+		this.controls.data.controls.billingData.controls.company.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.firstName.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.lastName.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.telephone.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.address.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.zipCode.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.city.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.province.statusSubject.next(null);
+		this.controls.data.controls.billingData.controls.country.statusSubject.next(null);
 	}
 
 	touchForm() {
@@ -253,8 +295,36 @@ export class CartComponent extends Component {
 		}
 	}
 
+	setStep(step) {
+		this.step = step;
+		switch (step) {
+			case CartSteps.Items:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Carrello' });
+				break;
+			case CartSteps.Data:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Dati Utente' });
+				break;
+			case CartSteps.Delivery:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Consegna' });
+				break;
+			case CartSteps.Recap:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Riepilogo' });
+				break;
+			case CartSteps.Payment:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Pagamento' });
+				break;
+			case CartSteps.Complete:
+				const totalPrice = NumberPipe.transform(this.totalPrice, { style: 'currency', currency: 'EUR' });
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Conferma Ordine', 'revenue': totalPrice });
+				break;
+			case CartSteps.Error:
+				GtmService.push({ 'event': 'step checkout', 'ecommstep': 'Errore' });
+				break;
+		}
+	}
+
 	onBack() {
-		this.step--;
+		this.setStep(this.step - 1);
 		let patch = null;
 		if (this.step === CartSteps.Items) {
 			this.user = null;
@@ -265,7 +335,7 @@ export class CartComponent extends Component {
 	}
 
 	onNext(patch) {
-		this.step++;
+		this.setStep(this.step + 1);
 		this.onPatch(patch);
 	}
 
@@ -354,7 +424,15 @@ export class CartComponent extends Component {
 				if (items.length) {
 					return CartService.estimatedDelivery$({ items }).pipe(
 						map(data => {
-							this.estimatedDelivery = data.estimatedDelivery;
+							const now = new Date();
+							const days = Math.floor((new Date(data.estimatedDelivery) - now) / (1000 * 3600 * 24));
+							if (days > 0) {
+								this.readyToShip = false;
+								this.estimatedDelivery = data.estimatedDelivery;
+							} else {
+								this.readyToShip = true;
+								this.estimatedDelivery = null;
+							}
 							return items;
 						}),
 					);
@@ -406,7 +484,7 @@ export class CartComponent extends Component {
 					city: user.city,
 					// province: null,
 					country: user.country,
-					privacy: user.privacy,
+					// privacy: user.privacy,
 				}
 			});
 		}
@@ -585,7 +663,7 @@ export class CartComponent extends Component {
 	onData(_) {
 		const form = this.form;
 		// const controls = this.controls;
-		// console.log('CartComponent.onData', form.controls.data.valid);
+		console.log('CartComponent.onData', form.controls.data.valid);
 		if (form.controls.data.valid) {
 			const deliveryData = form.value.data;
 			const deliveryCountry = this.getCountryById(deliveryData.country);
@@ -731,14 +809,15 @@ export class CartComponent extends Component {
 		const paymentMethod = controls.paymentMethod.options.find(x => x.id === form.value.paymentMethod);
 		this.paymentMethod = paymentMethod;
 		if (form.valid) {
-			console.log('CartComponent.onPayment', form.value);
+			// console.log('CartComponent.onPayment', form.value);
 			CartService.doPayment$(form.value).pipe(
 				first(),
 			).subscribe(response => {
 				if (environment.flags.production) {
 					window.location.href = response.redirectUrl;
 				} else {
-					this.onComplete({ id: 444, mp: 5, result: 1, transactionId: 'WEBSOLUTE27' }); // !!! only on development
+					this.onComplete({ id: '444', mp: '5', result: '-1', transactionId: 'WEBSOLUTE27' }); // !!! only on development
+					this.onAfterPatch(true);
 				}
 			});
 		}
@@ -746,18 +825,17 @@ export class CartComponent extends Component {
 
 	// 6. CartSteps.Complete
 	onComplete(params) {
-		// ?id=27&mp=5&result=1&transactionid=WEBSOLUTE27
-		this.step = CartSteps.Complete;
+		// ?id=444&mp=5&result=1&transactionid=WEBSOLUTE27
+		this.setStep(CartSteps.Complete);
 		this.success = params.result === '1';
 		this.error = params.result === '-1';
 		this.paymentMethodId = params.mp;
 		this.transactionId = params.transactionId;
 		this.orderId = params.id;
 		this.order = null;
+		this.hasPendingCart = CartService.hasPendingCart();
 		if (this.success) {
 			this.orderBusy = true;
-			CartMiniService.setItems([]);
-			CartService.setCart(null);
 			OrdersService.detail$(this.orderId).pipe(
 				first(),
 				tap(order => {
@@ -769,7 +847,6 @@ export class CartComponent extends Component {
 				}),
 			).subscribe();
 		}
-		// this.onPatch();
 	}
 
 	onOpenOrder(orderId) {
@@ -778,6 +855,22 @@ export class CartComponent extends Component {
 		).subscribe(event => {
 			console.log('CartComponent.onOpenOrder', event);
 		});
+	}
+
+	onRetry() {
+		this.error = false;
+		this.success = false;
+		this.errorPayment = null;
+		this.paymentMethod = null;
+		const items = CartMiniService.resumePendingItems();
+		const cart = CartService.resumePendingCart();
+		if (cart) {
+			this.load$().pipe(
+				first(),
+			).subscribe();
+		}
+		// this.setStep(CartSteps.Payment);
+		// this.onPatch(cart);
 	}
 }
 

@@ -17,6 +17,9 @@ export class SearchService {
 				tap(items => {
 					items.forEach(item => {
 						item.title = SearchService.toTitleCase(item.title);
+						if (item.abstract) {
+							item.abstract = SearchService.toTitleCase(item.abstract);
+						}
 					});
 					SearchService.items_ = items;
 				}),
@@ -28,9 +31,19 @@ export class SearchService {
 		query = query.toLowerCase();
 		return this.search$_().pipe(
 			map(items => {
-				items = items.filter(item => item.title.toLowerCase().indexOf(query) !== -1);
+				items = items.filter(item => {
+					if (item.title.toLowerCase().indexOf(query) !== -1) {
+						item.result = item.title;
+						return true;
+					} else if (item.abstract && item.abstract.toLowerCase().indexOf(query) !== -1) {
+						item.result = item.abstract;
+						return true;
+					} else {
+						return false;
+					}
+				});
 				items.sort((a, b) => {
-					return a.title.toLowerCase().indexOf(query) - b.title.toLowerCase().indexOf(query);
+					return a.result.toLowerCase().indexOf(query) - b.result.toLowerCase().indexOf(query);
 				});
 				return items;
 			}),

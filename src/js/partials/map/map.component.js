@@ -44,13 +44,14 @@ export class MapComponent extends Component {
 			if (!this.items) {
 				map.fitBounds(this.getItalyBounds());
 			}
-
 		});
 	}
 
 	onChanges() {
-		this.clearMarkers();
-		this.addMarkers(this.items);
+		if (this.markersDidChange()) {
+			this.clearMarkers();
+			this.addMarkers(this.items);
+		}
 	}
 
 	calculateDistance(lat1, lon1, lat2, lon2, unit) {
@@ -76,6 +77,20 @@ export class MapComponent extends Component {
 			}
 			return dist;
 		}
+	}
+
+	markersDidChange() {
+		let changed = false;
+		if (!this.markers) {
+			changed = true;
+		} else if (this.items.length !== this.markers.length) {
+			changed = true;
+		} else {
+			changed = this.markers.reduce((p, marker, i) => {
+				return p || (marker.item !== this.items[i]);
+			}, false);
+		}
+		return changed;
 	}
 
 	clearMarkers() {
@@ -171,6 +186,22 @@ export class MapComponent extends Component {
 
 			this.markers = markers;
 
+			// fix for minimum bound size
+			const boundsNE = bounds.getNorthEast();
+			const boundsSW = bounds.getSouthWest();
+			const minLatLng = 0.04;
+			const lat = Math.abs(boundsNE.lat() - boundsSW.lat());
+			const lng = Math.abs(boundsNE.lng() - boundsSW.lng());
+			if (lat < minLatLng || lng < minLatLng) {
+				// console.log(boundsNE.lat(), boundsNE.lng(), boundsSW.lat(), boundsSW.lng());
+				const dLat = (minLatLng - lat) / 2;
+				const dLng = (minLatLng - lng) / 2;
+				const extendNE = new google.maps.LatLng(boundsNE.lat() + dLat, boundsNE.lng() + dLng);
+				const extendSW = new google.maps.LatLng(boundsSW.lat() - dLat, boundsSW.lng() - dLng);
+				bounds.extend(extendNE);
+				bounds.extend(extendSW);
+			}
+
 			map.fitBounds(bounds);
 		}
 	}
@@ -218,14 +249,16 @@ export class MapComponent extends Component {
 	}
 
 	fitBounds(items) {
-		if (items.length) {
+		const map = this.map;
+		if (map && items.length) {
 			const bounds = new google.maps.LatLngBounds();
 			items.forEach((item) => {
 				const position = new google.maps.LatLng(item.latitude, item.longitude);
 				bounds.extend(position);
 			});
-			this.map.fitBounds(bounds);
+			map.fitBounds(bounds);
 			// console.log('fitBounds');
+			this.setMinimumZoom();
 		}
 	}
 

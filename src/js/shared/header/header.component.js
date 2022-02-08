@@ -43,6 +43,11 @@ export class HeaderComponent extends Component {
 		HeaderService.header$().pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(header => {
+			if (header === 'search') {
+				LocomotiveScrollService.stop();
+			} else if (this.header === 'search') {
+				LocomotiveScrollService.start();
+			}
 			this.header = header;
 			this.pushChanges();
 			body.setAttribute('class', header !== -1 ? `${header}-active` : '');
@@ -111,11 +116,19 @@ export class HeaderComponent extends Component {
 
 	onToggle(id) {
 		MenuService.onBack();
-		HeaderService.toggleHeader(id);
+		if (id !== 'cart' || !this.isCart) {
+			HeaderService.toggleHeader(id);
+		} else {
+			window.location.href = `${environment.slug.cart}?step=1`;
+		}
 	}
 
 	onBack(event) {
 		MenuService.onBack();
+	}
+
+	get isCart() {
+		return window.location.href.indexOf(environment.slug.cart) !== -1;
 	}
 }
 

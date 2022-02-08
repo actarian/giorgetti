@@ -14,15 +14,15 @@ export class SwiperNewsPropositionDirective extends SwiperDirective {
 					spaceBetween: 40
 				},
 				1024: {
-					slidesPerView: 3,
+					slidesPerView: 2,
 					spaceBetween: 50
 				},
 				1440: {
-					slidesPerView: 3,
+					slidesPerView: 2,
 					spaceBetween: 60
 				},
 				1920: {
-					slidesPerView: 3,
+					slidesPerView: 2,
 					spaceBetween: 70
 				}
 			} : {

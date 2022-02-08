@@ -52,6 +52,12 @@
 		}
 	}
 
+	.main--homepage & {
+		&>.card__picture {
+			@include aspect-clip(620, 363);
+		}
+	}
+
 	.card__date {
 		display: block;
 		margin-bottom: 10px;

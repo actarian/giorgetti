@@ -1,6 +1,6 @@
 /**
  * @license giorgetti v1.0.0
- * (c) 2021 Luca Zampetti <lzampetti@gmail.com>
+ * (c) 2022 Luca Zampetti <lzampetti@gmail.com>
  * License: MIT
  */
 
@@ -286,7 +286,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
     prefetch: './js/workers/prefetch.service.worker.js'
   },
   githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/'
-};var NODE = typeof module !== 'undefined' && module.exports;
+}; // AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w
+var NODE = typeof module !== 'undefined' && module.exports;
 var PARAMS = NODE ? {
   get: function get() {}
 } : new URLSearchParams(window.location.search);
@@ -924,6 +925,26 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
     }
   };
 
+  CartMiniService.setPendingItems = function setPendingItems(items) {
+    if (items) {
+      LocalStorageService.set(CartMiniService.STORAGE_PENDING_KEY, items);
+      LocalStorageService.delete(CartMiniService.STORAGE_KEY);
+    } else {
+      LocalStorageService.delete(CartMiniService.STORAGE_PENDING_KEY);
+    }
+  };
+
+  CartMiniService.resumePendingItems = function resumePendingItems() {
+    var items = LocalStorageService.get(CartMiniService.STORAGE_PENDING_KEY);
+
+    if (items) {
+      this.setPendingItems(null);
+      this.setItems(items);
+    }
+
+    return items;
+  };
+
   CartMiniService.items$ = function items$() {
     var localItems = LocalStorageService.get(CartMiniService.STORAGE_KEY) || [];
     return rxjs.of(localItems).pipe(operators.switchMap(function (items) {
@@ -1063,6 +1084,11 @@ _defineProperty(HeaderService, "header$_", new rxjs.BehaviorSubject(-1));var Car
       return "cartItems_" + environment.currentMarket;
     }
   }, {
+    key: "STORAGE_PENDING_KEY",
+    get: function get() {
+      return "cartItems_pending_" + environment.currentMarket;
+    }
+  }, {
     key: "currentItems",
     get: function get() {
       return CartMiniService.items$_.getValue();
@@ -1182,6 +1208,31 @@ var CartService = /*#__PURE__*/function () {
     }
   };
 
+  CartService.setPendingCart = function setPendingCart(cart) {
+    if (cart) {
+      LocalStorageService.set(CartService.STORAGE_PENDING_KEY, cart);
+      LocalStorageService.delete(CartService.STORAGE_KEY);
+    } else {
+      LocalStorageService.delete(CartService.STORAGE_PENDING_KEY);
+    }
+  };
+
+  CartService.hasPendingCart = function hasPendingCart() {
+    var cart = LocalStorageService.get(CartService.STORAGE_PENDING_KEY);
+    return cart != null;
+  };
+
+  CartService.resumePendingCart = function resumePendingCart() {
+    var cart = LocalStorageService.get(CartService.STORAGE_PENDING_KEY);
+
+    if (cart) {
+      this.setPendingCart(null);
+      this.setCart(cart);
+    }
+
+    return cart;
+  };
+
   CartService.cart$ = function cart$() {
     var localCart = LocalStorageService.get(CartService.STORAGE_KEY) || null;
     return rxjs.of(localCart).pipe(operators.switchMap(function (cart) {
@@ -1210,7 +1261,12 @@ var CartService = /*#__PURE__*/function () {
     if (environment.flags.production) {
       return ApiService.post$('/cart/estimated-delivery', cart);
     } else {
-      return ApiService.get$('/cart/estimated-delivery.json');
+      return ApiService.get$('/cart/estimated-delivery.json').pipe(operators.map(function (x) {
+        var estimatedDelivery = new Date();
+        estimatedDelivery.setDate(estimatedDelivery.getDate() + 0);
+        x.estimatedDelivery = estimatedDelivery;
+        return x;
+      }));
     }
   };
 
@@ -1240,9 +1296,9 @@ var CartService = /*#__PURE__*/function () {
 
   CartService.doPayment$ = function doPayment$(cart) {
     return (environment.flags.production ? ApiService.post$('/cart/payment', cart) : ApiService.get$('/cart/payment.json')).pipe(operators.tap(function (_) {
-      // !!! clearing cart with skip option!
-      CartMiniService.setItems([], true);
-      CartService.setCart(cart, true);
+      // setting local storage pending payment
+      CartMiniService.setPendingItems(CartMiniService.currentItems);
+      CartService.setPendingCart(CartService.currentCart);
     }));
   };
 
@@ -1250,6 +1306,11 @@ var CartService = /*#__PURE__*/function () {
     key: "STORAGE_KEY",
     get: function get() {
       return "cart_" + environment.currentMarket;
+    }
+  }, {
+    key: "STORAGE_PENDING_KEY",
+    get: function get() {
+      return "cart_pending_" + environment.currentMarket;
     }
   }, {
     key: "currentCart",
@@ -2316,8 +2377,8 @@ FlagPipe.meta = {
       } // return match.toLowerCase() === x.toLowerCase() ? '<strong>' + match + '</strong>' : match;
 
     }); // text = HighlightPipe.decodeHTML(text);
+    // console.log(text, query);
 
-    console.log(text, query);
     return text;
   };
 
@@ -2447,6 +2508,66 @@ LabelForDirective.meta = {
     this.until = this.until ? document.querySelector(this.until) : null;
     this.sticky$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {// console.log('LocomotiveScrollStickyDirective', event);
     });
+    window.addEventListener("orientationchange", function (event) {
+      var width = window.screen.width;
+      var nav = document.querySelector('.nav--secondary');
+      var materials = document.querySelector('.section--materials');
+      var secReserved = document.querySelector('.reserved-section--secondary');
+
+      if (materials !== null) {
+        if (width < 1024) {
+          nav.removeAttribute('style');
+          nav.classList.remove('nav-fixed-position');
+        } else {
+          var footer = document.querySelector('.group--prefooter');
+          var headerHeight = document.querySelector('.header').offsetHeight;
+          var footerOffset = footer.getBoundingClientRect();
+          var topFooter = footerOffset.top;
+          var materialsOffset = materials.getBoundingClientRect();
+          var topMaterials = materialsOffset.top;
+
+          if (topMaterials - headerHeight < 0 && topFooter > 0) {
+            nav.classList.add('nav-fixed-position');
+            nav.style.top = headerHeight + 'px';
+          } else {
+            nav.removeAttribute('style');
+            nav.classList.remove('nav-fixed-position');
+          }
+        }
+      } else if (secReserved !== null) {
+        if (width < 1024) {
+          nav.removeAttribute('style');
+          nav.classList.remove('nav-fixed-position');
+        } else {
+          var footer = document.querySelector('.group--prefooter');
+          var _headerHeight = document.querySelector('.header').offsetHeight;
+          var footerOffset = footer.getBoundingClientRect();
+          var topFooter = footerOffset.top;
+          var materialsOffset = secReserved.getBoundingClientRect();
+          var topMaterials = materialsOffset.top;
+
+          if (topMaterials - _headerHeight < 0 && topFooter > 0) {
+            nav.classList.add('nav-fixed-position');
+            nav.style.top = _headerHeight + 'px';
+          } else {
+            nav.removeAttribute('style');
+            nav.classList.remove('nav-fixed-position');
+          }
+        }
+      }
+    });
+  };
+
+  _proto.isTouchDevice = function isTouchDevice() {
+    var userAgent = navigator.userAgent.toLowerCase();
+    var isTablet = /(mac|ipad|tablet|(android(?!.*mobile))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+    var isSmartphone = /(ipod|iphone|(android(?!.*mobile))|(windows(?!.*phone)(.*touch)))/.test(userAgent);
+    return isTablet || isSmartphone;
+  };
+
+  _proto.isSafari = function isSafari() {
+    var isSafari = navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/crios/i) && !navigator.userAgent.match(/fxios/i);
+    return isSafari;
   };
 
   _proto.sticky$ = function sticky$() {
@@ -2458,40 +2579,91 @@ LabelForDirective.meta = {
     var targetNode = this.targetNode;
     var until = this.until;
     return LocomotiveScrollService.scroll$.pipe(operators.tap(function (event) {
-      var rect = node.getBoundingClientRect();
-      var y = 0;
+      if (!_this2.isTouchDevice() && !_this2.isSafari()) {
+        var rect = node.getBoundingClientRect();
+        var y = 0;
 
-      if (_this2.bottom) {
-        var bottom = window.innerHeight - targetNode.offsetHeight;
+        if (_this2.bottom) {
+          var bottom = window.innerHeight - targetNode.offsetHeight;
 
-        if (window.innerWidth >= 1024 && rect.y > bottom) {
-          y = bottom - rect.y;
-          _this2.sticked = true;
-        } else {
-          _this2.sticked = false;
-        }
-      } else {
-        var top = event.direction === 'down' ? 80 : 135;
-
-        if (window.innerWidth >= 1024 && rect.y < top) {
-          y = top - rect.y;
-
-          if (until) {
-            var untilRect = until.getBoundingClientRect();
-            var height = untilRect.y - rect.y;
-            y = Math.min(height, y);
+          if (window.innerWidth >= 1024 && rect.y > bottom) {
+            y = bottom - rect.y;
+            _this2.sticked = true;
+          } else {
+            _this2.sticked = false;
           }
-
-          _this2.sticked = true;
         } else {
-          _this2.sticked = false;
-        }
-      } // console.log(rect.height - targetNode.offsetHeight);
+          var top = event.direction === 'down' ? 80 : 135;
+
+          if (window.innerWidth >= 1024 && rect.y < top) {
+            y = top - rect.y;
+
+            if (until) {
+              var untilRect = until.getBoundingClientRect();
+              var height = untilRect.y - rect.y;
+              y = Math.min(height, y);
+            }
+
+            _this2.sticked = true;
+          } else {
+            _this2.sticked = false;
+          }
+        } // console.log(rect.height - targetNode.offsetHeight);
 
 
-      gsap.set(targetNode, {
-        y: y
-      });
+        gsap.set(targetNode, {
+          y: y
+        });
+      } else {
+        var body = document.querySelector('body');
+        body.addEventListener('scroll', function (event) {
+          var nav = document.querySelector('.nav--secondary');
+          var materials = document.querySelector('.section--materials');
+          var secReserved = document.querySelector('.reserved-section--secondary');
+
+          if (materials !== null) {
+            if (window.innerWidth >= 1024) {
+              var footer = document.querySelector('.group--prefooter');
+              var headerHeight = document.querySelector('.header').offsetHeight;
+              var footerOffset = footer.getBoundingClientRect();
+              var topFooter = footerOffset.top;
+              var materialsOffset = materials.getBoundingClientRect();
+              var topMaterials = materialsOffset.top;
+
+              if (topMaterials - headerHeight < 0 && topFooter > 0) {
+                nav.classList.add('nav-fixed-position');
+                nav.style.top = headerHeight + 'px';
+              } else {
+                nav.removeAttribute('style');
+                nav.classList.remove('nav-fixed-position');
+              }
+            } else {
+              nav.removeAttribute('style');
+              nav.classList.remove('nav-fixed-position');
+            }
+          } else if (secReserved !== null) {
+            if (window.innerWidth >= 1024) {
+              var footer = document.querySelector('.group--prefooter');
+              var _headerHeight2 = document.querySelector('.header').offsetHeight;
+              var footerOffset = footer.getBoundingClientRect();
+              var topFooter = footerOffset.top;
+              var materialsOffset = secReserved.getBoundingClientRect();
+              var topMaterials = materialsOffset.top;
+
+              if (topMaterials - _headerHeight2 < 0 && topFooter > 0) {
+                nav.classList.add('nav-fixed-position');
+                nav.style.top = _headerHeight2 + 'px';
+              } else {
+                nav.removeAttribute('style');
+                nav.classList.remove('nav-fixed-position');
+              }
+            } else {
+              nav.removeAttribute('style');
+              nav.classList.remove('nav-fixed-position');
+            }
+          }
+        }, false);
+      }
     }));
   };
 
@@ -4151,6 +4323,18 @@ ControlPrivacyComponent.meta = {
     this.disabled = this.disabled || false;
   };
 
+  _proto.onFocus = function onFocus(event) {
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    var input = node.querySelector('.control--text');
+
+    if (input) {
+      input.setSelectionRange(0, 1000);
+      input.focus();
+    }
+  };
+
   return ControlSearchComponent;
 }(ControlComponent);
 ControlSearchComponent.meta = {
@@ -4158,7 +4342,7 @@ ControlSearchComponent.meta = {
   inputs: ['control', 'label', 'disabled'],
   template:
   /* html */
-  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<svg class=\"search\"><use xlink:href=\"#search\"></use></svg>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t"
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\">\n\t\t\t<svg class=\"search\" (click)=\"onFocus($event)\"><use xlink:href=\"#search\"></use></svg>\n\t\t\t<input type=\"text\" class=\"control--text\" [formControl]=\"control\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t</div>\n\t"
 };var ControlTextComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlTextComponent, _ControlComponent);
 
@@ -5258,9 +5442,10 @@ var GtmService = /*#__PURE__*/function () {
       field = formGroup().get(fieldName);
     } else if (formGroup) {
       field = formGroup.get(fieldName);
-    }
+    } // console.log('RequiredIfValidator', field.value, shouldBe != null ? field.value === shouldBe : field.value);
 
-    return !value && field && (shouldBe != null ? field.value === shouldBe : field.value != null) ? {
+
+    return !value && field && (shouldBe != null ? field.value === shouldBe : field.value) ? {
       required: {
         value: value,
         requiredIf: fieldName
@@ -5977,8 +6162,11 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   var _proto = CartComponent.prototype;
 
   _proto.onInit = function onInit() {
+    this.busy = false;
+    this.orderBusy = false;
+    this.hasPendingCart = false;
     this.steps = CartSteps;
-    this.step = CartSteps.None;
+    this.setStep(CartSteps.None);
     this.detectSocialLogin();
     this.checkPaymentParams();
   };
@@ -6012,6 +6200,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     this.errorPayment = null;
     this.error = false;
     this.success = false;
+    this.readyToShip = false;
     this.estimatedDelivery = null;
     this.items = null;
     this.items$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
@@ -6091,7 +6280,6 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     }
 
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
-      // console.log('form', form.value);
       _this2.pushChanges();
 
       LocomotiveScrollService.update();
@@ -6149,7 +6337,14 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     this.pushChanges();
     CartService.cart$().pipe(operators.first()).subscribe(function (cart) {
       if (cart) {
-        _this2.step = cart.step;
+        var step = _this2.getStepParam();
+
+        if (step === '1') {
+          _this2.setStep(CartSteps.Items);
+        } else {
+          _this2.setStep(cart.step);
+        }
+
         _this2.guest = cart.guest;
         _this2.deliveryData = cart.deliveryData;
         _this2.billingData = cart.billingData;
@@ -6170,11 +6365,45 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
           });
         }
       } else {
-        _this2.step = CartSteps.Items;
+        _this2.setStep(CartSteps.Items);
       }
 
       _this2.onPatch(cart, true);
     });
+  };
+
+  _proto.getStepParam = function getStepParam() {
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    var params = Object.fromEntries(urlSearchParams.entries());
+
+    if (params.step != null) {
+      urlSearchParams.delete('step');
+
+      if (window.history.replaceState) {
+        // console.log(window.location, urlSearchParams);
+        var search = urlSearchParams.toString();
+        var newUrl = window.location.origin + window.location.pathname + (search !== '' ? '?' + search : search);
+        window.history.replaceState(null, document.title, newUrl);
+      }
+    }
+
+    return params.step;
+  };
+
+  _proto.onRevalidate = function onRevalidate() {
+    // console.log('onRevalidate');
+    this.controls.data.controls.invoiceData.controls.taxNumber.statusSubject.next(null);
+    this.controls.data.controls.invoiceData.controls.sdi.statusSubject.next(null);
+    this.controls.data.controls.invoiceData.controls.pec.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.company.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.firstName.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.lastName.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.telephone.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.address.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.zipCode.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.city.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.province.statusSubject.next(null);
+    this.controls.data.controls.billingData.controls.country.statusSubject.next(null);
   };
 
   _proto.touchForm = function touchForm() {
@@ -6196,8 +6425,68 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     }
   };
 
+  _proto.setStep = function setStep(step) {
+    this.step = step;
+
+    switch (step) {
+      case CartSteps.Items:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Carrello'
+        });
+        break;
+
+      case CartSteps.Data:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Dati Utente'
+        });
+        break;
+
+      case CartSteps.Delivery:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Consegna'
+        });
+        break;
+
+      case CartSteps.Recap:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Riepilogo'
+        });
+        break;
+
+      case CartSteps.Payment:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Pagamento'
+        });
+        break;
+
+      case CartSteps.Complete:
+        var totalPrice = NumberPipe.transform(this.totalPrice, {
+          style: 'currency',
+          currency: 'EUR'
+        });
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Conferma Ordine',
+          'revenue': totalPrice
+        });
+        break;
+
+      case CartSteps.Error:
+        GtmService.push({
+          'event': 'step checkout',
+          'ecommstep': 'Errore'
+        });
+        break;
+    }
+  };
+
   _proto.onBack = function onBack() {
-    this.step--;
+    this.setStep(this.step - 1);
     var patch = null;
 
     if (this.step === CartSteps.Items) {
@@ -6213,7 +6502,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onNext = function onNext(patch) {
-    this.step++;
+    this.setStep(this.step + 1);
     this.onPatch(patch);
   };
 
@@ -6321,7 +6610,17 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
         return CartService.estimatedDelivery$({
           items: items
         }).pipe(operators.map(function (data) {
-          _this5.estimatedDelivery = data.estimatedDelivery;
+          var now = new Date();
+          var days = Math.floor((new Date(data.estimatedDelivery) - now) / (1000 * 3600 * 24));
+
+          if (days > 0) {
+            _this5.readyToShip = false;
+            _this5.estimatedDelivery = data.estimatedDelivery;
+          } else {
+            _this5.readyToShip = true;
+            _this5.estimatedDelivery = null;
+          }
+
           return items;
         }));
       } else {
@@ -6381,8 +6680,8 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
           // zipCode: null,
           city: user.city,
           // province: null,
-          country: user.country,
-          privacy: user.privacy
+          country: user.country // privacy: user.privacy,
+
         }
       });
     }
@@ -6591,7 +6890,8 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     var _this11 = this;
 
     var form = this.form; // const controls = this.controls;
-    // console.log('CartComponent.onData', form.controls.data.valid);
+
+    console.log('CartComponent.onData', form.controls.data.valid);
 
     if (form.controls.data.valid) {
       var deliveryData = form.value.data;
@@ -6779,18 +7079,20 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     this.paymentMethod = paymentMethod;
 
     if (form.valid) {
-      console.log('CartComponent.onPayment', form.value);
+      // console.log('CartComponent.onPayment', form.value);
       CartService.doPayment$(form.value).pipe(operators.first()).subscribe(function (response) {
         if (environment.flags.production) {
           window.location.href = response.redirectUrl;
         } else {
           _this15.onComplete({
-            id: 444,
-            mp: 5,
-            result: 1,
+            id: '444',
+            mp: '5',
+            result: '-1',
             transactionId: 'WEBSOLUTE27'
           }); // !!! only on development
 
+
+          _this15.onAfterPatch(true);
         }
       });
     }
@@ -6800,19 +7102,18 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   _proto.onComplete = function onComplete(params) {
     var _this16 = this;
 
-    // ?id=27&mp=5&result=1&transactionid=WEBSOLUTE27
-    this.step = CartSteps.Complete;
+    // ?id=444&mp=5&result=1&transactionid=WEBSOLUTE27
+    this.setStep(CartSteps.Complete);
     this.success = params.result === '1';
     this.error = params.result === '-1';
     this.paymentMethodId = params.mp;
     this.transactionId = params.transactionId;
     this.orderId = params.id;
     this.order = null;
+    this.hasPendingCart = CartService.hasPendingCart();
 
     if (this.success) {
       this.orderBusy = true;
-      CartMiniService.setItems([]);
-      CartService.setCart(null);
       OrdersService.detail$(this.orderId).pipe(operators.first(), operators.tap(function (order) {
         _this16.order = order;
       }), operators.finalize(function (_) {
@@ -6820,8 +7121,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
         _this16.pushChanges();
       })).subscribe();
-    } // this.onPatch();
-
+    }
   };
 
   _proto.onOpenOrder = function onOpenOrder(orderId) {
@@ -6833,6 +7133,21 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
       console.log('CartComponent.onOpenOrder', event);
     });
+  };
+
+  _proto.onRetry = function onRetry() {
+    this.error = false;
+    this.success = false;
+    this.errorPayment = null;
+    this.paymentMethod = null;
+    var items = CartMiniService.resumePendingItems();
+    var cart = CartService.resumePendingCart();
+
+    if (cart) {
+      this.load$().pipe(operators.first()).subscribe();
+    } // this.setStep(CartSteps.Payment);
+    // this.onPatch(cart);
+
   };
 
   _createClass(CartComponent, [{
@@ -6848,7 +7163,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
       }
 
       if (this.discount) {
-        total += this.discount.price;
+        total += this.discount.value;
       }
 
       return total;
@@ -7372,7 +7687,8 @@ MagazineRequestComponent.meta = {
 
   MagazineService.all$ = function all$() {
     if (environment.flags.production) {
-      return ApiService.get$('/magazine/all');
+      var url = environment.currentCaOrder.length === 1 ? '/magazine/all' : '/magazine/all/' + environment.currentCaId;
+      return ApiService.get$(url);
     } else {
       return ApiService.get$('/magazine/all.json');
     }
@@ -7437,7 +7753,7 @@ MagazineComponent.meta = {
 
   MarketsAndLanguagesService.all$ = function all$(currentCoId) {
     if (environment.flags.production) {
-      return ApiService.get$('/markets-and-languages/all-nolangselector?currentCoId=' + currentCoId);
+      return ApiService.get$('/markets-and-languages/all?currentCoId=' + currentCoId);
     } else {
       return ApiService.get$('/markets-and-languages/all.json');
     }
@@ -8066,7 +8382,7 @@ NewsComponent.meta = {
       // required if country === 114, Italy
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       engagement: new rxcompForm.FormControl(null),
-      newsletter: true,
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
       newsletterLanguage: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -8517,6 +8833,10 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     CartService.setCart(null); // getting showefy price and adding to mini cart
 
     CartMiniService.getPriceAndAddItem$(cartItem).pipe(operators.first()).subscribe();
+    GtmService.push({
+      'event': 'step checkout',
+      'ecommstep': 'Aggiungi al Carrello'
+    });
   };
 
   _createClass(ProductsConfigureComponent, [{
@@ -8612,6 +8932,9 @@ ProductsConfigureComponent.meta = {
       _this.visibleItems = _this.items.slice(0, Math.min(4, _this.items.length));
 
       _this.pushChanges();
+    });
+    GtmService.push({
+      'pageCategory': 'Scheda Prodotto'
     });
   };
 
@@ -10791,8 +11114,10 @@ var MarkerClusterer = /** @class */ (function (_super) {
   };
 
   _proto.onChanges = function onChanges() {
-    this.clearMarkers();
-    this.addMarkers(this.items);
+    if (this.markersDidChange()) {
+      this.clearMarkers();
+      this.addMarkers(this.items);
+    }
   };
 
   _proto.calculateDistance = function calculateDistance(lat1, lon1, lat2, lon2, unit) {
@@ -10825,6 +11150,24 @@ var MarkerClusterer = /** @class */ (function (_super) {
     }
   };
 
+  _proto.markersDidChange = function markersDidChange() {
+    var _this2 = this;
+
+    var changed = false;
+
+    if (!this.markers) {
+      changed = true;
+    } else if (this.items.length !== this.markers.length) {
+      changed = true;
+    } else {
+      changed = this.markers.reduce(function (p, marker, i) {
+        return p || marker.item !== _this2.items[i];
+      }, false);
+    }
+
+    return changed;
+  };
+
   _proto.clearMarkers = function clearMarkers() {
     if (this.markerCluster) {
       this.markerCluster.clearMarkers();
@@ -10838,7 +11181,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
   };
 
   _proto.addMarkers = function addMarkers(items) {
-    var _this2 = this;
+    var _this3 = this;
 
     var map = this.map;
 
@@ -10880,7 +11223,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
           content: content
         });
         marker.addListener('click', function () {
-          _this2.setMarkerWindow(marker.position, content); // this.scrollToStore(item);
+          _this3.setMarkerWindow(marker.position, content); // this.scrollToStore(item);
           // GtmService.push({ event: 'dealerlocator', action: 'marker-click', label: item.title });
 
         });
@@ -10905,13 +11248,30 @@ var MarkerClusterer = /** @class */ (function (_super) {
         this.markerCluster = markerCluster;
       }
 
-      this.markers = markers;
+      this.markers = markers; // fix for minimum bound size
+
+      var boundsNE = bounds.getNorthEast();
+      var boundsSW = bounds.getSouthWest();
+      var minLatLng = 0.04;
+      var lat = Math.abs(boundsNE.lat() - boundsSW.lat());
+      var lng = Math.abs(boundsNE.lng() - boundsSW.lng());
+
+      if (lat < minLatLng || lng < minLatLng) {
+        // console.log(boundsNE.lat(), boundsNE.lng(), boundsSW.lat(), boundsSW.lng());
+        var dLat = (minLatLng - lat) / 2;
+        var dLng = (minLatLng - lng) / 2;
+        var extendNE = new google.maps.LatLng(boundsNE.lat() + dLat, boundsNE.lng() + dLng);
+        var extendSW = new google.maps.LatLng(boundsSW.lat() - dLat, boundsSW.lng() - dLng);
+        bounds.extend(extendNE);
+        bounds.extend(extendSW);
+      }
+
       map.fitBounds(bounds);
     }
   };
 
   _proto.getGeolocation = function getGeolocation(map) {
-    var _this3 = this;
+    var _this4 = this;
 
     this.error = null;
     this.busyLocation = true;
@@ -10920,8 +11280,8 @@ var MarkerClusterer = /** @class */ (function (_super) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (location) {
         position = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-        var geocoder = _this3.geocoder || new google.maps.Geocoder();
-        _this3.geocoder = geocoder;
+        var geocoder = _this4.geocoder || new google.maps.Geocoder();
+        _this4.geocoder = geocoder;
         geocoder.geocode({
           'location': position
         }, function (results, status) {
@@ -10929,71 +11289,75 @@ var MarkerClusterer = /** @class */ (function (_super) {
             var filteredInfoCity = results.filter(function (address_component) {
               return address_component.types.includes("locality");
             });
-            _this3.model.city = filteredInfoCity.length ? filteredInfoCity[0].formatted_address : undefined;
-            _this3.model.address = results[0].formatted_address;
+            _this4.model.city = filteredInfoCity.length ? filteredInfoCity[0].formatted_address : undefined;
+            _this4.model.address = results[0].formatted_address;
 
             for (var i = 0; i < results[0].address_components.length; i++) {
               if (results[0].address_components[i].types[0] == "country" || results[0].address_components[i].types[0] == "political") {
-                _this3.searchCountry = results[0].address_components[i].short_name;
+                _this4.searchCountry = results[0].address_components[i].short_name;
               }
             }
 
-            _this3.setInfoWindow(position, 1);
+            _this4.setInfoWindow(position, 1);
 
-            _this3.searchPosition(position).finally(function () {
-              return _this3.busyLocation = false;
+            _this4.searchPosition(position).finally(function () {
+              return _this4.busyLocation = false;
             });
 
-            _this3.map.setCenter(position);
+            _this4.map.setCenter(position);
 
-            _this3.map.setZoom(ZOOM_LEVEL);
+            _this4.map.setZoom(ZOOM_LEVEL);
           }
         });
       }, function () {
-        _this3.setInfoWindow(position, 2);
+        _this4.setInfoWindow(position, 2);
 
-        _this3.searchPosition(position).finally(function () {
-          return _this3.busyLocation = false;
+        _this4.searchPosition(position).finally(function () {
+          return _this4.busyLocation = false;
         });
       });
     } else {
       // Browser doesn't support Geolocation
       this.setInfoWindow(position, 3);
       this.searchPosition(position).finally(function () {
-        return _this3.busyLocation = false;
+        return _this4.busyLocation = false;
       });
     }
   };
 
   _proto.fitBounds = function fitBounds(items) {
-    if (items.length) {
+    var map = this.map;
+
+    if (map && items.length) {
       var bounds = new google.maps.LatLngBounds();
       items.forEach(function (item) {
         var position = new google.maps.LatLng(item.latitude, item.longitude);
         bounds.extend(position);
       });
-      this.map.fitBounds(bounds); // console.log('fitBounds');
+      map.fitBounds(bounds); // console.log('fitBounds');
+
+      this.setMinimumZoom();
     }
   };
 
   _proto.findNearStores = function findNearStores(items, position) {
-    var _this4 = this;
+    var _this5 = this;
 
     if (items) {
       items.forEach(function (item) {
-        item.distance = _this4.calculateDistance(item.latitude, item.longitude, position.lat(), position.lng(), 'K');
+        item.distance = _this5.calculateDistance(item.latitude, item.longitude, position.lat(), position.lng(), 'K');
         item.visible = (item.cod_stato == window.userCountry || !window.userCountry) && item.distance <= MAX_DISTANCE
         /* Km */
         ;
 
         if (item.visible) {
           if (item.removed) {
-            _this4.markerCluster.addMarker(item.marker);
+            _this5.markerCluster.addMarker(item.marker);
           }
 
           delete item.removed;
         } else {
-          _this4.markerCluster.removeMarker(item.marker);
+          _this5.markerCluster.removeMarker(item.marker);
 
           item.removed = true;
         }
@@ -11006,7 +11370,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
         return item.visible;
       }).slice(0, 50);
       this.$timeout(function () {
-        _this4.visibleStores = visibleStores;
+        _this5.visibleStores = visibleStores;
       }, 1); // console.log('findNearStores', visibleStores);
 
       return visibleStores;
@@ -11151,15 +11515,15 @@ SwiperHomepageDirective.meta = {
           spaceBetween: 40
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 2,
           spaceBetween: 50
         },
         1440: {
-          slidesPerView: 3,
+          slidesPerView: 2,
           spaceBetween: 60
         },
         1920: {
-          slidesPerView: 3,
+          slidesPerView: 2,
           spaceBetween: 70
         }
       } : {
@@ -11585,6 +11949,12 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
     var body = document.querySelector('body');
     this.header = HeaderService.currentHeader;
     HeaderService.header$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (header) {
+      if (header === 'search') {
+        LocomotiveScrollService.stop();
+      } else if (_this2.header === 'search') {
+        LocomotiveScrollService.start();
+      }
+
       _this2.header = header;
 
       _this2.pushChanges();
@@ -11644,7 +12014,12 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
 
   _proto.onToggle = function onToggle(id) {
     MenuService.onBack();
-    HeaderService.toggleHeader(id);
+
+    if (id !== 'cart' || !this.isCart) {
+      HeaderService.toggleHeader(id);
+    } else {
+      window.location.href = environment.slug.cart + "?step=1";
+    }
   };
 
   _proto.onBack = function onBack(event) {
@@ -11680,6 +12055,11 @@ _defineProperty(MenuService, "menu$_", new rxjs.BehaviorSubject(-1));var HeaderC
 
         scrolled ? node.classList.add("scrolled") : node.classList.remove("scrolled");
       }
+    }
+  }, {
+    key: "isCart",
+    get: function get() {
+      return window.location.href.indexOf(environment.slug.cart) !== -1;
     }
   }]);
 
@@ -11805,6 +12185,10 @@ NewsletterPropositionComponent.meta = {
       return (environment.flags.production ? ApiService.get$("/search/search") : ApiService.get$("/search/search.json")).pipe(operators.tap(function (items) {
         items.forEach(function (item) {
           item.title = SearchService.toTitleCase(item.title);
+
+          if (item.abstract) {
+            item.abstract = SearchService.toTitleCase(item.abstract);
+          }
         });
         SearchService.items_ = items;
       }));
@@ -11815,10 +12199,18 @@ NewsletterPropositionComponent.meta = {
     query = query.toLowerCase();
     return this.search$_().pipe(operators.map(function (items) {
       items = items.filter(function (item) {
-        return item.title.toLowerCase().indexOf(query) !== -1;
+        if (item.title.toLowerCase().indexOf(query) !== -1) {
+          item.result = item.title;
+          return true;
+        } else if (item.abstract && item.abstract.toLowerCase().indexOf(query) !== -1) {
+          item.result = item.abstract;
+          return true;
+        } else {
+          return false;
+        }
       });
       items.sort(function (a, b) {
-        return a.title.toLowerCase().indexOf(query) - b.title.toLowerCase().indexOf(query);
+        return a.result.toLowerCase().indexOf(query) - b.result.toLowerCase().indexOf(query);
       });
       return items;
     }));
@@ -11844,7 +12236,8 @@ NewsletterPropositionComponent.meta = {
   };
 
   return SearchService;
-}();var SearchComponent = /*#__PURE__*/function (_Component) {
+}();var SEARCH_LIMIT_RESULT = 50;
+var SearchComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(SearchComponent, _Component);
 
   function SearchComponent() {
@@ -11865,11 +12258,22 @@ NewsletterPropositionComponent.meta = {
     var controls = this.controls = form.controls;
     this.search$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (items) {
       _this.items = items;
-      _this.visibleItems = items.slice(0, Math.min(10, items.length));
+      _this.visibleItems = items.slice(0, Math.min(SEARCH_LIMIT_RESULT, items.length));
       _this.busy = false;
 
       _this.pushChanges();
     });
+    setTimeout(function () {
+      var _getContext = rxcomp.getContext(_this),
+          node = _getContext.node;
+
+      var input = node.querySelector('.control--text');
+
+      if (input) {
+        input.focus();
+      } // console.log('SearchComponent', input);
+
+    }, 300);
   };
 
   _proto.search$ = function search$() {
@@ -11883,7 +12287,7 @@ NewsletterPropositionComponent.meta = {
 
         _this2.pushChanges();
 
-        return SearchService.search$(query).pipe(operators.delay(2000));
+        return SearchService.search$(query).pipe(operators.delay(1));
       } else {
         return rxjs.of([]);
       }

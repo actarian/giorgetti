@@ -187,7 +187,7 @@
 			</div>
 			<button type="button" class="btn--close" (click)="onToggle('menu')"><svg class="close"><use xlink:href="#close"></use></svg></button>
 		</div>
-		<div class="group--search" [class]="{ active: header == 'search' }">
+		<div class="group--search" [class]="{ active: header == 'search' }" *if="header == 'search'">
 			<div class="container" search>
 				<div class="title">Cerca nel sito</div>
 				<form class="form" [formGroup]="form" name="form" role="form" novalidate autocomplete="off">
@@ -196,9 +196,9 @@
 				<!-- spinner -->
 				<div class="spinner" *if="busy"></div>
 				<!-- results -->
-				<ul class="nav--results" *if="visibleItems.length">
+				<ul class="nav--results" *if="!busy && visibleItems.length">
 					<li class="nav__item" *for="let item of visibleItems">
-						<a [href]="item.url"><span class="nav__title" [innerHTML]="item.title | highlight : controls.search.value"></span> <span class="nav__url" [innerHTML]="item.url"></span></a>
+						<a [href]="item.url"><span class="nav__title" [innerHTML]="item.result| highlight : controls.search.value"></span> <span class="nav__url" [innerHTML]="item.url"></span></a>
 					</li>
 				</ul>
 			</div>

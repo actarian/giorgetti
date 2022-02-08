@@ -60,6 +60,11 @@
 
 			.control--text {
 				@extend %control--text;
+
+				&::placeholder {
+					color: #000;
+					opacity: .25;
+				}
 			}
 		}
 	}

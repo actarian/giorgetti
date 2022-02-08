@@ -59,3 +59,5 @@ export const environmentStatic = {
 	},
 	githubDocs: 'https://raw.githubusercontent.com/actarian/giorgetti/main/docs/',
 };
+
+// AIzaSyAIsa4g8z-HPPwohsf8jzVTbKw-DiI8k5w

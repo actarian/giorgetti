@@ -25,7 +25,7 @@ export class NewsletterComponent extends Component {
 			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
 			city: new FormControl(null, [Validators.RequiredValidator()]),
 			engagement: new FormControl(null),
-			newsletter: true,
+			newsletter: new FormControl(null, [Validators.RequiredTrueValidator()]),
 			newsletterLanguage: new FormControl(null, [Validators.RequiredValidator()]),
 			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
 			commercial: new FormControl(null, [Validators.RequiredValidator()]),
