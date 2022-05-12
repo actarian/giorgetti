@@ -422,6 +422,28 @@
 
 	}
 
+	table {
+		font-size: 0.8em;
+		border: none!important;
+
+		td {
+			padding: 8px;
+			border-collapse: collapse;
+			border: none;
+			border-bottom: 1px solid black;
+
+			&, p {
+				text-align: left!important;
+				margin: 0!important;
+			}
+		}
+
+		ul, ol {
+			margin: 0;
+			padding: 0 0 0 30px;
+		}
+	}
+
 	@include media-up(md) {
 		padding-bottom: 140px;
 	}

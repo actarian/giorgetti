@@ -11,7 +11,7 @@ export class CareersModalComponent extends Component {
 		if (parentInstance instanceof ModalOutletComponent) {
 			const data = parentInstance.modal.data;
 			this.position = data.position;
-			// console.log('CareersModalComponent.onInit', data);
+			console.log('CareersModalComponent.onInit', data.position);
 		}
 		LocomotiveScrollService.stop();
 	}

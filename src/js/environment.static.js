@@ -12,6 +12,7 @@ export const environmentStatic = {
 	languages: ['it', 'en', 'de', 'ch'],
 	defaultLanguage: 'it',
 	currentLanguage: 'it',
+	detectedCountry: 'Italia',
 	api: '/giorgetti/api',
 	assets: '/giorgetti/',
 	slug: {

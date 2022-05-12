@@ -95,4 +95,6 @@ options = Utils.merge(options, window.environment);
 
 export const environment = new Environment(options);
 
-// console.log('environment', environment);
+if (window.STATIC) {
+	console.log('environment', environment);
+}

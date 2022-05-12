@@ -207,14 +207,15 @@
 	}
 
 	.card__address,
-	.card__city,
+	.card__location,
 	.card__country {
 		font-size: 14px;
 	}
 
 	.card__phone,
 	.card__fax,
-	.card__email {
+	.card__email,
+	.card__website {
 		@extend %btn-link;
 		font-size: 12px;
 		font-weight: 600;
@@ -273,7 +274,11 @@
 		border-radius: 8px;
 
 		@include media-down(xs) {
-			padding: 20px 30px 20px;
+			padding: 20px;
+
+			.card__content {
+				padding: 0;
+			}
 		}
 	}
 }
@@ -305,7 +310,12 @@
 	@include media-down(sm) {
 
 		.map {
-			@include aspect-clip(1, 1);
+			@include aspect-clip(1, 2);
+		}
+
+		[role="dialog"] {
+			width: 100%;
+			max-width: 260px!important;
 		}
 	}
 }

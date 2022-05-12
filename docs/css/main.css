@@ -2475,6 +2475,30 @@ html.has-scroll-dragging {
       -o-object-fit: cover;
          object-fit: cover; } }
 
+@media (min-width: 1024px) and (min-width: 768px) {
+  .expand--left-md {
+    margin-left: calc(-50vw + (768px - 40px) / 2); } }
+
+@media (min-width: 1024px) and (min-width: 1024px) {
+  .expand--left-md {
+    margin-left: calc(-50vw + (1024px - 50px) / 2); } }
+
+@media (min-width: 1024px) and (min-width: 1440px) {
+  .expand--left-md {
+    margin-left: calc(-50vw + (1280px - 60px) / 2); } }
+
+@media (min-width: 1024px) and (min-width: 1920px) {
+  .expand--left-md {
+    margin-left: calc(-50vw + (1280px - 70px) / 2); } }
+
+@media (min-width: 1024px) {
+  .expand--left-md.picture {
+    display: flex; }
+    .expand--left-md.picture > img {
+      width: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; } }
+
 @media (max-width: 767.98px) {
   .hidden-xs-down {
     display: none !important; } }
@@ -2732,7 +2756,7 @@ body {
   color: var(--foreground); }
 
 ::selection {
-  background: yellow;
+  background: rgba(209, 205, 202, 0.6);
   color: inherit; }
 
 h1,
@@ -3251,10 +3275,11 @@ h6 {
 .nav--files > li > button,
 .nav--files ul > li > button,
 .nav--index > li > button, .group--form--checkbox label > span > a, .group--form--privacy label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link,
+.modal--generic .btn--link, .card--hero-products-detail .btn--link, .section--text .btn--link,
 .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
-.card--store-locator .card__email, .card--dealer .card__phone,
+.card--store-locator .card__email,
+.card--store-locator .card__website, .card--dealer .card__phone,
 .card--dealer .card__fax,
 .card--dealer .card__email, .card--contact .card__phone,
 .card--contact .card__fax,
@@ -3262,10 +3287,10 @@ h6 {
 .card--address .card__fax,
 .card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
-.header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, [control-autocomplete] .btn--reset, .header .group--center .btn--logo, .header .btn--menu,
+.header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .filters__addon .btn--geolocation, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news > .card__picture, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .card--contact .card__link, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
 .modal--materials .btn--prev,
 .modal--materials .btn--next, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
@@ -3303,10 +3328,11 @@ h6 {
   .nav--files > li > button,
   .nav--files ul > li > button,
   .nav--index > li > button, .group--form--checkbox label > span > a, .group--form--privacy label > span > a, .modal--generic a,
-  .modal--generic .btn--link, .section--text .btn--link,
+  .modal--generic .btn--link, .card--hero-products-detail .btn--link, .section--text .btn--link,
   .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
   .card--store-locator .card__fax,
-  .card--store-locator .card__email, .card--dealer .card__phone,
+  .card--store-locator .card__email,
+  .card--store-locator .card__website, .card--dealer .card__phone,
   .card--dealer .card__fax,
   .card--dealer .card__email, .card--contact .card__phone,
   .card--contact .card__fax,
@@ -3314,10 +3340,10 @@ h6 {
   .card--address .card__fax,
   .card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
   .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
-  .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
+  .section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, [control-autocomplete] .btn--reset, .header .group--center .btn--logo, .header .btn--menu,
+  .header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .filters__addon .btn--geolocation, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
   .group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news > .card__picture, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-  .section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+  .section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .card--contact .card__link, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
   .modal--materials .btn--prev,
   .modal--materials .btn--next, .modal--user .btn--close,
   .section--auth .btn--close, .modal--user .btn--link,
@@ -3344,10 +3370,11 @@ h6 {
   .nav--files > li > button:active,
   .nav--files ul > li > button:active,
   .nav--index > li > button:active, .group--form--checkbox label > span > a:active, .group--form--privacy label > span > a:active, .modal--generic a:active,
-  .modal--generic .btn--link:active, .section--text .btn--link:active,
+  .modal--generic .btn--link:active, .card--hero-products-detail .btn--link:active, .section--text .btn--link:active,
   .section--text a:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
   .card--store-locator .card__fax:active,
-  .card--store-locator .card__email:active, .card--dealer .card__phone:active,
+  .card--store-locator .card__email:active,
+  .card--store-locator .card__website:active, .card--dealer .card__phone:active,
   .card--dealer .card__fax:active,
   .card--dealer .card__email:active, .card--contact .card__phone:active,
   .card--contact .card__fax:active,
@@ -3355,10 +3382,10 @@ h6 {
   .card--address .card__fax:active,
   .card--address .card__email:active, .card--hero-products-detail__old .btn--more:active, .section--versions .btn--more:active,
   .section--versions .btn--configure:active, .section--product-materials .btn--more:active, .group--insights .btn--more:active, .card--hero-products-detail .btn--more:active, .section--intro-sm .btn--more:active, .section--form .btn--submit:active, .section--materials-listing .btn--more:active, .section--user-detail .btn--primary:active,
-  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .card--version .btn--download:active, .section--product-proposition .btn--cta:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
-  .header .btn--cart:active, .group--main .btn--close:active, .group--submenus .btn--back:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .group--filters .btn--submit:active, .modal--generic .btn--close:active, .card--hero-homepage .card__picture:active, .group--actions .btn--prev:active,
+  .section--user-detail .btn--submit:active, .section--user-edit-password .btn--submit:active, .section--files .btn--more:active, .section--cart-mini .btn--buy:active, .section--cart .btn--primary:active, .card--hero-homepage .btn--cta:active, .group--actions .btn--cta:active, .card--version .btn--download:active, .section--product-proposition .btn--cta:active, .section--intro-sm .btn--secondary:active, .section--user-detail .btn--secondary:active, .files .btn--secondary:active, .section--cart-mini .btn--secondary:active, .section--cart .btn--secondary:active, .btn:active, [control-autocomplete] .btn--reset:active, .header .group--center .btn--logo:active, .header .btn--menu:active,
+  .header .btn--cart:active, .group--main .btn--close:active, .group--submenus .btn--back:active, .group--controls .btn--submit:active, .group--giorgetti-battaglia .group--logo .btn--logo:active, .btn--websolute:active, .group--filters .filters__addon .btn--geolocation:active, .group--filters .btn--submit:active, .modal--generic .btn--close:active, .card--hero-homepage .card__picture:active, .group--actions .btn--prev:active,
   .group--actions .btn--next:active, .group--video .btn--play:active, .card--product-proposition:active, .section--products .btn--more:active, .card--hero-products-detail__old .card__picture:active, .card--version:active, .card--hero-products-detail .card__picture:active, .card--hero-project > .card__picture:active, .card--hero-project .btn--discover:active, .card--project:active, .section--projects .btn--more:active, .card--design:active, .card--project-proposition:active, .modal--projects-registration .btn--close:active, .modal--projects-registration .btn--link:active, .card--hero-news > .card__picture:active, .card--hero-news .btn--discover:active, .card--news > .card__picture:active, .card--news .btn--discover:active, .section--news .btn--more:active, .card--gallery > .card__picture:active, .card--gallery > .card__video .btn--play:active, .card--gallery .btn--more:active, .card--news-proposition:active, .card--news-proposition .btn--more:active, .section--news-proposition .btn--prev:active,
-  .section--news-proposition .btn--next:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--store-locator .btn--discover:active, .section--store-locator .btn--more:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .section--table .btn--more:active, .modal--careers .btn--close:active, .modal--careers .btn--link:active, .modal--materials .btn--close:active,
+  .section--news-proposition .btn--next:active, .card--designer:active, .card--atelier:active, .card--store:active, .card--store-locator:active, .card--store-locator .btn--discover:active, .section--store-locator .btn--more:active, .card--dealer:active, .section--dealers .btn--more:active, .card--contact:active, .card--contact .card__link:active, .section--table .btn--more:active, .modal--careers .btn--close:active, .modal--careers .btn--link:active, .modal--materials .btn--close:active,
   .modal--materials .btn--prev:active,
   .modal--materials .btn--next:active, .modal--user .btn--close:active,
   .section--auth .btn--close:active, .modal--user .btn--link:active,
@@ -3385,10 +3412,11 @@ h6 {
   .nav--files > li > button:focus,
   .nav--files ul > li > button:focus,
   .nav--index > li > button:focus, .group--form--checkbox label > span > a:focus, .group--form--privacy label > span > a:focus, .modal--generic a:focus,
-  .modal--generic .btn--link:focus, .section--text .btn--link:focus,
+  .modal--generic .btn--link:focus, .card--hero-products-detail .btn--link:focus, .section--text .btn--link:focus,
   .section--text a:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
   .card--store-locator .card__fax:focus,
-  .card--store-locator .card__email:focus, .card--dealer .card__phone:focus,
+  .card--store-locator .card__email:focus,
+  .card--store-locator .card__website:focus, .card--dealer .card__phone:focus,
   .card--dealer .card__fax:focus,
   .card--dealer .card__email:focus, .card--contact .card__phone:focus,
   .card--contact .card__fax:focus,
@@ -3396,10 +3424,10 @@ h6 {
   .card--address .card__fax:focus,
   .card--address .card__email:focus, .card--hero-products-detail__old .btn--more:focus, .section--versions .btn--more:focus,
   .section--versions .btn--configure:focus, .section--product-materials .btn--more:focus, .group--insights .btn--more:focus, .card--hero-products-detail .btn--more:focus, .section--intro-sm .btn--more:focus, .section--form .btn--submit:focus, .section--materials-listing .btn--more:focus, .section--user-detail .btn--primary:focus,
-  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .card--version .btn--download:focus, .section--product-proposition .btn--cta:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
-  .header .btn--cart:focus, .group--main .btn--close:focus, .group--submenus .btn--back:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .group--filters .btn--submit:focus, .modal--generic .btn--close:focus, .card--hero-homepage .card__picture:focus, .group--actions .btn--prev:focus,
+  .section--user-detail .btn--submit:focus, .section--user-edit-password .btn--submit:focus, .section--files .btn--more:focus, .section--cart-mini .btn--buy:focus, .section--cart .btn--primary:focus, .card--hero-homepage .btn--cta:focus, .group--actions .btn--cta:focus, .card--version .btn--download:focus, .section--product-proposition .btn--cta:focus, .section--intro-sm .btn--secondary:focus, .section--user-detail .btn--secondary:focus, .files .btn--secondary:focus, .section--cart-mini .btn--secondary:focus, .section--cart .btn--secondary:focus, .btn:focus, [control-autocomplete] .btn--reset:focus, .header .group--center .btn--logo:focus, .header .btn--menu:focus,
+  .header .btn--cart:focus, .group--main .btn--close:focus, .group--submenus .btn--back:focus, .group--controls .btn--submit:focus, .group--giorgetti-battaglia .group--logo .btn--logo:focus, .btn--websolute:focus, .group--filters .filters__addon .btn--geolocation:focus, .group--filters .btn--submit:focus, .modal--generic .btn--close:focus, .card--hero-homepage .card__picture:focus, .group--actions .btn--prev:focus,
   .group--actions .btn--next:focus, .group--video .btn--play:focus, .card--product-proposition:focus, .section--products .btn--more:focus, .card--hero-products-detail__old .card__picture:focus, .card--version:focus, .card--hero-products-detail .card__picture:focus, .card--hero-project > .card__picture:focus, .card--hero-project .btn--discover:focus, .card--project:focus, .section--projects .btn--more:focus, .card--design:focus, .card--project-proposition:focus, .modal--projects-registration .btn--close:focus, .modal--projects-registration .btn--link:focus, .card--hero-news > .card__picture:focus, .card--hero-news .btn--discover:focus, .card--news > .card__picture:focus, .card--news .btn--discover:focus, .section--news .btn--more:focus, .card--gallery > .card__picture:focus, .card--gallery > .card__video .btn--play:focus, .card--gallery .btn--more:focus, .card--news-proposition:focus, .card--news-proposition .btn--more:focus, .section--news-proposition .btn--prev:focus,
-  .section--news-proposition .btn--next:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--store-locator .btn--discover:focus, .section--store-locator .btn--more:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .section--table .btn--more:focus, .modal--careers .btn--close:focus, .modal--careers .btn--link:focus, .modal--materials .btn--close:focus,
+  .section--news-proposition .btn--next:focus, .card--designer:focus, .card--atelier:focus, .card--store:focus, .card--store-locator:focus, .card--store-locator .btn--discover:focus, .section--store-locator .btn--more:focus, .card--dealer:focus, .section--dealers .btn--more:focus, .card--contact:focus, .card--contact .card__link:focus, .section--table .btn--more:focus, .modal--careers .btn--close:focus, .modal--careers .btn--link:focus, .modal--materials .btn--close:focus,
   .modal--materials .btn--prev:focus,
   .modal--materials .btn--next:focus, .modal--user .btn--close:focus,
   .section--auth .btn--close:focus, .modal--user .btn--link:focus,
@@ -3426,10 +3454,11 @@ h6 {
   .nav--files > li > button:hover,
   .nav--files ul > li > button:hover,
   .nav--index > li > button:hover, .group--form--checkbox label > span > a:hover, .group--form--privacy label > span > a:hover, .modal--generic a:hover,
-  .modal--generic .btn--link:hover, .section--text .btn--link:hover,
+  .modal--generic .btn--link:hover, .card--hero-products-detail .btn--link:hover, .section--text .btn--link:hover,
   .section--text a:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
   .card--store-locator .card__fax:hover,
-  .card--store-locator .card__email:hover, .card--dealer .card__phone:hover,
+  .card--store-locator .card__email:hover,
+  .card--store-locator .card__website:hover, .card--dealer .card__phone:hover,
   .card--dealer .card__fax:hover,
   .card--dealer .card__email:hover, .card--contact .card__phone:hover,
   .card--contact .card__fax:hover,
@@ -3437,10 +3466,10 @@ h6 {
   .card--address .card__fax:hover,
   .card--address .card__email:hover, .card--hero-products-detail__old .btn--more:hover, .section--versions .btn--more:hover,
   .section--versions .btn--configure:hover, .section--product-materials .btn--more:hover, .group--insights .btn--more:hover, .card--hero-products-detail .btn--more:hover, .section--intro-sm .btn--more:hover, .section--form .btn--submit:hover, .section--materials-listing .btn--more:hover, .section--user-detail .btn--primary:hover,
-  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .card--version .btn--download:hover, .section--product-proposition .btn--cta:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
-  .header .btn--cart:hover, .group--main .btn--close:hover, .group--submenus .btn--back:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .group--filters .btn--submit:hover, .modal--generic .btn--close:hover, .card--hero-homepage .card__picture:hover, .group--actions .btn--prev:hover,
+  .section--user-detail .btn--submit:hover, .section--user-edit-password .btn--submit:hover, .section--files .btn--more:hover, .section--cart-mini .btn--buy:hover, .section--cart .btn--primary:hover, .card--hero-homepage .btn--cta:hover, .group--actions .btn--cta:hover, .card--version .btn--download:hover, .section--product-proposition .btn--cta:hover, .section--intro-sm .btn--secondary:hover, .section--user-detail .btn--secondary:hover, .files .btn--secondary:hover, .section--cart-mini .btn--secondary:hover, .section--cart .btn--secondary:hover, .btn:hover, [control-autocomplete] .btn--reset:hover, .header .group--center .btn--logo:hover, .header .btn--menu:hover,
+  .header .btn--cart:hover, .group--main .btn--close:hover, .group--submenus .btn--back:hover, .group--controls .btn--submit:hover, .group--giorgetti-battaglia .group--logo .btn--logo:hover, .btn--websolute:hover, .group--filters .filters__addon .btn--geolocation:hover, .group--filters .btn--submit:hover, .modal--generic .btn--close:hover, .card--hero-homepage .card__picture:hover, .group--actions .btn--prev:hover,
   .group--actions .btn--next:hover, .group--video .btn--play:hover, .card--product-proposition:hover, .section--products .btn--more:hover, .card--hero-products-detail__old .card__picture:hover, .card--version:hover, .card--hero-products-detail .card__picture:hover, .card--hero-project > .card__picture:hover, .card--hero-project .btn--discover:hover, .card--project:hover, .section--projects .btn--more:hover, .card--design:hover, .card--project-proposition:hover, .modal--projects-registration .btn--close:hover, .modal--projects-registration .btn--link:hover, .card--hero-news > .card__picture:hover, .card--hero-news .btn--discover:hover, .card--news > .card__picture:hover, .card--news .btn--discover:hover, .section--news .btn--more:hover, .card--gallery > .card__picture:hover, .card--gallery > .card__video .btn--play:hover, .card--gallery .btn--more:hover, .card--news-proposition:hover, .card--news-proposition .btn--more:hover, .section--news-proposition .btn--prev:hover,
-  .section--news-proposition .btn--next:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--store-locator .btn--discover:hover, .section--store-locator .btn--more:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .section--table .btn--more:hover, .modal--careers .btn--close:hover, .modal--careers .btn--link:hover, .modal--materials .btn--close:hover,
+  .section--news-proposition .btn--next:hover, .card--designer:hover, .card--atelier:hover, .card--store:hover, .card--store-locator:hover, .card--store-locator .btn--discover:hover, .section--store-locator .btn--more:hover, .card--dealer:hover, .section--dealers .btn--more:hover, .card--contact:hover, .card--contact .card__link:hover, .section--table .btn--more:hover, .modal--careers .btn--close:hover, .modal--careers .btn--link:hover, .modal--materials .btn--close:hover,
   .modal--materials .btn--prev:hover,
   .modal--materials .btn--next:hover, .modal--user .btn--close:hover,
   .section--auth .btn--close:hover, .modal--user .btn--link:hover,
@@ -3467,10 +3496,11 @@ h6 {
   .nav--files > li > button:visited,
   .nav--files ul > li > button:visited,
   .nav--index > li > button:visited, .group--form--checkbox label > span > a:visited, .group--form--privacy label > span > a:visited, .modal--generic a:visited,
-  .modal--generic .btn--link:visited, .section--text .btn--link:visited,
+  .modal--generic .btn--link:visited, .card--hero-products-detail .btn--link:visited, .section--text .btn--link:visited,
   .section--text a:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
   .card--store-locator .card__fax:visited,
-  .card--store-locator .card__email:visited, .card--dealer .card__phone:visited,
+  .card--store-locator .card__email:visited,
+  .card--store-locator .card__website:visited, .card--dealer .card__phone:visited,
   .card--dealer .card__fax:visited,
   .card--dealer .card__email:visited, .card--contact .card__phone:visited,
   .card--contact .card__fax:visited,
@@ -3478,10 +3508,10 @@ h6 {
   .card--address .card__fax:visited,
   .card--address .card__email:visited, .card--hero-products-detail__old .btn--more:visited, .section--versions .btn--more:visited,
   .section--versions .btn--configure:visited, .section--product-materials .btn--more:visited, .group--insights .btn--more:visited, .card--hero-products-detail .btn--more:visited, .section--intro-sm .btn--more:visited, .section--form .btn--submit:visited, .section--materials-listing .btn--more:visited, .section--user-detail .btn--primary:visited,
-  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .card--version .btn--download:visited, .section--product-proposition .btn--cta:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
-  .header .btn--cart:visited, .group--main .btn--close:visited, .group--submenus .btn--back:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .group--filters .btn--submit:visited, .modal--generic .btn--close:visited, .card--hero-homepage .card__picture:visited, .group--actions .btn--prev:visited,
+  .section--user-detail .btn--submit:visited, .section--user-edit-password .btn--submit:visited, .section--files .btn--more:visited, .section--cart-mini .btn--buy:visited, .section--cart .btn--primary:visited, .card--hero-homepage .btn--cta:visited, .group--actions .btn--cta:visited, .card--version .btn--download:visited, .section--product-proposition .btn--cta:visited, .section--intro-sm .btn--secondary:visited, .section--user-detail .btn--secondary:visited, .files .btn--secondary:visited, .section--cart-mini .btn--secondary:visited, .section--cart .btn--secondary:visited, .btn:visited, [control-autocomplete] .btn--reset:visited, .header .group--center .btn--logo:visited, .header .btn--menu:visited,
+  .header .btn--cart:visited, .group--main .btn--close:visited, .group--submenus .btn--back:visited, .group--controls .btn--submit:visited, .group--giorgetti-battaglia .group--logo .btn--logo:visited, .btn--websolute:visited, .group--filters .filters__addon .btn--geolocation:visited, .group--filters .btn--submit:visited, .modal--generic .btn--close:visited, .card--hero-homepage .card__picture:visited, .group--actions .btn--prev:visited,
   .group--actions .btn--next:visited, .group--video .btn--play:visited, .card--product-proposition:visited, .section--products .btn--more:visited, .card--hero-products-detail__old .card__picture:visited, .card--version:visited, .card--hero-products-detail .card__picture:visited, .card--hero-project > .card__picture:visited, .card--hero-project .btn--discover:visited, .card--project:visited, .section--projects .btn--more:visited, .card--design:visited, .card--project-proposition:visited, .modal--projects-registration .btn--close:visited, .modal--projects-registration .btn--link:visited, .card--hero-news > .card__picture:visited, .card--hero-news .btn--discover:visited, .card--news > .card__picture:visited, .card--news .btn--discover:visited, .section--news .btn--more:visited, .card--gallery > .card__picture:visited, .card--gallery > .card__video .btn--play:visited, .card--gallery .btn--more:visited, .card--news-proposition:visited, .card--news-proposition .btn--more:visited, .section--news-proposition .btn--prev:visited,
-  .section--news-proposition .btn--next:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--store-locator .btn--discover:visited, .section--store-locator .btn--more:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .section--table .btn--more:visited, .modal--careers .btn--close:visited, .modal--careers .btn--link:visited, .modal--materials .btn--close:visited,
+  .section--news-proposition .btn--next:visited, .card--designer:visited, .card--atelier:visited, .card--store:visited, .card--store-locator:visited, .card--store-locator .btn--discover:visited, .section--store-locator .btn--more:visited, .card--dealer:visited, .section--dealers .btn--more:visited, .card--contact:visited, .card--contact .card__link:visited, .section--table .btn--more:visited, .modal--careers .btn--close:visited, .modal--careers .btn--link:visited, .modal--materials .btn--close:visited,
   .modal--materials .btn--prev:visited,
   .modal--materials .btn--next:visited, .modal--user .btn--close:visited,
   .section--auth .btn--close:visited, .modal--user .btn--link:visited,
@@ -3513,10 +3543,11 @@ h6 {
 .nav--files > li > button,
 .nav--files ul > li > button,
 .nav--index > li > button, .group--form--checkbox label > span > a, .group--form--privacy label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link,
+.modal--generic .btn--link, .card--hero-products-detail .btn--link, .section--text .btn--link,
 .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
-.card--store-locator .card__email, .card--dealer .card__phone,
+.card--store-locator .card__email,
+.card--store-locator .card__website, .card--dealer .card__phone,
 .card--dealer .card__fax,
 .card--dealer .card__email, .card--contact .card__phone,
 .card--contact .card__fax,
@@ -3524,10 +3555,10 @@ h6 {
 .card--address .card__fax,
 .card--address .card__email, .card--hero-products-detail__old .btn--more, .section--versions .btn--more,
 .section--versions .btn--configure, .section--product-materials .btn--more, .group--insights .btn--more, .card--hero-products-detail .btn--more, .section--intro-sm .btn--more, .section--form .btn--submit, .section--materials-listing .btn--more, .section--user-detail .btn--primary,
-.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, .header .group--center .btn--logo, .header .btn--menu,
-.header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
+.section--user-detail .btn--submit, .section--user-edit-password .btn--submit, .section--files .btn--more, .section--cart-mini .btn--buy, .section--cart .btn--primary, .card--hero-homepage .btn--cta, .group--actions .btn--cta, .card--version .btn--download, .section--product-proposition .btn--cta, .section--intro-sm .btn--secondary, .section--user-detail .btn--secondary, .files .btn--secondary, .section--cart-mini .btn--secondary, .section--cart .btn--secondary, .btn, [control-autocomplete] .btn--reset, .header .group--center .btn--logo, .header .btn--menu,
+.header .btn--cart, .group--main .btn--close, .group--submenus .btn--back, .group--controls .btn--submit, .group--giorgetti-battaglia .group--logo .btn--logo, .btn--websolute, .group--filters .filters__addon .btn--geolocation, .group--filters .btn--submit, .modal--generic .btn--close, .card--hero-homepage .card__picture, .group--actions .btn--prev,
 .group--actions .btn--next, .group--video .btn--play, .card--product-proposition, .section--products .btn--more, .card--hero-products-detail__old .card__picture, .card--version, .card--hero-products-detail .card__picture, .card--hero-project > .card__picture, .card--hero-project .btn--discover, .card--project, .section--projects .btn--more, .card--design, .card--project-proposition, .modal--projects-registration .btn--close, .modal--projects-registration .btn--link, .card--hero-news > .card__picture, .card--hero-news .btn--discover, .card--news > .card__picture, .card--news .btn--discover, .section--news .btn--more, .card--gallery > .card__picture, .card--gallery > .card__video .btn--play, .card--gallery .btn--more, .card--news-proposition, .card--news-proposition .btn--more, .section--news-proposition .btn--prev,
-.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
+.section--news-proposition .btn--next, .card--designer, .card--atelier, .card--store, .card--store-locator, .card--store-locator .btn--discover, .section--store-locator .btn--more, .card--dealer, .section--dealers .btn--more, .card--contact, .card--contact .card__link, .section--table .btn--more, .modal--careers .btn--close, .modal--careers .btn--link, .modal--materials .btn--close,
 .modal--materials .btn--prev,
 .modal--materials .btn--next, .modal--user .btn--close,
 .section--auth .btn--close, .modal--user .btn--link,
@@ -3536,7 +3567,7 @@ h6 {
 .nav--index > .nav__item > span {
   transition: cubic-bezier(0.65, 0.05, 0.36, 1) 350ms;
   transition-property: background-color, color, border, opacity; }
-  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--products-detail > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--products-detail > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail__old .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-products-detail .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .card--version .btn--download svg, .section--product-proposition .btn--cta svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail__old .card__picture svg, .card--version svg, .card--hero-products-detail .card__picture svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .card--project-proposition svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news > .card__picture svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .modal--market-proposition .btn--logo svg, .modal--market-proposition .btn--close svg, .modal--market-proposition .btn--secondary svg, .modal--market-proposition .btn--primary svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .btn--magazine-request svg, .modal--magazine-request .btn--close svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
+  .nav--language > li > a svg, .nav--service > li > a svg, .nav--main > li > a svg, .nav--social > li > a svg, .nav--colophon > li > a svg, .nav--breadcrumb > li > a svg, .nav--products-detail > li > a svg, .nav--share > li > a svg, .nav--secondary > li > a svg, .nav--markets > li > a svg, .nav--markets > .nav__item ul > li > a svg, .nav--steps > li > a svg, .nav--footer-menu > li > a svg, .nav--dropdown > li > a svg, .nav--options > li > a svg, .nav--submenu > li > a svg, .nav--results > li > a svg, .nav--files > li > a svg, .nav--files ul > li > a svg, .nav--index > li > a svg, .nav--language > li > button svg, .nav--service > li > button svg, .nav--main > li > button svg, .nav--social > li > button svg, .nav--colophon > li > button svg, .nav--breadcrumb > li > button svg, .nav--products-detail > li > button svg, .nav--share > li > button svg, .nav--secondary > li > button svg, .nav--markets > li > button svg, .nav--markets > .nav__item ul > li > button svg, .nav--steps > li > button svg, .nav--footer-menu > li > button svg, .nav--dropdown > li > button svg, .nav--options > li > button svg, .nav--submenu > li > button svg, .nav--results > li > button svg, .nav--files > li > button svg, .nav--files ul > li > button svg, .nav--index > li > button svg, .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .card--hero-products-detail .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--store-locator .card__website svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg, .card--hero-products-detail__old .btn--more svg, .section--versions .btn--more svg, .section--versions .btn--configure svg, .section--product-materials .btn--more svg, .group--insights .btn--more svg, .card--hero-products-detail .btn--more svg, .section--intro-sm .btn--more svg, .section--form .btn--submit svg, .section--materials-listing .btn--more svg, .section--user-detail .btn--primary svg, .section--user-detail .btn--submit svg, .section--user-edit-password .btn--submit svg, .section--files .btn--more svg, .section--cart-mini .btn--buy svg, .section--cart .btn--primary svg, .card--hero-homepage .btn--cta svg, .group--actions .btn--cta svg, .card--version .btn--download svg, .section--product-proposition .btn--cta svg, .section--intro-sm .btn--secondary svg, .section--user-detail .btn--secondary svg, .files .btn--secondary svg, .section--cart-mini .btn--secondary svg, .section--cart .btn--secondary svg, .btn svg, [control-autocomplete] .btn--reset svg, .header .group--center .btn--logo svg, .header .btn--menu svg, .header .btn--cart svg, .group--main .btn--close svg, .group--submenus .btn--back svg, .group--controls .btn--submit svg, .group--giorgetti-battaglia .group--logo .btn--logo svg, .btn--websolute svg, .group--filters .filters__addon .btn--geolocation svg, .group--filters .btn--submit svg, .modal--generic .btn--close svg, .card--hero-homepage .card__picture svg, .group--actions .btn--prev svg, .group--actions .btn--next svg, .group--video .btn--play svg, .card--product-proposition svg, .section--products .btn--more svg, .card--hero-products-detail__old .card__picture svg, .card--version svg, .card--hero-products-detail .card__picture svg, .card--hero-project > .card__picture svg, .card--hero-project .btn--discover svg, .card--project svg, .section--projects .btn--more svg, .card--design svg, .card--project-proposition svg, .modal--projects-registration .btn--close svg, .modal--projects-registration .btn--link svg, .card--hero-news > .card__picture svg, .card--hero-news .btn--discover svg, .card--news > .card__picture svg, .card--news .btn--discover svg, .section--news .btn--more svg, .card--gallery > .card__picture svg, .card--gallery > .card__video .btn--play svg, .card--gallery .btn--more svg, .card--news-proposition svg, .card--news-proposition .btn--more svg, .section--news-proposition .btn--prev svg, .section--news-proposition .btn--next svg, .card--designer svg, .card--atelier svg, .card--store svg, .card--store-locator svg, .card--store-locator .btn--discover svg, .section--store-locator .btn--more svg, .card--dealer svg, .section--dealers .btn--more svg, .card--contact svg, .card--contact .card__link svg, .section--table .btn--more svg, .modal--careers .btn--close svg, .modal--careers .btn--link svg, .modal--materials .btn--close svg, .modal--materials .btn--prev svg, .modal--materials .btn--next svg, .modal--user .btn--close svg, .section--auth .btn--close svg, .modal--user .btn--link svg, .section--auth .btn--link svg, .modal--social-login .btn--close svg, .modal--social-login .btn--link svg, .card--file svg, .card--file .btn--action svg, .files .btn--title svg, .modal--markets-and-languages .btn--logo svg, .modal--markets-and-languages .btn--close svg, .modal--market-proposition .btn--logo svg, .modal--market-proposition .btn--close svg, .modal--market-proposition .btn--secondary svg, .modal--market-proposition .btn--primary svg, .card--cart-item .card__title svg, .card--cart-item .btn--action svg, .section--cart-mini .btn--close svg, .tr--cart .group--info .right__title svg, .tr--cart .btn--remove svg, .tr--cart .btn--action svg, .btn--accordion svg, .card--address svg, error-component .error svg, error-component .error .btn--detail svg, .modal--orders .btn--close svg, .section--orders .btn--link svg, .btn--magazine-request svg, .modal--magazine-request .btn--close svg, .section--index .title svg, .nav--index > .nav__item > a svg, .nav--index > .nav__item > span svg {
     fill: currentColor;
     transition: ease-in-out 250ms;
     transition-property: fill, opacity; }
@@ -3561,10 +3592,11 @@ h6 {
   .nav--files > li > button[disabled],
   .nav--files ul > li > button[disabled],
   .nav--index > li > button[disabled], .group--form--checkbox label > span > a[disabled], .group--form--privacy label > span > a[disabled], .modal--generic a[disabled],
-  .modal--generic .btn--link[disabled], .section--text .btn--link[disabled],
+  .modal--generic .btn--link[disabled], .card--hero-products-detail .btn--link[disabled], .section--text .btn--link[disabled],
   .section--text a[disabled], .group--address .address__text a[disabled], .card--store-locator .card__phone[disabled],
   .card--store-locator .card__fax[disabled],
-  .card--store-locator .card__email[disabled], .card--dealer .card__phone[disabled],
+  .card--store-locator .card__email[disabled],
+  .card--store-locator .card__website[disabled], .card--dealer .card__phone[disabled],
   .card--dealer .card__fax[disabled],
   .card--dealer .card__email[disabled], .card--contact .card__phone[disabled],
   .card--contact .card__fax[disabled],
@@ -3572,10 +3604,10 @@ h6 {
   .card--address .card__fax[disabled],
   .card--address .card__email[disabled], .card--hero-products-detail__old .btn--more[disabled], .section--versions .btn--more[disabled],
   .section--versions .btn--configure[disabled], .section--product-materials .btn--more[disabled], .group--insights .btn--more[disabled], .card--hero-products-detail .btn--more[disabled], .section--intro-sm .btn--more[disabled], .section--form .btn--submit[disabled], .section--materials-listing .btn--more[disabled], .section--user-detail .btn--primary[disabled],
-  .section--user-detail .btn--submit[disabled], .section--user-edit-password .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .card--version .btn--download[disabled], .section--product-proposition .btn--cta[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
-  .header .btn--cart[disabled], .group--main .btn--close[disabled], .group--submenus .btn--back[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .group--filters .btn--submit[disabled], .modal--generic .btn--close[disabled], .card--hero-homepage .card__picture[disabled], .group--actions .btn--prev[disabled],
+  .section--user-detail .btn--submit[disabled], .section--user-edit-password .btn--submit[disabled], .section--files .btn--more[disabled], .section--cart-mini .btn--buy[disabled], .section--cart .btn--primary[disabled], .card--hero-homepage .btn--cta[disabled], .group--actions .btn--cta[disabled], .card--version .btn--download[disabled], .section--product-proposition .btn--cta[disabled], .section--intro-sm .btn--secondary[disabled], .section--user-detail .btn--secondary[disabled], .files .btn--secondary[disabled], .section--cart-mini .btn--secondary[disabled], .section--cart .btn--secondary[disabled], .btn[disabled], [control-autocomplete] .btn--reset[disabled], .header .group--center .btn--logo[disabled], .header .btn--menu[disabled],
+  .header .btn--cart[disabled], .group--main .btn--close[disabled], .group--submenus .btn--back[disabled], .group--controls .btn--submit[disabled], .group--giorgetti-battaglia .group--logo .btn--logo[disabled], .btn--websolute[disabled], .group--filters .filters__addon .btn--geolocation[disabled], .group--filters .btn--submit[disabled], .modal--generic .btn--close[disabled], .card--hero-homepage .card__picture[disabled], .group--actions .btn--prev[disabled],
   .group--actions .btn--next[disabled], .group--video .btn--play[disabled], .card--product-proposition[disabled], .section--products .btn--more[disabled], .card--hero-products-detail__old .card__picture[disabled], .card--version[disabled], .card--hero-products-detail .card__picture[disabled], .card--hero-project > .card__picture[disabled], .card--hero-project .btn--discover[disabled], .card--project[disabled], .section--projects .btn--more[disabled], .card--design[disabled], .card--project-proposition[disabled], .modal--projects-registration .btn--close[disabled], .modal--projects-registration .btn--link[disabled], .card--hero-news > .card__picture[disabled], .card--hero-news .btn--discover[disabled], .card--news > .card__picture[disabled], .card--news .btn--discover[disabled], .section--news .btn--more[disabled], .card--gallery > .card__picture[disabled], .card--gallery > .card__video .btn--play[disabled], .card--gallery .btn--more[disabled], .card--news-proposition[disabled], .card--news-proposition .btn--more[disabled], .section--news-proposition .btn--prev[disabled],
-  .section--news-proposition .btn--next[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--store-locator .btn--discover[disabled], .section--store-locator .btn--more[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .section--table .btn--more[disabled], .modal--careers .btn--close[disabled], .modal--careers .btn--link[disabled], .modal--materials .btn--close[disabled],
+  .section--news-proposition .btn--next[disabled], .card--designer[disabled], .card--atelier[disabled], .card--store[disabled], .card--store-locator[disabled], .card--store-locator .btn--discover[disabled], .section--store-locator .btn--more[disabled], .card--dealer[disabled], .section--dealers .btn--more[disabled], .card--contact[disabled], .card--contact .card__link[disabled], .section--table .btn--more[disabled], .modal--careers .btn--close[disabled], .modal--careers .btn--link[disabled], .modal--materials .btn--close[disabled],
   .modal--materials .btn--prev[disabled],
   .modal--materials .btn--next[disabled], .modal--user .btn--close[disabled],
   .section--auth .btn--close[disabled], .modal--user .btn--link[disabled],
@@ -3586,10 +3618,11 @@ h6 {
     pointer-events: none; }
 
 .group--form--checkbox label > span > a, .group--form--privacy label > span > a, .modal--generic a,
-.modal--generic .btn--link, .section--text .btn--link,
+.modal--generic .btn--link, .card--hero-products-detail .btn--link, .section--text .btn--link,
 .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
 .card--store-locator .card__fax,
-.card--store-locator .card__email, .card--dealer .card__phone,
+.card--store-locator .card__email,
+.card--store-locator .card__website, .card--dealer .card__phone,
 .card--dealer .card__fax,
 .card--dealer .card__email, .card--contact .card__phone,
 .card--contact .card__fax,
@@ -3598,10 +3631,11 @@ h6 {
 .card--address .card__email {
   position: relative; }
   .group--form--checkbox label > span > a:after, .group--form--privacy label > span > a:after, .modal--generic a:after,
-  .modal--generic .btn--link:after, .section--text .btn--link:after,
+  .modal--generic .btn--link:after, .card--hero-products-detail .btn--link:after, .section--text .btn--link:after,
   .section--text a:after, .group--address .address__text a:after, .card--store-locator .card__phone:after,
   .card--store-locator .card__fax:after,
-  .card--store-locator .card__email:after, .card--dealer .card__phone:after,
+  .card--store-locator .card__email:after,
+  .card--store-locator .card__website:after, .card--dealer .card__phone:after,
   .card--dealer .card__fax:after,
   .card--dealer .card__email:after, .card--contact .card__phone:after,
   .card--contact .card__fax:after,
@@ -3617,58 +3651,63 @@ h6 {
     background: currentColor;
     transform-origin: left;
     transition: transform cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
-  .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg {
+  .group--form--checkbox label > span > a svg, .group--form--privacy label > span > a svg, .modal--generic a svg, .modal--generic .btn--link svg, .card--hero-products-detail .btn--link svg, .section--text .btn--link svg, .section--text a svg, .group--address .address__text a svg, .card--store-locator .card__phone svg, .card--store-locator .card__fax svg, .card--store-locator .card__email svg, .card--store-locator .card__website svg, .card--dealer .card__phone svg, .card--dealer .card__fax svg, .card--dealer .card__email svg, .card--contact .card__phone svg, .card--contact .card__fax svg, .card--contact .card__email svg, .section--user-detail .btn--link svg, .card--address .card__phone svg, .card--address .card__fax svg, .card--address .card__email svg {
     width: 24px;
     height: 24px;
     margin-left: -10px;
     margin-right: 10px; }
-  .group--form--checkbox label > span > a span, .group--form--privacy label > span > a span, .modal--generic a span, .modal--generic .btn--link span, .section--text .btn--link span, .section--text a span, .group--address .address__text a span, .card--store-locator .card__phone span, .card--store-locator .card__fax span, .card--store-locator .card__email span, .card--dealer .card__phone span, .card--dealer .card__fax span, .card--dealer .card__email span, .card--contact .card__phone span, .card--contact .card__fax span, .card--contact .card__email span, .section--user-detail .btn--link span, .card--address .card__phone span, .card--address .card__fax span, .card--address .card__email span {
+  .group--form--checkbox label > span > a span, .group--form--privacy label > span > a span, .modal--generic a span, .modal--generic .btn--link span, .card--hero-products-detail .btn--link span, .section--text .btn--link span, .section--text a span, .group--address .address__text a span, .card--store-locator .card__phone span, .card--store-locator .card__fax span, .card--store-locator .card__email span, .card--store-locator .card__website span, .card--dealer .card__phone span, .card--dealer .card__fax span, .card--dealer .card__email span, .card--contact .card__phone span, .card--contact .card__fax span, .card--contact .card__email span, .section--user-detail .btn--link span, .card--address .card__phone span, .card--address .card__fax span, .card--address .card__email span {
     display: block; }
   .group--form--checkbox label > span > a, .group--form--privacy label > span > a, .modal--generic a,
-  .modal--generic .btn--link, .section--text .btn--link,
+  .modal--generic .btn--link, .card--hero-products-detail .btn--link, .section--text .btn--link,
   .section--text a, .group--address .address__text a, .card--store-locator .card__phone,
   .card--store-locator .card__fax,
-  .card--store-locator .card__email, .card--dealer .card__phone,
+  .card--store-locator .card__email,
+  .card--store-locator .card__website, .card--dealer .card__phone,
   .card--dealer .card__fax,
   .card--dealer .card__email, .card--contact .card__phone,
   .card--contact .card__fax,
   .card--contact .card__email, .section--user-detail .btn--link, .card--address .card__phone,
   .card--address .card__fax,
   .card--address .card__email, .group--form--checkbox label > span > a:active, .group--form--privacy label > span > a:active, .modal--generic a:active,
-  .modal--generic .btn--link:active, .section--text .btn--link:active,
+  .modal--generic .btn--link:active, .card--hero-products-detail .btn--link:active, .section--text .btn--link:active,
   .section--text a:active, .group--address .address__text a:active, .card--store-locator .card__phone:active,
   .card--store-locator .card__fax:active,
-  .card--store-locator .card__email:active, .card--dealer .card__phone:active,
+  .card--store-locator .card__email:active,
+  .card--store-locator .card__website:active, .card--dealer .card__phone:active,
   .card--dealer .card__fax:active,
   .card--dealer .card__email:active, .card--contact .card__phone:active,
   .card--contact .card__fax:active,
   .card--contact .card__email:active, .section--user-detail .btn--link:active, .card--address .card__phone:active,
   .card--address .card__fax:active,
   .card--address .card__email:active, .group--form--checkbox label > span > a:focus, .group--form--privacy label > span > a:focus, .modal--generic a:focus,
-  .modal--generic .btn--link:focus, .section--text .btn--link:focus,
+  .modal--generic .btn--link:focus, .card--hero-products-detail .btn--link:focus, .section--text .btn--link:focus,
   .section--text a:focus, .group--address .address__text a:focus, .card--store-locator .card__phone:focus,
   .card--store-locator .card__fax:focus,
-  .card--store-locator .card__email:focus, .card--dealer .card__phone:focus,
+  .card--store-locator .card__email:focus,
+  .card--store-locator .card__website:focus, .card--dealer .card__phone:focus,
   .card--dealer .card__fax:focus,
   .card--dealer .card__email:focus, .card--contact .card__phone:focus,
   .card--contact .card__fax:focus,
   .card--contact .card__email:focus, .section--user-detail .btn--link:focus, .card--address .card__phone:focus,
   .card--address .card__fax:focus,
   .card--address .card__email:focus, .group--form--checkbox label > span > a:hover, .group--form--privacy label > span > a:hover, .modal--generic a:hover,
-  .modal--generic .btn--link:hover, .section--text .btn--link:hover,
+  .modal--generic .btn--link:hover, .card--hero-products-detail .btn--link:hover, .section--text .btn--link:hover,
   .section--text a:hover, .group--address .address__text a:hover, .card--store-locator .card__phone:hover,
   .card--store-locator .card__fax:hover,
-  .card--store-locator .card__email:hover, .card--dealer .card__phone:hover,
+  .card--store-locator .card__email:hover,
+  .card--store-locator .card__website:hover, .card--dealer .card__phone:hover,
   .card--dealer .card__fax:hover,
   .card--dealer .card__email:hover, .card--contact .card__phone:hover,
   .card--contact .card__fax:hover,
   .card--contact .card__email:hover, .section--user-detail .btn--link:hover, .card--address .card__phone:hover,
   .card--address .card__fax:hover,
   .card--address .card__email:hover, .group--form--checkbox label > span > a:visited, .group--form--privacy label > span > a:visited, .modal--generic a:visited,
-  .modal--generic .btn--link:visited, .section--text .btn--link:visited,
+  .modal--generic .btn--link:visited, .card--hero-products-detail .btn--link:visited, .section--text .btn--link:visited,
   .section--text a:visited, .group--address .address__text a:visited, .card--store-locator .card__phone:visited,
   .card--store-locator .card__fax:visited,
-  .card--store-locator .card__email:visited, .card--dealer .card__phone:visited,
+  .card--store-locator .card__email:visited,
+  .card--store-locator .card__website:visited, .card--dealer .card__phone:visited,
   .card--dealer .card__fax:visited,
   .card--dealer .card__email:visited, .card--contact .card__phone:visited,
   .card--contact .card__fax:visited,
@@ -3677,10 +3716,11 @@ h6 {
   .card--address .card__email:visited {
     color: inherit; }
   .group--form--checkbox label > span > a:hover:after, .group--form--privacy label > span > a:hover:after, .modal--generic a:hover:after,
-  .modal--generic .btn--link:hover:after, .section--text .btn--link:hover:after,
+  .modal--generic .btn--link:hover:after, .card--hero-products-detail .btn--link:hover:after, .section--text .btn--link:hover:after,
   .section--text a:hover:after, .group--address .address__text a:hover:after, .card--store-locator .card__phone:hover:after,
   .card--store-locator .card__fax:hover:after,
-  .card--store-locator .card__email:hover:after, .card--dealer .card__phone:hover:after,
+  .card--store-locator .card__email:hover:after,
+  .card--store-locator .card__website:hover:after, .card--dealer .card__phone:hover:after,
   .card--dealer .card__fax:hover:after,
   .card--dealer .card__email:hover:after, .card--contact .card__phone:hover:after,
   .card--contact .card__fax:hover:after,
@@ -4329,7 +4369,7 @@ h6 {
 ::-webkit-file-upload-button {
   cursor: pointer; }
 
-.group--form label, .group--form--textarea label, .group--form--checkbox label, .group--form--privacy label, .group--form--file label, .group--form--select label, .required .required__badge {
+.group--form label, .group--form--textarea label, .group--form--checkbox label, .group--form--privacy label, .group--form--file label, .group--form--select label, .group--form--autocomplete label, .required .required__badge {
   display: block;
   flex: 0 0 100%;
   font-family: var(--font-primary);
@@ -4346,24 +4386,24 @@ h6 {
 .control--text::placeholder, .control--select::placeholder, .control--custom-select::placeholder, .group--controls .controls__email [control-email] .control--text::placeholder {
   color: var(--foreground-tertiary); }
 
-.group--filters .filters__select .control--custom-select:-ms-input-placeholder, .group--filters .filters__search [control-search] .control--text:-ms-input-placeholder, .section--form-negative .control--text:-ms-input-placeholder {
+.group--filters .filters__select .control--custom-select:-ms-input-placeholder, .group--filters .filters__search [control-search] .control--text:-ms-input-placeholder, .group--filters .filters__autocomplete [control-autocomplete] .control--text:-ms-input-placeholder, .section--form-negative .control--text:-ms-input-placeholder {
   color: var(--foreground-secondary); }
 
-.group--filters .filters__select .control--custom-select::placeholder, .group--filters .filters__search [control-search] .control--text::placeholder, .section--form-negative .control--text::placeholder {
+.group--filters .filters__select .control--custom-select::placeholder, .group--filters .filters__search [control-search] .control--text::placeholder, .group--filters .filters__autocomplete [control-autocomplete] .control--text::placeholder, .section--form-negative .control--text::placeholder {
   color: var(--foreground-secondary); }
 
-.group--form, .group--form--textarea, .group--form--checkbox, .group--form--privacy, .group--form--file, .group--form--select {
+.group--form, .group--form--textarea, .group--form--checkbox, .group--form--privacy, .group--form--file, .group--form--select, .group--form--autocomplete {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   padding: 10px 0;
   border-bottom: 2px solid var(--background-tertiary); }
   @media (max-width: 767.98px) {
-    .group--form, .group--form--textarea, .group--form--checkbox, .group--form--privacy, .group--form--file, .group--form--select {
+    .group--form, .group--form--textarea, .group--form--checkbox, .group--form--privacy, .group--form--file, .group--form--select, .group--form--autocomplete {
       margin-bottom: 10px; } }
-  .group--form:not(.required) .required__sign, .group--form--textarea:not(.required) .required__sign, .group--form--checkbox:not(.required) .required__sign, .group--form--privacy:not(.required) .required__sign, .group--form--file:not(.required) .required__sign, .group--form--select:not(.required) .required__sign {
+  .group--form:not(.required) .required__sign, .group--form--textarea:not(.required) .required__sign, .group--form--checkbox:not(.required) .required__sign, .group--form--privacy:not(.required) .required__sign, .group--form--file:not(.required) .required__sign, .group--form--select:not(.required) .required__sign, .group--form--autocomplete:not(.required) .required__sign {
     display: none; }
-  .required.group--form .required__badge, .required.group--form--textarea .required__badge, .required.group--form--checkbox .required__badge, .required.group--form--privacy .required__badge, .required.group--form--file .required__badge, .required.group--form--select .required__badge {
+  .required.group--form .required__badge, .required.group--form--textarea .required__badge, .required.group--form--checkbox .required__badge, .required.group--form--privacy .required__badge, .required.group--form--file .required__badge, .required.group--form--select .required__badge, .required.group--form--autocomplete .required__badge {
     top: 13px;
     right: 1px;
     width: 4px;
@@ -4373,9 +4413,9 @@ h6 {
     line-height: 0;
     font-size: 0;
     transform: rotateZ(45deg); }
-  .invalid.touched .group--form .required__sign, .invalid.touched .group--form--textarea .required__sign, .invalid.touched .group--form--checkbox .required__sign, .invalid.touched .group--form--privacy .required__sign, .invalid.touched .group--form--file .required__sign, .invalid.touched .group--form--select .required__sign {
+  .invalid.touched .group--form .required__sign, .invalid.touched .group--form--textarea .required__sign, .invalid.touched .group--form--checkbox .required__sign, .invalid.touched .group--form--privacy .required__sign, .invalid.touched .group--form--file .required__sign, .invalid.touched .group--form--select .required__sign, .invalid.touched .group--form--autocomplete .required__sign {
     color: var(--foreground-primary); }
-  .invalid.touched .group--form .required__badge, .invalid.touched .group--form--textarea .required__badge, .invalid.touched .group--form--checkbox .required__badge, .invalid.touched .group--form--privacy .required__badge, .invalid.touched .group--form--file .required__badge, .invalid.touched .group--form--select .required__badge {
+  .invalid.touched .group--form .required__badge, .invalid.touched .group--form--textarea .required__badge, .invalid.touched .group--form--checkbox .required__badge, .invalid.touched .group--form--privacy .required__badge, .invalid.touched .group--form--file .required__badge, .invalid.touched .group--form--select .required__badge, .invalid.touched .group--form--autocomplete .required__badge {
     background: var(--background-primary);
     color: var(--foreground-secondary); }
 
@@ -4442,7 +4482,7 @@ h6 {
   .invalid.control--text:not(.pristine), .invalid.control--select:not(.pristine), .invalid.control--custom-select:not(.pristine), .group--controls .controls__email [control-email] .invalid.control--text:not(.pristine) {
     color: var(--foreground-primary); }
 
-.group--filters .filters__select .control--custom-select, .group--filters .filters__search [control-search] .control--text {
+.group--filters .filters__select .control--custom-select, .group--filters .filters__search [control-search] .control--text, .group--filters .filters__autocomplete [control-autocomplete] .control--text {
   background: transparent;
   color: var(--foreground-negative);
   border: 0px solid transparent;
@@ -4465,7 +4505,7 @@ h6 {
   letter-spacing: 0.05em;
   line-height: 1.5;
   text-transform: uppercase; }
-  .group--filters .filters__select .control--custom-select:-webkit-autofill, .group--filters .filters__search [control-search] .control--text:-webkit-autofill, .group--filters .filters__select .control--custom-select:-webkit-autofill:hover, .group--filters .filters__search [control-search] .control--text:-webkit-autofill:hover, .group--filters .filters__select .control--custom-select:-webkit-autofill:focus, .group--filters .filters__search [control-search] .control--text:-webkit-autofill:focus {
+  .group--filters .filters__select .control--custom-select:-webkit-autofill, .group--filters .filters__search [control-search] .control--text:-webkit-autofill, .group--filters .filters__autocomplete [control-autocomplete] .control--text:-webkit-autofill, .group--filters .filters__select .control--custom-select:-webkit-autofill:hover, .group--filters .filters__search [control-search] .control--text:-webkit-autofill:hover, .group--filters .filters__autocomplete [control-autocomplete] .control--text:-webkit-autofill:hover, .group--filters .filters__select .control--custom-select:-webkit-autofill:focus, .group--filters .filters__search [control-search] .control--text:-webkit-autofill:focus, .group--filters .filters__autocomplete [control-autocomplete] .control--text:-webkit-autofill:focus {
     background: transparent;
     color: var(--foreground-negative);
     border: 0px solid transparent;
@@ -4480,30 +4520,30 @@ h6 {
     box-shadow: 0 0 0px 1000px transparent inset;
     -webkit-transition: background-color 5000s ease-in-out 0s;
     transition: background-color 5000s ease-in-out 0s; }
-  .group--filters .filters__select .control--custom-select:-ms-input-placeholder, .group--filters .filters__search [control-search] .control--text:-ms-input-placeholder {
+  .group--filters .filters__select .control--custom-select:-ms-input-placeholder, .group--filters .filters__search [control-search] .control--text:-ms-input-placeholder, .group--filters .filters__autocomplete [control-autocomplete] .control--text:-ms-input-placeholder {
     font-family: var(--font-primary);
     font-size: 16px;
     font-weight: normal;
     letter-spacing: 0.05em;
     line-height: 3;
     text-transform: none; }
-  .group--filters .filters__select .control--custom-select::placeholder, .group--filters .filters__search [control-search] .control--text::placeholder {
+  .group--filters .filters__select .control--custom-select::placeholder, .group--filters .filters__search [control-search] .control--text::placeholder, .group--filters .filters__autocomplete [control-autocomplete] .control--text::placeholder {
     font-family: var(--font-primary);
     font-size: 16px;
     font-weight: normal;
     letter-spacing: 0.05em;
     line-height: 3;
     text-transform: none; }
-  .group--filters .filters__select .pristine.control--custom-select, .group--filters .filters__search [control-search] .pristine.control--text {
+  .group--filters .filters__select .pristine.control--custom-select, .group--filters .filters__search [control-search] .pristine.control--text, .group--filters .filters__autocomplete [control-autocomplete] .pristine.control--text {
     color: var(--foreground-negative); }
-  .group--filters .filters__select .dirty.control--custom-select, .group--filters .filters__search [control-search] .dirty.control--text {
+  .group--filters .filters__select .dirty.control--custom-select, .group--filters .filters__search [control-search] .dirty.control--text, .group--filters .filters__autocomplete [control-autocomplete] .dirty.control--text {
     color: var(--foreground-negative); }
-  .group--filters .filters__select .touched.control--custom-select, .group--filters .filters__search [control-search] .touched.control--text {
+  .group--filters .filters__select .touched.control--custom-select, .group--filters .filters__search [control-search] .touched.control--text, .group--filters .filters__autocomplete [control-autocomplete] .touched.control--text {
     color: var(--foreground-negative); }
-  .group--filters .filters__select .valid.control--custom-select, .group--filters .filters__search [control-search] .valid.control--text {
+  .group--filters .filters__select .valid.control--custom-select, .group--filters .filters__search [control-search] .valid.control--text, .group--filters .filters__autocomplete [control-autocomplete] .valid.control--text {
     border-color: var(--foreground-negative);
     color: var(--foreground-negative); }
-  .group--filters .filters__select .invalid.control--custom-select:not(.pristine), .group--filters .filters__search [control-search] .invalid.control--text:not(.pristine) {
+  .group--filters .filters__select .invalid.control--custom-select:not(.pristine), .group--filters .filters__search [control-search] .invalid.control--text:not(.pristine), .group--filters .filters__autocomplete [control-autocomplete] .invalid.control--text:not(.pristine) {
     color: var(--foreground-primary); }
 
 .form .title {
@@ -5126,6 +5166,52 @@ test-component code {
     display: block;
     visibility: hidden;
     pointer-events: none; }
+
+.group--form--autocomplete {
+  position: relative;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 10px 20px;
+  color: var(--foreground-negative);
+  cursor: pointer; }
+  @media (max-width: 767.98px) {
+    .group--form--autocomplete {
+      margin: 0 0 10px 0; } }
+
+[control-autocomplete] {
+  position: relative; }
+  [control-autocomplete] .group--form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  [control-autocomplete] .dropdown {
+    top: 100%;
+    width: 100%;
+    left: 0;
+    border-radius: 0; }
+  [control-autocomplete].hidden {
+    display: block;
+    visibility: hidden;
+    pointer-events: none; }
+  [control-autocomplete] .btn--reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 5px;
+    opacity: 0.5; }
+    [control-autocomplete] .btn--reset svg {
+      width: 10px;
+      height: 10px;
+      fill: currentColor; }
+    [control-autocomplete] .btn--reset:hover {
+      opacity: 1; }
 
 .header {
   position: sticky;
@@ -6225,6 +6311,10 @@ test-component code {
   .group--filters .filters__search [control-search] {
     height: 100%;
     color: var(--foreground-negative); }
+    .group--filters .filters__search [control-search] label {
+      display: none; }
+    .group--filters .filters__search [control-search] input {
+      font-size: 14px; }
     .group--filters .filters__search [control-search] .group--form {
       display: flex;
       align-items: center;
@@ -6237,8 +6327,56 @@ test-component code {
         height: 24px;
         margin-right: 20px; }
 
+.group--filters .filters__autocomplete {
+  flex: 1 1 auto;
+  border-left: 1px solid #6A6A6A;
+  display: flex;
+  align-items: center; }
+  .group--filters .filters__autocomplete [control-autocomplete] {
+    flex: 1 1 auto;
+    height: 100%;
+    color: var(--foreground-negative); }
+    .group--filters .filters__autocomplete [control-autocomplete] label {
+      display: none; }
+    .group--filters .filters__autocomplete [control-autocomplete] input {
+      font-size: 14px; }
+    .group--filters .filters__autocomplete [control-autocomplete] .group--form {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      border: none;
+      margin: 0; }
+      .group--filters .filters__autocomplete [control-autocomplete] .group--form .search {
+        width: 24px;
+        height: 24px;
+        margin-right: 20px; }
+  .group--filters .filters__autocomplete .filters__addon {
+    height: 100%; }
+  @media (max-width: 1023.98px) {
+    .group--filters .filters__autocomplete {
+      background: var(--background-negative);
+      color: var(--foreground-negative); } }
+
 .group--filters .filters__cta {
   display: none; }
+
+.group--filters .filters__addon {
+  flex: 0 1 67px;
+  border-left: 1px solid #6a6a6a; }
+  .group--filters .filters__addon .btn--geolocation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+    opacity: 0.5; }
+    .group--filters .filters__addon .btn--geolocation svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor; }
+    .group--filters .filters__addon .btn--geolocation:hover {
+      opacity: 1; }
 
 .group--filters .group--form,
 .group--filters .group--form--checkbox,
@@ -7645,7 +7783,7 @@ test-component code {
           margin-top: 30px; } }
 
 .section--insights {
-  padding: 200px 0 0 0; }
+  padding: 200px 0 200px 0; }
   .section--insights .title {
     margin-bottom: 115px;
     font-family: var(--font-secondary);
@@ -7655,9 +7793,13 @@ test-component code {
     letter-spacing: -0.008em;
     text-transform: uppercase; }
   @media (max-width: 767.98px) {
-    .section--insights .title {
-      font-size: 32px;
-      margin-bottom: 80px; } }
+    .section--insights {
+      padding: 120px 0 80px 0; }
+      .section--insights .title {
+        font-size: 32px;
+        margin-bottom: 80px; }
+      .section--insights .col-sm-4:last-child > .group--insights {
+        margin-bottom: 0; } }
 
 .group--insights {
   display: flex;
@@ -7709,6 +7851,8 @@ test-component code {
     font-size: 18px;
     letter-spacing: 0.03em;
     color: #6A6A6A; }
+  .card--hero-products-detail .btn--link {
+    font-weight: 600; }
   .card--hero-products-detail .card__cta {
     margin-top: 40px; }
   .card--hero-products-detail .card__designer {
@@ -7773,7 +7917,7 @@ test-component code {
         position: relative;
         padding: 40px 0 80px 0; }
       .card--hero-products-detail .card__title {
-        font-size: 64px; }
+        font-size: 54px; }
       .card--hero-products-detail .card__cta {
         display: flex;
         flex-direction: column;
@@ -9471,6 +9615,21 @@ test-component code {
     .section--text .group--informations ol > li:not(:last-child) {
       margin: 0 0 20px 0; }
 
+.section--text table {
+  font-size: 0.8em;
+  border: none !important; }
+  .section--text table td {
+    padding: 8px;
+    border-collapse: collapse;
+    border: none;
+    border-bottom: 1px solid black; }
+    .section--text table td, .section--text table td p {
+      text-align: left !important;
+      margin: 0 !important; }
+  .section--text table ul, .section--text table ol {
+    margin: 0;
+    padding: 0 0 0 30px; }
+
 @media (min-width: 1024px) {
   .section--text {
     padding-bottom: 140px; } }
@@ -10920,12 +11079,13 @@ test-component code {
     font-weight: 600;
     margin-bottom: 20px; }
   .card--store-locator .card__address,
-  .card--store-locator .card__city,
+  .card--store-locator .card__location,
   .card--store-locator .card__country {
     font-size: 14px; }
   .card--store-locator .card__phone,
   .card--store-locator .card__fax,
-  .card--store-locator .card__email {
+  .card--store-locator .card__email,
+  .card--store-locator .card__website {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 4px;
@@ -10977,7 +11137,9 @@ test-component code {
     border-radius: 8px; }
     @media (max-width: 767.98px) {
       .card--store-locator.store, .card--store-locator.atelier {
-        padding: 20px 30px 20px; } }
+        padding: 20px; }
+        .card--store-locator.store .card__content, .card--store-locator.atelier .card__content {
+          padding: 0; } }
 
 .section--store-locator-map {
   position: relative;
@@ -11017,7 +11179,7 @@ test-component code {
     .section--store-locator-map .map {
       position: relative;
       width: 100%;
-      padding-top: 100%;
+      padding-top: 200%;
       overflow: hidden; }
       .section--store-locator-map .map > img,
       .section--store-locator-map .map > svg,
@@ -11031,7 +11193,10 @@ test-component code {
         width: 100%;
         height: 100%;
         -o-object-fit: cover;
-           object-fit: cover; } }
+           object-fit: cover; }
+    .section--store-locator-map [role="dialog"] {
+      width: 100%;
+      max-width: 260px !important; } }
 
 .section--store-locator {
   margin-bottom: -240px;
@@ -11413,6 +11578,43 @@ test-component code {
     .card--contact .card__fax.active:after,
     .card--contact .card__email:hover:after,
     .card--contact .card__email.active:after {
+      transform: scale(1, 1); }
+  .card--contact .card__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--background-tertiary); }
+  .card--contact .card__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    transition: none; }
+    .card--contact .card__link svg {
+      width: 16px;
+      height: 16px;
+      margin: 0 10px 0 0; }
+    .card--contact .card__link span {
+      display: block;
+      position: relative; }
+    .card--contact .card__link span:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      bottom: -1px;
+      background: currentColor;
+      transform-origin: left;
+      transform: scale(0, 1);
+      transition: transform cubic-bezier(0.65, 0.05, 0.36, 1) 350ms; }
+    .card--contact .card__link, .card--contact .card__link:active, .card--contact .card__link:focus, .card--contact .card__link:hover, .card--contact .card__link:visited {
+      color: inherit; }
+    .card--contact .card__link:hover span:after, .card--contact .card__link.active span:after {
       transform: scale(1, 1); }
   .card--contact .card__note {
     font-size: 12px;
@@ -14997,6 +15199,36 @@ error-component {
         padding: 60px 0; }
         .modal--magazine-request .modal__wrapper:last-child {
           padding-bottom: 120px; } }
+
+.brand--contact {
+  display: block;
+  width: 150px;
+  margin-bottom: 20px; }
+  .brand--contact__picture {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden; }
+    .brand--contact__picture > img,
+    .brand--contact__picture > svg,
+    .brand--contact__picture > video,
+    .brand--contact__picture > canvas,
+    .brand--contact__picture > .video,
+    .brand--contact__picture > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .brand--contact__picture > img {
+      border-radius: 50%;
+      overflow: hidden; }
+
+.card--contact .group--actions {
+  margin: 10px 0 40px 0; }
 
 .section--index {
   padding: 0 0 80px 0; }

@@ -1,11 +1,13 @@
 import MarkerClusterer from '@googlemaps/markerclustererplus';
 import { Component, getContext } from 'rxcomp';
-import { first } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { filter, first, map, takeUntil } from 'rxjs/operators';
 import { GoogleMapsService } from '../../common/googlemaps/googlemaps.service';
 import { environment } from '../../environment';
 import { MAP_STYLE } from './map.style';
 
 const USE_CLUSTERER = true;
+const FIT_BOUNDS = false;
 
 export class MapComponent extends Component {
 
@@ -13,7 +15,6 @@ export class MapComponent extends Component {
 		GoogleMapsService.maps$().pipe(
 			first(),
 		).subscribe(maps => {
-
 			const google = window.google;
 			const { node } = getContext(this);
 			const center = this.center;
@@ -23,13 +24,14 @@ export class MapComponent extends Component {
 			const mapOptions = {
 				zoom: 15, // 9,
 				center: position,
-				scrollwheel: false,
+				// scrollwheel: false,
+				gestureHandling: 'cooperative',
 				// mapTypeId: google.maps.MapTypeId.ROADMAP,
 				zoomControlOptions: {
 					style: google.maps.ZoomControlStyle.DEFAULT
 				},
 				// overviewMapControl: true,
-				scaleControl: false,
+				// scaleControl: false,
 				zoomControl: true,
 				mapTypeControl: false,
 				streetViewControl: false,
@@ -40,42 +42,44 @@ export class MapComponent extends Component {
 
 			const mapElement = node.querySelector('.map');
 			const map = this.map = new google.maps.Map(mapElement, mapOptions);
+			google.maps.event.addListener(map, 'idle', () => {
+				const bounds = map.getBounds();
+				this.change.next(bounds);
+				/*
+				const ne = bounds.getNorthEast();
+				const sw = bounds.getSouthWest();
+				this.change.next([ne.lat(), ne.lng(), sw.lat(), sw.lng()]);
+				*/
+			});
 			this.addMarkers(this.items);
 			if (!this.items) {
 				map.fitBounds(this.getItalyBounds());
 			}
+			this.ready.next(this);
 		});
+		this.wheel$().pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe();
+	}
+
+	wheel$() {
+		const { node } = getContext(this);
+		const mapElement = node.querySelector('.map');
+		return fromEvent(mapElement, 'wheel').pipe(
+			map((event) => {
+				if (event.ctrlKey == true) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					return false;
+				}
+			}),
+		)
 	}
 
 	onChanges() {
 		if (this.markersDidChange()) {
 			this.clearMarkers();
 			this.addMarkers(this.items);
-		}
-	}
-
-	calculateDistance(lat1, lon1, lat2, lon2, unit) {
-		if ((lat1 == lat2) && (lon1 == lon2)) {
-			return 0;
-		} else {
-			const radlat1 = Math.PI * lat1 / 180;
-			const radlat2 = Math.PI * lat2 / 180;
-			const theta = lon1 - lon2;
-			const radtheta = Math.PI * theta / 180;
-			let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-			if (dist > 1) {
-				dist = 1;
-			}
-			dist = Math.acos(dist);
-			dist = dist * 180 / Math.PI;
-			dist = dist * 60 * 1.1515;
-			if (unit == "K") {
-				dist = dist * 1.609344;
-			}
-			if (unit == "N") {
-				dist = dist * 0.8684;
-			}
-			return dist;
 		}
 	}
 
@@ -106,13 +110,9 @@ export class MapComponent extends Component {
 		const map = this.map;
 		if (map && items) {
 			const bounds = new google.maps.LatLngBounds();
-
 			const markers = items.map((item) => {
-
 				const position = new google.maps.LatLng(item.latitude, item.longitude);
-
 				bounds.extend(position);
-
 				let content = /* html */`<div class="card--store-locator">
 					<div class="card__content">
 						<div class="card__name"><span>${item.name}</span></div>
@@ -122,9 +122,9 @@ export class MapComponent extends Component {
 						${item.phone ? `<a class="card__phone" href="tel:${item.phone}">${item.phone}</a>` : ''}
 						${item.fax ? `<a class="card__fax" href="tel:${item.fax}">${item.fax}</a>` : ''}
 						${item.email ? `<a class="card__email" href="mailto:${item.email}">${item.email}</a>` : ''}
+						${item.website ? `<a class="card__email" href="${item.website}">${item.website}</a>` : ''}
 					</div>
 				</div>`;
-
 				/*
 				`<div class="marker__content">
 					<div class="title"><span>${item.name}</span></div>
@@ -144,12 +144,10 @@ export class MapComponent extends Component {
 					</div>
 				</div>`
 				*/
-
 				const markerImage = new google.maps.MarkerImage(
 					`${environment.assets}img/maps/marker-sm.png`,
 					new google.maps.Size(24, 32),
 				);
-
 				let marker = new google.maps.Marker({
 					position: position,
 					map: USE_CLUSTERER ? null : map,
@@ -166,7 +164,6 @@ export class MapComponent extends Component {
 				item.marker = marker;
 				return marker;
 			});
-
 			if (USE_CLUSTERER) {
 				const markerCluster = new MarkerClusterer(this.map, markers, {
 					imagePath: `${environment.assets}img/maps/cluster-`,
@@ -183,26 +180,25 @@ export class MapComponent extends Component {
 				markerCluster.setStyles(styles);
 				this.markerCluster = markerCluster;
 			}
-
 			this.markers = markers;
-
-			// fix for minimum bound size
-			const boundsNE = bounds.getNorthEast();
-			const boundsSW = bounds.getSouthWest();
-			const minLatLng = 0.04;
-			const lat = Math.abs(boundsNE.lat() - boundsSW.lat());
-			const lng = Math.abs(boundsNE.lng() - boundsSW.lng());
-			if (lat < minLatLng || lng < minLatLng) {
-				// console.log(boundsNE.lat(), boundsNE.lng(), boundsSW.lat(), boundsSW.lng());
-				const dLat = (minLatLng - lat) / 2;
-				const dLng = (minLatLng - lng) / 2;
-				const extendNE = new google.maps.LatLng(boundsNE.lat() + dLat, boundsNE.lng() + dLng);
-				const extendSW = new google.maps.LatLng(boundsSW.lat() - dLat, boundsSW.lng() - dLng);
-				bounds.extend(extendNE);
-				bounds.extend(extendSW);
+			if (FIT_BOUNDS) {
+				// fix for minimum bound size
+				const boundsNE = bounds.getNorthEast();
+				const boundsSW = bounds.getSouthWest();
+				const minLatLng = 0.04;
+				const lat = Math.abs(boundsNE.lat() - boundsSW.lat());
+				const lng = Math.abs(boundsNE.lng() - boundsSW.lng());
+				if (lat < minLatLng || lng < minLatLng) {
+					// console.log(boundsNE.lat(), boundsNE.lng(), boundsSW.lat(), boundsSW.lng());
+					const dLat = (minLatLng - lat) / 2;
+					const dLng = (minLatLng - lng) / 2;
+					const extendNE = new google.maps.LatLng(boundsNE.lat() + dLat, boundsNE.lng() + dLng);
+					const extendSW = new google.maps.LatLng(boundsSW.lat() - dLat, boundsSW.lng() - dLng);
+					bounds.extend(extendNE);
+					bounds.extend(extendSW);
+				}
+				map.fitBounds(bounds);
 			}
-
-			map.fitBounds(bounds);
 		}
 	}
 
@@ -224,13 +220,11 @@ export class MapComponent extends Component {
 						});
 						this.model.city = filteredInfoCity.length ? filteredInfoCity[0].formatted_address : undefined;
 						this.model.address = results[0].formatted_address;
-
 						for (let i = 0; i < results[0].address_components.length; i++) {
 							if (results[0].address_components[i].types[0] == "country" || results[0].address_components[i].types[0] == "political") {
 								this.searchCountry = results[0].address_components[i].short_name;
 							}
 						}
-
 						this.setInfoWindow(position, 1);
 						this.searchPosition(position).finally(() => this.busyLocation = false);
 						this.map.setCenter(position);
@@ -262,34 +256,6 @@ export class MapComponent extends Component {
 		}
 	}
 
-	findNearStores(items, position) {
-		if (items) {
-			items.forEach((item) => {
-				item.distance = this.calculateDistance(item.latitude, item.longitude, position.lat(), position.lng(), 'K');
-				item.visible = (item.cod_stato == window.userCountry || !window.userCountry) && item.distance <= MAX_DISTANCE /* Km */;
-				if (item.visible) {
-					if (item.removed) {
-						this.markerCluster.addMarker(item.marker);
-					}
-					delete item.removed;
-				} else {
-					this.markerCluster.removeMarker(item.marker);
-					item.removed = true;
-				}
-			});
-			items = items.slice();
-			items.sort((a, b) => {
-				return a.distance * (a.importante ? 0.5 : 1) - b.distance * (b.importante ? 0.5 : 1);
-			});
-			const visibleStores = items.filter(item => item.visible).slice(0, 50);
-			this.$timeout(() => {
-				this.visibleStores = visibleStores;
-			}, 1);
-			// console.log('findNearStores', visibleStores);
-			return visibleStores;
-		}
-	}
-
 	panTo(item) {
 		const position = new google.maps.LatLng(item.latitude, item.longitude);
 		this.map.setZoom(ZOOM_LEVEL);
@@ -300,6 +266,10 @@ export class MapComponent extends Component {
 
 	setMarkerWindow(position, content) {
 		if (position) {
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+				this.subscription = null;
+			}
 			const markerWindow = this.markerWindow || new google.maps.InfoWindow({
 				pixelOffset: new google.maps.Size(0, -35)
 			});
@@ -307,9 +277,31 @@ export class MapComponent extends Component {
 			markerWindow.setPosition(position);
 			markerWindow.setContent(content);
 			markerWindow.open(this.map);
+			setTimeout(() => {
+				if (this.subscription) {
+					this.subscription.unsubscribe();
+					this.subscription = null;
+				}
+				this.subscription = this.clickOutside$('[role="dialog"]').subscribe(() => {
+					this.closeMarkerWindow();
+				});
+			}, 50);
 		} else {
 			this.closeMarkerWindow();
 		}
+	}
+
+	clickOutside$(clickOutsideSelector) {
+		return fromEvent(document, 'click').pipe(
+			filter(event => {
+				const target = event.target;
+				const clickOutsideTarget = document.querySelector(clickOutsideSelector);
+				const clickedInside = clickOutsideTarget.contains(target) || !document.contains(target);
+				if (!clickedInside) {
+					return true;
+				}
+			}),
+		)
 	}
 
 	closeMarkerWindow() {
@@ -336,4 +328,5 @@ export class MapComponent extends Component {
 MapComponent.meta = {
 	selector: '[map]',
 	inputs: ['center', 'items'],
+	outputs: ['ready', 'change'],
 };

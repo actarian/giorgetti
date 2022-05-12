@@ -16,15 +16,17 @@ export class CareersComponent extends Component {
 		this.error = null;
 		this.success = false;
 		this.positions = [];
+		const isItaly = RequiredIfValidator(() => Boolean(this.form.value.country === 114));
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
 			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
 			telephone: new FormControl(null),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
-			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
+			region: new FormControl(null, [isItaly]),
 			city: new FormControl(null, [Validators.RequiredValidator()]),
-			domain: new FormControl(null, [Validators.RequiredValidator()]),
+			domain: new FormControl((this.position && this.position.domain) ? this.position.domain.id : null, [Validators.RequiredValidator()]),
+			position: new FormControl(this.position ? this.position.id : null),
 			cv: new FormControl(null),
 			presentationLetter: new FormControl(null),
 			message: new FormControl(null),
@@ -95,13 +97,24 @@ export class CareersComponent extends Component {
 			form.submitted = true;
 			CareersService.submit$(form.value).pipe(
 				first(),
-			).subscribe(_ => {
-				this.success = true;
-				form.reset();
-				GtmService.push({
-					'event': "Careers",
-					'form_name': "Lavora con noi"
-				});
+			).subscribe(response => {
+				console.log('CareersComponent.submit$', response);
+				if (response.status === false) {
+					this.error = {
+						statusCode: '',
+						statusMessage: '',
+						friendlyMessage: response.html
+					};
+				} else {
+					this.success = true;
+					form.reset();
+					GtmService.push({
+						'event': "Careers",
+						'form_name': "Lavora con noi"
+					});
+				}
+				this.pushChanges();
+				LocomotiveScrollService.update();
 			}, error => {
 				console.log('CareersComponent.error', error);
 				this.error = error;

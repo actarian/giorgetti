@@ -11,6 +11,8 @@ const DIVISIONS = [
 	{ amount: Number.POSITIVE_INFINITY, name: 'years' }
 ];
 
+const useWeeks = true;
+
 export class RelativeDatePipe extends Pipe {
 
 	static transform(value, options = { numeric: 'auto' }, language = null) { // = 'en-IN'
@@ -19,6 +21,9 @@ export class RelativeDatePipe extends Pipe {
 			language = language || environment.currentLanguage;
 			const formatter = new Intl.RelativeTimeFormat(language, options);
 			let duration = (date - new Date()) / 1000;
+			if (useWeeks) {
+				return formatter.format(Math.round(duration / 60 / 60 / 24 / 7), 'weeks');
+			}
 			for (let i = 0; i <= DIVISIONS.length; i++) {
 				const division = DIVISIONS[i];
 				if (Math.abs(duration) < division.amount) {

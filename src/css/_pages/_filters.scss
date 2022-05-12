@@ -60,6 +60,14 @@
 			height: 100%;
 			color: $foreground-negative;
 
+			label {
+				display: none;
+			}
+
+			input {
+				font-size: 14px;
+			}
+
 			.group--form {
 				display: flex;
 				align-items: center;
@@ -81,8 +89,82 @@
 		}
 	}
 
+	.filters__autocomplete {
+		flex: 1 1 auto;
+		border-left: 1px solid #6A6A6A; // grigio scuro
+		display: flex;
+		align-items: center;
+
+		[control-autocomplete] {
+			flex: 1 1 auto;
+			height: 100%;
+			color: $foreground-negative;
+
+			label {
+				display: none;
+			}
+
+			input {
+				font-size: 14px;
+			}
+
+			.group--form {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 100%;
+				border: none;
+				margin: 0;
+
+				.search {
+					width: 24px;
+					height: 24px;
+					margin-right: 20px;
+				}
+			}
+
+			.control--text {
+				@extend %control--text-negative;
+			}
+		}
+
+		.filters__addon {
+			height: 100%;
+		}
+
+		@include media-down(sm) {
+			background: $background-negative;
+			color: $foreground-negative;
+		}
+	}
+
 	.filters__cta {
 		display: none;
+	}
+
+	.filters__addon {
+		flex: 0 1 67px;
+		border-left: 1px solid #6a6a6a;
+
+		.btn--geolocation {
+			@extend %btn;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			padding: 0 20px;
+			opacity: 0.5;
+
+			svg {
+				width: 24px;
+				height: 24px;
+				fill: currentColor;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 
 	.group--form,

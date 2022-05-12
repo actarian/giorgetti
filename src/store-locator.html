@@ -37,7 +37,7 @@
 		<div class="container">
 			<form class="form" [formGroup]="form" (submit)="onSearch($event)" name="form" role="form" novalidate autocomplete="off">
 				<div class="group--filters">
-					<div class="filters__select" name="Paese" [filter]="filters.country" [filters]="filters" (change)="onFilterDidChange()"></div>
+					<div class="filters__select" name="Paese" [filter]="filters.country" [filters]="filters" (change)="onFilterDidChange()" *if="filters.country"></div>
 					<div class="filters__select" name="Tipologia" [filter]="filters.category" [filters]="filters" (change)="onFilterDidChange()"></div>
 					<!--
 					<div class="filters__select">
@@ -46,24 +46,27 @@
 					<div class="filters__select">
 						<div control-custom-select [control]="controls.category" label="Tipologia" select="Tipologia"></div>
 					</div>
-					-->
-					<div class="filters__search">
-						<div control-search [control]="controls.search" label="Cerca"></div>
-					</div>
 					<div class="filters__cta">
 						<button type="submit" class="btn--submit">Cerca</button>
+					</div>
+					-->
+					<div class="filters__autocomplete">
+						<div control-autocomplete [control]="autocomplete" [source]="autocompleteSource$" label="Cerca"></div>
+						<div class="filters__addon" *if="hasGeolocation()">
+							<button type="button" class="btn--geolocation" (click)="onGeolocation($event)"><svg class="geolocation"><use xlink:href="#geolocation"></use></svg></button>
+						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 
-	<div class="section--store-locator-map" map [items]="filteredItems">
+	<div class="section--store-locator-map" map [items]="filteredItems" (ready)="onMapReady($event)" (change)="onMapDidChange($event)">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<!-- Google Maps -->
-					<div class="map expand--left"></div>
+					<div class="map"></div>
 				</div>
 			</div>
 		</div>
@@ -80,13 +83,18 @@
 						<div class="card__content">
 							<div class="card__name" [innerHTML]="item.name"></div>
 							<div class="card__address" [innerHTML]="item.address"></div>
-							<div class="card__city" [innerHTML]="item.city"></div>
+							<div class="card__location">
+								<span class="card__zipcode" [innerHTML]="item.zipCode" *if="item.zipCode"></span>
+								<span class="card__city" [innerHTML]="item.city" *if="item.city"></span>
+								<span class="card__province" [innerHTML]="item.province" *if="item.province"></span>
+							</div>
 							<div class="card__country" [innerHTML]="item.country.name"></div>
 							<div class="card__phones" *if="item.phone || item.fax">
 								<a class="card__phone" [href]="'tel:' + item.phone" [innerHTML]="item.phone" *if="item.phone"></a>
 								<a class="card__fax" [href]="'tel:' + item.fax" [innerHTML]="item.fax" *if="item.fax"></a>
 							</div>
 							<a class="card__email" [href]="'mailto:' + item.email" [innerHTML]="item.email" *if="item.email"></a>
+							<a class="card__website" [href]="item.website" [innerHTML]="item.website" *if="false && item.website"></a>
 							<div class="card__cta" *if="item.related">
 								<a [href]="item.related.url" class="btn--discover">Scopri</a>
 							</div>

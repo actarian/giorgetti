@@ -15,6 +15,7 @@ export class NewsletterComponent extends Component {
 		this.success = false;
 		const email = LocationService.deserialize('email');
 		// console.log('NewsletterComponent', email);
+		const isItaly = RequiredIfValidator(() => Boolean(this.form.value.country === 114));
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
@@ -22,7 +23,7 @@ export class NewsletterComponent extends Component {
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
 			telephone: new FormControl(null),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
-			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
+			region: new FormControl(null, [isItaly]),
 			city: new FormControl(null, [Validators.RequiredValidator()]),
 			engagement: new FormControl(null),
 			newsletter: new FormControl(null, [Validators.RequiredTrueValidator()]),

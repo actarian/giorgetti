@@ -1,4 +1,4 @@
-import { merge } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { LocationService } from '../location/location.service';
 import { FilterItem } from './filter-item';
@@ -16,6 +16,7 @@ export class FilterService {
 				filters[key] = filter;
 			});
 		}
+		this.filter$ = new Subject();
 		this.filters = filters;
 		this.deserialize(this.filters, initialParams);
 	}
@@ -70,7 +71,7 @@ export class FilterService {
 	items$(items) {
 		const filters = this.filters;
 		const changes = Object.keys(filters).map(key => filters[key].change$);
-		return merge(...changes).pipe(
+		return merge(...changes, this.filter$).pipe(
 			// tap(() => console.log(filters)),
 			tap(() => this.serialize(filters)),
 			map(() => this.filterItems(items)),

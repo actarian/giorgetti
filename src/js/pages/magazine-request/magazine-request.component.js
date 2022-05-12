@@ -13,6 +13,8 @@ export class MagazineRequestComponent extends Component {
 		this.response = null;
 		this.error = null;
 		this.success = false;
+		const isItaly = RequiredIfValidator(() => Boolean(this.form.value.country === 114));
+		const hasPrintedCopy = RequiredIfValidator(() => Boolean(this.form.value.printedCopy));
 		const form = this.form = new FormGroup({
 			magazine: new FormControl(null, [Validators.RequiredValidator()]),
 			//
@@ -22,15 +24,15 @@ export class MagazineRequestComponent extends Component {
 			telephone: new FormControl(null),
 			occupation: new FormControl(null, [Validators.RequiredValidator()]),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
-			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
+			region: new FormControl(null, [isItaly]),
 			//
 			printedCopy: new FormControl(null),
 			//
-			city: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-			province: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-			zipCode: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-			address: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-			streetNumber: new FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+			city: new FormControl(null, [hasPrintedCopy]),
+			province: new FormControl(null, [hasPrintedCopy]),
+			zipCode: new FormControl(null, [hasPrintedCopy]),
+			address: new FormControl(null, [hasPrintedCopy]),
+			streetNumber: new FormControl(null, [hasPrintedCopy]),
 			//
 			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
 			newsletter: new FormControl(null, [Validators.RequiredValidator()]),
@@ -59,6 +61,7 @@ export class MagazineRequestComponent extends Component {
 				controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
 				controls.country.options = FormService.toSelectOptions(data.country.options);
 				controls.region.options = FormService.toSelectOptions(data.region.options);
+				controls.province.options = FormService.toSelectOptions(data.province.options);
 				this.pushChanges();
 			})
 		);
@@ -122,6 +125,11 @@ export class MagazineRequestComponent extends Component {
 		} else {
 			form.touched = true;
 		}
+	}
+
+	onCountryDidChange() {
+		console.log('MagazineRequestComponent.onCountryDidChange');
+		this.controls.province.value = null;
 	}
 
 }

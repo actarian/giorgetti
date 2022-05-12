@@ -22,18 +22,34 @@ export class ProductsConfigureComponent extends Component {
 	}
 
 	get currentMarket() {
-		const currentMarket = environment.currentMarket.toLowerCase();
-		const userMarket = environment.userMarket.toLowerCase();
-		if (userMarket !== currentMarket) {
-			return 'xx';
-		} else {
-			return currentMarket;
+		let currentMarket = environment.currentMarket.toLowerCase();
+		switch (currentMarket) {
+			case 'cn':
+				currentMarket = currentMarket;
+				break;
+			default:
+				const userMarket = environment.userMarket.toLowerCase();
+				if (userMarket !== currentMarket) {
+					currentMarket = 'xx';
+				}
 		}
+		return currentMarket;
+	}
+
+	get currentLanguage() {
+		let currentLanguage = environment.currentLanguage.toLowerCase();
+		switch (currentLanguage) {
+			case 'zh':
+				currentLanguage = 'en';
+				break;
+		}
+		return currentLanguage;
 	}
 
 	get showefyUrl() {
+		// console.log('ProductsConfigureComponent.showefyUrl', 'currentLanguage', this.currentLanguage, 'currentMarket', this.currentMarket, 'priceListByMarket', this.priceListByMarket, environment);
 		if (this.product) {
-			return `https://www.showefy.com/showroom/giorgetti/?l=${environment.currentLanguage}&c=${this.currentMarket}&list=${this.priceListByMarket}&codprod=${this.product.code}${this.product.familyCode ? `&codfam=${this.product.familyCode}` : ''}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
+			return `https://www.showefy.com/showroom/giorgetti/?l=${this.currentLanguage}&c=${this.currentMarket}&list=${this.priceListByMarket}&codprod=${this.product.code}${this.product.familyCode ? `&codfam=${this.product.familyCode}` : ''}&autoEnter=1${this.sl ? `&ext&sl=${this.sl}` : ''}`;
 		}
 	}
 

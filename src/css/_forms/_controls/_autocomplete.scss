@@ -1,0 +1,63 @@
+.group--form--autocomplete {
+	@extend %group--form;
+	position: relative;
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 100%;
+	padding: 10px 20px;
+	color: var(--foreground-negative);
+	cursor: pointer;
+
+	@include media-down(xs) {
+		margin: 0 0 10px 0;
+	}
+}
+
+[control-autocomplete] {
+	position: relative;
+
+	.group--form {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.dropdown {
+		top: 100%;
+		width: 100%;
+		left: 0;
+		border-radius: 0;
+	}
+
+	&.hidden {
+		display: block;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	.btn--reset {
+		@extend %btn;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		padding: 0 5px;
+		opacity: 0.5;
+
+		svg {
+			width: 10px;
+			height: 10px;
+			fill: currentColor;
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}

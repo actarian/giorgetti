@@ -1,0 +1,23 @@
+.section--business-card {}
+
+.brand--contact {
+	display: block;
+	width: 150px;
+	margin-bottom: 20px;
+
+	&__picture {
+		display: block;
+		@include aspect-clip(1, 1);
+
+		&>img {
+			border-radius: 50%;
+			overflow: hidden;
+		}
+	}
+}
+
+.card--contact {
+	.group--actions {
+		margin: 10px 0 40px 0;
+	}
+}

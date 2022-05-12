@@ -1,4 +1,5 @@
 import { Module } from 'rxcomp';
+import { ControlAutocompleteComponent } from './control-autocomplete.component';
 import { ControlCheckboxComponent } from './control-checkbox.component';
 import { ControlCustomSelectComponent } from './control-custom-select.component';
 import { ControlEmailComponent } from './control-email.component';
@@ -12,6 +13,7 @@ import { ErrorsComponent } from './errors.component';
 import { TestComponent } from './test.component';
 
 const factories = [
+	ControlAutocompleteComponent,
 	ControlCheckboxComponent,
 	ControlCustomSelectComponent,
 	ControlEmailComponent,

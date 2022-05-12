@@ -12,6 +12,7 @@ export const environmentServed = {
 	languages: ['it', 'en', 'de', 'ch'],
 	defaultLanguage: 'it',
 	currentLanguage: 'it',
+	detectedCountry: 'Italia',
 	api: '/api',
 	assets: '/Client/docs/',
 	slug: {

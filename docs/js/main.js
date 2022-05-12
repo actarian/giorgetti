@@ -179,6 +179,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   languages: ['it', 'en', 'de', 'ch'],
   defaultLanguage: 'it',
   currentLanguage: 'it',
+  detectedCountry: 'Italia',
   api: '/api',
   assets: '/Client/docs/',
   slug: {
@@ -239,6 +240,7 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
   languages: ['it', 'en', 'de', 'ch'],
   defaultLanguage: 'it',
   currentLanguage: 'it',
+  detectedCountry: 'Italia',
   api: '/giorgetti/api',
   assets: '/giorgetti/',
   slug: {
@@ -382,8 +384,11 @@ var defaultOptions = {
 var environmentOptions = window.STATIC ? environmentStatic : environmentServed;
 var options = Object.assign(defaultOptions, environmentOptions);
 options = Utils.merge(options, window.environment);
-var environment = new Environment(options); // console.log('environment', environment);
-var HttpService = /*#__PURE__*/function () {
+var environment = new Environment(options);
+
+if (window.STATIC) {
+  console.log('environment', environment);
+}var HttpService = /*#__PURE__*/function () {
   function HttpService() {}
 
   HttpService.http$ = function http$(method, url, data, format, userPass, options) {
@@ -2981,29 +2986,7 @@ NameDirective.meta = {
 }(rxcomp.Pipe);
 NumberPipe.meta = {
   name: 'number'
-};var DIVISIONS = [{
-  amount: 60,
-  name: 'seconds'
-}, {
-  amount: 60,
-  name: 'minutes'
-}, {
-  amount: 24,
-  name: 'hours'
-}, {
-  amount: 7,
-  name: 'days'
-}, {
-  amount: 4.34524,
-  name: 'weeks'
-}, {
-  amount: 12,
-  name: 'months'
-}, {
-  amount: Number.POSITIVE_INFINITY,
-  name: 'years'
-}];
-var RelativeDatePipe = /*#__PURE__*/function (_Pipe) {
+};var RelativeDatePipe = /*#__PURE__*/function (_Pipe) {
   _inheritsLoose(RelativeDatePipe, _Pipe);
 
   function RelativeDatePipe() {
@@ -3029,14 +3012,8 @@ var RelativeDatePipe = /*#__PURE__*/function (_Pipe) {
       var formatter = new Intl.RelativeTimeFormat(language, options);
       var duration = (date - new Date()) / 1000;
 
-      for (var i = 0; i <= DIVISIONS.length; i++) {
-        var division = DIVISIONS[i];
-
-        if (Math.abs(duration) < division.amount) {
-          return formatter.format(Math.round(duration), division.name);
-        }
-
-        duration /= division.amount;
+      {
+        return formatter.format(Math.round(duration / 60 / 60 / 24 / 7), 'weeks');
       }
     }
   };
@@ -3822,6 +3799,97 @@ var ControlComponent = /*#__PURE__*/function (_Component) {
 ControlComponent.meta = {
   selector: '[control]',
   inputs: ['control']
+};var ControlAutocompleteComponent = /*#__PURE__*/function (_ControlComponent) {
+  _inheritsLoose(ControlAutocompleteComponent, _ControlComponent);
+
+  function ControlAutocompleteComponent() {
+    return _ControlComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = ControlAutocompleteComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    _ControlComponent.prototype.onInit.call(this);
+
+    var _getContext = rxcomp.getContext(this),
+        node = _getContext.node;
+
+    this.input = node.querySelector('input');
+    this.disabled = this.disabled || false;
+    this.items = [];
+    this.control.changes$.pipe(operators.tap(function (value) {
+      _this.setInputValue(value);
+    }), operators.takeUntil(this.unsubscribe$)).subscribe();
+    this.query$().pipe(operators.switchMap(function (query) {
+      if (typeof _this.source === 'function') {
+        return _this.source(query);
+      } else {
+        return rxjs.of([]);
+      }
+    }), operators.tap(function (items) {
+      _this.items = items;
+
+      _this.pushChanges();
+    }), operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.query$ = function query$() {
+    var input = this.input;
+    return rxjs.merge(rxjs.fromEvent(input, 'input'), rxjs.fromEvent(input, 'change')).pipe(operators.map(function (event) {
+      var value = input.value === '' ? null : input.value; // console.log('ControlAutocompleteComponent.query$', value);
+
+      return value;
+    }), operators.distinctUntilChanged());
+  };
+
+  _proto.setInputValue = function setInputValue(value) {
+    var input = this.input;
+    input.value = value ? value.name : null;
+  };
+
+  _proto.setOption = function setOption(item) {
+    // console.log('setOption', item);
+    var value = item.id;
+    this.control.value = item;
+    this.items = [];
+    this.pushChanges();
+    this.change.next(item);
+  };
+
+  _proto.onClick = function onClick(event) {
+    this.setInputValue(null);
+  };
+
+  _proto.onClickOutside = function onClickOutside(event) {
+    if (!this.control.value) {
+      this.setInputValue(null);
+    }
+
+    this.items = [];
+    this.pushChanges();
+  };
+
+  _proto.onReset = function onReset(event) {
+    this.control.value = null;
+    this.change.next(null);
+
+    if (this.items.length) {
+      this.items = [];
+      this.pushChanges();
+    }
+  };
+
+  return ControlAutocompleteComponent;
+}(ControlComponent);
+ControlAutocompleteComponent.meta = {
+  selector: '[control-autocomplete]',
+  outputs: ['change'],
+  inputs: ['control', 'label', 'disabled', 'source'],
+  template:
+  /* html */
+  "\n\t\t<div class=\"group--form\" [class]=\"{ required: control.validators.length, disabled: disabled }\" (click)=\"onClick($event)\">\n\t\t\t<label [labelFor]=\"uniqueId\"><span [innerHTML]=\"label\"></span> <span class=\"required__sign\">*</span></label>\n\t\t\t<input [id]=\"uniqueId\" type=\"text\" class=\"control--text\" [placeholder]=\"label\" [disabled]=\"disabled\" />\n\t\t\t<button type=\"button\" class=\"btn--reset\" (click)=\"onReset($event)\" *if=\"control.value\"><svg class=\"close-sm\"><use xlink:href=\"#close-sm\"></use></svg></button>\n\t\t\t<!-- <svg class=\"caret-down\"><use xlink:href=\"#caret-down\"></use></svg> -->\n\t\t\t<span class=\"required__badge\" [innerHTML]=\"'required' | label\"></span>\n\t\t</div>\n\t\t<errors-component [control]=\"control\"></errors-component>\n\t\t<div class=\"dropdown\" [class]=\"{ dropped: items.length }\" (clickOutside)=\"onClickOutside($event)\">\n\t\t\t<div class=\"category\" [innerHTML]=\"label\"></div>\n\t\t\t<ul class=\"nav--dropdown\">\n\t\t\t\t<li (click)=\"setOption(item)\" [class]=\"{ empty: item.id == null }\" *for=\"let item of items\">\n\t\t\t\t\t<span [innerHTML]=\"item.name | label\"></span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t"
 };var ControlCheckboxComponent = /*#__PURE__*/function (_ControlComponent) {
   _inheritsLoose(ControlCheckboxComponent, _ControlComponent);
 
@@ -4030,7 +4098,7 @@ _defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = 
   };
 
   _proto.setOption = function setOption(item) {
-    // console.log('setOption', item, this.isMultiple);
+    console.log('setOption', item, this.isMultiple);
     var value;
 
     if (this.isMultiple) {
@@ -4437,7 +4505,7 @@ TestComponent.meta = {
   template:
   /* html */
   "\n\t<div class=\"test-component\" *if=\"!('production' | flag)\">\n\t\t<div class=\"test-component__title\">development mode</div>\n\t\t<code [innerHTML]=\"form.value | json\"></code>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onTest($event)\"><span>test</span></button>\n\t\t<button type=\"button\" class=\"btn--submit\" (click)=\"onReset($event)\"><span>reset</span></button>\n\t</div>\n\t"
-};var factories$1 = [ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlFileComponent, ControlPasswordComponent, ControlPrivacyComponent, // ControlSelectComponent,
+};var factories$1 = [ControlAutocompleteComponent, ControlCheckboxComponent, ControlCustomSelectComponent, ControlEmailComponent, ControlFileComponent, ControlPasswordComponent, ControlPrivacyComponent, // ControlSelectComponent,
 ControlSearchComponent, ControlTextareaComponent, ControlTextComponent, // DisabledDirective,
 ErrorsComponent, TestComponent // ValueDirective,
 ];
@@ -4627,6 +4695,7 @@ var FilterItem = /*#__PURE__*/function () {
       });
     }
 
+    this.filter$ = new rxjs.Subject();
     this.filters = filters;
     this.deserialize(this.filters, initialParams);
   }
@@ -4695,7 +4764,7 @@ var FilterItem = /*#__PURE__*/function () {
     var changes = Object.keys(filters).map(function (key) {
       return filters[key].change$;
     });
-    return rxjs.merge.apply(void 0, changes).pipe( // tap(() => console.log(filters)),
+    return rxjs.merge.apply(void 0, changes.concat([this.filter$])).pipe( // tap(() => console.log(filters)),
     operators.tap(function () {
       return _this.serialize(filters);
     }), operators.map(function () {
@@ -4820,6 +4889,7 @@ var FiltersComponent = /*#__PURE__*/function (_Component) {
     });
     var controls = this.controls = form.controls;
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      // console.log('FiltersComponent.onInit.form.changes$', form.value.search);
       _this.setFilterByKeyAndValue('search', form.value.search);
 
       _this.pushChanges();
@@ -4858,19 +4928,32 @@ var FiltersComponent = /*#__PURE__*/function (_Component) {
     this.filterService = filterService;
     this.filters = filterService.filters;
     this.setFiltersParams();
-    var search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+    var search = this.filters.search && this.filters.search.values.length ? this.filters.search.values[0] : null;
     this.form.patch({
       search: search
     });
     filterService.items$(items).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (filteredItems) {
-      _this2.filteredItems = filteredItems;
-      _this2.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
+      _this2.filteredItems = _this2.doSortItems(filteredItems);
+      _this2.visibleItems = _this2.getVisibleItems();
 
       _this2.pushChanges();
 
       LocomotiveScrollService.update();
       LocomotiveScrollService.start(); // console.log('FiltersComponent.filteredItems', filteredItems.length);
     });
+    this.onLoaded();
+  };
+
+  _proto.onLoaded = function onLoaded() {// console.log('FiltersComponent.onLoaded');
+  };
+
+  _proto.doSortItems = function doSortItems(items) {
+    return items;
+  };
+
+  _proto.getVisibleItems = function getVisibleItems() {
+    var filteredItems = this.filteredItems;
+    return filteredItems.slice(0, Math.min(12, filteredItems.length));
   };
 
   _proto.showMore = function showMore(event) {
@@ -5374,7 +5457,8 @@ AteliersAndStoresComponent.meta = {
 
     if (parentInstance instanceof ModalOutletComponent) {
       var data = parentInstance.modal.data;
-      this.position = data.position; // console.log('CareersModalComponent.onInit', data);
+      this.position = data.position;
+      console.log('CareersModalComponent.onInit', data.position);
     }
 
     LocomotiveScrollService.stop();
@@ -5434,23 +5518,23 @@ var GtmService = /*#__PURE__*/function () {
   };
 
   return FormService;
-}();function RequiredIfValidator(fieldName, formGroup, shouldBe) {
-  return new rxcompForm.FormValidator(function (value) {
-    var field = null;
+}();function RequiredIfValidator(condition) {
+  return new rxcompForm.FormValidator(function (value, params) {
+    var condition = params.condition;
 
-    if (typeof formGroup === 'function') {
-      field = formGroup().get(fieldName);
-    } else if (formGroup) {
-      field = formGroup.get(fieldName);
-    } // console.log('RequiredIfValidator', field.value, shouldBe != null ? field.value === shouldBe : field.value);
+    if (!typeof condition === 'function') {
+      return null;
+    }
 
-
-    return !value && field && (shouldBe != null ? field.value === shouldBe : field.value) ? {
-      required: {
-        value: value,
-        requiredIf: fieldName
-      }
-    } : null;
+    if (Boolean(condition()) === true) {
+      return value == null || value.length === 0 ? {
+        required: true
+      } : null;
+    } else {
+      return null;
+    }
+  }, {
+    condition: condition
   });
 }var CareersService = /*#__PURE__*/function () {
   function CareersService() {}
@@ -5495,16 +5579,19 @@ var GtmService = /*#__PURE__*/function () {
     this.error = null;
     this.success = false;
     this.positions = [];
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      domain: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      domain: new rxcompForm.FormControl(this.position && this.position.domain ? this.position.domain.id : null, [rxcompForm.Validators.RequiredValidator()]),
+      position: new rxcompForm.FormControl(this.position ? this.position.id : null),
       cv: new rxcompForm.FormControl(null),
       presentationLetter: new rxcompForm.FormControl(null),
       message: new rxcompForm.FormControl(null),
@@ -5573,13 +5660,27 @@ var GtmService = /*#__PURE__*/function () {
     if (form.valid) {
       // console.log('CareersComponent.onSubmit', form.value);
       form.submitted = true;
-      CareersService.submit$(form.value).pipe(operators.first()).subscribe(function (_) {
-        _this3.success = true;
-        form.reset();
-        GtmService.push({
-          'event': "Careers",
-          'form_name': "Lavora con noi"
-        });
+      CareersService.submit$(form.value).pipe(operators.first()).subscribe(function (response) {
+        console.log('CareersComponent.submit$', response);
+
+        if (response.status === false) {
+          _this3.error = {
+            statusCode: '',
+            statusMessage: '',
+            friendlyMessage: response.html
+          };
+        } else {
+          _this3.success = true;
+          form.reset();
+          GtmService.push({
+            'event': "Careers",
+            'form_name': "Lavora con noi"
+          });
+        }
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
       }, function (error) {
         console.log('CareersComponent.error', error);
         _this3.error = error;
@@ -6058,7 +6159,7 @@ _defineProperty(GoogleService, "instance", void 0);var GoogleMapsService = /*#__
       throw new Error('GoogleMapsService.error missing apiKey in environment.googleMaps');
     }
 
-    return OnceService.script$("//maps.googleapis.com/maps/api/js?callback={{callback}}&key=" + environment.googleMaps.apiKey + "&libraries=places", true).pipe(operators.concatMap(function (_) {
+    return OnceService.script$("//maps.googleapis.com/maps/api/js?callback={{callback}}&key=" + environment.googleMaps.apiKey + "&libraries=places&language=" + environment.currentLanguage, true).pipe(operators.concatMap(function (_) {
       _this2.maps = window.google.maps;
       return rxjs.of(_this2.maps);
     }));
@@ -6078,6 +6179,158 @@ _defineProperty(GoogleService, "instance", void 0);var GoogleMapsService = /*#__
             reject(results);
           }
         });
+      }));
+    }));
+  };
+
+  GoogleMapsService.getAutocompleteService = function getAutocompleteService(maps) {
+    if (!this.autocompleteService_) {
+      this.autocompleteService_ = new maps.places.AutocompleteService();
+    }
+
+    return this.autocompleteService_;
+  };
+
+  GoogleMapsService.getPlaceService = function getPlaceService(maps, map) {
+    if (!this.placeService_) {
+      this.placeService_ = new maps.places.PlacesService(map);
+    }
+
+    return this.placeService_;
+  };
+
+  GoogleMapsService.autocomplete$ = function autocomplete$(query) {
+    var _this3 = this;
+
+    // console.log('GoogleMapsService.autocomplete$', query);
+
+    /*
+    input
+    Type:  string
+    The user entered input string.
+    		bounds optional
+    Type:  LatLngBounds|LatLngBoundsLiteral optional
+    Bounds for prediction biasing. Predictions will be biased towards, but not restricted to, the given bounds. Both location and radius will be ignored if bounds is set.
+    		componentRestrictions optional
+    Type:  ComponentRestrictions optional
+    The component restrictions. Component restrictions are used to restrict predictions to only those within the parent component. For example, the country.
+    		location optional
+    Type:  LatLng optional
+    Location for prediction biasing. Predictions will be biased towards the given location and radius. Alternatively, bounds can be used.
+    		offset optional
+    Type:  number optional
+    The character position in the input term at which the service uses text for predictions (the position of the cursor in the input field).
+    		origin optional
+    Type:  LatLng|LatLngLiteral optional
+    The location where AutocompletePrediction.distance_meters is calculated from.
+    		radius optional
+    Type:  number optional
+    The radius of the area used for prediction biasing. The radius is specified in meters, and must always be accompanied by a location property. Alternatively, bounds can be used.
+    		sessionToken optional
+    Type:  AutocompleteSessionToken optional
+    Unique reference used to bundle individual requests into sessions.
+    		types optional
+    Type:  Array<string> optional
+    The types of predictions to be returned. For a list of supported types, see the developer's guide. If nothing is specified, all types are returned. In general only a single type is allowed. The exception is that you can safely mix the 'geocode' and 'establishment' types, but note that this will have the same effect as specifying no types.
+    */
+    return GoogleMapsService.maps$().pipe(operators.switchMap(function (maps) {
+      var autocompleteService = _this3.getAutocompleteService(maps);
+
+      return rxjs.from(new Promise(function (resolve, reject) {
+        var options = {
+          input: query // fields: ["formatted_address", "geometry", "name"],
+          // strictBounds: false,
+          // types: ["locality", "sublocality", "postal_code", "country", "administrative_area_level_1", "administrative_area_level_2", "administrative_area_level_3"],
+
+        }; // console.log('GoogleMapsService.autocomplete$', options);
+
+        autocompleteService.getPlacePredictions(options, function (predictions, status) {
+          if (status === maps.places.PlacesServiceStatus.OK && predictions && predictions.length) {
+            predictions = predictions.map(function (prediction) {
+              // console.log(prediction);
+              return {
+                id: prediction.place_id,
+                name: prediction.description,
+                description: prediction.description,
+
+                /*
+                lat: prediction.geometry.location.lat(),
+                lng: prediction.geometry.location.lng(),
+                */
+                getDetails: function getDetails(map) {
+                  var request = {
+                    placeId: prediction.place_id,
+                    fields: ['name', 'address_component', 'geometry.location', 'geometry.viewport']
+                  };
+                  return new Promise(function (resolve, reject) {
+                    var placeService = _this3.getPlaceService(maps, map);
+
+                    placeService.getDetails(request, function (place, status) {
+                      if (status == maps.places.PlacesServiceStatus.OK) {
+                        // console.log(place);
+                        var components = place.address_components;
+                        var streetNumber = components.find(function (x) {
+                          return x.types.includes('street_number');
+                        });
+                        var streetNumberName = streetNumber ? streetNumber.short_name : '';
+                        var route = components.find(function (x) {
+                          return x.types.includes('route');
+                        });
+                        var routeName = route ? route.short_name : '';
+                        var locality = components.find(function (x) {
+                          return x.types.includes('locality');
+                        });
+                        var localityName = locality ? locality.short_name : '';
+                        var postal_code = components.find(function (x) {
+                          return x.types.includes('postal_code');
+                        });
+                        var zipCode = postal_code ? postal_code.short_name : '';
+                        var city = components.find(function (x) {
+                          return x.types.includes('administrative_area_level_3');
+                        });
+                        var cityName = city ? city.short_name : '';
+                        var province = components.find(function (x) {
+                          return x.types.includes('administrative_area_level_2');
+                        });
+                        var provinceName = province ? province.short_name : '';
+                        var country = components.find(function (x) {
+                          return x.types.includes('country');
+                        });
+                        var countryName = country ? country.long_name : '';
+                        var address = (route ? routeName : '') + (streetNumber ? ', ' + streetNumberName : '') + (locality && (!city || cityName !== localityName) ? ', ' + localityName : ''); // console.log(place);
+
+                        var location = place.geometry ? place.geometry.location : null;
+                        var latitude = location ? location.lat() : null;
+                        var longitude = location ? location.lng() : null;
+                        resolve({
+                          streetNumber: streetNumberName,
+                          route: routeName,
+                          locality: localityName,
+                          zipCode: zipCode,
+                          city: cityName,
+                          province: provinceName,
+                          country: countryName,
+                          address: address,
+                          latitude: latitude,
+                          longitude: longitude,
+                          geometry: place.geometry
+                        });
+                      } else {
+                        reject(status);
+                      }
+                    });
+                  });
+                }
+              };
+            });
+            resolve(predictions);
+          } else {
+            reject(status);
+          }
+        });
+      })).pipe(operators.catchError(function (error) {
+        console.error(error);
+        return rxjs.of([]);
       }));
     }));
   };
@@ -6218,6 +6471,15 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     this.delivery = null;
     this.discount = null;
     this.paymentMethod = null;
+    var hasInvoice = RequiredIfValidator(function () {
+      return Boolean(_this2.form.value.data.invoice);
+    });
+    var hasBilling = RequiredIfValidator(function () {
+      return Boolean(_this2.form.value.data.billing);
+    });
+    var hasStore = RequiredIfValidator(function () {
+      return Boolean(_this2.selectedStore);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       step: this.step,
       items: null,
@@ -6237,21 +6499,21 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
         message: null,
         invoice: null,
         invoiceData: new rxcompForm.FormGroup({
-          taxNumber: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
-          sdi: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
-          pec: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)])
+          taxNumber: new rxcompForm.FormControl(null, [hasInvoice]),
+          sdi: new rxcompForm.FormControl(null, [hasInvoice]),
+          pec: new rxcompForm.FormControl(null, [hasInvoice])
         }),
         billing: null,
         billingData: new rxcompForm.FormGroup({
-          company: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          firstName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          lastName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          telephone: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          address: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          zipCode: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          city: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          province: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          country: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)])
+          company: new rxcompForm.FormControl(null, [hasBilling]),
+          firstName: new rxcompForm.FormControl(null, [hasBilling]),
+          lastName: new rxcompForm.FormControl(null, [hasBilling]),
+          telephone: new rxcompForm.FormControl(null, [hasBilling]),
+          address: new rxcompForm.FormControl(null, [hasBilling]),
+          zipCode: new rxcompForm.FormControl(null, [hasBilling]),
+          city: new rxcompForm.FormControl(null, [hasBilling]),
+          province: new rxcompForm.FormControl(null, [hasBilling]),
+          country: new rxcompForm.FormControl(null, [hasBilling])
         }),
         conditions: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
         privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
@@ -6269,16 +6531,11 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
       paymentMethod: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       stores: null,
       store: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      storeTerms: new rxcompForm.FormControl(null, [hasStore]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
     var controls = this.controls = form.controls;
-
-    function getDataGroup() {
-      // console.log(form.controls.data);
-      return form.controls.data;
-    }
-
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       _this2.pushChanges();
 
@@ -6502,6 +6759,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onNext = function onNext(patch) {
+    this.form.touched = false;
     this.setStep(this.step + 1);
     this.onPatch(patch);
   };
@@ -6537,6 +6795,10 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
           _this3.onAfterPatch(true);
         });
+        break;
+
+      case CartSteps.Recap:
+        this.controls.storeTerms.statusSubject.next(null);
         break;
 
       default:
@@ -7060,6 +7322,16 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     });
   };
 
+  _proto.onRecap = function onRecap(_) {
+    var form = this.form; // console.log('CartComponent.onRecap', form.controls.storeTerms.valid);
+
+    if (form.controls.storeTerms.valid) {
+      this.onNext();
+    } else {
+      this.touchForm();
+    }
+  };
+
   _proto.onTimetableToggle = function onTimetableToggle(event) {
     if (this.selectedStore) {
       this.selectedStore.showTimetable = !this.selectedStore.showTimetable;
@@ -7230,6 +7502,9 @@ CartComponent.meta = {
 
     this.error = null;
     this.success = false;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -7242,7 +7517,7 @@ CartComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -7566,6 +7841,12 @@ MagazineRequestPropositionComponent.meta = {
     this.response = null;
     this.error = null;
     this.success = false;
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
+    var hasPrintedCopy = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.printedCopy);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       magazine: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       //
@@ -7575,16 +7856,15 @@ MagazineRequestPropositionComponent.meta = {
       telephone: new rxcompForm.FormControl(null),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       //
       printedCopy: new rxcompForm.FormControl(null),
       //
-      city: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      province: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      zipCode: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      address: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      streetNumber: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      city: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      province: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      zipCode: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      address: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      streetNumber: new rxcompForm.FormControl(null, [hasPrintedCopy]),
       //
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -7611,6 +7891,7 @@ MagazineRequestPropositionComponent.meta = {
       controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
       controls.country.options = FormService.toSelectOptions(data.country.options);
       controls.region.options = FormService.toSelectOptions(data.region.options);
+      controls.province.options = FormService.toSelectOptions(data.province.options);
 
       _this2.pushChanges();
     }));
@@ -7676,6 +7957,11 @@ MagazineRequestPropositionComponent.meta = {
     } else {
       form.touched = true;
     }
+  };
+
+  _proto.onCountryDidChange = function onCountryDidChange() {
+    console.log('MagazineRequestComponent.onCountryDidChange');
+    this.controls.province.value = null;
   };
 
   return MagazineRequestComponent;
@@ -8371,6 +8657,9 @@ NewsComponent.meta = {
     this.success = false;
     var email = LocationService.deserialize('email'); // console.log('NewsletterComponent', email);
 
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -8378,8 +8667,7 @@ NewsComponent.meta = {
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       engagement: new rxcompForm.FormControl(null),
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
@@ -8852,19 +9140,42 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
     key: "currentMarket",
     get: function get() {
       var currentMarket = environment.currentMarket.toLowerCase();
-      var userMarket = environment.userMarket.toLowerCase();
 
-      if (userMarket !== currentMarket) {
-        return 'xx';
-      } else {
-        return currentMarket;
+      switch (currentMarket) {
+        case 'cn':
+          currentMarket = currentMarket;
+          break;
+
+        default:
+          var userMarket = environment.userMarket.toLowerCase();
+
+          if (userMarket !== currentMarket) {
+            currentMarket = 'xx';
+          }
+
       }
+
+      return currentMarket;
+    }
+  }, {
+    key: "currentLanguage",
+    get: function get() {
+      var currentLanguage = environment.currentLanguage.toLowerCase();
+
+      switch (currentLanguage) {
+        case 'zh':
+          currentLanguage = 'en';
+          break;
+      }
+
+      return currentLanguage;
     }
   }, {
     key: "showefyUrl",
     get: function get() {
+      // console.log('ProductsConfigureComponent.showefyUrl', 'currentLanguage', this.currentLanguage, 'currentMarket', this.currentMarket, 'priceListByMarket', this.priceListByMarket, environment);
       if (this.product) {
-        return "https://www.showefy.com/showroom/giorgetti/?l=" + environment.currentLanguage + "&c=" + this.currentMarket + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + (this.product.familyCode ? "&codfam=" + this.product.familyCode : '') + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
+        return "https://www.showefy.com/showroom/giorgetti/?l=" + this.currentLanguage + "&c=" + this.currentMarket + "&list=" + this.priceListByMarket + "&codprod=" + this.product.code + (this.product.familyCode ? "&codfam=" + this.product.familyCode : '') + "&autoEnter=1" + (this.sl ? "&ext&sl=" + this.sl : '');
       }
     }
   }]);
@@ -9125,10 +9436,10 @@ ProjectsRegistrationModalComponent.meta = {
       products: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       picture: new rxcompForm.FormControl(null),
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
-      //newsletter: new FormControl(null, [Validators.RequiredValidator()]),
-      //commercial: new FormControl(null, [Validators.RequiredValidator()]),
-      //promotion: new FormControl(null, [Validators.RequiredValidator()]),
-      //newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      // newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+      // commercial: new FormControl(null, [Validators.RequiredValidator()]),
+      // promotion: new FormControl(null, [Validators.RequiredValidator()]),
+      // newsletterLanguage: new FormControl(null, [RequiredIfValidator(() => Boolean(this.form.value.newsletter))]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -9552,7 +9863,83 @@ _defineProperty(FilesService, "files$_", new rxjs.BehaviorSubject([]));var Reser
 }(rxcomp.Component);
 ReservedAreaComponent.meta = {
   selector: '[reserved-area]'
-};var StoreLocatorService = /*#__PURE__*/function () {
+};var MapService = /*#__PURE__*/function () {
+  function MapService() {}
+
+  MapService.findNearStores = function findNearStores(items, center) {
+    var _this = this;
+
+    if (items) {
+      items = items.slice();
+      items.forEach(function (item) {
+        item.distance = _this.calculateDistance(item.latitude, item.longitude, center.lat, center.lng, 'K'); // item.visible = (item.cod_stato == window.userCountry || !window.userCountry) && item.distance <= MAX_DISTANCE /* Km */;
+      });
+      items.sort(function (a, b) {
+        return a.distance - b.distance;
+      });
+      return items;
+    }
+  };
+
+  MapService.calculateDistances = function calculateDistances(items, center) {
+    var _this2 = this;
+
+    if (items) {
+      items.forEach(function (item) {
+        item.distance = _this2.calculateDistance(item.latitude, item.longitude, center.lat, center.lng, 'K');
+      });
+    }
+
+    return items;
+  };
+
+  MapService.calculateDistance = function calculateDistance(lat1, lon1, lat2, lon2, unit) {
+    if (lat1 == lat2 && lon1 == lon2) {
+      return 0;
+    } else {
+      var radlat1 = Math.PI * lat1 / 180;
+      var radlat2 = Math.PI * lat2 / 180;
+      var theta = lon1 - lon2;
+      var radtheta = Math.PI * theta / 180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+
+      if (dist > 1) {
+        dist = 1;
+      }
+
+      dist = Math.acos(dist);
+      dist = dist * 180 / Math.PI;
+      dist = dist * 60 * 1.1515;
+
+      if (unit == "K") {
+        dist = dist * 1.609344;
+      }
+
+      if (unit == "N") {
+        dist = dist * 0.8684;
+      }
+
+      return dist;
+    }
+  };
+
+  MapService.getBounds = function getBounds(items, count) {
+    if (count === void 0) {
+      count = Number.POSITIVE_INFINITY;
+    }
+
+    var bounds = new google.maps.LatLngBounds();
+    items.forEach(function (item, i) {
+      if (i < count) {
+        var position = new google.maps.LatLng(item.latitude, item.longitude);
+        bounds.extend(position);
+      }
+    });
+    return bounds;
+  };
+
+  return MapService;
+}();var StoreLocatorService = /*#__PURE__*/function () {
   function StoreLocatorService() {}
 
   StoreLocatorService.all$ = function all$() {
@@ -9581,8 +9968,137 @@ ReservedAreaComponent.meta = {
 
   var _proto = StoreLocatorComponent.prototype;
 
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+
+    this.autocomplete$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
   _proto.load$ = function load$() {
-    return rxjs.combineLatest([StoreLocatorService.all$(), StoreLocatorService.filters$()]);
+    return rxjs.combineLatest([StoreLocatorService.all$(), StoreLocatorService.filters$().pipe(operators.map(function (filters) {
+      delete filters.search;
+      delete filters.country;
+      filters.bounds = {
+        label: 'Bounds',
+        mode: 'query'
+      };
+      return filters;
+    }))]);
+  };
+
+  _proto.onLoaded = function onLoaded() {
+    var _this = this;
+
+    var search = this.filters.search;
+
+    if (search && search.values.length) {
+      var value = search.values[0]; // console.log('StoreLocatorCompoent.onLoaded', value);
+
+      this.autocomplete.value = value;
+    }
+
+    if (environment.detectedCountry) {
+      this.geocode$({
+        address: environment.detectedCountry
+      }, 'country').subscribe(function (place) {
+        _this.autocomplete.value = place;
+      });
+    }
+  };
+
+  _proto.autocompleteSource$ = function autocompleteSource$(query) {
+    return GoogleMapsService.autocomplete$(query);
+  };
+
+  _proto.autocomplete$ = function autocomplete$() {
+    var _this2 = this;
+
+    var autocomplete = this.autocomplete = new rxcompForm.FormControl(null);
+    return autocomplete.changes$.pipe(operators.tap(function (value) {
+      var place;
+
+      if (value) {
+        if (value.geometry) {
+          _this2.setPlace(value);
+        } else if (typeof value.getDetails === 'function' && _this2.map) {
+          value.getDetails(_this2.map).then(function (place) {
+            // console.log('StoreLocatorComponent.autocomplete.getDetails', place);
+            place = {
+              name: value.name,
+              geometry: place.geometry
+            };
+
+            _this2.setPlace(place);
+          });
+        }
+      } else {
+        place = null;
+
+        _this2.setPlace(place);
+      }
+    }));
+  };
+
+  _proto.setPlace = function setPlace(place) {
+    if (this.filters && this.filters.bounds) {
+      this.filters.bounds.set(null);
+    }
+
+    var items = this.filteredItems;
+    var map = this.map;
+
+    if (map) {
+      if (place) {
+        var minimumBounds = null;
+
+        if (items.length >= 2) {
+          var center = place.geometry.location;
+          center.lat = center.lat();
+          center.lng = center.lng();
+          MapService.calculateDistances(items, center);
+          this.doSortItemsByDistance(items);
+          minimumBounds = new google.maps.LatLngBounds();
+
+          for (var i = 0; i < 2; i++) {
+            var item = items[i]; // console.log(item);
+
+            var lat = item.latitude;
+            var lng = item.longitude;
+            var p1 = new google.maps.LatLng(lat, lng);
+            minimumBounds.extend(p1);
+            var lat2 = center.lat + (center.lat - lat);
+            var lng2 = center.lng + (center.lng - lng);
+            var p2 = new google.maps.LatLng(lat2, lng2);
+            minimumBounds.extend(p2);
+          }
+        }
+
+        if (place.geometry.viewport || minimumBounds) {
+          var bounds = place.geometry.viewport;
+
+          if (minimumBounds) {
+            bounds = bounds.union(minimumBounds);
+          }
+
+          google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
+            this.setZoom(Math.min(11, this.getZoom()));
+          });
+          map.fitBounds(bounds, 0);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(11);
+        }
+      } else {
+        var _bounds = MapService.getBounds(items);
+
+        google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
+          this.setZoom(Math.min(11, this.getZoom()));
+        });
+        map.fitBounds(_bounds);
+      }
+    }
+
+    this.place = place;
   };
 
   _proto.doFilterItem = function doFilterItem(key, item, value) {
@@ -9593,13 +10109,168 @@ ReservedAreaComponent.meta = {
       case 'category':
         return item.category && item.category.id === value;
 
+      case 'bounds':
+        if (value && typeof value.contains === 'function') {
+          var position = new google.maps.LatLng(item.latitude, item.longitude);
+          return value.contains(position);
+        }
+
+        return true;
+
       case 'search':
-        return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 || // item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 || item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+        return true;
+
+      /*
+      return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+      	// item.address.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+      	item.city.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+      	item.country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      	*/
 
       default:
         return false;
     }
+  };
+
+  _proto.doSortItemsByDistance = function doSortItemsByDistance(items) {
+    // console.log('StoreLocatorComponent.doSortItemsByDistance');
+    items.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+    return items;
+  };
+
+  _proto.doSortItemsByRank = function doSortItemsByRank(items) {
+    // console.log('StoreLocatorComponent.doSortItemsByRank');
+    var ranks = {
+      9: 100,
+      8: 50,
+      10: 0,
+      11: 0
+    };
+    items.sort(function (a, b) {
+      var categoryA = ranks[a.category.id] || 0;
+      var categoryB = ranks[b.category.id] || 0;
+      var categorySort = categoryB - categoryA;
+
+      if (categorySort !== 0) {
+        return categorySort;
+      }
+
+      var countrNameA = a.country.name;
+      var countrNameB = b.country.name;
+      if (countrNameA > countrNameB) return 1;
+      if (countrNameA < countrNameB) return -1;
+      var cityNameA = a.city;
+      var cityNameB = b.city;
+      if (cityNameA > cityNameB) return 1;
+      if (cityNameA < cityNameB) return -1;
+      return a.rank - b.rank;
+    });
+    return items;
+  };
+
+  _proto.doSortItems = function doSortItems(items) {
+    var bounds = this.bounds;
+
+    if (bounds) {
+      /*
+      const center = bounds.getCenter();
+      center.lat = center.lat();
+      center.lng = center.lng();
+      MapService.calculateDistances(items, center);
+      */
+      items = this.doSortItemsByDistance(items);
+    } else {
+      items = this.doSortItemsByRank(items);
+    } // items = this.place ? this.doSortItemsByDistance(items) : this.doSortItemsByRank(items);
+
+
+    return items;
+  };
+
+  _proto.onMapReady = function onMapReady(mapController) {
+    this.mapController = mapController;
+    this.map = mapController.map;
+  };
+
+  _proto.onMapDidChange = function onMapDidChange(bounds) {
+    this.bounds = bounds; // console.log('StoreLocatorComponent.onMapDidChange', bounds, this.filters);
+
+    if (this.filters.bounds) {
+      this.filters.bounds.set(bounds);
+    }
+  }
+  /*
+  showMore(event) {
+  	let filteredItems = this.filteredItems;
+  	if (this.map) {
+  		filteredItems = this.filteredItems.filter(item => {
+  			const position = new google.maps.LatLng(item.latitude, item.longitude);
+  			return bounds.contains(position);
+  		});
+  	}
+  	if (this.visibleItems.length + this.pageSize >= filteredItems.length) {
+  		this.visibleItems = filteredItems.slice();
+  	} else {
+  		this.visibleItems = filteredItems.slice(0, Math.min(this.visibleItems.length + this.pageSize, filteredItems.length));
+  	}
+  	this.pushChanges();
+  	LocomotiveScrollService.update();
+  }
+  */
+  ;
+
+  _proto.hasGeolocation = function hasGeolocation() {
+    return this.map && navigator.geolocation;
+  };
+
+  _proto.onGeolocation = function onGeolocation(event) {
+    var _this3 = this;
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        _this3.geocode$({
+          location: location
+        }).subscribe(function (place) {
+          _this3.autocomplete.value = place;
+        });
+      }, function (error) {
+        console.log('StoreLocatorComponent.onGeolocation.error', error);
+      });
+    } else {
+      console.log('Browser doesn\'t support Geolocation');
+    }
+  };
+
+  _proto.geocode$ = function geocode$(payload, type) {
+    if (type === void 0) {
+      type = 'administrative_area_level_3';
+    }
+
+    return GoogleMapsService.geocode$(payload).pipe(operators.map(function (results) {
+      // console.log('GoogleMapsService.geocode$', results);
+      var place = results.find(function (x) {
+        return x.types.includes(type);
+      });
+      var address = place.address_components.find(function (x) {
+        return x.types.includes(type);
+      });
+      place = {
+        name: address ? address.long_name : 'current location',
+        geometry: place.geometry ? place.geometry : {
+          location: location
+        }
+      }; // console.log('StoreLocatorComponent.onGeolocation', place);
+
+      return place;
+    }));
   };
 
   return StoreLocatorComponent;
@@ -11088,13 +11759,14 @@ var MarkerClusterer = /** @class */ (function (_super) {
         zoom: 15,
         // 9,
         center: position,
-        scrollwheel: false,
+        // scrollwheel: false,
+        gestureHandling: 'cooperative',
         // mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoomControlOptions: {
           style: google.maps.ZoomControlStyle.DEFAULT
         },
         // overviewMapControl: true,
-        scaleControl: false,
+        // scaleControl: false,
         zoomControl: true,
         mapTypeControl: false,
         streetViewControl: false,
@@ -11104,49 +11776,47 @@ var MarkerClusterer = /** @class */ (function (_super) {
       };
       var mapElement = node.querySelector('.map');
       var map = _this.map = new google.maps.Map(mapElement, mapOptions);
+      google.maps.event.addListener(map, 'idle', function () {
+        var bounds = map.getBounds();
+
+        _this.change.next(bounds);
+        /*
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        this.change.next([ne.lat(), ne.lng(), sw.lat(), sw.lng()]);
+        */
+
+      });
 
       _this.addMarkers(_this.items);
 
       if (!_this.items) {
         map.fitBounds(_this.getItalyBounds());
       }
+
+      _this.ready.next(_this);
     });
+    this.wheel$().pipe(operators.takeUntil(this.unsubscribe$)).subscribe();
+  };
+
+  _proto.wheel$ = function wheel$() {
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    var mapElement = node.querySelector('.map');
+    return rxjs.fromEvent(mapElement, 'wheel').pipe(operators.map(function (event) {
+      if (event.ctrlKey == true) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return false;
+      }
+    }));
   };
 
   _proto.onChanges = function onChanges() {
     if (this.markersDidChange()) {
       this.clearMarkers();
       this.addMarkers(this.items);
-    }
-  };
-
-  _proto.calculateDistance = function calculateDistance(lat1, lon1, lat2, lon2, unit) {
-    if (lat1 == lat2 && lon1 == lon2) {
-      return 0;
-    } else {
-      var radlat1 = Math.PI * lat1 / 180;
-      var radlat2 = Math.PI * lat2 / 180;
-      var theta = lon1 - lon2;
-      var radtheta = Math.PI * theta / 180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-
-      if (dist > 1) {
-        dist = 1;
-      }
-
-      dist = Math.acos(dist);
-      dist = dist * 180 / Math.PI;
-      dist = dist * 60 * 1.1515;
-
-      if (unit == "K") {
-        dist = dist * 1.609344;
-      }
-
-      if (unit == "N") {
-        dist = dist * 0.8684;
-      }
-
-      return dist;
     }
   };
 
@@ -11192,7 +11862,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
         bounds.extend(position);
         var content =
         /* html */
-        "<div class=\"card--store-locator\">\n\t\t\t\t\t<div class=\"card__content\">\n\t\t\t\t\t\t<div class=\"card__name\"><span>" + item.name + "</span></div>\n\t\t\t\t\t\t<div class=\"card__address\">" + item.address + "</div>\n\t\t\t\t\t\t<div class=\"card__city\">" + item.city + "</div>\n\t\t\t\t\t\t<div class=\"card__country\">" + item.country.name + "</div>\n\t\t\t\t\t\t" + (item.phone ? "<a class=\"card__phone\" href=\"tel:" + item.phone + "\">" + item.phone + "</a>" : '') + "\n\t\t\t\t\t\t" + (item.fax ? "<a class=\"card__fax\" href=\"tel:" + item.fax + "\">" + item.fax + "</a>" : '') + "\n\t\t\t\t\t\t" + (item.email ? "<a class=\"card__email\" href=\"mailto:" + item.email + "\">" + item.email + "</a>" : '') + "\n\t\t\t\t\t</div>\n\t\t\t\t</div>";
+        "<div class=\"card--store-locator\">\n\t\t\t\t\t<div class=\"card__content\">\n\t\t\t\t\t\t<div class=\"card__name\"><span>" + item.name + "</span></div>\n\t\t\t\t\t\t<div class=\"card__address\">" + item.address + "</div>\n\t\t\t\t\t\t<div class=\"card__city\">" + item.city + "</div>\n\t\t\t\t\t\t<div class=\"card__country\">" + item.country.name + "</div>\n\t\t\t\t\t\t" + (item.phone ? "<a class=\"card__phone\" href=\"tel:" + item.phone + "\">" + item.phone + "</a>" : '') + "\n\t\t\t\t\t\t" + (item.fax ? "<a class=\"card__fax\" href=\"tel:" + item.fax + "\">" + item.fax + "</a>" : '') + "\n\t\t\t\t\t\t" + (item.email ? "<a class=\"card__email\" href=\"mailto:" + item.email + "\">" + item.email + "</a>" : '') + "\n\t\t\t\t\t\t" + (item.website ? "<a class=\"card__email\" href=\"" + item.website + "\">" + item.website + "</a>" : '') + "\n\t\t\t\t\t</div>\n\t\t\t\t</div>";
         /*
         `<div class="marker__content">
         	<div class="title"><span>${item.name}</span></div>
@@ -11248,25 +11918,7 @@ var MarkerClusterer = /** @class */ (function (_super) {
         this.markerCluster = markerCluster;
       }
 
-      this.markers = markers; // fix for minimum bound size
-
-      var boundsNE = bounds.getNorthEast();
-      var boundsSW = bounds.getSouthWest();
-      var minLatLng = 0.04;
-      var lat = Math.abs(boundsNE.lat() - boundsSW.lat());
-      var lng = Math.abs(boundsNE.lng() - boundsSW.lng());
-
-      if (lat < minLatLng || lng < minLatLng) {
-        // console.log(boundsNE.lat(), boundsNE.lng(), boundsSW.lat(), boundsSW.lng());
-        var dLat = (minLatLng - lat) / 2;
-        var dLng = (minLatLng - lng) / 2;
-        var extendNE = new google.maps.LatLng(boundsNE.lat() + dLat, boundsNE.lng() + dLng);
-        var extendSW = new google.maps.LatLng(boundsSW.lat() - dLat, boundsSW.lng() - dLng);
-        bounds.extend(extendNE);
-        bounds.extend(extendSW);
-      }
-
-      map.fitBounds(bounds);
+      this.markers = markers;
     }
   };
 
@@ -11340,43 +11992,6 @@ var MarkerClusterer = /** @class */ (function (_super) {
     }
   };
 
-  _proto.findNearStores = function findNearStores(items, position) {
-    var _this5 = this;
-
-    if (items) {
-      items.forEach(function (item) {
-        item.distance = _this5.calculateDistance(item.latitude, item.longitude, position.lat(), position.lng(), 'K');
-        item.visible = (item.cod_stato == window.userCountry || !window.userCountry) && item.distance <= MAX_DISTANCE
-        /* Km */
-        ;
-
-        if (item.visible) {
-          if (item.removed) {
-            _this5.markerCluster.addMarker(item.marker);
-          }
-
-          delete item.removed;
-        } else {
-          _this5.markerCluster.removeMarker(item.marker);
-
-          item.removed = true;
-        }
-      });
-      items = items.slice();
-      items.sort(function (a, b) {
-        return a.distance * (a.importante ? 0.5 : 1) - b.distance * (b.importante ? 0.5 : 1);
-      });
-      var visibleStores = items.filter(function (item) {
-        return item.visible;
-      }).slice(0, 50);
-      this.$timeout(function () {
-        _this5.visibleStores = visibleStores;
-      }, 1); // console.log('findNearStores', visibleStores);
-
-      return visibleStores;
-    }
-  };
-
   _proto.panTo = function panTo(item) {
     var position = new google.maps.LatLng(item.latitude, item.longitude);
     this.map.setZoom(ZOOM_LEVEL);
@@ -11388,7 +12003,14 @@ var MarkerClusterer = /** @class */ (function (_super) {
   };
 
   _proto.setMarkerWindow = function setMarkerWindow(position, content) {
+    var _this5 = this;
+
     if (position) {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+        this.subscription = null;
+      }
+
       var markerWindow = this.markerWindow || new google.maps.InfoWindow({
         pixelOffset: new google.maps.Size(0, -35)
       });
@@ -11396,9 +12018,32 @@ var MarkerClusterer = /** @class */ (function (_super) {
       markerWindow.setPosition(position);
       markerWindow.setContent(content);
       markerWindow.open(this.map);
+      setTimeout(function () {
+        if (_this5.subscription) {
+          _this5.subscription.unsubscribe();
+
+          _this5.subscription = null;
+        }
+
+        _this5.subscription = _this5.clickOutside$('[role="dialog"]').subscribe(function () {
+          _this5.closeMarkerWindow();
+        });
+      }, 50);
     } else {
       this.closeMarkerWindow();
     }
+  };
+
+  _proto.clickOutside$ = function clickOutside$(clickOutsideSelector) {
+    return rxjs.fromEvent(document, 'click').pipe(operators.filter(function (event) {
+      var target = event.target;
+      var clickOutsideTarget = document.querySelector(clickOutsideSelector);
+      var clickedInside = clickOutsideTarget.contains(target) || !document.contains(target);
+
+      if (!clickedInside) {
+        return true;
+      }
+    }));
   };
 
   _proto.closeMarkerWindow = function closeMarkerWindow() {
@@ -11419,7 +12064,8 @@ var MarkerClusterer = /** @class */ (function (_super) {
 }(rxcomp.Component);
 MapComponent.meta = {
   selector: '[map]',
-  inputs: ['center', 'items']
+  inputs: ['center', 'items'],
+  outputs: ['ready', 'change']
 };var SwiperGalleryDirective = /*#__PURE__*/function (_SwiperDirective) {
   _inheritsLoose(SwiperGalleryDirective, _SwiperDirective);
 
@@ -12731,6 +13377,9 @@ UserEditPasswordComponent.meta = {
     this.error = null;
     this.success = false;
     this.responseMessage = null;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -12743,7 +13392,7 @@ UserEditPasswordComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -13213,6 +13862,9 @@ UserSigninComponent.meta = {
     this.error = null;
     this.success = false;
     this.responseMessage = null;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(this.me.firstName || null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(this.me.lastName || null, [rxcompForm.Validators.RequiredValidator()]),
@@ -13227,7 +13879,7 @@ UserSigninComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });

@@ -46,6 +46,7 @@ export class FiltersComponent extends Component {
 		form.changes$.pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe((_) => {
+			// console.log('FiltersComponent.onInit.form.changes$', form.value.search);
 			this.setFilterByKeyAndValue('search', form.value.search);
 			this.pushChanges();
 		});
@@ -81,18 +82,32 @@ export class FiltersComponent extends Component {
 		this.filterService = filterService;
 		this.filters = filterService.filters;
 		this.setFiltersParams();
-		const search = this.filters.search.values.length ? this.filters.search.values[0] : null;
+		const search = (this.filters.search && this.filters.search.values.length) ? this.filters.search.values[0] : null;
 		this.form.patch({ search });
 		filterService.items$(items).pipe(
 			takeUntil(this.unsubscribe$),
 		).subscribe(filteredItems => {
-			this.filteredItems = filteredItems;
-			this.visibleItems = filteredItems.slice(0, Math.min(12, filteredItems.length));
+			this.filteredItems = this.doSortItems(filteredItems);
+			this.visibleItems = this.getVisibleItems();
 			this.pushChanges();
 			LocomotiveScrollService.update();
 			LocomotiveScrollService.start();
 			// console.log('FiltersComponent.filteredItems', filteredItems.length);
 		});
+		this.onLoaded();
+	}
+
+	onLoaded() {
+		// console.log('FiltersComponent.onLoaded');
+	}
+
+	doSortItems(items) {
+		return items;
+	}
+
+	getVisibleItems() {
+		const filteredItems = this.filteredItems;
+		return filteredItems.slice(0, Math.min(12, filteredItems.length));
 	}
 
 	showMore(event) {
