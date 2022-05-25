@@ -6617,29 +6617,56 @@ test-component code {
   .card--hero-homepage .card__cta {
     display: flex;
     justify-content: center; }
-  @media (max-width: 1023.98px) {
-    .card--hero-homepage .card__picture {
+  .card--hero-homepage .card__picture {
+    position: relative;
+    width: 100%;
+    padding-top: 47.61905%;
+    overflow: hidden;
+    position: relative; }
+    .card--hero-homepage .card__picture > img,
+    .card--hero-homepage .card__picture > svg,
+    .card--hero-homepage .card__picture > video,
+    .card--hero-homepage .card__picture > canvas,
+    .card--hero-homepage .card__picture > .video,
+    .card--hero-homepage .card__picture > iframe,
+    .card--hero-homepage .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%; }
-    .card--hero-homepage .card__content {
-      position: relative;
-      min-height: 100vw;
-      display: flex;
-      align-items: center; }
-      .card--hero-homepage .card__content > .container {
-        padding-top: 80px;
-        padding-bottom: 80px; }
-    .card--hero-homepage .card__title {
-      font-size: 60px; } }
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .card--hero-homepage .card__picture img {
+      transition: none;
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .card--hero-homepage .card__picture video {
+      -o-object-fit: cover;
+         object-fit: cover; }
+    .card--hero-homepage .card__picture .th-video-poster {
+      background-size: cover; }
+  @media (max-width: 1023.98px) {
+    .card--hero-homepage {
+      min-height: calc(100vh - 140px); }
+      .card--hero-homepage .card__picture {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0; }
+      .card--hero-homepage .card__content {
+        position: relative;
+        min-height: 100vw;
+        display: flex;
+        align-items: center; }
+        .card--hero-homepage .card__content > .container {
+          padding-top: 80px;
+          padding-bottom: 80px; }
+      .card--hero-homepage .card__title {
+        font-size: 60px; } }
   @media (min-width: 1024px) {
-    .card--hero-homepage .card__picture {
-      position: relative;
-      max-height: calc(100vh - 135px); }
-      .card--hero-homepage .card__picture img {
-        transition: none; }
     .card--hero-homepage .card__content {
       position: absolute; }
     .card--hero-homepage .card__title {
@@ -6729,7 +6756,8 @@ test-component code {
     .group--video > .video > video,
     .group--video > .video > canvas,
     .group--video > .video > .video,
-    .group--video > .video > iframe {
+    .group--video > .video > iframe,
+    .group--video > .video .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -6891,6 +6919,10 @@ test-component code {
   .main--homepage .section--video + .section--news-proposition {
     padding-top: 450px; } }
 
+[swiper-homepage] .swiper-wrapper {
+  display: flex;
+  align-items: stretch; }
+
 .card--product-proposition {
   position: relative;
   display: flex;
@@ -6908,7 +6940,8 @@ test-component code {
     .card--product-proposition > .card__picture > video,
     .card--product-proposition > .card__picture > canvas,
     .card--product-proposition > .card__picture > .video,
-    .card--product-proposition > .card__picture > iframe {
+    .card--product-proposition > .card__picture > iframe,
+    .card--product-proposition > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -7007,7 +7040,8 @@ test-component code {
     .large > .card--product-proposition > .card__picture > video,
     .large > .card--product-proposition > .card__picture > canvas,
     .large > .card--product-proposition > .card__picture > .video,
-    .large > .card--product-proposition > .card__picture > iframe {
+    .large > .card--product-proposition > .card__picture > iframe,
+    .large > .card--product-proposition > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -7511,7 +7545,8 @@ test-component code {
         .card--version .card__picture > video,
         .card--version .card__picture > canvas,
         .card--version .card__picture > .video,
-        .card--version .card__picture > iframe {
+        .card--version .card__picture > iframe,
+        .card--version .card__picture .thron {
           position: absolute;
           top: 0;
           left: 0;
@@ -7660,7 +7695,8 @@ test-component code {
     .card--product-material .card__picture > video,
     .card--product-material .card__picture > canvas,
     .card--product-material .card__picture > .video,
-    .card--product-material .card__picture > iframe {
+    .card--product-material .card__picture > iframe,
+    .card--product-material .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -7917,7 +7953,7 @@ test-component code {
         position: relative;
         padding: 40px 0 80px 0; }
       .card--hero-products-detail .card__title {
-        font-size: 54px; }
+        font-size: 48px; }
       .card--hero-products-detail .card__cta {
         display: flex;
         flex-direction: column;
@@ -8053,7 +8089,8 @@ test-component code {
   [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > video,
   [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > canvas,
   [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > .video,
-  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > iframe {
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture > iframe,
+  [swiper-products-proposition] .swiper-slide.large > .card--product-proposition > .card__picture .thron {
     position: absolute;
     top: 0;
     left: 0;
@@ -8210,7 +8247,8 @@ test-component code {
     .card--project > .card__picture > video,
     .card--project > .card__picture > canvas,
     .card--project > .card__picture > .video,
-    .card--project > .card__picture > iframe {
+    .card--project > .card__picture > iframe,
+    .card--project > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -8474,7 +8512,8 @@ test-component code {
     .card--design > .card__picture > video,
     .card--design > .card__picture > canvas,
     .card--design > .card__picture > .video,
-    .card--design > .card__picture > iframe {
+    .card--design > .card__picture > iframe,
+    .card--design > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -8544,7 +8583,8 @@ test-component code {
     .large > .card--design > .card__picture > video,
     .large > .card--design > .card__picture > canvas,
     .large > .card--design > .card__picture > .video,
-    .large > .card--design > .card__picture > iframe {
+    .large > .card--design > .card__picture > iframe,
+    .large > .card--design > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -8679,7 +8719,8 @@ test-component code {
     .card--project-proposition > .card__picture > video,
     .card--project-proposition > .card__picture > canvas,
     .card--project-proposition > .card__picture > .video,
-    .card--project-proposition > .card__picture > iframe {
+    .card--project-proposition > .card__picture > iframe,
+    .card--project-proposition > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -8894,7 +8935,8 @@ test-component code {
         .modal--projects-registration .modal__picture > video,
         .modal--projects-registration .modal__picture > canvas,
         .modal--projects-registration .modal__picture > .video,
-        .modal--projects-registration .modal__picture > iframe {
+        .modal--projects-registration .modal__picture > iframe,
+        .modal--projects-registration .modal__picture .thron {
           position: absolute;
           top: 0;
           left: 0;
@@ -9084,7 +9126,8 @@ test-component code {
     .card--news > .card__picture > video,
     .card--news > .card__picture > canvas,
     .card--news > .card__picture > .video,
-    .card--news > .card__picture > iframe {
+    .card--news > .card__picture > iframe,
+    .card--news > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -9669,7 +9712,8 @@ test-component code {
     .card--news-proposition > .card__picture > video,
     .card--news-proposition > .card__picture > canvas,
     .card--news-proposition > .card__picture > .video,
-    .card--news-proposition > .card__picture > iframe {
+    .card--news-proposition > .card__picture > iframe,
+    .card--news-proposition > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -9721,7 +9765,8 @@ test-component code {
     .main--homepage .card--news-proposition > .card__picture > video,
     .main--homepage .card--news-proposition > .card__picture > canvas,
     .main--homepage .card--news-proposition > .card__picture > .video,
-    .main--homepage .card--news-proposition > .card__picture > iframe {
+    .main--homepage .card--news-proposition > .card__picture > iframe,
+    .main--homepage .card--news-proposition > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -9830,7 +9875,8 @@ test-component code {
     .card--designer > .card__picture > video,
     .card--designer > .card__picture > canvas,
     .card--designer > .card__picture > .video,
-    .card--designer > .card__picture > iframe {
+    .card--designer > .card__picture > iframe,
+    .card--designer > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -10036,7 +10082,8 @@ test-component code {
     .card--atelier > .card__picture > video,
     .card--atelier > .card__picture > canvas,
     .card--atelier > .card__picture > .video,
-    .card--atelier > .card__picture > iframe {
+    .card--atelier > .card__picture > iframe,
+    .card--atelier > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -10116,7 +10163,8 @@ test-component code {
     .card--store > .card__picture > video,
     .card--store > .card__picture > canvas,
     .card--store > .card__picture > .video,
-    .card--store > .card__picture > iframe {
+    .card--store > .card__picture > iframe,
+    .card--store > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -10430,7 +10478,8 @@ test-component code {
     .section--map .map > video,
     .section--map .map > canvas,
     .section--map .map > .video,
-    .section--map .map > iframe {
+    .section--map .map > iframe,
+    .section--map .map .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -11167,7 +11216,8 @@ test-component code {
       .section--store-locator-map .map > video,
       .section--store-locator-map .map > canvas,
       .section--store-locator-map .map > .video,
-      .section--store-locator-map .map > iframe {
+      .section--store-locator-map .map > iframe,
+      .section--store-locator-map .map .thron {
         position: absolute;
         top: 0;
         left: 0;
@@ -11186,7 +11236,8 @@ test-component code {
       .section--store-locator-map .map > video,
       .section--store-locator-map .map > canvas,
       .section--store-locator-map .map > .video,
-      .section--store-locator-map .map > iframe {
+      .section--store-locator-map .map > iframe,
+      .section--store-locator-map .map .thron {
         position: absolute;
         top: 0;
         left: 0;
@@ -12179,7 +12230,8 @@ test-component code {
   .section--materials .picture > video,
   .section--materials .picture > canvas,
   .section--materials .picture > .video,
-  .section--materials .picture > iframe {
+  .section--materials .picture > iframe,
+  .section--materials .picture .thron {
     position: absolute;
     top: 0;
     left: 0;
@@ -12220,7 +12272,8 @@ test-component code {
     .card--material .card__picture > video,
     .card--material .card__picture > canvas,
     .card--material .card__picture > .video,
-    .card--material .card__picture > iframe {
+    .card--material .card__picture > iframe,
+    .card--material .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -12442,7 +12495,8 @@ test-component code {
         .modal--materials .modal__picture > video,
         .modal--materials .modal__picture > canvas,
         .modal--materials .modal__picture > .video,
-        .modal--materials .modal__picture > iframe {
+        .modal--materials .modal__picture > iframe,
+        .modal--materials .modal__picture .thron {
           position: absolute;
           top: 0;
           left: 0;
@@ -12486,7 +12540,8 @@ test-component code {
         .modal--materials .modal__picture > video,
         .modal--materials .modal__picture > canvas,
         .modal--materials .modal__picture > .video,
-        .modal--materials .modal__picture > iframe {
+        .modal--materials .modal__picture > iframe,
+        .modal--materials .modal__picture .thron {
           position: absolute;
           top: 0;
           left: 0;
@@ -12728,7 +12783,8 @@ test-component code {
         .modal--user .modal__picture > video,
         .modal--user .modal__picture > canvas,
         .modal--user .modal__picture > .video,
-        .modal--user .modal__picture > iframe {
+        .modal--user .modal__picture > iframe,
+        .modal--user .modal__picture .thron {
           position: absolute;
           top: 0;
           left: 0;
@@ -13224,7 +13280,8 @@ test-component code {
     .card--file .card__picture > video,
     .card--file .card__picture > canvas,
     .card--file .card__picture > .video,
-    .card--file .card__picture > iframe {
+    .card--file .card__picture > iframe,
+    .card--file .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -13975,7 +14032,8 @@ test-component code {
     .card--cart-item > .card__picture > video,
     .card--cart-item > .card__picture > canvas,
     .card--cart-item > .card__picture > .video,
-    .card--cart-item > .card__picture > iframe {
+    .card--cart-item > .card__picture > iframe,
+    .card--cart-item > .card__picture .thron {
       position: absolute;
       top: 0;
       left: 0;
@@ -14375,7 +14433,8 @@ test-component code {
       .tr--cart .group--info .left__picture > video,
       .tr--cart .group--info .left__picture > canvas,
       .tr--cart .group--info .left__picture > .video,
-      .tr--cart .group--info .left__picture > iframe {
+      .tr--cart .group--info .left__picture > iframe,
+      .tr--cart .group--info .left__picture .thron {
         position: absolute;
         top: 0;
         left: 0;
@@ -15215,7 +15274,8 @@ error-component {
     .brand--contact__picture > video,
     .brand--contact__picture > canvas,
     .brand--contact__picture > .video,
-    .brand--contact__picture > iframe {
+    .brand--contact__picture > iframe,
+    .brand--contact__picture .thron {
       position: absolute;
       top: 0;
       left: 0;

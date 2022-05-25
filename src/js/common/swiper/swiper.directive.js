@@ -1,4 +1,4 @@
-import { Component, getContext } from 'rxcomp';
+import { Component, getContext, getContextByNode } from 'rxcomp';
 import { Subject } from 'rxjs';
 
 export class SwiperDirective extends Component {
@@ -96,18 +96,113 @@ export class SwiperDirective extends Component {
 			gsap.set(target, { opacity: 0 });
 			this.index = 0;
 			const on = this.options.on || {};
+			const self = this;
 			on.slideChange = () => {
 				const swiper = this.swiper;
 				if (swiper) {
 					console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
+
+					const slide = swiper.slides[swiper.realIndex];
+					if (slide.classList.contains('swiper-slide--video')) {
+						swiper.el.classList.add('swiper-container--video');
+						swiper.params.touchRatio = 0;
+					} else {
+						swiper.el.classList.remove('swiper-container--video');
+						swiper.params.touchRatio = 1;
+					}
+
 					this.index = swiper.activeIndex;
 					this.events$.next(this.index);
 					this.pushChanges();
 				}
 			}
+			on.slideChangeTransitionStart = function() {
+				const swiper = this;
+				self.slideChangeTransitionStart(swiper);
+			};
+			on.slideChangeTransitionEnd = function() {
+				const swiper = this;
+				self.slideChangeTransitionEnd(swiper);
+			};
+
 			this.options.on = on;
 			this.addListeners_();
 		}
+	}
+
+	slideChangeTransitionStart(swiper) {
+		this.onToggleVideo(swiper);
+	}
+
+	slideChangeTransitionEnd(swiper) {
+		this.onCheckAutoplay();
+	}
+
+	onToggleVideo(swiper) {
+		Array.from(swiper.slides).forEach(slide => {
+			const target = slide.querySelector('video, [thron]');
+			if (target) {
+				if (slide.classList.contains('swiper-slide-active')) {
+					if (target.hasAttribute('thron')) {
+						const context = getContextByNode(target);
+						context.instance.playVideo();
+					} else {
+						target.play();
+					}
+				} else {
+					if (target.hasAttribute('thron')) {
+						const context = getContextByNode(target);
+						context.instance.pauseVideo();
+					} else {
+						target.pause();
+					}
+				}
+			}
+		});
+
+		/*
+		Array.from(swiper.slides).forEach(slide => {
+			const node = slide.querySelector('video, [thron]');
+			if (node) {
+				if (node.hasAttribute('thron')) {
+					const context = getContextByNode(node);
+					context.instance.pauseVideo();
+				} else {
+					node.pause();
+				}
+			}
+		});
+		*/
+	}
+
+	onCheckAutoplay() {
+		if (this.to) {
+			clearTimeout(this.to);
+		}
+		const { node } = getContext(this);
+		const video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]');
+		console.log('onCheckAutoplay.video', video);
+		if (!video) {
+			this.to = setTimeout(() => {
+				this.onNext();
+			}, 5000);
+		}
+	}
+
+	onNext() {
+		const swiper = this.swiper;
+		if (swiper) {
+			if (swiper.realIndex == swiper.slides.length - 1) {
+				swiper.slideTo(0);
+			} else {
+				swiper.slideNext();
+			}
+		}
+	}
+
+	onThronComplete(event) {
+		console.log('onThronComplete');
+		this.onNext();
 	}
 
 	addListeners_() {
@@ -135,7 +230,7 @@ export class SwiperDirective extends Component {
 				const on = this.options.on || (this.options.on = {});
 				const callback = on.init;
 				if (!on.init || !on.init.swiperDirectiveInit) {
-					on.init = function () {
+					on.init = function() {
 						gsap.to(target, {
 							duration: 0.4,
 							opacity: 1,

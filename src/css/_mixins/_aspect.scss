@@ -5,6 +5,7 @@
 	&>img,
 	&>svg,
 	&>video,
+	.thron,
 	&>* {
 		grid-area: 1 / 1 / 2 / 2;
 	}
@@ -30,7 +31,8 @@
 	&>img,
 	&>svg,
 	&>video,
-	&>canvas {
+	&>canvas,
+	.thron {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -55,7 +57,8 @@
 	&>video,
 	&>canvas,
 	&>.video,
-	&>iframe {
+	&>iframe,
+	.thron {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -74,7 +77,8 @@
 	&>img,
 	&>svg,
 	&>video,
-	&>canvas {
+	&>canvas,
+	.thron {
 		position: absolute;
 		bottom: 10px;
 		left: 0;
@@ -113,7 +117,8 @@
 	&>img,
 	&>svg,
 	&>video,
-	&>canvas {
+	&>canvas,
+	.thron {
 		position: absolute;
 		top: 0;
 		left: 0;

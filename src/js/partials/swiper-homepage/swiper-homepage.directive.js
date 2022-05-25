@@ -1,3 +1,4 @@
+import { getContext } from 'rxcomp';
 import { SwiperDirective } from '../../common/swiper/swiper.directive';
 
 export class SwiperHomepageDirective extends SwiperDirective {
@@ -9,6 +10,13 @@ export class SwiperHomepageDirective extends SwiperDirective {
 			speed: 600,
 			keyboardControl: true,
 			mousewheelControl: false,
+			/*
+			autoplay: {
+				delay: 5000,
+				disableOnInteraction: true,
+				pauseOnMouseEnter: true,
+			},
+			*/
 			keyboard: {
 				enabled: true,
 				onlyInViewport: true,
@@ -18,7 +26,9 @@ export class SwiperHomepageDirective extends SwiperDirective {
 				clickable: true,
 			},
 		};
-		this.init_();
+		const { node } = getContext(this);
+		const target = node.classList.contains('swiper-container') ? node : node.querySelector('.swiper-container');
+		this.init_(target);
 		// console.log('SwiperHomepageDirective.onInit');
 	}
 

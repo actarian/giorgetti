@@ -12,7 +12,6 @@ export class ContactsComponent extends Component {
 	onInit() {
 		this.error = null;
 		this.success = false;
-		const hasNewsletter = RequiredIfValidator(() => Boolean(this.form.value.newsletter));
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
@@ -25,7 +24,7 @@ export class ContactsComponent extends Component {
 			newsletter: new FormControl(null, [Validators.RequiredValidator()]),
 			commercial: new FormControl(null, [Validators.RequiredValidator()]),
 			promotion: new FormControl(null, [Validators.RequiredValidator()]),
-			newsletterLanguage: new FormControl(null, [hasNewsletter]),
+			newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
 			checkRequest: window.antiforgery,
 			checkField: '',
 		});

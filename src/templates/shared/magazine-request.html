@@ -13,14 +13,13 @@
 				<div control-text [control]="controls.email" label="Email"></div>
 				<div control-text [control]="controls.telephone" label="Telefono"></div>
 				<div control-custom-select [control]="controls.occupation" label="Professione"></div>
-				<div control-custom-select [control]="controls.country" label="Paese" (change)="onCountryDidChange()"></div>
+				<div control-custom-select [control]="controls.country" label="Paese"></div>
 				<div control-custom-select [control]="controls.region" label="Regione" *if="controls.country.value == 114"></div>
 				<!---->
 				<div class="full" control-checkbox [control]="controls.printedCopy" label="Desideri ricevere anche la versione stampata del Magazine?"></div>
 				<!---->
 				<div control-text [control]="controls.city" label="Città" *if="controls.printedCopy.value == true"></div>
-				<div control-custom-select [control]="controls.province" label="Provincia" *if="controls.printedCopy.value == true && controls.country.value == 114"></div>
-				<div control-text [control]="controls.province" label="Provincia" *if="controls.printedCopy.value == true && controls.country.value != 114"></div>
+				<div control-text [control]="controls.province" label="Provincia" *if="controls.printedCopy.value == true"></div>
 				<div control-text [control]="controls.zipCode" label="CAP" *if="controls.printedCopy.value == true"></div>
 				<div control-text [control]="controls.address" label="Indirizzo" *if="controls.printedCopy.value == true"></div>
 				<div control-text [control]="controls.streetNumber" label="N° civico" *if="controls.printedCopy.value == true"></div>

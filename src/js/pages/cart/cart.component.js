@@ -104,9 +104,6 @@ export class CartComponent extends Component {
 		this.delivery = null;
 		this.discount = null;
 		this.paymentMethod = null;
-		const hasInvoice = RequiredIfValidator(() => Boolean(this.form.value.data.invoice));
-		const hasBilling = RequiredIfValidator(() => Boolean(this.form.value.data.billing));
-		const hasStore = RequiredIfValidator(() => Boolean(this.selectedStore));
 		const form = this.form = new FormGroup({
 			step: this.step,
 			items: null,
@@ -126,21 +123,21 @@ export class CartComponent extends Component {
 				message: null,
 				invoice: null,
 				invoiceData: new FormGroup({
-					taxNumber: new FormControl(null, [hasInvoice]),
-					sdi: new FormControl(null, [hasInvoice]),
-					pec: new FormControl(null, [hasInvoice]),
+					taxNumber: new FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
+					sdi: new FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
+					pec: new FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
 				}),
 				billing: null,
 				billingData: new FormGroup({
-					company: new FormControl(null, [hasBilling]),
-					firstName: new FormControl(null, [hasBilling]),
-					lastName: new FormControl(null, [hasBilling]),
-					telephone: new FormControl(null, [hasBilling]),
-					address: new FormControl(null, [hasBilling]),
-					zipCode: new FormControl(null, [hasBilling]),
-					city: new FormControl(null, [hasBilling]),
-					province: new FormControl(null, [hasBilling]),
-					country: new FormControl(null, [hasBilling]),
+					company: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					firstName: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					lastName: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					telephone: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					address: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					zipCode: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					city: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					province: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
+					country: new FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
 				}),
 				conditions: new FormControl(null, [Validators.RequiredTrueValidator()]),
 				privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
@@ -158,11 +155,14 @@ export class CartComponent extends Component {
 			paymentMethod: new FormControl(null, [Validators.RequiredValidator()]),
 			stores: null,
 			store: new FormControl(null, [Validators.RequiredValidator()]),
-			storeTerms: new FormControl(null, [hasStore]),
 			checkRequest: window.antiforgery,
 			checkField: '',
 		});
 		const controls = this.controls = form.controls;
+		function getDataGroup() {
+			// console.log(form.controls.data);
+			return form.controls.data;
+		}
 		form.changes$.pipe(
 			takeUntil(this.unsubscribe$)
 		).subscribe((_) => {
@@ -335,7 +335,6 @@ export class CartComponent extends Component {
 	}
 
 	onNext(patch) {
-		this.form.touched = false;
 		this.setStep(this.step + 1);
 		this.onPatch(patch);
 	}
@@ -359,9 +358,6 @@ export class CartComponent extends Component {
 					this.errorDelivery = errorDelivery;
 					this.onAfterPatch(true);
 				});
-				break;
-			case CartSteps.Recap:
-				this.controls.storeTerms.statusSubject.next(null);
 				break;
 			default:
 				this.onAfterPatch(skipUpdate);
@@ -797,16 +793,6 @@ export class CartComponent extends Component {
 		}, errorDiscount => {
 			this.errorDiscount = errorDiscount;
 		});
-	}
-
-	onRecap(_) {
-		const form = this.form;
-		// console.log('CartComponent.onRecap', form.controls.storeTerms.valid);
-		if (form.controls.storeTerms.valid) {
-			this.onNext();
-		} else {
-			this.touchForm();
-		}
 	}
 
 	onTimetableToggle(event) {

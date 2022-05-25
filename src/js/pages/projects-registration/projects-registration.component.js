@@ -4,6 +4,7 @@ import { first, takeUntil, tap } from 'rxjs/operators';
 import { GtmService } from '../../common/gtm/gtm.service';
 import { LocomotiveScrollService } from '../../common/locomotive-scroll/locomotive-scroll.service';
 import { FormService } from '../../controls/form.service';
+import RequiredIfValidator from '../../controls/required-if.validator';
 import { ProjectsRegistrationService } from './projects-registration.service';
 
 export class ProjectsRegistrationComponent extends Component {
@@ -34,10 +35,10 @@ export class ProjectsRegistrationComponent extends Component {
 			products: new FormControl(null, [Validators.RequiredValidator()]),
 			picture: new FormControl(null),
 			privacy: new FormControl(null, [Validators.RequiredTrueValidator()]),
-			// newsletter: new FormControl(null, [Validators.RequiredValidator()]),
-			// commercial: new FormControl(null, [Validators.RequiredValidator()]),
-			// promotion: new FormControl(null, [Validators.RequiredValidator()]),
-			// newsletterLanguage: new FormControl(null, [RequiredIfValidator(() => Boolean(this.form.value.newsletter))]),
+			//newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+			//commercial: new FormControl(null, [Validators.RequiredValidator()]),
+			//promotion: new FormControl(null, [Validators.RequiredValidator()]),
+			//newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
 			checkRequest: window.antiforgery,
 			checkField: '',
 		});

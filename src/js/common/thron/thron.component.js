@@ -78,7 +78,7 @@ export class ThronComponent extends Component {
 		const { node } = getContext(this);
 		const id = this.target.id;
 		const player = this.player;
-		if (!this.controls) {
+		if (node.hasAttribute('autoplay')) {
 			const mediaContainer = player.mediaContainer();
 			const video = mediaContainer.querySelector('video');
 			video.setAttribute('playsinline', 'true');
@@ -137,37 +137,43 @@ export class ThronComponent extends Component {
 	}
 
 	playVideo() {
-		const { node } = getContext(this);
-		const id = this.target.id;
-		const player = this.player;
-		const status = player.status();
-		// console.log('ThronDirective.playVideo', id, status);
-		if (status && !status.playing) {
-			player.play();
+		if (this.target) {
+			const { node } = getContext(this);
+			const id = this.target.id;
+			const player = this.player;
+			const status = player.status();
+			// console.log('ThronDirective.playVideo', id, status);
+			if (status && !status.playing) {
+				player.play();
+			}
 		}
 	}
 
 	pauseVideo() {
-		const { node } = getContext(this);
-		const id = this.target.id;
-		const player = this.player;
-		const status = player.status();
-		// console.log('ThronDirective.pauseVideo', id, status);
-		if (status && status.playing) {
-			player.pause();
+		if (this.target) {
+			const { node } = getContext(this);
+			const id = this.target.id;
+			const player = this.player;
+			const status = player.status();
+			// console.log('ThronDirective.pauseVideo', id, status);
+			if (status && status.playing) {
+				player.pause();
+			}
 		}
 	}
 
 	toggle() {
-		const { node } = getContext(this);
-		const id = this.target.id;
-		const player = this.player;
-		const status = player.status();
-		// console.log('ThronDirective.pauseVideo', id, status);
-		if (status && status.playing) {
-			player.pause();
-		} else {
-			player.play();
+		if (this.target) {
+			const { node } = getContext(this);
+			const id = this.target.id;
+			const player = this.player;
+			const status = player.status();
+			// console.log('ThronDirective.pauseVideo', id, status);
+			if (status && status.playing) {
+				player.pause();
+			} else {
+				player.play();
+			}
 		}
 	}
 

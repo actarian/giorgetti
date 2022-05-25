@@ -122,7 +122,6 @@ export class MapComponent extends Component {
 						${item.phone ? `<a class="card__phone" href="tel:${item.phone}">${item.phone}</a>` : ''}
 						${item.fax ? `<a class="card__fax" href="tel:${item.fax}">${item.fax}</a>` : ''}
 						${item.email ? `<a class="card__email" href="mailto:${item.email}">${item.email}</a>` : ''}
-						${item.website ? `<a class="card__email" href="${item.website}">${item.website}</a>` : ''}
 					</div>
 				</div>`;
 				/*

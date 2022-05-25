@@ -301,7 +301,6 @@
 										</div>
 									</div>
 								</div>
-								<div control-checkbox [control]="controls.storeTerms" label="Sì, accetto le &amp;lt;a href=&amp;quot;/it/condizioni&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;Condizioni&amp;lt;/a&gt;" (change)="onRevalidate()"></div>
 								<div class="group--timetable" *if="selectedStore.timetable.length">
 									<button type="button" class="btn--accordion" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
 										<span>Orari di apertura</span>
@@ -427,7 +426,7 @@
 					<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 						<div class="group--cart">
 							<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>
-							<button type="button" class="btn--primary" (click)="onRecap($event)">Vai al pagamento</button>
+							<button type="button" class="btn--primary" (click)="onNext($event)">Vai al pagamento</button>
 						</div>
 					</div>
 				</div>
