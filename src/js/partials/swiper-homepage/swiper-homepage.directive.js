@@ -10,13 +10,11 @@ export class SwiperHomepageDirective extends SwiperDirective {
 			speed: 600,
 			keyboardControl: true,
 			mousewheelControl: false,
-			/*
 			autoplay: {
 				delay: 5000,
 				disableOnInteraction: true,
 				pauseOnMouseEnter: true,
 			},
-			*/
 			keyboard: {
 				enabled: true,
 				onlyInViewport: true,
@@ -24,6 +22,10 @@ export class SwiperHomepageDirective extends SwiperDirective {
 			pagination: {
 				el: '.swiper-pagination',
 				clickable: true,
+			},
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
 			},
 		};
 		const { node } = getContext(this);

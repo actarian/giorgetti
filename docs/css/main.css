@@ -4057,7 +4057,7 @@ h6 {
       width: 18px;
       height: 18px;
       border-radius: 9px;
-      border: 2px solid rgba(22, 37, 91, 0.5);
+      border: 2px solid rgba(0, 0, 0, 0.5);
       background: transparent;
       opacity: 1;
       outline: none; }
@@ -4072,7 +4072,7 @@ h6 {
         width: 8px;
         height: 8px;
         border-radius: 4px;
-        background: #16255b;
+        background: #000000;
         opacity: 0;
         transition: opacity ease-in-out 350ms; }
       [swiper-homepage] .swiper-pagination-bullet:hover:before, [swiper-products-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-projects-proposition] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-gallery] .swiper-container .swiper-pagination-bullet:hover:before, [swiper-news-proposition] .swiper-container .swiper-pagination-bullet:hover:before {
@@ -6620,7 +6620,7 @@ test-component code {
   .card--hero-homepage .card__picture {
     position: relative;
     width: 100%;
-    padding-top: 47.61905%;
+    padding-top: 43.47826%;
     overflow: hidden;
     position: relative; }
     .card--hero-homepage .card__picture > img,
@@ -6922,6 +6922,36 @@ test-component code {
 [swiper-homepage] .swiper-wrapper {
   display: flex;
   align-items: stretch; }
+
+[swiper-homepage] .swiper-slide {
+  width: 100vw; }
+
+[swiper-homepage] .swiper-button-next svg,
+[swiper-homepage] .swiper-button-prev svg {
+  display: none; }
+
+[swiper-homepage] .swiper-button-next:after,
+[swiper-homepage] .swiper-button-prev:after {
+  color: white;
+  mix-blend-mode: difference; }
+
+[swiper-homepage] .swiper-pagination {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  padding: 10px 0;
+  margin: 0;
+  z-index: 1; }
+
+[swiper-homepage] .swiper-pagination-bullet {
+  border: 2px solid rgba(255, 255, 255, 0.5); }
+  [swiper-homepage] .swiper-pagination-bullet:before {
+    background: #ffffff; }
 
 .card--product-proposition {
   position: relative;

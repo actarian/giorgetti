@@ -3210,7 +3210,8 @@ SvgIconStructure.meta = {
 };
 /*
 <svg class="copy" width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#copy"></use></svg>
-*/var SwiperDirective = /*#__PURE__*/function (_Component) {
+*/var UID = 0;
+var SwiperDirective = /*#__PURE__*/function (_Component) {
   _inheritsLoose(SwiperDirective, _Component);
 
   function SwiperDirective() {
@@ -3225,9 +3226,12 @@ SvgIconStructure.meta = {
       spaceBetween: 0,
       centeredSlides: true,
       speed: 600,
+
+      /*
       autoplay: {
-        delay: 5000
+      	delay: 5000,
       },
+      */
       keyboardControl: true,
       mousewheelControl: false,
       pagination: {
@@ -3325,7 +3329,7 @@ SvgIconStructure.meta = {
         var swiper = _this.swiper;
 
         if (swiper) {
-          console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
+          // console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
           var slide = swiper.slides[swiper.realIndex];
 
           if (slide.classList.contains('swiper-slide--video')) {
@@ -3408,15 +3412,18 @@ SvgIconStructure.meta = {
   _proto.onCheckAutoplay = function onCheckAutoplay() {
     var _this2 = this;
 
+    var _getContext2 = rxcomp.getContext(this),
+        node = _getContext2.node;
+
+    if (!node.hasAttribute('autoplay')) {
+      return;
+    }
+
     if (this.to) {
       clearTimeout(this.to);
     }
 
-    var _getContext2 = rxcomp.getContext(this),
-        node = _getContext2.node;
-
-    var video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]');
-    console.log('onCheckAutoplay.video', video);
+    var video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]'); // console.log('onCheckAutoplay.video', video);
 
     if (!video) {
       this.to = setTimeout(function () {
@@ -3438,7 +3445,7 @@ SvgIconStructure.meta = {
   };
 
   _proto.onThronComplete = function onThronComplete(event) {
-    console.log('onThronComplete');
+    // console.log('onThronComplete');
     this.onNext();
   };
 
@@ -3457,6 +3464,8 @@ SvgIconStructure.meta = {
   };
 
   _proto.swiperInitOrUpdate_ = function swiperInitOrUpdate_() {
+    var _this3 = this;
+
     if (this.enabled) {
       var target = this.target;
       var swiper = this.swiper;
@@ -3464,13 +3473,27 @@ SvgIconStructure.meta = {
       if (swiper) {
         swiper.update(); // swiper.slideTo(0, 0);
       } else {
+        this.id = ++UID;
+        target.setAttribute('swiper-id', this.id);
+
+        if (this.options.pagination && this.options.pagination.el) {
+          this.options.pagination.el = "[swiper-id=\"" + this.id + "\"] " + this.options.pagination.el;
+        }
+
+        if (this.options.navigation && this.options.navigation.nextEl) {
+          this.options.navigation.nextEl = "[swiper-id=\"" + this.id + "\"] " + this.options.navigation.nextEl;
+        }
+
+        if (this.options.navigation && this.options.navigation.prevEl) {
+          this.options.navigation.prevEl = "[swiper-id=\"" + this.id + "\"] " + this.options.navigation.prevEl;
+        } // console.log(this.options);
+
+
         var on = this.options.on || (this.options.on = {});
         var callback = on.init;
 
         if (!on.init || !on.init.swiperDirectiveInit) {
           on.init = function () {
-            var _this3 = this;
-
             gsap.to(target, {
               duration: 0.4,
               opacity: 1,
@@ -3480,6 +3503,8 @@ SvgIconStructure.meta = {
               if (typeof callback === 'function') {
                 callback.apply(_this3, [swiper, element, scope]);
               }
+
+              _this3.onCheckAutoplay();
             }, 1);
           };
 
@@ -3506,7 +3531,7 @@ SvgIconStructure.meta = {
           x.removeEventListener('load', onLoad);
 
           if (swiper.activeIndex > 0) {
-            console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
+            // console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
             setTimeout(function () {
               swiper.slideTo(0, 0);
             }, 1);
@@ -3870,7 +3895,7 @@ CommonModule.meta = {
   imports: [],
   declarations: [].concat(factories, pipes),
   exports: [].concat(factories, pipes)
-};var UID = 10000;
+};var UID$1 = 10000;
 var ControlComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ControlComponent, _Component);
 
@@ -3881,7 +3906,7 @@ var ControlComponent = /*#__PURE__*/function (_Component) {
   var _proto = ControlComponent.prototype;
 
   _proto.onInit = function onInit() {
-    this.uid = ++UID;
+    this.uid = ++UID$1;
     this.label = this.label || 'label';
   };
 
@@ -12198,14 +12223,11 @@ SwiperGalleryDirective.meta = {
       speed: 600,
       keyboardControl: true,
       mousewheelControl: false,
-
-      /*
       autoplay: {
-      	delay: 5000,
-      	disableOnInteraction: true,
-      	pauseOnMouseEnter: true,
+        delay: 5000,
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true
       },
-      */
       keyboard: {
         enabled: true,
         onlyInViewport: true
@@ -12213,6 +12235,10 @@ SwiperGalleryDirective.meta = {
       pagination: {
         el: '.swiper-pagination',
         clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
       }
     };
 

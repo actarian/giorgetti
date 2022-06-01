@@ -1,6 +1,8 @@
 import { Component, getContext, getContextByNode } from 'rxcomp';
 import { Subject } from 'rxjs';
 
+let UID = 0;
+
 export class SwiperDirective extends Component {
 
 	onInit() {
@@ -9,9 +11,11 @@ export class SwiperDirective extends Component {
 			spaceBetween: 0,
 			centeredSlides: true,
 			speed: 600,
+			/*
 			autoplay: {
 				delay: 5000,
 			},
+			*/
 			keyboardControl: true,
 			mousewheelControl: false,
 			pagination: {
@@ -100,7 +104,7 @@ export class SwiperDirective extends Component {
 			on.slideChange = () => {
 				const swiper = this.swiper;
 				if (swiper) {
-					console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
+					// console.log('SwiperDirective.onSlideChange', swiper.activeIndex);
 
 					const slide = swiper.slides[swiper.realIndex];
 					if (slide.classList.contains('swiper-slide--video')) {
@@ -176,12 +180,15 @@ export class SwiperDirective extends Component {
 	}
 
 	onCheckAutoplay() {
+		const { node } = getContext(this);
+		if (!node.hasAttribute('autoplay')) {
+			return;
+		}
 		if (this.to) {
 			clearTimeout(this.to);
 		}
-		const { node } = getContext(this);
 		const video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]');
-		console.log('onCheckAutoplay.video', video);
+		// console.log('onCheckAutoplay.video', video);
 		if (!video) {
 			this.to = setTimeout(() => {
 				this.onNext();
@@ -201,7 +208,7 @@ export class SwiperDirective extends Component {
 	}
 
 	onThronComplete(event) {
-		console.log('onThronComplete');
+		// console.log('onThronComplete');
 		this.onNext();
 	}
 
@@ -227,10 +234,22 @@ export class SwiperDirective extends Component {
 				swiper.update();
 				// swiper.slideTo(0, 0);
 			} else {
+				this.id = ++UID;
+				target.setAttribute('swiper-id', this.id);
+				if (this.options.pagination && this.options.pagination.el) {
+					this.options.pagination.el = `[swiper-id="${this.id}"] ${this.options.pagination.el}`;
+				}
+				if (this.options.navigation && this.options.navigation.nextEl) {
+					this.options.navigation.nextEl = `[swiper-id="${this.id}"] ${this.options.navigation.nextEl}`;
+				}
+				if (this.options.navigation && this.options.navigation.prevEl) {
+					this.options.navigation.prevEl = `[swiper-id="${this.id}"] ${this.options.navigation.prevEl}`;
+				}
+				// console.log(this.options);
 				const on = this.options.on || (this.options.on = {});
 				const callback = on.init;
 				if (!on.init || !on.init.swiperDirectiveInit) {
-					on.init = function() {
+					on.init = () => {
 						gsap.to(target, {
 							duration: 0.4,
 							opacity: 1,
@@ -240,6 +259,7 @@ export class SwiperDirective extends Component {
 							if (typeof callback === 'function') {
 								callback.apply(this, [swiper, element, scope]);
 							}
+							this.onCheckAutoplay();
 						}, 1);
 					};
 					on.init.swiperDirectiveInit = true;
@@ -258,7 +278,7 @@ export class SwiperDirective extends Component {
 				const onLoad = () => {
 					x.removeEventListener('load', onLoad);
 					if (swiper.activeIndex > 0) {
-						console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
+						// console.log('SwiperDirective.imgOnLoad', swiper.activeIndex);
 						setTimeout(() => {
 							swiper.slideTo(0, 0);
 						}, 1);
