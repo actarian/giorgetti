@@ -76,6 +76,7 @@ const defaultOptions = {
 		browse: 'Sfoglia',
 		cancel: 'Annulla',
 		error_email: 'Email non valida',
+		error_phoneNumber: 'Inserire un numero di telefono nel formato +39-xxx-xxxxxxx',
 		error_match: 'I campi non corrispondono',
 		error_required: 'Campo obbligatorio',
 		loading: 'caricamento',

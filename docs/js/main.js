@@ -370,6 +370,7 @@ var defaultOptions = {
     browse: 'Sfoglia',
     cancel: 'Annulla',
     error_email: 'Email non valida',
+    error_phoneNumber: 'Inserire un numero di telefono nel formato +39-xxx-xxxxxxx',
     error_match: 'I campi non corrispondono',
     error_required: 'Campo obbligatorio',
     loading: 'caricamento',
@@ -584,6 +585,7 @@ if (window.STATIC) {
       browse: 'Sfoglia',
       cancel: 'Annulla',
       error_email: 'Email non valida',
+      error_phoneNumber: 'Inserire un numero di telefono nel formato +39-xxx-xxxxxxx',
       error_match: 'I campi non corrispondono',
       error_required: 'Campo obbligatorio',
       loading: 'caricamento',
@@ -3421,7 +3423,8 @@ var SwiperDirective = /*#__PURE__*/function (_Component) {
 
     if (this.to) {
       clearTimeout(this.to);
-    }
+    } // console.log('onCheckAutoplay', Array.prototype.slice.call(node.querySelectorAll('.swiper-slide')).map(x => x.classList.toString()).join(', '));
+
 
     var video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]'); // console.log('onCheckAutoplay.video', video);
 
@@ -3441,6 +3444,13 @@ var SwiperDirective = /*#__PURE__*/function (_Component) {
       } else {
         swiper.slideNext();
       }
+    }
+  };
+
+  _proto.onThronReady = function onThronReady(event) {
+    // console.log('onThronReady', event);
+    if (this.swiper) {
+      this.onToggleVideo(this.swiper);
     }
   };
 
@@ -4233,7 +4243,7 @@ _defineProperty(KeyboardService, "keys", {});var ControlCustomSelectComponent = 
   };
 
   _proto.setOption = function setOption(item) {
-    // console.log('setOption', item, this.isMultiple);
+    console.log('setOption', item, this.isMultiple);
     var value;
 
     if (this.isMultiple) {
@@ -5653,23 +5663,23 @@ var GtmService = /*#__PURE__*/function () {
   };
 
   return FormService;
-}();function RequiredIfValidator(fieldName, formGroup, shouldBe) {
-  return new rxcompForm.FormValidator(function (value) {
-    var field = null;
+}();function RequiredIfValidator(condition) {
+  return new rxcompForm.FormValidator(function (value, params) {
+    var condition = params.condition;
 
-    if (typeof formGroup === 'function') {
-      field = formGroup().get(fieldName);
-    } else if (formGroup) {
-      field = formGroup.get(fieldName);
-    } // console.log('RequiredIfValidator', field.value, shouldBe != null ? field.value === shouldBe : field.value);
+    if (!typeof condition === 'function') {
+      return null;
+    }
 
-
-    return !value && field && (shouldBe != null ? field.value === shouldBe : field.value) ? {
-      required: {
-        value: value,
-        requiredIf: fieldName
-      }
-    } : null;
+    if (Boolean(condition()) === true) {
+      return value == null || value.length === 0 ? {
+        required: true
+      } : null;
+    } else {
+      return null;
+    }
+  }, {
+    condition: condition
   });
 }var CareersService = /*#__PURE__*/function () {
   function CareersService() {}
@@ -5714,14 +5724,16 @@ var GtmService = /*#__PURE__*/function () {
     this.error = null;
     this.success = false;
     this.positions = [];
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
       telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       domain: new rxcompForm.FormControl(this.position && this.position.domain ? this.position.domain.id : null, [rxcompForm.Validators.RequiredValidator()]),
       position: new rxcompForm.FormControl(this.position ? this.position.id : null),
@@ -6604,6 +6616,15 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     this.delivery = null;
     this.discount = null;
     this.paymentMethod = null;
+    var hasInvoice = RequiredIfValidator(function () {
+      return Boolean(_this2.form.value.data.invoice);
+    });
+    var hasBilling = RequiredIfValidator(function () {
+      return Boolean(_this2.form.value.data.billing);
+    });
+    var hasStore = RequiredIfValidator(function () {
+      return Boolean(_this2.selectedStore);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       step: this.step,
       items: null,
@@ -6623,21 +6644,21 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
         message: null,
         invoice: null,
         invoiceData: new rxcompForm.FormGroup({
-          taxNumber: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
-          sdi: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)]),
-          pec: new rxcompForm.FormControl(null, [RequiredIfValidator('invoice', getDataGroup)])
+          taxNumber: new rxcompForm.FormControl(null, [hasInvoice]),
+          sdi: new rxcompForm.FormControl(null, [hasInvoice]),
+          pec: new rxcompForm.FormControl(null, [hasInvoice])
         }),
         billing: null,
         billingData: new rxcompForm.FormGroup({
-          company: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          firstName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          lastName: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          telephone: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          address: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          zipCode: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          city: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          province: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)]),
-          country: new rxcompForm.FormControl(null, [RequiredIfValidator('billing', getDataGroup)])
+          company: new rxcompForm.FormControl(null, [hasBilling]),
+          firstName: new rxcompForm.FormControl(null, [hasBilling]),
+          lastName: new rxcompForm.FormControl(null, [hasBilling]),
+          telephone: new rxcompForm.FormControl(null, [hasBilling]),
+          address: new rxcompForm.FormControl(null, [hasBilling]),
+          zipCode: new rxcompForm.FormControl(null, [hasBilling]),
+          city: new rxcompForm.FormControl(null, [hasBilling]),
+          province: new rxcompForm.FormControl(null, [hasBilling]),
+          country: new rxcompForm.FormControl(null, [hasBilling])
         }),
         conditions: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
         privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
@@ -6655,16 +6676,12 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
       paymentMethod: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       stores: null,
       store: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      // @temp: storeTerms temporaneamente disabilitato
+      // storeTerms: new FormControl(null, [hasStore]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
     var controls = this.controls = form.controls;
-
-    function getDataGroup() {
-      // console.log(form.controls.data);
-      return form.controls.data;
-    }
-
     form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
       _this2.pushChanges();
 
@@ -6888,6 +6905,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onNext = function onNext(patch) {
+    this.form.touched = false;
     this.setStep(this.step + 1);
     this.onPatch(patch);
   };
@@ -6923,6 +6941,10 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 
           _this3.onAfterPatch(true);
         });
+        break;
+
+      case CartSteps.Recap:
+        this.controls.storeTerms.statusSubject.next(null);
         break;
 
       default:
@@ -7446,6 +7468,16 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     });
   };
 
+  _proto.onRecap = function onRecap(_) {
+    var form = this.form; // console.log('CartComponent.onRecap', form.controls.storeTerms.valid);
+    // @temp: storeTerms temporaneamente disabilitato
+    // if (form.controls.storeTerms.valid) {
+
+    {
+      this.onNext();
+    }
+  };
+
   _proto.onTimetableToggle = function onTimetableToggle(event) {
     if (this.selectedStore) {
       this.selectedStore.showTimetable = !this.selectedStore.showTimetable;
@@ -7616,6 +7648,9 @@ CartComponent.meta = {
 
     this.error = null;
     this.success = false;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -7628,7 +7663,7 @@ CartComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -7917,7 +7952,22 @@ MagazineRequestModalComponent.meta = {
 }(rxcomp.Component);
 MagazineRequestPropositionComponent.meta = {
   selector: '[magazine-request-proposition]'
-};var MagazineRequestService = /*#__PURE__*/function () {
+};/**
+ * a phone number pattern validator
+ */
+
+function PhoneNumberValidator() {
+  var regex = /^(\+\d{1,2}){1}[\s|-]?[(]?(\d+)[\)]?[\s|-]?(\d+)?$/;
+  return new rxcompForm.FormValidator(function (value, params) {
+    if (!value) {
+      return null;
+    }
+
+    return regex.test(value) ? null : {
+      phoneNumber: true
+    };
+  });
+}var MagazineRequestService = /*#__PURE__*/function () {
   function MagazineRequestService() {}
 
   MagazineRequestService.data$ = function data$() {
@@ -7952,6 +8002,12 @@ MagazineRequestPropositionComponent.meta = {
     this.response = null;
     this.error = null;
     this.success = false;
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
+    var hasPrintedCopy = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.printedCopy);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       magazine: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       //
@@ -7961,16 +8017,16 @@ MagazineRequestPropositionComponent.meta = {
       telephone: new rxcompForm.FormControl(null),
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       //
       printedCopy: new rxcompForm.FormControl(null),
       //
-      city: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      province: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      zipCode: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      address: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
-      streetNumber: new rxcompForm.FormControl(null, [new RequiredIfValidator('printedCopy', form, true)]),
+      city: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      province: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      zipCode: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      address: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      streetNumber: new rxcompForm.FormControl(null, [hasPrintedCopy]),
+      phoneNumber: new rxcompForm.FormControl(null, [hasPrintedCopy, PhoneNumberValidator()]),
       //
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -7997,6 +8053,7 @@ MagazineRequestPropositionComponent.meta = {
       controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
       controls.country.options = FormService.toSelectOptions(data.country.options);
       controls.region.options = FormService.toSelectOptions(data.region.options);
+      controls.province.options = FormService.toSelectOptions(data.province.options);
 
       _this2.pushChanges();
     }));
@@ -8062,6 +8119,11 @@ MagazineRequestPropositionComponent.meta = {
     } else {
       form.touched = true;
     }
+  };
+
+  _proto.onCountryDidChange = function onCountryDidChange() {
+    console.log('MagazineRequestComponent.onCountryDidChange');
+    this.controls.province.value = null;
   };
 
   return MagazineRequestComponent;
@@ -8757,6 +8819,9 @@ NewsComponent.meta = {
     this.success = false;
     var email = LocationService.deserialize('email'); // console.log('NewsletterComponent', email);
 
+    var isItaly = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.country === 114);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -8764,8 +8829,7 @@ NewsComponent.meta = {
       occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       telephone: new rxcompForm.FormControl(null),
       country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      region: new rxcompForm.FormControl(null, [new RequiredIfValidator('country', form, 114)]),
-      // required if country === 114, Italy
+      region: new rxcompForm.FormControl(null, [isItaly]),
       city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       engagement: new rxcompForm.FormControl(null),
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
@@ -9534,10 +9598,10 @@ ProjectsRegistrationModalComponent.meta = {
       products: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       picture: new rxcompForm.FormControl(null),
       privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
-      //newsletter: new FormControl(null, [Validators.RequiredValidator()]),
-      //commercial: new FormControl(null, [Validators.RequiredValidator()]),
-      //promotion: new FormControl(null, [Validators.RequiredValidator()]),
-      //newsletterLanguage: new FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      // newsletter: new FormControl(null, [Validators.RequiredValidator()]),
+      // commercial: new FormControl(null, [Validators.RequiredValidator()]),
+      // promotion: new FormControl(null, [Validators.RequiredValidator()]),
+      // newsletterLanguage: new FormControl(null, [RequiredIfValidator(() => Boolean(this.form.value.newsletter))]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -12223,11 +12287,14 @@ SwiperGalleryDirective.meta = {
       speed: 600,
       keyboardControl: true,
       mousewheelControl: false,
+
+      /*
       autoplay: {
-        delay: 5000,
-        disableOnInteraction: true,
-        pauseOnMouseEnter: true
+      	delay: 5000,
+      	disableOnInteraction: true,
+      	pauseOnMouseEnter: true,
       },
+      */
       keyboard: {
         enabled: true,
         onlyInViewport: true
@@ -13489,6 +13556,9 @@ UserEditPasswordComponent.meta = {
     this.error = null;
     this.success = false;
     this.responseMessage = null;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
@@ -13501,7 +13571,7 @@ UserEditPasswordComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -13971,6 +14041,9 @@ UserSigninComponent.meta = {
     this.error = null;
     this.success = false;
     this.responseMessage = null;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
     var form = this.form = new rxcompForm.FormGroup({
       firstName: new rxcompForm.FormControl(this.me.firstName || null, [rxcompForm.Validators.RequiredValidator()]),
       lastName: new rxcompForm.FormControl(this.me.lastName || null, [rxcompForm.Validators.RequiredValidator()]),
@@ -13985,7 +14058,7 @@ UserSigninComponent.meta = {
       newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      newsletterLanguage: new rxcompForm.FormControl(null, [RequiredIfValidator('newsletter', form)]),
+      newsletterLanguage: new rxcompForm.FormControl(null, [hasNewsletter]),
       checkRequest: window.antiforgery,
       checkField: ''
     });

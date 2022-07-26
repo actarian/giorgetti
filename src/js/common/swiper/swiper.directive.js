@@ -187,6 +187,7 @@ export class SwiperDirective extends Component {
 		if (this.to) {
 			clearTimeout(this.to);
 		}
+		// console.log('onCheckAutoplay', Array.prototype.slice.call(node.querySelectorAll('.swiper-slide')).map(x => x.classList.toString()).join(', '));
 		const video = node.querySelector('.swiper-slide-active video, .swiper-slide-active [thron]');
 		// console.log('onCheckAutoplay.video', video);
 		if (!video) {
@@ -204,6 +205,13 @@ export class SwiperDirective extends Component {
 			} else {
 				swiper.slideNext();
 			}
+		}
+	}
+
+	onThronReady(event) {
+		// console.log('onThronReady', event);
+		if (this.swiper) {
+			this.onToggleVideo(this.swiper);
 		}
 	}
 
@@ -294,7 +302,6 @@ export class SwiperDirective extends Component {
 			this.swiper.destroy();
 		}
 	}
-
 }
 
 SwiperDirective.meta = {

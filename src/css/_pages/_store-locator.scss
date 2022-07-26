@@ -208,7 +208,10 @@
 
 	.card__address,
 	.card__location,
-	.card__country {
+	.card__city,
+	.card__country,
+	.card__contact,
+	.card__title {
 		font-size: 14px;
 	}
 
@@ -221,6 +224,15 @@
 		font-weight: 600;
 		margin-bottom: 4px;
 		transition: none;
+	}
+
+	.card__title {
+		font-weight: 600;
+		margin: 1em 0 0.5em 0;
+	}
+
+	.card__contact {
+		font-size: 1.1em;
 	}
 
 	.card__cta {

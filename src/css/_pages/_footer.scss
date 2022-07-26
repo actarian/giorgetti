@@ -321,6 +321,10 @@
 		text-transform: uppercase;
 	}
 
+	a {
+		@extend %btn-link;
+	}
+
 	// .card__abstract { font-size: 16px; }
 
 	@include media-down(xs) {
@@ -411,5 +415,81 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 15px;
+	}
+}
+
+.group--postfooter {
+	.row {
+		align-items: flex-end;
+	}
+
+	.logo--fsc {
+		&>img {
+			aspect-ratio: 149 / 172;
+			max-width: 100%;
+			height: auto !important;
+		}
+	}
+
+	.btn--altagamma {
+		&>img {
+			aspect-ratio: 181 / 44;
+			max-width: 100%;
+			height: auto !important;
+		}
+	}
+
+	.btn--bmc {
+		&>img {
+			aspect-ratio: 153 / 47;
+			max-width: 100%;
+			height: auto !important;
+		}
+	}
+
+	@include media-down(md) {
+		.logo--fsc {
+			display: flex;
+			justify-content: center;
+			padding: 40px 0 10px;
+		}
+	}
+}
+
+.group--credits {
+	padding-top: 30px;
+
+	.btn--websolute {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@include media-down(sm) {
+		.row {
+			&>div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+		}
+	}
+
+	@include media-up(md) {
+		.btn--websolute {
+			height: 100%;
+		}
+	}
+
+	@include media-up(lg) {
+		.row {
+			align-items: center;
+
+			&>:last-child {
+				text-align: center;
+			}
+		}
 	}
 }

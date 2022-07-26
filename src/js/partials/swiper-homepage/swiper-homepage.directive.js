@@ -10,11 +10,13 @@ export class SwiperHomepageDirective extends SwiperDirective {
 			speed: 600,
 			keyboardControl: true,
 			mousewheelControl: false,
+			/*
 			autoplay: {
 				delay: 5000,
 				disableOnInteraction: true,
 				pauseOnMouseEnter: true,
 			},
+			*/
 			keyboard: {
 				enabled: true,
 				onlyInViewport: true,

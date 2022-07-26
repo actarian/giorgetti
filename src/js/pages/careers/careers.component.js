@@ -16,13 +16,14 @@ export class CareersComponent extends Component {
 		this.error = null;
 		this.success = false;
 		this.positions = [];
+		const isItaly = RequiredIfValidator(() => Boolean(this.form.value.country === 114));
 		const form = this.form = new FormGroup({
 			firstName: new FormControl(null, [Validators.RequiredValidator()]),
 			lastName: new FormControl(null, [Validators.RequiredValidator()]),
 			email: new FormControl(null, [Validators.RequiredValidator(), Validators.EmailValidator()]),
 			telephone: new FormControl(null),
 			country: new FormControl(null, [Validators.RequiredValidator()]),
-			region: new FormControl(null, [new RequiredIfValidator('country', form, 114)]), // required if country === 114, Italy
+			region: new FormControl(null, [isItaly]),
 			city: new FormControl(null, [Validators.RequiredValidator()]),
 			domain: new FormControl((this.position && this.position.domain) ? this.position.domain.id : null, [Validators.RequiredValidator()]),
 			position: new FormControl(this.position ? this.position.id : null),

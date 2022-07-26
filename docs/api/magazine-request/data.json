@@ -1110,6 +1110,19 @@
       }
     ]
   },
+  "province": {
+    "label": "Provincia",
+    "options": [
+      {
+        "value": 1,
+        "label": "Pesaro e Urbino"
+      },
+      {
+        "value": 2,
+        "label": "Roma"
+      }
+    ]
+  },
   "magazine": {
     "label": "Professione",
     "options": [

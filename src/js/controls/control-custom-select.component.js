@@ -52,7 +52,7 @@ export class ControlCustomSelectComponent extends ControlComponent {
 	}
 
 	setOption(item) {
-		// console.log('setOption', item, this.isMultiple);
+		console.log('setOption', item, this.isMultiple);
 		let value;
 		if (this.isMultiple) {
 			const value = this.control.value || [];

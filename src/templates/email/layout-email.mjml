@@ -75,18 +75,17 @@
     <!-- Text -->
     <mj-section padding="20px 10px 20px 10px">
       <mj-column width="100%">
+        <!-- Title -->
         <mj-text align="left" color="#35302C" font-family="BauerBodoni, serif" font-size="36px" line-height="46px" letter-spacing="-2px" text-transform="uppercase">
           Il nuovo volto di palazzo Beccaguti Cavriani
         </mj-text>
-      </mj-column>
-      <mj-column width="100%">
+        <!-- Abstract -->
         <mj-text align="left" color="#A19C96" font-family="AvantGarde, sans-serif" font-size="19px" line-height="26px" text-transform="uppercase">
           <p padding="0">
             The three villas designed by Femont Galvan Designers are in the most wonderful locations in Spain and they will make you dream!
           </p>
         </mj-text>
-      </mj-column>
-      <mj-column width="100%">
+        <!-- Text -->
         <mj-text align="left" font-size="15px" color="#35302C" line-height="22px">
           <p>
             Giorgetti pieces design the spaces of these projects in a wonderful sequence of environments and moods.
@@ -100,6 +99,9 @@
           <p>
             A refined and warm atmosphere like that of the <a href="https://www.giorgettimeda.com/en/projects/valderrama" style="color:#35302C; font-weight:bold;" target="_blank">"Valderrama"</a> project: a selection of natural materials, wood, leather, textiles and marble, in combination with a subtle sandy palette. The balance between materials and colours is the key to achieve this home feeling of effortless cosiness.
           </p>
+        </mj-text>
+        <!-- Link -->
+        <mj-text align="left" font-size="15px" color="#35302C" line-height="22px">
           <p>
             <a href="https://www.giorgettimeda.com/en/projects" style="color:#35302C; font-weight:bold;" target="_blank">Click here to discover all the Giorgetti's projects</a>
           </p>
