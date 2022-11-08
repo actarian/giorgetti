@@ -43,7 +43,15 @@
 
     <!-- Body -->
 
-    <!-- Hero -->
+    <!-- Hero-1 -->
+    <mj-section padding="0">
+      <mj-column width="100%">
+        <mj-image padding="0" src="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg"></mj-image>
+      </mj-column>
+    </mj-section>
+    <!-- /Hero-1 -->
+
+    <!-- Hero-2 -->
     <mj-hero background-url="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg" mode="fixed-height" height="330px" background-width="600px" background-height="330px" background-color="#d1cdca" padding="80px 15px">
       <mj-text padding="40px 0 20px 0" align="center" color="#ffffff" font-family="BauerBodoni, serif" font-size="48px" line-height="48px" letter-spacing="-2px" text-transform="uppercase">
         Nuovi arrivi
@@ -52,6 +60,7 @@
         Nuovi arrivi
       </mj-button>
     </mj-hero>
+    <!-- /Hero-2 -->
 
     <!-- Text -->
     <mj-section padding="20px 10px 20px 10px">

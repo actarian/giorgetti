@@ -43,9 +43,17 @@
 
     <!-- Body -->
 
-    <!-- Hero -->
+    <!-- Hero-1 -->
+    <mj-section padding="0">
+      <mj-column width="100%">
+        <mj-image padding="0" src="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg"></mj-image>
+      </mj-column>
+    </mj-section>
+    <!-- /Hero-1 -->
+
+    <!-- Hero-2 -->
     <mj-hero background-url="https://www.giorgettimeda.com/media/immagini/7677_n_newsletter-proposta01.jpg" mode="fixed-height" height="280px" background-width="600px" background-height="280px" background-color="#d1cdca" padding="80px 15px"></mj-hero>
-    <!-- /Hero -->
+    <!-- /Hero-2 -->
 
     <!-- Subscription -->
     <mj-section padding="20px 10px 20px 10px">

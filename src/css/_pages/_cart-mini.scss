@@ -154,7 +154,7 @@
 	border-left: 1px solid $background-tertiary;
 	overflow: hidden;
 
-	&>.container {
+	& > .container {
 		height: 100%;
 	}
 
@@ -169,7 +169,7 @@
 		text-transform: uppercase;
 		color: #232221;
 
-		&>span>em {
+		& > span > em {
 			font-style: normal;
 			color: #6A6A6A;
 		}
@@ -212,7 +212,6 @@
 
 	.btn--buy {
 		@extend %btn-primary;
-
 		display: flex;
 		width: 100%;
 		min-width: 0 !important;
@@ -225,7 +224,6 @@
 
 	.btn--secondary {
 		@extend %btn-secondary;
-
 		display: flex;
 		width: 100%;
 		min-width: 0 !important;
@@ -236,7 +234,7 @@
 		}
 	}
 
-	.btn--buy+.btn--secondary {
+	.btn--buy + .btn--secondary {
 		margin-top: 10px;
 	}
 
@@ -252,13 +250,15 @@
 		height: 100vh;
 		right: 0px;
 	}
-	@media(min-width:768px) and (max-width:1024px){
-		height:88vh;
+
+	@media(min-width:768px) and (max-width:1024px) {
+		height: 88vh;
 	}
 
 	@include media-down(xs) {
 		height: calc(100vh - 80px);
 		right: 0;
+		padding-bottom: 40px;
 	}
 }
 

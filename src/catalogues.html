@@ -1,0 +1,67 @@
+<!-- @@master = ./templates/layout.html { "baseHref": "/giorgetti/" } -->
+<!-- @@block = main-->
+
+<main class="main" catalogues>
+
+	<div class="section--breadcrumb">
+		<div class="container">
+			<ul class="nav--breadcrumb">
+				<li class="nav__item"><a href="/giorgetti/">Home</a></li>
+				<li class="nav__item"><a href="/giorgetti/catalogues.html">Cataloghi</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="section--intro-sm">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 offset-md-3 absolute" scroll scrollSpeed="1.5">
+					<div class="background expand--right"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="title">Cataloghi</div>
+					<div class="description">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel dolor cursus, varius augue nec, suscipit est. Vivamus accumsan eget tortor non porta. Morbi imperdiet elementum tincidunt. Proin rhoncus blandit turpis, sed molestie felis. Sed dui magna.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section--press">
+		<div class="container">
+			<!-- spinner -->
+			<div class="spinner" *if="busy"></div>
+			<!-- results -->
+			<div class="listing--press">
+				<div class="listing__item" *for="let item of visibleItems">
+					<a [href]="item.url" [download]="item.fileName" class="card--press">
+						<span class="card__picture">
+							<img loading="lazy" [src]="item.image" />
+							<span class="over" *if="item.abstract || item.title">
+								<span class="over__title" [innerHTML]="item.abstract || item.title"></span>
+							</span>
+						</span>
+						<span class="card__content">
+							<span class="card__date" [innerHTML]="item.date | date : {
+								month: 'long', year: 'numeric'
+							}" *if="item.date"></span>
+							<span class="card__title" [innerHTML]="item.title"></span>
+							<span class="card__abstract" [innerHTML]="item.abstract" *if="item.abstract"></span>
+						</span>
+						<span class="card__cta">
+							<span>Download</span>
+							<svg class="download"><use xlink:href="#download"></use></svg>
+						</span>
+					</a>
+				</div>
+			</div>
+			<!-- more -->
+			<div class="group--cta">
+				<button type="button" class="btn--more" (click)="showMore($event)" *if="filteredItems.length > visibleItems.length">Mostra di più</button>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!-- @@close-->

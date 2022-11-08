@@ -8,6 +8,7 @@ import { AteliersAndStoresComponent } from './pages/ateliers-and-stores/ateliers
 import { CareersModalComponent } from './pages/careers/careers-modal.component';
 import { CareersComponent } from './pages/careers/careers.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CataloguesComponent } from './pages/catalogues/catalogues.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { DealersComponent } from './pages/dealers/dealers.component';
 import { DesignersComponent } from './pages/designers/designers.component';
@@ -25,6 +26,7 @@ import { NewsletterComponent } from './pages/newsletter/newsletter.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail.component';
 import { OrdersModalComponent } from './pages/orders/orders-modal.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { PressComponent } from './pages/press/press.component';
 import { ProductsConfigureComponent } from './pages/products-configure/products-configure.component';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -51,6 +53,7 @@ AppModule.meta = {
 		CareersComponent,
 		CareersModalComponent,
 		CartComponent,
+		CataloguesComponent,
 		ContactsComponent,
 		DealersComponent,
 		DesignersComponent,
@@ -68,6 +71,7 @@ AppModule.meta = {
 		OrdersComponent,
 		OrdersDetailComponent,
 		OrdersModalComponent,
+		PressComponent,
 		ProductsComponent,
 		ProductsConfigureComponent,
 		ProductsDetailComponent,

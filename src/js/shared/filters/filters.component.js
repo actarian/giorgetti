@@ -66,7 +66,7 @@ export class FiltersComponent extends Component {
 
 	onLoad() {
 		const items = this.items;
-		const filters = this.filters;
+		const filters = this.filters || {};
 		Object.keys(filters).forEach(key => {
 			filters[key].mode = filters[key].mode || FilterMode.OR;
 		});

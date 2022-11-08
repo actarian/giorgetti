@@ -112,7 +112,7 @@ export class StoreLocatorComponent extends FiltersComponent {
 						bounds = bounds.union(minimumBounds);
 					}
 					google.maps.event.addListenerOnce(map, 'zoom_changed', function() {
-						this.setZoom(Math.min(11, this.getZoom()));
+						map.setZoom(Math.min(11, map.getZoom()));
 					});
 					map.fitBounds(bounds, 0);
 				} else {
@@ -122,7 +122,7 @@ export class StoreLocatorComponent extends FiltersComponent {
 			} else {
 				const bounds = MapService.getBounds(items);
 				google.maps.event.addListenerOnce(map, 'zoom_changed', function() {
-					this.setZoom(Math.min(11, this.getZoom()));
+					map.setZoom(Math.min(11, map.getZoom()));
 				});
 				map.fitBounds(bounds);
 			}

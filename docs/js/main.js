@@ -4909,6 +4909,11 @@ var FilterItem = /*#__PURE__*/function () {
     var changes = Object.keys(filters).map(function (key) {
       return filters[key].change$;
     });
+
+    if (changes.length === 0) {
+      return rxjs.of(this.filterItems(items));
+    }
+
     return rxjs.merge.apply(void 0, changes.concat([this.filter$])).pipe( // tap(() => console.log(filters)),
     operators.tap(function () {
       return _this.serialize(filters);
@@ -5056,7 +5061,7 @@ var FiltersComponent = /*#__PURE__*/function (_Component) {
     var _this2 = this;
 
     var items = this.items;
-    var filters = this.filters;
+    var filters = this.filters || {};
     Object.keys(filters).forEach(function (key) {
       filters[key].mode = filters[key].mode || FilterMode.OR;
     });
@@ -7614,6 +7619,46 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
 }(rxcomp.Component);
 CartComponent.meta = {
   selector: '[cart]'
+};var CataloguesService = /*#__PURE__*/function () {
+  function CataloguesService() {}
+
+  CataloguesService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/catalogues/all');
+    } else {
+      return ApiService.get$('/catalogues/all.json');
+    }
+  };
+
+  return CataloguesService;
+}();var CataloguesComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(CataloguesComponent, _FiltersComponent);
+
+  function CataloguesComponent() {
+    return _FiltersComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = CataloguesComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([CataloguesService.all$()]);
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      default:
+        return true;
+    }
+  };
+
+  return CataloguesComponent;
+}(FiltersComponent);
+CataloguesComponent.meta = {
+  selector: '[catalogues]'
 };var ContactsService = /*#__PURE__*/function () {
   function ContactsService() {}
 
@@ -9051,6 +9096,46 @@ OrdersDetailComponent.meta = {
 }(rxcomp.Component);
 OrdersComponent.meta = {
   selector: '[orders]'
+};var PressService = /*#__PURE__*/function () {
+  function PressService() {}
+
+  PressService.all$ = function all$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/press/all');
+    } else {
+      return ApiService.get$('/press/all.json');
+    }
+  };
+
+  return PressService;
+}();var PressComponent = /*#__PURE__*/function (_FiltersComponent) {
+  _inheritsLoose(PressComponent, _FiltersComponent);
+
+  function PressComponent() {
+    return _FiltersComponent.apply(this, arguments) || this;
+  }
+
+  var _proto = PressComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    _FiltersComponent.prototype.onInit.call(this);
+  };
+
+  _proto.load$ = function load$() {
+    return rxjs.combineLatest([PressService.all$()]);
+  };
+
+  _proto.doFilterItem = function doFilterItem(key, item, value) {
+    switch (key) {
+      default:
+        return true;
+    }
+  };
+
+  return PressComponent;
+}(FiltersComponent);
+PressComponent.meta = {
+  selector: '[press]'
 };var breadcumbStyle = "font-size: .8rem; text-transform: uppercase; letter-spacing: 0.075em; color: #37393b; display: none;";
 var titleStyle = "letter-spacing: 0; font-family: 'Bauer Bodoni', sans-serif; font-size: 2.9rem; margin: 0;word-wrap: break-word;text-transform: uppercase;color:#37393b;";
 var designerStyle = "font-size: .8rem; letter-spacing: 0.075em;margin-bottom: 15px;word-wrap: break-word;text-transform: uppercase; display: none;";
@@ -10243,7 +10328,7 @@ ReservedAreaComponent.meta = {
           }
 
           google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
-            this.setZoom(Math.min(11, this.getZoom()));
+            map.setZoom(Math.min(11, map.getZoom()));
           });
           map.fitBounds(bounds, 0);
         } else {
@@ -10254,7 +10339,7 @@ ReservedAreaComponent.meta = {
         var _bounds = MapService.getBounds(items);
 
         google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
-          this.setZoom(Math.min(11, this.getZoom()));
+          map.setZoom(Math.min(11, map.getZoom()));
         });
         map.fitBounds(_bounds);
       }
@@ -14181,6 +14266,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestComponent, MagazineRequestModalComponent, MagazineRequestPropositionComponent, MarketPropositionModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, CataloguesComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestComponent, MagazineRequestModalComponent, MagazineRequestPropositionComponent, MarketPropositionModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, PressComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));
