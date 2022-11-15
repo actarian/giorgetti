@@ -12,6 +12,7 @@ import { ModalResolveEvent, ModalService } from '../../common/modal/modal.servic
 import { NumberPipe } from '../../common/number/number.pipe';
 import { FormService } from '../../controls/form.service';
 import RequiredIfValidator from '../../controls/required-if.validator';
+import RequiredTrueIfValidator from '../../controls/required-true-if.validator';
 import { environment } from '../../environment';
 import { CartMiniService } from '../../shared/cart-mini/cart-mini.service';
 import { UserService } from '../../shared/user/user.service';
@@ -106,7 +107,7 @@ export class CartComponent extends Component {
 		this.paymentMethod = null;
 		const hasInvoice = RequiredIfValidator(() => Boolean(this.form.value.data.invoice));
 		const hasBilling = RequiredIfValidator(() => Boolean(this.form.value.data.billing));
-		const hasStore = RequiredIfValidator(() => Boolean(this.selectedStore));
+		const hasStore = RequiredTrueIfValidator(() => Boolean(this.step == this.steps.Recap && this.checkStoreTerms && this.form.value.store));
 		const form = this.form = new FormGroup({
 			step: this.step,
 			items: null,
@@ -159,8 +160,7 @@ export class CartComponent extends Component {
 			stores: null,
 			store: new FormControl(null, [Validators.RequiredValidator()]),
 
-			// @temp: storeTerms temporaneamente disabilitato
-			// storeTerms: new FormControl(null, [hasStore]),
+			storeTerms: new FormControl(null, [hasStore]),
 
 			checkRequest: window.antiforgery,
 			checkField: '',
@@ -525,7 +525,7 @@ export class CartComponent extends Component {
 	}
 
 	onFacebookLogin() {
-		console.log('onFacebookLogin');
+		// console.log('onFacebookLogin');
 		this.socialBusy = 'facebook';
 		let socialMe;
 		function mapMe(data) {
@@ -562,7 +562,7 @@ export class CartComponent extends Component {
 				me.socialToken = data.facebookToken;
 				me.socialTokenExpiresAt = data.authResponse.data_access_expiration_time;
 			}
-			console.log('CartComponent.onFacebookLogin.mapMe', me);
+			// console.log('CartComponent.onFacebookLogin.mapMe', me);
 			return me;
 		}
 		FacebookService.me$().pipe(
@@ -620,7 +620,7 @@ export class CartComponent extends Component {
 				me.socialToken = data.googleToken;
 				me.socialTokenExpiresAt = data.authResponse.expires_at;
 			}
-			console.log('CartComponent.onGoogleLogin.mapMe', me);
+			// console.log('CartComponent.onGoogleLogin.mapMe', me);
 			return me;
 		}
 		GoogleService.me$().pipe(
@@ -646,7 +646,7 @@ export class CartComponent extends Component {
 		LinkedinService.linkedin$().pipe(
 			first(),
 		).subscribe(token => {
-			console.log('CartComponent.onLinkedinLogin', token);
+			// console.log('CartComponent.onLinkedinLogin', token);
 			this.onModalSignUp({ firstName: 'Luca' });
 		}, error => {
 			console.log('CartComponent.onLinkedinLogin.error', error);
@@ -670,7 +670,7 @@ export class CartComponent extends Component {
 	onData(_) {
 		const form = this.form;
 		// const controls = this.controls;
-		console.log('CartComponent.onData', form.controls.data.valid);
+		// console.log('CartComponent.onData', form.controls.data.valid);
 		if (form.controls.data.valid) {
 			const deliveryData = form.value.data;
 			const deliveryCountry = this.getCountryById(deliveryData.country);
@@ -804,11 +804,8 @@ export class CartComponent extends Component {
 
 	onRecap(_) {
 		const form = this.form;
-		// console.log('CartComponent.onRecap', form.controls.storeTerms.valid);
-
-		// @temp: storeTerms temporaneamente disabilitato
-		// if (form.controls.storeTerms.valid) {
-		if (true) {
+		// console.log('CartComponent.onRecap', form.valid);
+		if (form.valid) {
 			this.onNext();
 		} else {
 			this.touchForm();
@@ -820,6 +817,16 @@ export class CartComponent extends Component {
 			this.selectedStore.showTimetable = !this.selectedStore.showTimetable;
 			this.pushChanges();
 		}
+	}
+
+	testRecap() {
+		this.form.patch({
+			storeTerms: true,
+		});
+	}
+
+	resetRecap() {
+		this.controls.storeTerms.reset();
 	}
 
 	// 5. CartSteps.Payment
@@ -896,4 +903,5 @@ export class CartComponent extends Component {
 
 CartComponent.meta = {
 	selector: '[cart]',
+	inputs: ['checkStoreTerms'],
 };

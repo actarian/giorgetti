@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "code": 63230,
+    "category": {
+      "id": 1,
+      "name": "Sedie e sgabelli"
+    },
+    "categories": [
+      1
+    ],
+    "subcategories": [
+      100
+    ],
+    "ambiences": [
+      1
+    ],
+    "materials": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "designers": [
+      400
+    ],
+    "url": "/giorgetti/products-detail.html",
+    "image": "/giorgetti/img/products/4240_n_LISTING_50250.jpg",
+    "title": "50250",
+    "configurable": true
+  }
+]

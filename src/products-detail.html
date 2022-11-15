@@ -40,9 +40,10 @@
 						<div class="col-md-5 offset-md-7">
 							<div class="card__title">Adam <em>Divano</em></div>
 							<div class="card__abstract">Un segno grafico rigoroso ed essenziale definisce la struttura delle sedute Adam, i rivestimenti in pelle, tessuto e cuoio si appoggiano come un foglio sugli elementi tubolari, ingentilendone il tratto.</div>
+							<div class="card__designer">Designer <a href="/giorgetti/designer-detail.html" class="btn--link">Carlo Colombo 2018</a></div>
 							<div class="card__cta">
 								<button type="button" class="btn--more" *if="firstConfigurableVersion" (click)="configureProduct()">Acquista ora</button>
-								<button type="button" class="btn--more" (locomotiveScrollTo)="'#versions'">Scopri le versioni</button>
+								<button type="button" class="btn--more" (click)="onRequestInfo()">Richiedi informazioni</button>
 								<!--
 								<button type="button" class="btn--more" (click)="onAddToCart(product)">
 									<span *if="!isAddedToCart({ 'id': 1 })">Acquista</span>
@@ -50,7 +51,10 @@
 								</button>
 								-->
 							</div>
-							<div class="card__designer">Designer <a href="/giorgetti/designer-detail.html" class="btn--link">Carlo Colombo 2018</a></div>
+							<button type="button" class="btn--anchor" (locomotiveScrollTo)="'#versions'">
+								<span>Scopri le versioni</span>
+								<svg class="angle-down"><use xlink:href="#angle-down"></use></svg>
+							</button>
 						</div>
 					</div>
 				</div>

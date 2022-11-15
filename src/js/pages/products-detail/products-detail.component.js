@@ -79,6 +79,19 @@ export class ProductsDetailComponent extends Component {
 		}
 	}
 
+	onRequestInfo() {
+		ModalService.open$({ src: environment.template.modal.productsDetailRequestModal, data: { product: this.product } }).pipe(
+			takeUntil(this.unsubscribe$),
+		).subscribe(event => {
+			console.log('ProductsDetailComponent.onRequestInfo', event);
+			/*
+			if (event instanceof ModalResolveEvent) {
+				// info requested!
+			}
+			*/
+		});
+	}
+
 	onReservedArea() {
 		UserService.me$().pipe(
 			first(),

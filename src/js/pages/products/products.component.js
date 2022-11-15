@@ -9,6 +9,7 @@ export class ProductsComponent extends FiltersComponent {
 
 	onInit() {
 		super.onInit();
+		this.listingId = this.listingId || null;
 		this.categoryId = this.categoryId || null;
 		this.subcategoryId = this.subcategoryId || null;
 		this.shop = this.shop || false;
@@ -16,7 +17,7 @@ export class ProductsComponent extends FiltersComponent {
 
 	load$() {
 		return combineLatest([
-			ProductsService.all$(),
+			this.listingId ? ProductsService.listing$(this.listingId) : ProductsService.all$(),
 			ProductsService.filters$(),
 		]);
 	}
@@ -59,5 +60,5 @@ export class ProductsComponent extends FiltersComponent {
 
 ProductsComponent.meta = {
 	selector: '[products]',
-	inputs: ['categoryId', 'subcategoryId', 'shop'],
+	inputs: ['listingId', 'categoryId', 'subcategoryId', 'shop'],
 };

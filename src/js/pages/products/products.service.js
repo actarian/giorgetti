@@ -8,9 +8,17 @@ export class ProductsService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return ProductsService.sort$(ApiService.get$('/products/all'));
+			return ApiService.get$('/products/all');
 		} else {
-			return ProductsService.sort$(ApiService.get$('/products/all.json'));
+			return ApiService.get$('/products/all.json');
+		}
+	}
+
+	static listing$(listingId) {
+		if (environment.flags.production) {
+			return ApiService.get$(`/products/listing/${listingId}`);
+		} else {
+			return ApiService.get$(`/products/listing.json?listingId=${listingId}`);
 		}
 	}
 

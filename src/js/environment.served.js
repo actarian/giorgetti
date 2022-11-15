@@ -31,6 +31,7 @@ export const environmentServed = {
 			ordersModal: '/template/modals/orders-modal.cshtml',
 			projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
 			userModal: '/template/modals/user-modal.cshtml',
+			productsDetailRequestModal: '/template/modals/products-detail-request-modal.cshtml',
 		}
 	},
 	facebook: {

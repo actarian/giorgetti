@@ -28,6 +28,8 @@ import { OrdersModalComponent } from './pages/orders/orders-modal.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { PressComponent } from './pages/press/press.component';
 import { ProductsConfigureComponent } from './pages/products-configure/products-configure.component';
+import { ProductsDetailRequestModalComponent } from './pages/products-detail/products-detail-request-modal.component';
+import { ProductsDetailRequestComponent } from './pages/products-detail/products-detail-request.component';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProjectsRegistrationModalComponent } from './pages/projects-registration/projects-registration-modal.component';
@@ -75,6 +77,8 @@ AppModule.meta = {
 		ProductsComponent,
 		ProductsConfigureComponent,
 		ProductsDetailComponent,
+		ProductsDetailRequestComponent,
+		ProductsDetailRequestModalComponent,
 		ProjectsComponent,
 		ProjectsRegistrationComponent,
 		ProjectsRegistrationModalComponent,

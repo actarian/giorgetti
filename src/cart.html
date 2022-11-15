@@ -12,7 +12,7 @@
 		</div>
 	</div>
 
-	<div class="section--cart" cart>
+	<div class="section--cart" cart [checkStoreTerms]="true">
 		<div class="container" *if="step !== steps.None">
 			<!-- EMPTY -->
 			<div *if="step !== steps.Complete && items?.length == 0">
@@ -280,55 +280,57 @@
 					<div class="title">Riepilogo Ordine</div>
 					<div class="row">
 						<div class="col-md-7">
-							<div class="group--address" *if="!selectedStore">
-								<div class="subtitle">Non è stato possibile trovare un negozio.</div>
-							</div>
-							<div *if="selectedStore">
-								<div class="group--address">
-									<div class="subtitle">Negozio di riferimento</div>
-									<div class="card--address">
-										<div class="card__content">
-											<div class="card__name" [innerHTML]="selectedStore.name"></div>
-											<div class="card__address" [innerHTML]="selectedStore.address"></div>
-											<div class="card__address">
-												<span class="card__city" [innerHTML]="selectedStore.city"></span>
-												<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+							<form class="form" [formGroup]="form" (submit)="onRecap($event)" name="form" role="form" novalidate autocomplete="off">
+								<div class="group--address" *if="!selectedStore">
+									<div class="subtitle">Non è stato possibile trovare un negozio.</div>
+								</div>
+								<div *if="selectedStore">
+									<div class="group--address">
+										<div class="subtitle">Negozio di riferimento</div>
+										<div class="card--address">
+											<div class="card__content">
+												<div class="card__name" [innerHTML]="selectedStore.name"></div>
+												<div class="card__address" [innerHTML]="selectedStore.address"></div>
+												<div class="card__address">
+													<span class="card__city" [innerHTML]="selectedStore.city"></span>
+													<span class="card__country" [innerHTML]="selectedStore.country.name"></span>
+												</div>
+												<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
+													<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
+													<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+												</div>
+												<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 											</div>
-											<div class="card__phones" *if="selectedStore.phone || selectedStore.fax">
-												<a class="card__phone" [href]="'tel:' + selectedStore.phone" [innerHTML]="selectedStore.phone" *if="selectedStore.phone"></a>
-												<a class="card__fax" [href]="'tel:' + selectedStore.fax" [innerHTML]="selectedStore.fax" *if="selectedStore.fax"></a>
+										</div>
+									</div>
+									<div control-checkbox [control]="controls.storeTerms" [label]="'Sì, accetto le &amp;lt;a href=&amp;quot;/giorgetti/store-sales-conditions.html?id=' + selectedStore.id + '&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;Condizioni&amp;lt;/a&gt;'" target="modal" (change)="onRevalidate()"></div>
+									<div class="group--timetable" *if="selectedStore.timetable.length">
+										<button type="button" class="btn--accordion" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
+											<span>Orari di apertura</span>
+											<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
+										</button>
+										<div class="flex-table flex-table__sm" *if="selectedStore.showTimetable">
+											<div class="tr" *for="let time of selectedStore.timetable">
+												<div class="td" [innerHTML]="time.name"></div>
+												<div class="td" [innerHTML]="time.value"></div>
 											</div>
-											<a class="card__email" [href]="'mailto:' + selectedStore.email" [innerHTML]="selectedStore.email" *if="selectedStore.email"></a>
 										</div>
 									</div>
 								</div>
-								<div control-checkbox [control]="controls.storeTerms" [label]="'Sì, accetto le &amp;lt;a href=&amp;quot;/giorgetti/store-sales-conditions.html?id=' + selectedStore.id + '&amp;quot; target=&amp;quot;_blank&amp;quot;&gt;Condizioni&amp;lt;/a&gt;'" target="modal" (change)="onRevalidate()"></div>
-								<div class="group--timetable" *if="selectedStore.timetable.length">
-									<button type="button" class="btn--accordion" [class]="{ active: selectedStore.showTimetable }" (click)="onTimetableToggle($event)">
-										<span>Orari di apertura</span>
-										<svg class="caret-down"><use xlink:href="#caret-down"></use></svg>
-									</button>
-									<div class="flex-table flex-table__sm" *if="selectedStore.showTimetable">
-										<div class="tr" *for="let time of selectedStore.timetable">
-											<div class="td" [innerHTML]="time.name"></div>
-											<div class="td" [innerHTML]="time.value"></div>
-										</div>
+								<div class="group--stores" *if="controls.deliveryType.value == 1">
+									<div class="group--form--radio" [class]="{ required: controls.store.validators.length }" *for="let option of controls.store.options">
+										<label [labelFor]="controls.store.name + '-' + option.id" [class]="{ active: controls.store.value == option.id }" (click)="controls.store.value = option.id">
+											<div class="group--headline">
+												<svg class="radio" *if="controls.store.value != option.id"><use xlink:href="#radio"></use></svg>
+												<svg class="radio-checked" *if="controls.store.value == option.id"><use xlink:href="#radio-checked"></use></svg>
+												<span class="name" [innerHTML]="option.name"></span>
+												<span class="distance" [innerHTML]="option.distance | number : { style: 'unit', unit: 'kilometer', maximumFractionDigits: 1 }"></span>
+											</div>
+											<div class="description" [innerHTML]="option.description" *if="option.description"></div>
+										</label>
 									</div>
 								</div>
-							</div>
-							<div class="group--stores" *if="controls.deliveryType.value == 1">
-								<div class="group--form--radio" [class]="{ required: controls.store.validators.length }" *for="let option of controls.store.options">
-									<label [labelFor]="controls.store.name + '-' + option.id" [class]="{ active: controls.store.value == option.id }" (click)="controls.store.value = option.id">
-										<div class="group--headline">
-											<svg class="radio" *if="controls.store.value != option.id"><use xlink:href="#radio"></use></svg>
-											<svg class="radio-checked" *if="controls.store.value == option.id"><use xlink:href="#radio-checked"></use></svg>
-											<span class="name" [innerHTML]="option.name"></span>
-											<span class="distance" [innerHTML]="option.distance | number : { style: 'unit', unit: 'kilometer', maximumFractionDigits: 1 }"></span>
-										</div>
-										<div class="description" [innerHTML]="option.description" *if="option.description"></div>
-									</label>
-								</div>
-							</div>
+							</form>
 						</div>
 						<div class="col-md-5">
 							<div class="group--recap">
@@ -425,6 +427,7 @@
 							</div>
 						</div>
 					</div>
+					<test-component [form]="form" (test)="testRecap($event)" (reset)="resetRecap($event)"></test-component>
 					<div locomotive-scroll-sticky target=".group--cart" [bottom]="true">
 						<div class="group--cart">
 							<button type="button" class="btn--secondary" (click)="onBack($event)">Indietro</button>

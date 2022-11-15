@@ -6,9 +6,9 @@ export class AmbienceService {
 
 	static all$() {
 		if (environment.flags.production) {
-			return AmbienceService.sort$(ApiService.get$('/ambience/all'));
+			return ApiService.get$('/ambience/all');
 		} else {
-			return AmbienceService.sort$(ApiService.get$('/ambience/all.json'));
+			return ApiService.get$('/ambience/all.json');
 		}
 	}
 

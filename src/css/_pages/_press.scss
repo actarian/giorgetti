@@ -45,7 +45,8 @@
 			pointer-events: none;
 			transition: opacity ease-in-out $fast;
 
-			&__title {
+			&__title,
+			&__subtitle {
 				margin-bottom: 0;
 				font-family: $font-secondary;
 				font-size: 24px;
@@ -84,9 +85,9 @@
 		line-height: 1.2;
 	}
 
-	.card__title {
+	.card__title,
+	.card__subtitle {
 		display: block;
-		margin-bottom: 15px;
 		font-size: 18px;
 		line-height: 1.2;
 		text-transform: uppercase;
@@ -96,6 +97,14 @@
 			color: #6a6a6a;
 			font-size: 0.8em;
 		}
+	}
+
+	.card__title {
+		margin-bottom: 5px;
+	}
+
+	.card__subtitle {
+		margin-bottom: 15px;
 	}
 
 	.card__cta {

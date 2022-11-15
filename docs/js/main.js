@@ -197,7 +197,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
       materialsModal: '/template/modals/materials-modal.cshtml',
       ordersModal: '/template/modals/orders-modal.cshtml',
       projectsRegistrationModal: '/template/modals/projects-registration-modal.cshtml',
-      userModal: '/template/modals/user-modal.cshtml'
+      userModal: '/template/modals/user-modal.cshtml',
+      productsDetailRequestModal: '/template/modals/products-detail-request-modal.cshtml'
     }
   },
   facebook: {
@@ -258,7 +259,8 @@ ModalService.busy$ = new rxjs.Subject();var Utils = /*#__PURE__*/function () {
       materialsModal: '/giorgetti/partials/modals/materials-modal.html',
       ordersModal: '/giorgetti/partials/modals/orders-modal.html',
       projectsRegistrationModal: '/giorgetti/partials/modals/projects-registration-modal.html',
-      userModal: '/giorgetti/partials/modals/user-modal.html'
+      userModal: '/giorgetti/partials/modals/user-modal.html',
+      productsDetailRequestModal: '/giorgetti/partials/modals/products-detail-request-modal.html'
     }
   },
   facebook: {
@@ -5161,9 +5163,17 @@ var ProductsService = /*#__PURE__*/function () {
 
   ProductsService.all$ = function all$() {
     if (environment.flags.production) {
-      return ProductsService.sort$(ApiService.get$('/products/all'));
+      return ApiService.get$('/products/all');
     } else {
-      return ProductsService.sort$(ApiService.get$('/products/all.json'));
+      return ApiService.get$('/products/all.json');
+    }
+  };
+
+  ProductsService.listing$ = function listing$(listingId) {
+    if (environment.flags.production) {
+      return ApiService.get$("/products/listing/" + listingId);
+    } else {
+      return ApiService.get$("/products/listing.json?listingId=" + listingId);
     }
   };
 
@@ -5238,13 +5248,14 @@ var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
   _proto.onInit = function onInit() {
     _FiltersComponent.prototype.onInit.call(this);
 
+    this.listingId = this.listingId || null;
     this.categoryId = this.categoryId || null;
     this.subcategoryId = this.subcategoryId || null;
     this.shop = this.shop || false;
   };
 
   _proto.load$ = function load$() {
-    return rxjs.combineLatest([ProductsService.all$(), ProductsService.filters$()]);
+    return rxjs.combineLatest([this.listingId ? ProductsService.listing$(this.listingId) : ProductsService.all$(), ProductsService.filters$()]);
   };
 
   _proto.setFiltersParams = function setFiltersParams() {
@@ -5300,15 +5311,15 @@ var ProductsComponent = /*#__PURE__*/function (_FiltersComponent) {
 }(FiltersComponent);
 ProductsComponent.meta = {
   selector: '[products]',
-  inputs: ['categoryId', 'subcategoryId', 'shop']
+  inputs: ['listingId', 'categoryId', 'subcategoryId', 'shop']
 };var AmbienceService = /*#__PURE__*/function () {
   function AmbienceService() {}
 
   AmbienceService.all$ = function all$() {
     if (environment.flags.production) {
-      return AmbienceService.sort$(ApiService.get$('/ambience/all'));
+      return ApiService.get$('/ambience/all');
     } else {
-      return AmbienceService.sort$(ApiService.get$('/ambience/all.json'));
+      return ApiService.get$('/ambience/all.json');
     }
   };
 
@@ -6533,7 +6544,29 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   return LinkedinService;
-}();var OrdersService = /*#__PURE__*/function () {
+}();/**
+ * a required and true validator based on condition
+ */
+
+function RequiredTrueIfValidator(condition) {
+  return new rxcompForm.FormValidator(function (value, params) {
+    var condition = params.condition;
+
+    if (!typeof condition === 'function') {
+      return null;
+    }
+
+    if (Boolean(condition()) === true) {
+      return value === true ? null : {
+        required: true
+      };
+    } else {
+      return null;
+    }
+  }, {
+    condition: condition
+  });
+}var OrdersService = /*#__PURE__*/function () {
   function OrdersService() {}
 
   OrdersService.all$ = function all$() {
@@ -6627,8 +6660,8 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     var hasBilling = RequiredIfValidator(function () {
       return Boolean(_this2.form.value.data.billing);
     });
-    var hasStore = RequiredIfValidator(function () {
-      return Boolean(_this2.selectedStore);
+    var hasStore = RequiredTrueIfValidator(function () {
+      return Boolean(_this2.step == _this2.steps.Recap && _this2.checkStoreTerms && _this2.form.value.store);
     });
     var form = this.form = new rxcompForm.FormGroup({
       step: this.step,
@@ -6681,8 +6714,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
       paymentMethod: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
       stores: null,
       store: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
-      // @temp: storeTerms temporaneamente disabilitato
-      // storeTerms: new FormControl(null, [hasStore]),
+      storeTerms: new rxcompForm.FormControl(null, [hasStore]),
       checkRequest: window.antiforgery,
       checkField: ''
     });
@@ -7134,7 +7166,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   _proto.onFacebookLogin = function onFacebookLogin() {
     var _this8 = this;
 
-    console.log('onFacebookLogin');
+    // console.log('onFacebookLogin');
     this.socialBusy = 'facebook';
     var socialMe;
 
@@ -7173,9 +7205,9 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
         me.socialId = data.id;
         me.socialToken = data.facebookToken;
         me.socialTokenExpiresAt = data.authResponse.data_access_expiration_time;
-      }
+      } // console.log('CartComponent.onFacebookLogin.mapMe', me);
 
-      console.log('CartComponent.onFacebookLogin.mapMe', me);
+
       return me;
     }
 
@@ -7241,9 +7273,9 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
         me.socialId = data.id;
         me.socialToken = data.googleToken;
         me.socialTokenExpiresAt = data.authResponse.expires_at;
-      }
+      } // console.log('CartComponent.onGoogleLogin.mapMe', me);
 
-      console.log('CartComponent.onGoogleLogin.mapMe', me);
+
       return me;
     }
 
@@ -7273,8 +7305,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     var _this10 = this;
 
     LinkedinService.linkedin$().pipe(operators.first()).subscribe(function (token) {
-      console.log('CartComponent.onLinkedinLogin', token);
-
+      // console.log('CartComponent.onLinkedinLogin', token);
       _this10.onModalSignUp({
         firstName: 'Luca'
       });
@@ -7303,8 +7334,7 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
     var _this11 = this;
 
     var form = this.form; // const controls = this.controls;
-
-    console.log('CartComponent.onData', form.controls.data.valid);
+    // console.log('CartComponent.onData', form.controls.data.valid);
 
     if (form.controls.data.valid) {
       var deliveryData = form.value.data;
@@ -7474,12 +7504,12 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   };
 
   _proto.onRecap = function onRecap(_) {
-    var form = this.form; // console.log('CartComponent.onRecap', form.controls.storeTerms.valid);
-    // @temp: storeTerms temporaneamente disabilitato
-    // if (form.controls.storeTerms.valid) {
+    var form = this.form; // console.log('CartComponent.onRecap', form.valid);
 
-    {
+    if (form.valid) {
       this.onNext();
+    } else {
+      this.touchForm();
     }
   };
 
@@ -7488,6 +7518,16 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
       this.selectedStore.showTimetable = !this.selectedStore.showTimetable;
       this.pushChanges();
     }
+  };
+
+  _proto.testRecap = function testRecap() {
+    this.form.patch({
+      storeTerms: true
+    });
+  };
+
+  _proto.resetRecap = function resetRecap() {
+    this.controls.storeTerms.reset();
   } // 5. CartSteps.Payment
   ;
 
@@ -7618,7 +7658,8 @@ _defineProperty(GoogleMapsService, "maps", void 0);var LinkedinService = /*#__PU
   return CartComponent;
 }(rxcomp.Component);
 CartComponent.meta = {
-  selector: '[cart]'
+  selector: '[cart]',
+  inputs: ['checkStoreTerms']
 };var CataloguesService = /*#__PURE__*/function () {
   function CataloguesService() {}
 
@@ -9432,6 +9473,42 @@ var ProductsConfigureComponent = /*#__PURE__*/function (_Component) {
 ProductsConfigureComponent.meta = {
   selector: '[products-configure]',
   inputs: ['token', 'product']
+};var ProductsDetailRequestModalComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProductsDetailRequestModalComponent, _Component);
+
+  function ProductsDetailRequestModalComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProductsDetailRequestModalComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    this.product = null;
+
+    var _getContext = rxcomp.getContext(this),
+        parentInstance = _getContext.parentInstance;
+
+    if (parentInstance instanceof ModalOutletComponent) {
+      var data = parentInstance.modal.data;
+      this.product = data.product;
+      console.log('ProductsDetailRequestModalComponent.onInit', data);
+    }
+
+    LocomotiveScrollService.stop();
+  };
+
+  _proto.onClose = function onClose() {
+    ModalService.reject();
+  };
+
+  _proto.onDestroy = function onDestroy() {
+    LocomotiveScrollService.start();
+  };
+
+  return ProductsDetailRequestModalComponent;
+}(rxcomp.Component);
+ProductsDetailRequestModalComponent.meta = {
+  selector: '[products-detail-request-modal]'
 };var ProductsDetailService = /*#__PURE__*/function () {
   function ProductsDetailService() {}
 
@@ -9470,8 +9547,152 @@ ProductsConfigureComponent.meta = {
     }));
   };
 
+  ProductsDetailService.data$ = function data$() {
+    if (environment.flags.production) {
+      return ApiService.get$('/products-detail/data');
+    } else {
+      return ApiService.get$('/products-detail/data.json');
+    }
+  };
+
+  ProductsDetailService.submit$ = function submit$(payload) {
+    if (environment.flags.production) {
+      return ApiService.post$('/products-detail/submit', payload);
+    } else {
+      return ApiService.get$('/products-detail/submit.json');
+    }
+  };
+
   return ProductsDetailService;
-}();var ProductsDetailComponent = /*#__PURE__*/function (_Component) {
+}();var ProductsDetailRequestComponent = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(ProductsDetailRequestComponent, _Component);
+
+  function ProductsDetailRequestComponent() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ProductsDetailRequestComponent.prototype;
+
+  _proto.onInit = function onInit() {
+    var _this = this;
+
+    console.log('ProductsDetailRequestComponent', this.product);
+    this.response = null;
+    this.error = null;
+    this.success = false;
+    var hasNewsletter = RequiredIfValidator(function () {
+      return Boolean(_this.form.value.newsletter);
+    });
+    var form = this.form = new rxcompForm.FormGroup({
+      productId: new rxcompForm.FormControl(this.product.id, [rxcompForm.Validators.RequiredValidator()]),
+      productTitle: new rxcompForm.FormControl(this.product.title, [rxcompForm.Validators.RequiredValidator()]),
+      reason: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      //
+      firstName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      lastName: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      email: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator(), rxcompForm.Validators.EmailValidator()]),
+      telephone: new rxcompForm.FormControl(null),
+      company: new rxcompForm.FormControl(null),
+      occupation: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      country: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      city: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      //
+      message: new rxcompForm.FormControl(null),
+      //
+      privacy: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredTrueValidator()]),
+      newsletter: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      commercial: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      promotion: new rxcompForm.FormControl(null, [rxcompForm.Validators.RequiredValidator()]),
+      // newsletterLanguage: new FormControl(null, [hasNewsletter]),
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+    var controls = this.controls = form.controls;
+    form.changes$.pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (_) {
+      _this.pushChanges();
+
+      LocomotiveScrollService.update();
+    });
+    this.load$().pipe(operators.first()).subscribe();
+  };
+
+  _proto.load$ = function load$() {
+    var _this2 = this;
+
+    return ProductsDetailService.data$().pipe(operators.tap(function (data) {
+      var controls = _this2.controls;
+      controls.reason.options = FormService.toSelectOptions(data.reason.options);
+      controls.occupation.options = FormService.toSelectOptions(data.occupation.options);
+      controls.country.options = FormService.toSelectOptions(data.country.options); // controls.newsletterLanguage.options = FormService.toSelectOptions(data.newsletterLanguage.options);
+
+      _this2.pushChanges();
+    }));
+  };
+
+  _proto.test = function test() {
+    var form = this.form;
+    var controls = this.controls;
+    var reason = controls.reason.options.length > 1 ? controls.reason.options[1].id : null;
+    var occupation = controls.occupation.options.length > 1 ? controls.occupation.options[1].id : null;
+    var country = controls.country.options.length > 1 ? controls.country.options[1].id : null;
+    form.patch({
+      reason: reason,
+      firstName: 'Jhon',
+      lastName: 'Appleseed',
+      email: 'jhonappleseed@gmail.com',
+      occupation: occupation,
+      country: country,
+      city: 'Pesaro',
+      privacy: true,
+      newsletter: false,
+      commercial: false,
+      promotion: false,
+      checkRequest: window.antiforgery,
+      checkField: ''
+    });
+  };
+
+  _proto.reset = function reset() {
+    var form = this.form;
+    form.reset();
+  };
+
+  _proto.onSubmit = function onSubmit(model) {
+    var _this3 = this;
+
+    var form = this.form;
+    console.log('ProductsDetailRequestComponent.onSubmit', form.value); // console.log('ProductsDetailRequestComponent.onSubmit', 'form.valid', valid);
+
+    if (form.valid) {
+      // console.log('ProductsDetailRequestComponent.onSubmit', form.value);
+      form.submitted = true;
+      ProductsDetailService.submit$(form.value).pipe(operators.first()).subscribe(function (response) {
+        _this3.response = response;
+        _this3.success = true;
+        form.reset();
+        GtmService.push({
+          'event': "ProductsDetailRequest",
+          'form_name': "ProductsDetailRequest"
+        });
+      }, function (error) {
+        console.log('ProductsDetailRequestComponent.error', error);
+        _this3.error = error;
+
+        _this3.pushChanges();
+
+        LocomotiveScrollService.update();
+      });
+    } else {
+      form.touched = true;
+    }
+  };
+
+  return ProductsDetailRequestComponent;
+}(rxcomp.Component);
+ProductsDetailRequestComponent.meta = {
+  selector: '[products-detail-request]',
+  inputs: ['product']
+};var ProductsDetailComponent = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ProductsDetailComponent, _Component);
 
   function ProductsDetailComponent() {
@@ -9553,6 +9774,22 @@ ProductsConfigureComponent.meta = {
     } else {
       window.location.href = environment.slug.configureProduct + "?productId=" + version.productId + "&code=" + version.code + (version.familyCode ? "&familyCode=" + version.familyCode : '');
     }
+  };
+
+  _proto.onRequestInfo = function onRequestInfo() {
+    ModalService.open$({
+      src: environment.template.modal.productsDetailRequestModal,
+      data: {
+        product: this.product
+      }
+    }).pipe(operators.takeUntil(this.unsubscribe$)).subscribe(function (event) {
+      console.log('ProductsDetailComponent.onRequestInfo', event);
+      /*
+      if (event instanceof ModalResolveEvent) {
+      	// info requested!
+      }
+      */
+    });
   };
 
   _proto.onReservedArea = function onReservedArea() {
@@ -14266,6 +14503,6 @@ SharedModule.meta = {
 }(rxcomp.Module);
 AppModule.meta = {
   imports: [rxcomp.CoreModule, rxcompForm.FormModule, CommonModule, ControlsModule, SharedModule],
-  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, CataloguesComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestComponent, MagazineRequestModalComponent, MagazineRequestPropositionComponent, MarketPropositionModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, PressComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
+  declarations: [AmbienceComponent, AteliersAndStoresComponent, CareersComponent, CareersModalComponent, CartComponent, CataloguesComponent, ContactsComponent, DealersComponent, DesignersComponent, GenericModalComponent, MagazineComponent, MagazineRequestComponent, MagazineRequestModalComponent, MagazineRequestPropositionComponent, MarketPropositionModalComponent, MarketsAndLanguagesModalComponent, MaterialsComponent, MaterialsModalComponent, NewsComponent, NewsletterComponent, OrdersComponent, OrdersDetailComponent, OrdersModalComponent, PressComponent, ProductsComponent, ProductsConfigureComponent, ProductsDetailComponent, ProductsDetailRequestComponent, ProductsDetailRequestModalComponent, ProjectsComponent, ProjectsRegistrationComponent, ProjectsRegistrationModalComponent, ReservedAreaComponent, StoreLocatorComponent],
   bootstrap: AppComponent
 };rxcomp.Browser.bootstrap(AppModule);})));

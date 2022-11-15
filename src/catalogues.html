@@ -38,8 +38,9 @@
 					<a [href]="item.url" [download]="item.fileName" class="card--press">
 						<span class="card__picture">
 							<img loading="lazy" [src]="item.image" />
-							<span class="over" *if="item.abstract || item.title">
-								<span class="over__title" [innerHTML]="item.abstract || item.title"></span>
+							<span class="over">
+								<span class="over__title" [innerHTML]="item.title"></span>
+								<span class="over__subtitle" [innerHTML]="item.subtitle"></span>
 							</span>
 						</span>
 						<span class="card__content">
@@ -47,6 +48,7 @@
 								month: 'long', year: 'numeric'
 							}" *if="item.date"></span>
 							<span class="card__title" [innerHTML]="item.title"></span>
+							<span class="card__subtitle" [innerHTML]="item.subtitle"></span>
 							<span class="card__abstract" [innerHTML]="item.abstract" *if="item.abstract"></span>
 						</span>
 						<span class="card__cta">

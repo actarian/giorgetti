@@ -40,4 +40,20 @@ export class ProductsDetailService {
 		);
 	}
 
+	static data$() {
+		if (environment.flags.production) {
+			return ApiService.get$('/products-detail/data');
+		} else {
+			return ApiService.get$('/products-detail/data.json');
+		}
+	}
+
+	static submit$(payload) {
+		if (environment.flags.production) {
+			return ApiService.post$('/products-detail/submit', payload);
+		} else {
+			return ApiService.get$('/products-detail/submit.json');
+		}
+	}
+
 }

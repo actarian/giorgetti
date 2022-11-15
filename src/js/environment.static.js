@@ -31,6 +31,7 @@ export const environmentStatic = {
 			ordersModal: '/giorgetti/partials/modals/orders-modal.html',
 			projectsRegistrationModal: '/giorgetti/partials/modals/projects-registration-modal.html',
 			userModal: '/giorgetti/partials/modals/user-modal.html',
+			productsDetailRequestModal: '/giorgetti/partials/modals/products-detail-request-modal.html',
 		}
 	},
 	facebook: {
